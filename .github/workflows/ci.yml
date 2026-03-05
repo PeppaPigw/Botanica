@@ -10,11 +10,18 @@ permissions:
 jobs:
   flutter:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -35,3 +42,7 @@ jobs:
       - name: Test
         run: flutter test --timeout 60s
 
+      - name: Build Android appbundle (release)
+        env:
+          GRADLE_OPTS: -Dhttps.protocols=TLSv1.3,TLSv1.2
+        run: flutter build appbundle --release
