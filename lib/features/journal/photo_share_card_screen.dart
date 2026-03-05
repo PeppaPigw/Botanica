@@ -74,7 +74,8 @@ class _PhotoShareCardScreenState extends ConsumerState<PhotoShareCardScreen> {
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              Icon(Icons.error_outline_rounded, size: 18, color: Theme.of(context).colorScheme.error),
+              Icon(Icons.error_outline_rounded,
+                  size: 18, color: Theme.of(context).colorScheme.error),
               const SizedBox(width: 10),
               Expanded(child: Text(l10n.journalShareFailed)),
             ],

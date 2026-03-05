@@ -312,7 +312,9 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              Icon(Icons.water_drop_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+              Icon(Icons.water_drop_rounded,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.inversePrimary),
               const SizedBox(width: 10),
               Text('${l10n.taskTypeWater} · ${l10n.commonDone}'),
             ],
@@ -390,7 +392,9 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
             behavior: SnackBarBehavior.floating,
             content: Row(
               children: [
-                Icon(Icons.no_photography_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+                Icon(Icons.no_photography_rounded,
+                    size: 18,
+                    color: Theme.of(context).colorScheme.inversePrimary),
                 const SizedBox(width: 10),
                 Expanded(child: Text(l10n.journalCameraPermissionNeeded)),
               ],
@@ -427,7 +431,9 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
             behavior: SnackBarBehavior.floating,
             content: Row(
               children: [
-                Icon(Icons.photo_library_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+                Icon(Icons.photo_library_rounded,
+                    size: 18,
+                    color: Theme.of(context).colorScheme.inversePrimary),
                 const SizedBox(width: 10),
                 Expanded(child: Text(l10n.journalPhotosPermissionNeeded)),
               ],
@@ -463,7 +469,8 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(Icons.photo_camera_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+            Icon(Icons.photo_camera_rounded,
+                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
             const SizedBox(width: 10),
             Text(l10n.journalPhotoSaved),
           ],
@@ -493,7 +500,8 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(Icons.edit_note_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+            Icon(Icons.edit_note_rounded,
+                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
             const SizedBox(width: 10),
             Text(l10n.diaryEntrySaved),
           ],
@@ -836,7 +844,8 @@ class _CoverImage extends StatelessWidget {
         : path!.trim();
 
     if (resolved.startsWith('assets/')) {
-      return Image.asset(resolved, fit: BoxFit.cover, filterQuality: FilterQuality.high);
+      return Image.asset(resolved,
+          fit: BoxFit.cover, filterQuality: FilterQuality.high);
     }
 
     return Image.file(

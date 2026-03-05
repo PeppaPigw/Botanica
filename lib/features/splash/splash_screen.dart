@@ -78,8 +78,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       tint: scheme.primary,
                     )
                         .animate(
-                          onPlay: (controller) =>
-                              controller.repeat(reverse: true, period: 3.seconds),
+                          onPlay: (controller) => controller.repeat(
+                              reverse: true, period: 3.seconds),
                         )
                         .scale(
                           begin: const Offset(1.0, 1.0),

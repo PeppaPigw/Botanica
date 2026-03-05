@@ -12,7 +12,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Botanica';
 
   @override
-  String get appTagline => 'Your personal plant care companion — calm, beautiful, and thoughtful.';
+  String get appTagline =>
+      'Your personal plant care companion — calm, beautiful, and thoughtful.';
 
   @override
   String get gardenNoScheduleYet => 'No schedule yet';
@@ -210,19 +211,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingTitle1 => 'Your Garden, beautifully organized';
 
   @override
-  String get onboardingBody1 => 'Track your plants, build a photo timeline, and keep notes without the clutter.';
+  String get onboardingBody1 =>
+      'Track your plants, build a photo timeline, and keep notes without the clutter.';
 
   @override
   String get onboardingTitle2 => 'Smart care, tuned to your environment';
 
   @override
-  String get onboardingBody2 => 'Humidity, temperature, season — Botanica explains why your schedule shifts.';
+  String get onboardingBody2 =>
+      'Humidity, temperature, season — Botanica explains why your schedule shifts.';
 
   @override
   String get onboardingTitle3 => 'Daily Flower ritual';
 
   @override
-  String get onboardingBody3 => 'A gentle daily card: meaning, care basics, and a 60‑second appreciation prompt.';
+  String get onboardingBody3 =>
+      'A gentle daily card: meaning, care basics, and a 60‑second appreciation prompt.';
 
   @override
   String get onboardingCta => 'Start Botanica';
@@ -231,7 +235,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permissionsTitle => 'Set up what you need';
 
   @override
-  String get permissionsSubtitle => 'Enable everything now, or only when you use each feature.';
+  String get permissionsSubtitle =>
+      'Enable everything now, or only when you use each feature.';
 
   @override
   String get permNotificationsTitle => 'Notifications';
@@ -285,7 +290,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permissionsNotNow => 'Not now';
 
   @override
-  String get permissionsPrivacyNote => 'Botanica asks only when needed — you can change this later in Profile.';
+  String get permissionsPrivacyNote =>
+      'Botanica asks only when needed — you can change this later in Profile.';
 
   @override
   String get gardenTitle => 'Garden';
@@ -314,7 +320,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String gardenWeatherChip(String condition, int temp, String unit, int humidity) {
+  String gardenWeatherChip(
+      String condition, int temp, String unit, int humidity) {
     return '$condition · $temp°$unit · $humidity%';
   }
 
@@ -358,7 +365,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gardenEmptyTitle => 'Start your garden';
 
   @override
-  String get gardenEmptyBody => 'Add your first plant to unlock a tailored care plan and daily tasks.';
+  String get gardenEmptyBody =>
+      'Add your first plant to unlock a tailored care plan and daily tasks.';
 
   @override
   String get gardenEmptyCta => 'Add your first plant';
@@ -382,7 +390,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addPlantScanTitle => 'Scan your plant';
 
   @override
-  String get addPlantScanBody => 'Capture leaf + full plant for better results.';
+  String get addPlantScanBody =>
+      'Capture leaf + full plant for better results.';
 
   @override
   String get addPlantScanButton => 'Scan now';
@@ -451,7 +460,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get plantDetailLogsEmptyTitle => 'No care logs yet';
 
   @override
-  String get plantDetailLogsEmptyBody => 'Complete a watering or care task and it will appear here.';
+  String get plantDetailLogsEmptyBody =>
+      'Complete a watering or care task and it will appear here.';
 
   @override
   String get tasksEmptyUpcoming => 'No upcoming tasks';
@@ -472,7 +482,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get plantDetailMissingTitle => 'Plant unavailable';
 
   @override
-  String get plantDetailMissingBody => 'This plant can’t be found. It may have been deleted.';
+  String get plantDetailMissingBody =>
+      'This plant can’t be found. It may have been deleted.';
 
   @override
   String get plantDetailMissingCta => 'Back to Garden';
@@ -491,7 +502,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get plantDetailEnvironmentStable => 'Stable conditions — no adjustment today.';
+  String get plantDetailEnvironmentStable =>
+      'Stable conditions — no adjustment today.';
 
   @override
   String get plantDetailDrynessLow => 'Low dryness (slower drying)';
@@ -503,22 +515,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get plantDetailDrynessHigh => 'High dryness (faster drying)';
 
   @override
-  String get plantDetailCareWaterBody => 'Next watering is calculated from a base interval and adjusted by humidity, temperature, and season.';
+  String get plantDetailCareWaterBody =>
+      'Next watering is calculated from a base interval and adjusted by humidity, temperature, and season.';
 
   @override
-  String get plantDetailCareLightBody => 'Bright, indirect light is a great default for most indoor plants.';
+  String get plantDetailCareLightBody =>
+      'Bright, indirect light is a great default for most indoor plants.';
 
   @override
   String get plantDetailCareTempTitle => 'Temperature';
 
   @override
-  String get plantDetailCareTempBody => 'Avoid sudden cold drafts. Stable warmth helps predictable growth.';
+  String get plantDetailCareTempBody =>
+      'Avoid sudden cold drafts. Stable warmth helps predictable growth.';
 
   @override
-  String get plantDetailJournalDesignNote => 'Match framing overlay and compare slider are designed here; plug in camera/gallery later.';
+  String get plantDetailJournalDesignNote =>
+      'Match framing overlay and compare slider are designed here; plug in camera/gallery later.';
 
   @override
-  String get plantDetailJournalIntro => 'A gentle timeline for photos and notes — your plant diary.';
+  String get plantDetailJournalIntro =>
+      'A gentle timeline for photos and notes — your plant diary.';
 
   @override
   String get journalSectionPhotos => 'Photos';
@@ -527,7 +544,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get diarySectionTitle => 'Diary';
 
   @override
-  String get diaryEmptyBody => 'No notes yet. Add one to remember what changed.';
+  String get diaryEmptyBody =>
+      'No notes yet. Add one to remember what changed.';
 
   @override
   String get diaryAddEntryTitle => 'New diary entry';
@@ -560,7 +578,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journalAddPhotoCamera => 'Camera';
 
   @override
-  String get journalAddPhotoCameraBody => 'Capture a new photo with an optional ghost overlay from your last shot.';
+  String get journalAddPhotoCameraBody =>
+      'Capture a new photo with an optional ghost overlay from your last shot.';
 
   @override
   String get journalAddPhotoGallery => 'Gallery';
@@ -572,22 +591,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journalCaptureTitle => 'Capture';
 
   @override
-  String get journalCaptureTip => 'Fill the frame and try to match your last photo for better comparisons.';
+  String get journalCaptureTip =>
+      'Fill the frame and try to match your last photo for better comparisons.';
 
   @override
   String get journalFlash => 'Flash';
 
   @override
-  String get journalCameraPermissionNeeded => 'Camera permission is required to capture photos.';
+  String get journalCameraPermissionNeeded =>
+      'Camera permission is required to capture photos.';
 
   @override
-  String get journalPhotosPermissionNeeded => 'Photos permission is required to pick images.';
+  String get journalPhotosPermissionNeeded =>
+      'Photos permission is required to pick images.';
 
   @override
   String get journalPhotoSaved => 'Saved to journal.';
 
   @override
-  String get journalEmptyBody => 'No photos yet. Add one to start your growth timeline.';
+  String get journalEmptyBody =>
+      'No photos yet. Add one to start your growth timeline.';
 
   @override
   String get journalPhotoTitle => 'Journal photo';
@@ -628,7 +651,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanCaptureTip => 'Capture leaf + full plant for best results.';
 
   @override
-  String get scanCameraPermissionNeeded => 'Camera permission is required to scan plants.';
+  String get scanCameraPermissionNeeded =>
+      'Camera permission is required to scan plants.';
 
   @override
   String get scanProcessingBody => 'Identifying your plant…';
@@ -649,7 +673,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanAddToGarden => 'Add to Garden';
 
   @override
-  String get scanDeterministicNote => 'Demo mode: results are deterministic offline placeholders. Plug in Kindwise/Gemini later.';
+  String get scanDeterministicNote =>
+      'Demo mode: results are deterministic offline placeholders. Plug in Kindwise/Gemini later.';
 
   @override
   String get tasksTitle => 'Tasks';
@@ -670,28 +695,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasksSeasonalTipsTitle => 'Seasonal care tips';
 
   @override
-  String get tipSpringRepot => 'Spring: Repot if roots are crowded and growth has resumed.';
+  String get tipSpringRepot =>
+      'Spring: Repot if roots are crowded and growth has resumed.';
 
   @override
-  String get tipSpringFertilize => 'Spring: Resume light fertilizing as new growth starts.';
+  String get tipSpringFertilize =>
+      'Spring: Resume light fertilizing as new growth starts.';
 
   @override
-  String get tipSummerWaterMore => 'Summer: Check soil more often — pots dry faster in heat.';
+  String get tipSummerWaterMore =>
+      'Summer: Check soil more often — pots dry faster in heat.';
 
   @override
-  String get tipSummerShadeOutdoor => 'Summer: Protect balcony/outdoor plants from harsh midday sun.';
+  String get tipSummerShadeOutdoor =>
+      'Summer: Protect balcony/outdoor plants from harsh midday sun.';
 
   @override
-  String get tipAutumnReduceWater => 'Autumn: Reduce watering as light and growth slow down.';
+  String get tipAutumnReduceWater =>
+      'Autumn: Reduce watering as light and growth slow down.';
 
   @override
-  String get tipAutumnBringIndoor => 'Autumn: Bring sensitive plants indoors before cold nights.';
+  String get tipAutumnBringIndoor =>
+      'Autumn: Bring sensitive plants indoors before cold nights.';
 
   @override
-  String get tipWinterReduceFertilize => 'Winter: Fertilize less and water less — growth slows.';
+  String get tipWinterReduceFertilize =>
+      'Winter: Fertilize less and water less — growth slows.';
 
   @override
-  String get tipWinterLowLight => 'Winter: Move closer to light or use a grow light to prevent stretching.';
+  String get tipWinterLowLight =>
+      'Winter: Move closer to light or use a grow light to prevent stretching.';
 
   @override
   String tasksSnoozedUntil(DateTime date) {
@@ -711,7 +744,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoverNoResultsTitle => 'No matches';
 
   @override
-  String get discoverNoResultsBody => 'Try a different name, or search by scientific name.';
+  String get discoverNoResultsBody =>
+      'Try a different name, or search by scientific name.';
 
   @override
   String get discoverSectionCurated => 'Curated plants';
@@ -744,19 +778,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoverGuideWateringTitle => 'Watering basics';
 
   @override
-  String get discoverGuideWateringBody => 'Learn how to read soil moisture and avoid overwatering.';
+  String get discoverGuideWateringBody =>
+      'Learn how to read soil moisture and avoid overwatering.';
 
   @override
   String get discoverGuideSoilTitle => 'Soil & drainage';
 
   @override
-  String get discoverGuideSoilBody => 'Why airy mixes reduce root rot and help growth.';
+  String get discoverGuideSoilBody =>
+      'Why airy mixes reduce root rot and help growth.';
 
   @override
   String get discoverGuidePestTitle => 'Pest checklist';
 
   @override
-  String get discoverGuidePestBody => 'A quick weekly routine to catch issues early.';
+  String get discoverGuidePestBody =>
+      'A quick weekly routine to catch issues early.';
 
   @override
   String get speciesDetailHistory => 'History';
@@ -919,13 +956,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailyInfoTitle => 'About Daily Flower';
 
   @override
-  String get dailyInfoIntro => 'Daily Flower is a calm ritual that changes once per day.';
+  String get dailyInfoIntro =>
+      'Daily Flower is a calm ritual that changes once per day.';
 
   @override
-  String get dailyInfoModeWesternZodiac => 'Western zodiac uses your birth date or your selected sign.';
+  String get dailyInfoModeWesternZodiac =>
+      'Western zodiac uses your birth date or your selected sign.';
 
   @override
-  String get dailyInfoModeTarot => 'Tarot is chosen by drawing four cards and selecting one.';
+  String get dailyInfoModeTarot =>
+      'Tarot is chosen by drawing four cards and selecting one.';
 
   @override
   String dailyInfoModeAuto(String mode) {
@@ -933,7 +973,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get dailyInfoModeJustFlower => 'Just Flower is the simplest ritual. Tap to reveal a personalized bloom.';
+  String get dailyInfoModeJustFlower =>
+      'Just Flower is the simplest ritual. Tap to reveal a personalized bloom.';
 
   @override
   String dailyInfoHowToReveal(String hint) {
@@ -965,7 +1006,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailyModeMissingTitle => 'Choose your Daily mode';
 
   @override
-  String get dailyModeMissingBody => 'Pick a tradition (tarot, almanac, rune…) and Botanica will personalize your Daily Flower.';
+  String get dailyModeMissingBody =>
+      'Pick a tradition (tarot, almanac, rune…) and Botanica will personalize your Daily Flower.';
 
   @override
   String get dailyModeMissingCta => 'Choose a mode';
@@ -977,7 +1019,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailyTarotDrawTitle => 'Tarot draw';
 
   @override
-  String get dailyTarotDrawBody => 'Four cards are dealt. Choose one — Botanica will reveal today’s flower.';
+  String get dailyTarotDrawBody =>
+      'Four cards are dealt. Choose one — Botanica will reveal today’s flower.';
 
   @override
   String get dailyTarotDrawCta => 'Deal 4 cards';
@@ -986,22 +1029,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailyTarotCardLabel => 'Choose';
 
   @override
-  String get dailyDeterministicNote => 'Daily Flower is deterministic: same day + locale + mode + your profile yields the same card (great for sharing).';
+  String get dailyDeterministicNote =>
+      'Daily Flower is deterministic: same day + locale + mode + your profile yields the same card (great for sharing).';
 
   @override
   String get dailyContentUnavailableTitle => 'Daily Flower unavailable';
 
   @override
-  String get dailyContentUnavailableBody => 'Botanica couldn’t load today’s flower content. Please try again.';
+  String get dailyContentUnavailableBody =>
+      'Botanica couldn’t load today’s flower content. Please try again.';
 
   @override
   String get dailyProfileMissingTitle => 'Complete your profile';
 
   @override
-  String get dailyProfileMissingBody => 'Set a personal key in Profile (like a short seed phrase or your birth date) so Daily Flower can be personalized.';
+  String get dailyProfileMissingBody =>
+      'Set a personal key in Profile (like a short seed phrase or your birth date) so Daily Flower can be personalized.';
 
   @override
-  String get dailyProfileMissingBodyZodiac => 'Set your birth date (or choose your sign) in Profile so Daily Flower can be personalized.';
+  String get dailyProfileMissingBodyZodiac =>
+      'Set your birth date (or choose your sign) in Profile so Daily Flower can be personalized.';
 
   @override
   String get dailyProfileMissingCta => 'Set up now';
@@ -1043,7 +1090,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileHemisphereTitle => 'Hemisphere';
 
   @override
-  String get profileHemisphereBody => 'Used for seasonal care adjustments (winter vs summer).';
+  String get profileHemisphereBody =>
+      'Used for seasonal care adjustments (winter vs summer).';
 
   @override
   String get hemisphereNorthern => 'Northern';
@@ -1066,13 +1114,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileBirthdateTitle => 'Birthdate';
 
   @override
-  String get profileBirthdateBody => 'Used for zodiac and almanac personalization.';
+  String get profileBirthdateBody =>
+      'Used for zodiac and almanac personalization.';
 
   @override
   String get profileDailySeedTitle => 'Personal key';
 
   @override
-  String get profileDailySeedBody => 'A short seed phrase (like your nickname) that personalizes Daily Flower without changing your mode.';
+  String get profileDailySeedBody =>
+      'A short seed phrase (like your nickname) that personalizes Daily Flower without changing your mode.';
 
   @override
   String get profileDailySeedHint => 'e.g. Aster';
@@ -1090,7 +1140,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileDailyProfileNotNeeded => 'No personal info needed.';
 
   @override
-  String get profileDailyProfilePickModeFirst => 'Choose your Daily mode first, then set up the details here.';
+  String get profileDailyProfilePickModeFirst =>
+      'Choose your Daily mode first, then set up the details here.';
 
   @override
   String get profileDailyProfileTarotSubtitle => 'Draw in Daily';
@@ -1099,7 +1150,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileDailyProfileAutoSubtitle => 'Auto (today’s date)';
 
   @override
-  String get profileDailyProfileTarotBody => 'Tarot mode is a daily ritual. Open Daily, deal four cards, and choose one — then today’s flower is revealed.';
+  String get profileDailyProfileTarotBody =>
+      'Tarot mode is a daily ritual. Open Daily, deal four cards, and choose one — then today’s flower is revealed.';
 
   @override
   String get profileDailyProfileTarotCta => 'Open Daily';
@@ -1146,7 +1198,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileAiInsightsTitle => 'AI insights';
 
   @override
-  String get profileAiInsightsBody => 'Subtle on-page notes that personalize your Daily Flower ritual.';
+  String get profileAiInsightsBody =>
+      'Subtle on-page notes that personalize your Daily Flower ritual.';
 
   @override
   String get profileAiKeyTitle => 'AI API key';
@@ -1161,10 +1214,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileAiKeyNotRequired => 'Not required';
 
   @override
-  String get profileAiKeySheetBody => 'Stored securely on this device. Used only to generate short, on-page insights in your selected language.';
+  String get profileAiKeySheetBody =>
+      'Stored securely on this device. Used only to generate short, on-page insights in your selected language.';
 
   @override
-  String get profileAiKeyNotRequiredBody => 'This build is configured to use an unauthenticated proxy, so no API key is needed.';
+  String get profileAiKeyNotRequiredBody =>
+      'This build is configured to use an unauthenticated proxy, so no API key is needed.';
 
   @override
   String get profileAiKeySheetHint => 'Paste your API key';
@@ -1191,7 +1246,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get creditsUiInspiration => 'UI inspiration';
 
   @override
-  String get creditsPlaceholderNote => 'Note: this project uses white placeholder PNGs for imagery — replace assets later with real photography/illustrations.';
+  String get creditsPlaceholderNote =>
+      'Note: this project uses white placeholder PNGs for imagery — replace assets later with real photography/illustrations.';
 
   @override
   String get unitsCelsius => 'Celsius (°C)';

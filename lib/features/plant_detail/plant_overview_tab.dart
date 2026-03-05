@@ -630,7 +630,9 @@ class _ResourceRow extends StatelessWidget {
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              Icon(Icons.content_copy_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+              Icon(Icons.content_copy_rounded,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.inversePrimary),
               const SizedBox(width: 10),
               Text(l10n.resourceLinkCopied),
             ],

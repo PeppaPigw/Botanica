@@ -313,7 +313,8 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String gardenWeatherChip(String condition, int temp, String unit, int humidity) {
+  String gardenWeatherChip(
+      String condition, int temp, String unit, int humidity) {
     return '$condition · $temp°$unit · $humidity%';
   }
 
@@ -648,7 +649,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scanAddToGarden => '添加到花园';
 
   @override
-  String get scanDeterministicNote => '演示模式：离线结果为可重复的占位识别，可后续接入 Kindwise/Gemini。';
+  String get scanDeterministicNote =>
+      '演示模式：离线结果为可重复的占位识别，可后续接入 Kindwise/Gemini。';
 
   @override
   String get tasksTitle => '任务';
@@ -985,7 +987,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dailyTarotCardLabel => '选择';
 
   @override
-  String get dailyDeterministicNote => '每日花语是确定性的：同一天 + 语言 + 模式 + 个人信息会得到同一张卡片（方便分享）。';
+  String get dailyDeterministicNote =>
+      '每日花语是确定性的：同一天 + 语言 + 模式 + 个人信息会得到同一张卡片（方便分享）。';
 
   @override
   String get dailyContentUnavailableTitle => '每日花语不可用';
@@ -1098,7 +1101,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profileDailyProfileAutoSubtitle => '自动（按日期）';
 
   @override
-  String get profileDailyProfileTarotBody => '塔罗模式是每日小仪式：在「每日」里发四张牌并选择一张，然后揭晓今日之花。';
+  String get profileDailyProfileTarotBody =>
+      '塔罗模式是每日小仪式：在「每日」里发四张牌并选择一张，然后揭晓今日之花。';
 
   @override
   String get profileDailyProfileTarotCta => '打开「每日」';
@@ -1190,7 +1194,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get creditsUiInspiration => 'UI 灵感';
 
   @override
-  String get creditsPlaceholderNote => '说明：本项目暂时使用白色 PNG 占位图，你可以在完成后替换为真实照片/插画资源。';
+  String get creditsPlaceholderNote =>
+      '说明：本项目暂时使用白色 PNG 占位图，你可以在完成后替换为真实照片/插画资源。';
 
   @override
   String get unitsCelsius => '摄氏 (°C)';

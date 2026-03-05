@@ -81,7 +81,9 @@ class _ScanFlowScreenState extends ConsumerState<ScanFlowScreen> {
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              Icon(Icons.no_photography_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+              Icon(Icons.no_photography_rounded,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.inversePrimary),
               const SizedBox(width: 10),
               Expanded(child: Text(l10n.scanCameraPermissionNeeded)),
             ],

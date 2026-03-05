@@ -12,7 +12,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appName => 'Botanica';
 
   @override
-  String get appTagline => 'رفيقك الشخصي للعناية بالنباتات — هادئ، جميل، ومدروس.';
+  String get appTagline =>
+      'رفيقك الشخصي للعناية بالنباتات — هادئ، جميل، ومدروس.';
 
   @override
   String get gardenNoScheduleYet => 'لا يوجد جدول بعد';
@@ -162,7 +163,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get stateLoadFailedTitle => 'تعذّر التحميل';
 
   @override
-  String get stateLoadFailedBody => 'تحقّق من اتصالك بالإنترنت ثم أعد المحاولة.';
+  String get stateLoadFailedBody =>
+      'تحقّق من اتصالك بالإنترنت ثم أعد المحاولة.';
 
   @override
   String get stateNotAvailableTitle => 'غير متاح';
@@ -216,13 +218,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingTitle2 => 'عناية ذكية حسب بيئتك';
 
   @override
-  String get onboardingBody2 => 'الرطوبة والحرارة والموسم — Botanica يشرح لماذا تتغير الجداول.';
+  String get onboardingBody2 =>
+      'الرطوبة والحرارة والموسم — Botanica يشرح لماذا تتغير الجداول.';
 
   @override
   String get onboardingTitle3 => 'طقس زهرة اليوم';
 
   @override
-  String get onboardingBody3 => 'بطاقة يومية لطيفة: معنى، أساسيات العناية، وتمرين تقدير لمدة 60 ثانية.';
+  String get onboardingBody3 =>
+      'بطاقة يومية لطيفة: معنى، أساسيات العناية، وتمرين تقدير لمدة 60 ثانية.';
 
   @override
   String get onboardingCta => 'ابدأ Botanica';
@@ -285,7 +289,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get permissionsNotNow => 'ليس الآن';
 
   @override
-  String get permissionsPrivacyNote => 'Botanica يطلب الأذونات عند الحاجة فقط — يمكنك تغيير ذلك لاحقًا من الملف.';
+  String get permissionsPrivacyNote =>
+      'Botanica يطلب الأذونات عند الحاجة فقط — يمكنك تغيير ذلك لاحقًا من الملف.';
 
   @override
   String get gardenTitle => 'الحديقة';
@@ -314,7 +319,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String gardenWeatherChip(String condition, int temp, String unit, int humidity) {
+  String gardenWeatherChip(
+      String condition, int temp, String unit, int humidity) {
     return '$condition · $temp°$unit · $humidity%';
   }
 
@@ -358,7 +364,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gardenEmptyTitle => 'ابدأ حديقتك';
 
   @override
-  String get gardenEmptyBody => 'أضف أول نبات لتحصل على خطة عناية مخصصة ومهام يومية.';
+  String get gardenEmptyBody =>
+      'أضف أول نبات لتحصل على خطة عناية مخصصة ومهام يومية.';
 
   @override
   String get gardenEmptyCta => 'إضافة أول نبات';
@@ -472,7 +479,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get plantDetailMissingTitle => 'النبتة غير متاحة';
 
   @override
-  String get plantDetailMissingBody => 'تعذّر العثور على هذه النبتة. ربما تم حذفها.';
+  String get plantDetailMissingBody =>
+      'تعذّر العثور على هذه النبتة. ربما تم حذفها.';
 
   @override
   String get plantDetailMissingCta => 'العودة إلى الحديقة';
@@ -503,22 +511,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get plantDetailDrynessHigh => 'جفاف مرتفع (يجف أسرع)';
 
   @override
-  String get plantDetailCareWaterBody => 'يتم حساب موعد السقي التالي من فترة أساس ويُعدّل حسب الرطوبة والحرارة والموسم.';
+  String get plantDetailCareWaterBody =>
+      'يتم حساب موعد السقي التالي من فترة أساس ويُعدّل حسب الرطوبة والحرارة والموسم.';
 
   @override
-  String get plantDetailCareLightBody => 'الضوء الساطع غير المباشر نقطة بداية ممتازة لمعظم النباتات الداخلية.';
+  String get plantDetailCareLightBody =>
+      'الضوء الساطع غير المباشر نقطة بداية ممتازة لمعظم النباتات الداخلية.';
 
   @override
   String get plantDetailCareTempTitle => 'الحرارة';
 
   @override
-  String get plantDetailCareTempBody => 'تجنب تيارات الهواء الباردة المفاجئة. الدفء المستقر يساعد على نمو متوقع.';
+  String get plantDetailCareTempBody =>
+      'تجنب تيارات الهواء الباردة المفاجئة. الدفء المستقر يساعد على نمو متوقع.';
 
   @override
-  String get plantDetailJournalDesignNote => 'تم تصميم طبقة مطابقة الإطار ومنزلق المقارنة هنا؛ اربط الكاميرا/المعرض لاحقًا.';
+  String get plantDetailJournalDesignNote =>
+      'تم تصميم طبقة مطابقة الإطار ومنزلق المقارنة هنا؛ اربط الكاميرا/المعرض لاحقًا.';
 
   @override
-  String get plantDetailJournalIntro => 'خط زمني لطيف للصور والملاحظات — يوميات نبتتك.';
+  String get plantDetailJournalIntro =>
+      'خط زمني لطيف للصور والملاحظات — يوميات نبتتك.';
 
   @override
   String get journalSectionPhotos => 'الصور';
@@ -527,7 +540,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get diarySectionTitle => 'اليوميات';
 
   @override
-  String get diaryEmptyBody => 'لا توجد ملاحظات بعد. أضف ملاحظة لتتذكر ما تغيّر.';
+  String get diaryEmptyBody =>
+      'لا توجد ملاحظات بعد. أضف ملاحظة لتتذكر ما تغيّر.';
 
   @override
   String get diaryAddEntryTitle => 'إضافة ملاحظة';
@@ -560,7 +574,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get journalAddPhotoCamera => 'الكاميرا';
 
   @override
-  String get journalAddPhotoCameraBody => 'التقط صورة جديدة مع طبقة شفافة من آخر صورة للمطابقة.';
+  String get journalAddPhotoCameraBody =>
+      'التقط صورة جديدة مع طبقة شفافة من آخر صورة للمطابقة.';
 
   @override
   String get journalAddPhotoGallery => 'المعرض';
@@ -572,13 +587,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get journalCaptureTitle => 'التقاط';
 
   @override
-  String get journalCaptureTip => 'املأ الإطار وحاول مطابقة الصورة السابقة لمقارنة أفضل.';
+  String get journalCaptureTip =>
+      'املأ الإطار وحاول مطابقة الصورة السابقة لمقارنة أفضل.';
 
   @override
   String get journalFlash => 'الفلاش';
 
   @override
-  String get journalCameraPermissionNeeded => 'يلزم إذن الكاميرا لالتقاط الصور.';
+  String get journalCameraPermissionNeeded =>
+      'يلزم إذن الكاميرا لالتقاط الصور.';
 
   @override
   String get journalPhotosPermissionNeeded => 'يلزم إذن الصور لاختيار الصور.';
@@ -649,7 +666,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scanAddToGarden => 'إضافة إلى الحديقة';
 
   @override
-  String get scanDeterministicNote => 'وضع تجريبي: نتائج حتمية دون اتصال. اربط Kindwise/Gemini لاحقًا.';
+  String get scanDeterministicNote =>
+      'وضع تجريبي: نتائج حتمية دون اتصال. اربط Kindwise/Gemini لاحقًا.';
 
   @override
   String get tasksTitle => 'المهام';
@@ -670,28 +688,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tasksSeasonalTipsTitle => 'نصائح موسمية للعناية';
 
   @override
-  String get tipSpringRepot => 'الربيع: أعد الزراعة إذا كانت الجذور مزدحمة وبدأ النمو من جديد.';
+  String get tipSpringRepot =>
+      'الربيع: أعد الزراعة إذا كانت الجذور مزدحمة وبدأ النمو من جديد.';
 
   @override
-  String get tipSpringFertilize => 'الربيع: استأنف التسميد الخفيف مع بداية النمو الجديد.';
+  String get tipSpringFertilize =>
+      'الربيع: استأنف التسميد الخفيف مع بداية النمو الجديد.';
 
   @override
-  String get tipSummerWaterMore => 'الصيف: افحص رطوبة التربة أكثر؛ الجفاف أسرع مع الحرارة.';
+  String get tipSummerWaterMore =>
+      'الصيف: افحص رطوبة التربة أكثر؛ الجفاف أسرع مع الحرارة.';
 
   @override
-  String get tipSummerShadeOutdoor => 'الصيف: احمِ نباتات الشرفة/الخارج من شمس الظهيرة القوية.';
+  String get tipSummerShadeOutdoor =>
+      'الصيف: احمِ نباتات الشرفة/الخارج من شمس الظهيرة القوية.';
 
   @override
-  String get tipAutumnReduceWater => 'الخريف: خفّف الري مع ضعف الضوء وتباطؤ النمو.';
+  String get tipAutumnReduceWater =>
+      'الخريف: خفّف الري مع ضعف الضوء وتباطؤ النمو.';
 
   @override
-  String get tipAutumnBringIndoor => 'الخريف: أدخل النباتات الحساسة قبل الليالي الباردة.';
+  String get tipAutumnBringIndoor =>
+      'الخريف: أدخل النباتات الحساسة قبل الليالي الباردة.';
 
   @override
-  String get tipWinterReduceFertilize => 'الشتاء: قلل التسميد والري لأن النمو يتباطأ.';
+  String get tipWinterReduceFertilize =>
+      'الشتاء: قلل التسميد والري لأن النمو يتباطأ.';
 
   @override
-  String get tipWinterLowLight => 'الشتاء: قرّبها من الضوء أو استخدم إضاءة نمو لتجنب الاستطالة.';
+  String get tipWinterLowLight =>
+      'الشتاء: قرّبها من الضوء أو استخدم إضاءة نمو لتجنب الاستطالة.';
 
   @override
   String tasksSnoozedUntil(DateTime date) {
@@ -744,19 +770,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get discoverGuideWateringTitle => 'أساسيات السقي';
 
   @override
-  String get discoverGuideWateringBody => 'تعلم قراءة رطوبة التربة وتجنب الإفراط في السقي.';
+  String get discoverGuideWateringBody =>
+      'تعلم قراءة رطوبة التربة وتجنب الإفراط في السقي.';
 
   @override
   String get discoverGuideSoilTitle => 'التربة والتصريف';
 
   @override
-  String get discoverGuideSoilBody => 'لماذا الخلطات الهوائية تقلل تعفن الجذور وتساعد النمو.';
+  String get discoverGuideSoilBody =>
+      'لماذا الخلطات الهوائية تقلل تعفن الجذور وتساعد النمو.';
 
   @override
   String get discoverGuidePestTitle => 'قائمة الآفات';
 
   @override
-  String get discoverGuidePestBody => 'روتين أسبوعي سريع لاكتشاف المشاكل مبكرًا.';
+  String get discoverGuidePestBody =>
+      'روتين أسبوعي سريع لاكتشاف المشاكل مبكرًا.';
 
   @override
   String get speciesDetailHistory => 'لمحة تاريخية';
@@ -922,10 +951,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dailyInfoIntro => 'زهرة اليوم طقس هادئ يتغير مرة واحدة كل يوم.';
 
   @override
-  String get dailyInfoModeWesternZodiac => 'الأبراج الغربية: يعتمد على تاريخ ميلادك أو البرج الذي تختاره.';
+  String get dailyInfoModeWesternZodiac =>
+      'الأبراج الغربية: يعتمد على تاريخ ميلادك أو البرج الذي تختاره.';
 
   @override
-  String get dailyInfoModeTarot => 'التاروت: يتم اختياره بسحب أربع بطاقات ثم اختيار بطاقة واحدة.';
+  String get dailyInfoModeTarot =>
+      'التاروت: يتم اختياره بسحب أربع بطاقات ثم اختيار بطاقة واحدة.';
 
   @override
   String dailyInfoModeAuto(String mode) {
@@ -933,7 +964,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get dailyInfoModeJustFlower => 'زهرة فقط: أبسط طقس. اضغط للكشف عن زهرة مُخصّصة لك.';
+  String get dailyInfoModeJustFlower =>
+      'زهرة فقط: أبسط طقس. اضغط للكشف عن زهرة مُخصّصة لك.';
 
   @override
   String dailyInfoHowToReveal(String hint) {
@@ -965,7 +997,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dailyModeMissingTitle => 'اختر وضعك اليومي';
 
   @override
-  String get dailyModeMissingBody => 'اختر تقليدًا (تاروت، ألماناك، رونات…) وستُخصِّص Botanica زهرة اليوم لك.';
+  String get dailyModeMissingBody =>
+      'اختر تقليدًا (تاروت، ألماناك، رونات…) وستُخصِّص Botanica زهرة اليوم لك.';
 
   @override
   String get dailyModeMissingCta => 'اختيار الوضع';
@@ -977,7 +1010,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dailyTarotDrawTitle => 'سحب التاروت';
 
   @override
-  String get dailyTarotDrawBody => 'تُوزَّع 4 بطاقات. اختر واحدة — ثم تكشف Botanica زهرة اليوم.';
+  String get dailyTarotDrawBody =>
+      'تُوزَّع 4 بطاقات. اختر واحدة — ثم تكشف Botanica زهرة اليوم.';
 
   @override
   String get dailyTarotDrawCta => 'وزّع 4 بطاقات';
@@ -986,22 +1020,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dailyTarotCardLabel => 'اختر';
 
   @override
-  String get dailyDeterministicNote => 'زهرة اليوم حتمية: نفس اليوم + اللغة + الوضع + ملفك يعطي نفس البطاقة (مناسبة للمشاركة).';
+  String get dailyDeterministicNote =>
+      'زهرة اليوم حتمية: نفس اليوم + اللغة + الوضع + ملفك يعطي نفس البطاقة (مناسبة للمشاركة).';
 
   @override
   String get dailyContentUnavailableTitle => 'زهرة اليوم غير متاحة';
 
   @override
-  String get dailyContentUnavailableBody => 'تعذر على Botanica تحميل محتوى اليوم. الرجاء المحاولة مرة أخرى.';
+  String get dailyContentUnavailableBody =>
+      'تعذر على Botanica تحميل محتوى اليوم. الرجاء المحاولة مرة أخرى.';
 
   @override
   String get dailyProfileMissingTitle => 'أكمل ملفك';
 
   @override
-  String get dailyProfileMissingBody => 'اضبط مفتاحًا شخصيًا في الملف الشخصي (كلمة قصيرة أو تاريخ الميلاد) لتخصيص زهرة اليوم.';
+  String get dailyProfileMissingBody =>
+      'اضبط مفتاحًا شخصيًا في الملف الشخصي (كلمة قصيرة أو تاريخ الميلاد) لتخصيص زهرة اليوم.';
 
   @override
-  String get dailyProfileMissingBodyZodiac => 'اضبط تاريخ ميلادك (أو اختر برجك) في الملف الشخصي لتخصيص زهرة اليوم.';
+  String get dailyProfileMissingBodyZodiac =>
+      'اضبط تاريخ ميلادك (أو اختر برجك) في الملف الشخصي لتخصيص زهرة اليوم.';
 
   @override
   String get dailyProfileMissingCta => 'الإعداد';
@@ -1043,7 +1081,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileHemisphereTitle => 'نصف الكرة';
 
   @override
-  String get profileHemisphereBody => 'يُستخدم لتعديلات العناية الموسمية (الشتاء مقابل الصيف).';
+  String get profileHemisphereBody =>
+      'يُستخدم لتعديلات العناية الموسمية (الشتاء مقابل الصيف).';
 
   @override
   String get hemisphereNorthern => 'الشمالي';
@@ -1072,7 +1111,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileDailySeedTitle => 'مفتاح شخصي';
 
   @override
-  String get profileDailySeedBody => 'كلمة قصيرة (مثل لقبك) تُخصّص زهرة اليوم دون تغيير الوضع.';
+  String get profileDailySeedBody =>
+      'كلمة قصيرة (مثل لقبك) تُخصّص زهرة اليوم دون تغيير الوضع.';
 
   @override
   String get profileDailySeedHint => 'مثال: Aster';
@@ -1090,7 +1130,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileDailyProfileNotNeeded => 'لا يلزم إدخال معلومات شخصية.';
 
   @override
-  String get profileDailyProfilePickModeFirst => 'اختر وضعك اليومي أولًا، ثم اضبط التفاصيل هنا.';
+  String get profileDailyProfilePickModeFirst =>
+      'اختر وضعك اليومي أولًا، ثم اضبط التفاصيل هنا.';
 
   @override
   String get profileDailyProfileTarotSubtitle => 'اسحب في اليومي';
@@ -1099,7 +1140,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileDailyProfileAutoSubtitle => 'تلقائي (اليوم)';
 
   @override
-  String get profileDailyProfileTarotBody => 'وضع التاروت طقس يومي. افتح صفحة اليوم، وزّع أربع بطاقات واختر واحدة — ثم تُكشف زهرة اليوم.';
+  String get profileDailyProfileTarotBody =>
+      'وضع التاروت طقس يومي. افتح صفحة اليوم، وزّع أربع بطاقات واختر واحدة — ثم تُكشف زهرة اليوم.';
 
   @override
   String get profileDailyProfileTarotCta => 'افتح اليوم';
@@ -1146,7 +1188,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileAiInsightsTitle => 'لمحات بالذكاء الاصطناعي';
 
   @override
-  String get profileAiInsightsBody => 'ملاحظات هادئة داخل الصفحات لتخصيص طقس زهرة اليوم.';
+  String get profileAiInsightsBody =>
+      'ملاحظات هادئة داخل الصفحات لتخصيص طقس زهرة اليوم.';
 
   @override
   String get profileAiKeyTitle => 'مفتاح API للذكاء الاصطناعي';
@@ -1161,10 +1204,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileAiKeyNotRequired => 'غير مطلوب';
 
   @override
-  String get profileAiKeySheetBody => 'يُحفظ بشكل آمن على هذا الجهاز. يُستخدم فقط لإنشاء ملاحظات قصيرة داخل الصفحات بلغتك المختارة.';
+  String get profileAiKeySheetBody =>
+      'يُحفظ بشكل آمن على هذا الجهاز. يُستخدم فقط لإنشاء ملاحظات قصيرة داخل الصفحات بلغتك المختارة.';
 
   @override
-  String get profileAiKeyNotRequiredBody => 'تم إعداد هذا الإصدار لاستخدام وكيل بدون مصادقة، لذلك لا تحتاج إلى مفتاح API.';
+  String get profileAiKeyNotRequiredBody =>
+      'تم إعداد هذا الإصدار لاستخدام وكيل بدون مصادقة، لذلك لا تحتاج إلى مفتاح API.';
 
   @override
   String get profileAiKeySheetHint => 'الصق مفتاح API';
@@ -1191,7 +1236,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get creditsUiInspiration => 'إلهام الواجهة';
 
   @override
-  String get creditsPlaceholderNote => 'ملاحظة: يستخدم هذا المشروع ملفات PNG بيضاء كصور مؤقتة — استبدل الأصول لاحقًا بصور/رسومات حقيقية.';
+  String get creditsPlaceholderNote =>
+      'ملاحظة: يستخدم هذا المشروع ملفات PNG بيضاء كصور مؤقتة — استبدل الأصول لاحقًا بصور/رسومات حقيقية.';
 
   @override
   String get unitsCelsius => 'مئوي (°C)';

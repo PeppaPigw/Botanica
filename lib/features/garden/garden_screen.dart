@@ -250,7 +250,8 @@ class _TodayCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      MaterialLocalizations.of(context).formatFullDate(DateTime.now()),
+                      MaterialLocalizations.of(context)
+                          .formatFullDate(DateTime.now()),
                       style: textTheme.bodySmall?.copyWith(
                         color: scheme.onSurface.withValues(alpha: 0.55),
                       ),
@@ -409,7 +410,9 @@ class _PlantCardState extends ConsumerState<_PlantCard> {
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              Icon(Icons.water_drop_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+              Icon(Icons.water_drop_rounded,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.inversePrimary),
               const SizedBox(width: 10),
               Text('${l10n.taskTypeWater} · ${l10n.commonDone}'),
             ],
@@ -442,7 +445,8 @@ class _PlantCardState extends ConsumerState<_PlantCard> {
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(Icons.check_circle_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+            Icon(Icons.check_circle_rounded,
+                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
             const SizedBox(width: 10),
             Text('${l10n.commonDone} · ${updated.nickname}'),
           ],

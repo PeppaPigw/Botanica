@@ -143,9 +143,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(Icons.water_drop_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+            Icon(Icons.water_drop_rounded,
+                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
             const SizedBox(width: 10),
-            Text('${l10n.taskTypeWater} · ${l10n.commonDone}: ${plant.nickname}'),
+            Text(
+                '${l10n.taskTypeWater} · ${l10n.commonDone}: ${plant.nickname}'),
           ],
         ),
       ),

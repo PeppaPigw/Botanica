@@ -74,7 +74,8 @@ class _DiaryShareCardScreenState extends ConsumerState<DiaryShareCardScreen> {
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              Icon(Icons.error_outline_rounded, size: 18, color: Theme.of(context).colorScheme.error),
+              Icon(Icons.error_outline_rounded,
+                  size: 18, color: Theme.of(context).colorScheme.error),
               const SizedBox(width: 10),
               Expanded(child: Text(l10n.journalShareFailed)),
             ],
@@ -166,7 +167,8 @@ class _DiaryShareCard extends StatelessWidget {
 
     Widget background;
     if (isAsset) {
-      background = Image.asset(backgroundPath, fit: BoxFit.cover, filterQuality: FilterQuality.high);
+      background = Image.asset(backgroundPath,
+          fit: BoxFit.cover, filterQuality: FilterQuality.high);
     } else {
       background = Image.file(
         File(backgroundPath),

@@ -62,8 +62,7 @@ class DailyFlowerCard extends StatelessWidget {
                           entry.content.imagePath!.trim(),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
-                          errorBuilder: (_, __, ___) =>
-                              const SizedBox.shrink(),
+                          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
                         ),
                       ),
                     ),

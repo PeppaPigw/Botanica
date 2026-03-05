@@ -352,7 +352,8 @@ class _TaskTile extends ConsumerWidget {
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(Icons.check_circle_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+            Icon(Icons.check_circle_rounded,
+                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
             const SizedBox(width: 10),
             Text('${l10n.commonDone} · ${plant.nickname}'),
           ],
@@ -385,7 +386,8 @@ class _TaskTile extends ConsumerWidget {
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(Icons.snooze_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+            Icon(Icons.snooze_rounded,
+                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
             const SizedBox(width: 10),
             Expanded(child: Text(l10n.tasksSnoozedUntil(next))),
           ],
