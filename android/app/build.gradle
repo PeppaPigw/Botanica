@@ -5,6 +5,52 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def env = System.getenv()
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { stream ->
+        keystoreProperties.load(stream)
+    }
+}
+
+def readSigningValue = { String envKey, String propKey ->
+    def envValue = env[envKey]
+    if (envValue != null && envValue.trim()) {
+        return envValue.trim()
+    }
+
+    def propValue = keystoreProperties.getProperty(propKey)
+    if (propValue != null && propValue.trim()) {
+        return propValue.trim()
+    }
+
+    return null
+}
+
+def releaseStoreFile = readSigningValue("BOTANICA_ANDROID_KEYSTORE_PATH", "storeFile")
+        ?: readSigningValue("ANDROID_KEYSTORE_PATH", "storeFile")
+def releaseStorePassword =
+        readSigningValue("BOTANICA_ANDROID_KEYSTORE_PASSWORD", "storePassword")
+                ?: readSigningValue("ANDROID_KEYSTORE_PASSWORD", "storePassword")
+def releaseKeyAlias = readSigningValue("BOTANICA_ANDROID_KEY_ALIAS", "keyAlias")
+        ?: readSigningValue("ANDROID_KEY_ALIAS", "keyAlias")
+def releaseKeyPassword = readSigningValue("BOTANICA_ANDROID_KEY_PASSWORD", "keyPassword")
+        ?: readSigningValue("ANDROID_KEY_PASSWORD", "keyPassword")
+
+def releaseStoreFileHandle =
+        releaseStoreFile ? rootProject.file(releaseStoreFile) : null
+
+def hasReleaseSigning = releaseStoreFileHandle != null &&
+        releaseStoreFileHandle.exists() &&
+        releaseStorePassword &&
+        releaseKeyAlias &&
+        releaseKeyPassword
+
+def requireReleaseSigning =
+        (env["BOTANICA_REQUIRE_RELEASE_SIGNING"] ?: "false").toBoolean()
+
 android {
     namespace = "com.botanica.botanica"
     // Some plugins (e.g. flutter_local_notifications) now require compiling
@@ -32,11 +78,37 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        release {
+            if (hasReleaseSigning) {
+                storeFile releaseStoreFileHandle
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.release
+            } else {
+                if (requireReleaseSigning) {
+                    throw new GradleException(
+                            "Release signing is required but not configured.\n" +
+                                    "See docs/release.md for setup instructions."
+                    )
+                }
+
+                // Keep local release builds reproducible without secrets, but
+                // make it obvious this is not Play Store uploadable.
+                logger.lifecycle(
+                        "Release signing not configured; using debug keystore. " +
+                                "See docs/release.md to configure a real release key."
+                )
+                signingConfig = signingConfigs.debug
+            }
         }
     }
 }

@@ -73,6 +73,14 @@ flutter analyze
 flutter test --timeout 60s
 ```
 
+## Release builds & signing
+
+See `docs/release.md` for:
+
+- Release build commands + artifact paths
+- Android keystore signing (no secrets in git)
+- iOS bundle ID + signing notes
+
 ## Running tests
 
 Unit tests:
