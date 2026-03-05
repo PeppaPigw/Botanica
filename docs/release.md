@@ -157,6 +157,27 @@ Store secrets in GitHub Actions:
 At workflow runtime, write the keystore + `android/key.properties` to disk
 (never commit them), then run `flutter build ... --release`.
 
+Minimal GitHub Actions snippet:
+
+```yaml
+- name: Write Android signing files
+  env:
+    ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+    ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+    ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+    ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+  run: |
+    mkdir -p android/keystore
+    echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/keystore/release.jks
+
+    cat > android/key.properties <<EOF
+    storeFile=keystore/release.jks
+    storePassword=$ANDROID_KEYSTORE_PASSWORD
+    keyAlias=$ANDROID_KEY_ALIAS
+    keyPassword=$ANDROID_KEY_PASSWORD
+    EOF
+```
+
 ## iOS signing (publishable)
 
 ### Bundle ID
