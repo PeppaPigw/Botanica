@@ -16,17 +16,22 @@ iOS:
 
 ## Release builds (commands)
 
-> If your machine has `~/.gradle/gradle.properties` pinned to TLS 1.2
-> (e.g. `systemProp.https.protocols=TLSv1.2`), Gradle may fail downloading
-> dependencies from Maven Central / Plugin Portal. Prefer using `GRADLE_OPTS`
-> to override per-command (does not change global machine config).
+This repo configures Gradle to allow TLS 1.3 in `android/gradle.properties`.
+
+If your machine has `~/.gradle/gradle.properties` pinned to TLS 1.2
+(e.g. `systemProp.https.protocols=TLSv1.2`) and you previously ran Gradle,
+restart the Gradle daemon so the project-level setting takes effect:
+
+```bash
+cd android && ./gradlew --stop
+```
 
 ```bash
 # Android APK
-GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build apk --release
+flutter build apk --release
 
 # Android App Bundle
-GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build appbundle --release
+flutter build appbundle --release
 
 # iOS (unsigned)
 flutter build ios --release --no-codesign
@@ -75,19 +80,29 @@ export BOTANICA_ANDROID_KEY_ALIAS="release"
 export BOTANICA_ANDROID_KEY_PASSWORD="..."
 ```
 
+Also supported (CI-friendly, non-project-specific):
+
+```bash
+export ANDROID_KEYSTORE_PATH="keystore/release.jks"
+export ANDROID_KEYSTORE_PASSWORD="..."
+export ANDROID_KEY_ALIAS="release"
+export ANDROID_KEY_PASSWORD="..."
+```
+
 ### Build
 
 ```bash
-GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build apk --release
-GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build appbundle --release
+flutter build apk --release
+flutter build appbundle --release
 ```
 
-If release signing is not configured, the build will fail with a clear error.
+If release signing is not configured, the build will fall back to **debug
+signing** (not Play Store uploadable) and log a clear warning.
 
-For **local-only** builds that explicitly allow debug signing:
+To enforce publishable signing in CI/release pipelines, set:
 
 ```bash
-BOTANICA_ALLOW_DEBUG_SIGNING=true flutter build apk --release
+BOTANICA_REQUIRE_RELEASE_SIGNING=true
 ```
 
 ### CI injection (GitHub Actions example)
@@ -140,4 +155,3 @@ flutter build ios --release --no-codesign
 ```bash
 git status --porcelain
 ```
-

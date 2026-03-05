@@ -56,6 +56,14 @@ flutter gen-l10n
 flutter run
 ```
 
+## Release
+
+See `docs/release.md` for:
+
+- Reproducible release build commands
+- Android signing (`key.properties` / CI env vars)
+- iOS bundle id + signing notes
+
 ## Weather (Open‑Meteo)
 
 Environment snapshots use Open‑Meteo’s free API: `https://open-meteo.com/en/docs`.
