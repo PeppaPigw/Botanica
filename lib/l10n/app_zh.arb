@@ -1,0 +1,622 @@
+{
+  "appName": "Botanica",
+  "appTagline": "你的私人植物养护伙伴 — 宁静、精美、用心。",
+  "gardenNoScheduleYet": "暂无养护计划",
+
+  "commonContinue": "继续",
+  "commonSkip": "跳过",
+  "commonStart": "开始",
+  "commonDone": "完成",
+  "commonCancel": "取消",
+  "commonClear": "清除",
+  "commonSave": "保存",
+  "commonClose": "关闭",
+  "commonShow": "显示",
+  "commonHide": "隐藏",
+  "commonLater": "稍后",
+  "commonSearch": "搜索",
+  "commonEdit": "编辑",
+  "commonAdd": "添加",
+  "commonSettings": "设置",
+  "commonUnits": "单位",
+  "commonLanguage": "语言",
+  "commonAbout": "关于",
+  "commonTryAgain": "重试",
+  "commonComingSoon": "即将推出",
+  "commonLoading": "加载中…",
+  "commonViewAll": "查看全部",
+  "commonWhy": "为什么？",
+  "commonIdeal": "理想",
+  "commonTolerates": "耐受",
+  "commonSoil": "土壤",
+  "commonSoilPh": "土壤酸碱度",
+  "commonWhen": "时间",
+  "commonHow": "方法",
+  "commonPestsAndDiseases": "虫害与病害",
+  "commonPrevention": "预防",
+  "commonHeatwave": "热浪",
+  "commonFrost": "霜冻",
+  "commonStorm": "风暴",
+  "commonHeavyRain": "暴雨",
+  "commonClimateHotDry": "炎热 / 干燥",
+  "commonClimateCoolWet": "凉爽 / 潮湿",
+  "commonClimateStrategies": "气候策略",
+  "resourcesTitle": "资源",
+  "resourceWikipedia": "维基百科",
+  "resourceYouTube": "YouTube",
+  "resourceBaiduBaike": "百度百科",
+  "resourceBilibili": "哔哩哔哩",
+  "resourceGbif": "GBIF",
+  "resourceCareGuide": "养护指南",
+  "resourceCopyLink": "复制链接",
+  "resourceLinkCopied": "已复制链接",
+  "stateLoadFailedTitle": "无法加载",
+  "stateLoadFailedBody": "请检查网络后重试。",
+  "stateNotAvailableTitle": "暂不可用",
+  "stateNotAvailableBody": "该内容暂时不可用。",
+
+  "navGarden": "花园",
+  "navCalendar": "日历",
+  "navDiscover": "发现",
+  "navDaily": "每日",
+  "navProfile": "我的",
+
+  "calendarTitle": "日历",
+  "calendarFilterAll": "全部",
+  "calendarPrevMonth": "上个月",
+  "calendarNextMonth": "下个月",
+  "calendarSectionHistory": "养护记录",
+  "calendarNoEvents": "这一天暂无记录。",
+
+  "splashTagline": "宁静养护，优雅整理。",
+
+  "onboardingTitle1": "你的花园，优雅有序",
+  "onboardingBody1": "记录植物、建立照片时间轴、随手备注，不再杂乱。",
+  "onboardingTitle2": "智能养护，随环境变化",
+  "onboardingBody2": "湿度、温度、季节——Botanica 会解释为什么计划会调整。",
+  "onboardingTitle3": "每日花语仪式",
+  "onboardingBody3": "温柔的每日卡片：寓意、基础养护，以及 60 秒的观赏提示。",
+  "onboardingCta": "开始使用 Botanica",
+
+  "permissionsTitle": "设置你需要的权限",
+  "permissionsSubtitle": "可一次性开启，也可在使用功能时再开启。",
+  "permNotificationsTitle": "通知提醒",
+  "permNotificationsBody": "不错过浇水等养护。",
+  "permLocationTitle": "位置",
+  "permLocationBody": "让养护根据气候自动调整。",
+  "permCameraTitle": "相机与相册",
+  "permCameraBody": "用于生长记录与植物识别。",
+  "permLocationServicesOff": "定位服务已关闭。",
+  "permStatusEnabled": "已开启",
+  "permStatusNotEnabled": "未开启",
+  "permStatusLimited": "受限",
+  "permStatusProvisional": "临时",
+  "permStatusRestricted": "受限制",
+  "permStatusBlocked": "已阻止",
+  "permActionEnable": "开启",
+  "permActionOpenSettings": "打开设置",
+  "permissionsEnableAll": "现在全部开启",
+  "permissionsNotNow": "暂不",
+  "permissionsPrivacyNote": "Botanica 只在需要时才请求权限，你可以在「我的」中随时修改。",
+
+  "gardenTitle": "花园",
+  "gardenTodayCardTitle": "今日",
+  "gardenLoadError": "加载植物失败。",
+  "gardenTasksDueToday": "{count, plural, =0{暂无待办} other{{count} 个待办}}",
+  "@gardenTasksDueToday": {
+    "description": "Task count on Today card",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenCareStreakChip": "连续护理{days}天",
+  "gardenWeatherChip": "{condition} · {temp}°{unit} · {humidity}%",
+  "@gardenWeatherChip": {
+    "placeholders": {
+      "condition": {
+        "type": "String"
+      },
+      "temp": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "humidity": {
+        "type": "int"
+      }
+    }
+  },
+  "weatherClear": "晴朗",
+  "weatherPartlyCloudy": "多云",
+  "weatherCloudy": "阴",
+  "weatherFog": "雾",
+  "weatherDrizzle": "毛毛雨",
+  "weatherRain": "雨",
+  "weatherSnow": "雪",
+  "weatherThunder": "雷暴",
+  "weatherUnknown": "天气",
+  "gardenQuickWatered": "已浇水",
+  "gardenQuickSnooze": "稍后提醒",
+  "gardenQuickAddPlant": "添加植物",
+  "gardenEmptyTitle": "开始你的花园",
+  "gardenEmptyBody": "添加第一株植物，获得专属养护计划与每日任务。",
+  "gardenEmptyCta": "添加第一株植物",
+  "gardenAddPlantFab": "添加植物",
+
+  "addPlantTitle": "添加植物",
+  "addPlantMethodScan": "扫描",
+  "addPlantMethodLibrary": "从植物库",
+  "addPlantMethodManual": "手动填写",
+  "addPlantScanTitle": "扫描植物",
+  "addPlantScanBody": "拍摄叶片 + 全株，识别更准确。",
+  "addPlantScanButton": "开始识别",
+  "addPlantLibraryTitle": "选择植物",
+  "addPlantManualTitle": "填写信息",
+  "addPlantConfirmTitle": "确认信息",
+  "addPlantFieldNickname": "昵称",
+  "addPlantFieldRoom": "房间",
+  "addPlantDefaultRoomLivingRoom": "客厅",
+  "addPlantDefaultSpeciesUnknown": "未知",
+  "addPlantFieldEnvironment": "环境",
+  "addPlantEnvIndoor": "室内",
+  "addPlantEnvBalcony": "阳台",
+  "addPlantEnvOutdoor": "户外",
+  "addPlantReminderTime": "提醒时间",
+  "addPlantReminderMorning": "早上",
+  "addPlantReminderEvening": "晚上",
+  "addPlantReminderCustom": "自定义",
+  "addPlantSaveButton": "保存到花园",
+
+  "plantDetailOverview": "概览",
+  "plantDetailCare": "养护",
+  "plantDetailJournal": "记录",
+  "plantDetailLogs": "日志",
+  "plantDetailLogsEmptyTitle": "暂无养护日志",
+  "plantDetailLogsEmptyBody": "完成一次浇水或养护任务后，记录会显示在这里。",
+  "tasksEmptyUpcoming": "暂无即将到来的任务",
+  "tasksEmptyOverdue": "全部完成，做得好！",
+  "plantDetailWaterNow": "现在浇水",
+  "plantDetailAddPhoto": "添加照片",
+  "plantDetailAddNote": "添加备注",
+  "plantDetailMissingTitle": "植物不可用",
+  "plantDetailMissingBody": "找不到这株植物，可能已被删除。",
+  "plantDetailMissingCta": "返回花园",
+  "plantDetailNextWateringInDays": "距离下次浇水还有 {days} 天",
+  "@plantDetailNextWateringInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantDetailEnvironmentImpactTitle": "环境影响",
+  "plantDetailEnvironmentImpactBaseAdjusted": "基础：{base} 天 · 调整后：{adjusted} 天",
+  "plantDetailEnvironmentStable": "环境稳定——今天无需调整。",
+  "plantDetailDrynessLow": "干燥指数低（干得更慢）",
+  "plantDetailDrynessBalanced": "干燥指数适中",
+  "plantDetailDrynessHigh": "干燥指数高（干得更快）",
+  "plantDetailCareWaterBody": "下次浇水由基础间隔计算，并根据湿度、温度与季节进行调整。",
+  "plantDetailCareLightBody": "对多数室内植物来说，明亮散射光是很好的默认选择。",
+  "plantDetailCareTempTitle": "温度",
+  "plantDetailCareTempBody": "避免突然的冷风直吹。稳定的温暖有助于规律生长。",
+  "plantDetailJournalDesignNote": "这里已设计好对齐取景叠层与对比滑杆；后续可接入相机/相册。",
+  "plantDetailJournalIntro": "用照片与文字记录成长——这是你的植物日记。",
+  "journalSectionPhotos": "照片",
+  "diarySectionTitle": "日记",
+  "diaryEmptyBody": "还没有文字记录。写一条，记下今天的变化。",
+  "diaryAddEntryTitle": "新建日记",
+  "diaryAddEntryHint": "写下你今天观察到的内容…",
+  "diaryAddEntryButton": "写日记",
+  "diaryEntryTitle": "日记内容",
+  "diaryEntrySaved": "已保存到日记。",
+  "journalShareCardTitle": "分享卡片",
+  "journalShareCardText": "由 Botanica 制作",
+  "journalShareFailed": "分享失败，请重试。",
+  "journalAddPhotoTitle": "添加照片",
+  "journalAddPhotoCamera": "相机",
+  "journalAddPhotoCameraBody": "拍摄新照片，可叠加上一张照片的半透明参考。",
+  "journalAddPhotoGallery": "相册",
+  "journalAddPhotoGalleryBody": "从相册选择一张照片。",
+  "journalCaptureTitle": "拍摄",
+  "journalCaptureTip": "尽量填满取景框，并对齐上一张以便更好对比。",
+  "journalFlash": "闪光灯",
+  "journalCameraPermissionNeeded": "需要相机权限才能拍摄照片。",
+  "journalPhotosPermissionNeeded": "需要相册权限才能选择照片。",
+  "journalPhotoSaved": "已保存到记录。",
+  "journalEmptyBody": "还没有照片。添加一张开启生长时间轴。",
+  "journalPhotoTitle": "记录照片",
+  "journalPhotoNoNote": "无备注",
+  "journalAddNoteTitle": "添加备注",
+  "journalAddNoteHint": "可选：新叶、换盆等。",
+  "journalCompareTitle": "对比",
+  "journalCompareHint": "左右拖动进行对比。",
+  "journalPhotoMeta": "{date}",
+  "@journalPhotoMeta": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+
+  "scanTitle": "识别",
+  "scanTryAgain": "重试",
+  "scanCaptureTitle": "识别你的植物",
+  "scanCaptureTip": "同时拍摄叶片与整株，效果更好。",
+  "scanCameraPermissionNeeded": "需要相机权限才能识别植物。",
+  "scanProcessingBody": "正在识别植物…",
+  "scanChooseCandidate": "选择匹配项",
+  "scanRefinePetSafe": "宠物友好",
+  "scanRefineEasy": "易养护",
+  "scanRefineLowLight": "耐低光",
+  "scanAddToGarden": "添加到花园",
+  "scanDeterministicNote": "演示模式：离线结果为可重复的占位识别，可后续接入 Kindwise/Gemini。",
+
+  "tasksTitle": "任务",
+  "tasksTabToday": "今日",
+  "tasksTabUpcoming": "即将到来",
+  "tasksTabOverdue": "已逾期",
+  "tasksCalendarToggle": "日历",
+  "tasksSeasonalTipsTitle": "季节护理小贴士",
+  "tipSpringRepot": "春季：新生长开始且根系拥挤时，考虑换盆。",
+  "tipSpringFertilize": "春季：开始长新叶后，恢复少量施肥。",
+  "tipSummerWaterMore": "夏季：高温更易干燥，勤检查土壤湿度。",
+  "tipSummerShadeOutdoor": "夏季：阳台/室外植物避免正午强光暴晒。",
+  "tipAutumnReduceWater": "秋季：光照变弱时，适当减少浇水频率。",
+  "tipAutumnBringIndoor": "秋季：夜间转凉，怕冷植物提前移入室内。",
+  "tipWinterReduceFertilize": "冬季：生长放缓，减少施肥并降低浇水。",
+  "tipWinterLowLight": "冬季：尽量靠近窗边或补光，避免徒长。",
+  "tasksSnoozedUntil": "已延后至 {date}",
+  "@tasksSnoozedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+
+  "discoverTitle": "发现",
+  "discoverSearchHint": "搜索植物、指南与技巧",
+  "discoverNoResultsTitle": "未找到匹配结果",
+  "discoverNoResultsBody": "试试其他名称，或使用学名搜索。",
+  "discoverSectionCurated": "精选植物",
+  "discoverSectionLibrary": "植物图鉴",
+  "discoverSectionGuides": "指南",
+  "discoverFilters": "筛选",
+  "discoverFilterPetSafe": "宠物友好",
+  "discoverFilterDifficulty": "难度",
+  "discoverFilterLight": "光照",
+  "discoverTagPetSafe": "宠物友好",
+  "discoverTagToxic": "有毒",
+  "discoverGuideWateringTitle": "浇水基础",
+  "discoverGuideWateringBody": "学会判断土壤湿度，避免过度浇水。",
+  "discoverGuideSoilTitle": "土壤与排水",
+  "discoverGuideSoilBody": "为什么疏松透气的介质能减少烂根并促进生长。",
+  "discoverGuidePestTitle": "虫害检查清单",
+  "discoverGuidePestBody": "每周 1 次的小流程，及早发现问题。",
+
+  "speciesDetailHistory": "历史",
+  "speciesDetailHabit": "生长习性",
+  "speciesDetailCareAtAGlance": "养护速览",
+  "speciesDetailWaterEvery": "每 {days} 天浇水",
+  "@speciesDetailWaterEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailFertilizeEvery": "每 {days} 天施肥",
+  "@speciesDetailFertilizeEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailMistEvery": "每 {days} 天喷雾",
+  "@speciesDetailMistEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailDetails": "详情",
+  "speciesDetailOrigin": "原产地",
+  "speciesDetailToxicity": "毒性",
+  "speciesDetailGrowth": "生长",
+  "speciesDetailMatureSize": "成熟尺寸",
+  "speciesDetailSizeHeight": "高度",
+  "speciesDetailSizeSpread": "冠幅",
+  "speciesDetailSizeVineLength": "藤长",
+  "speciesDetailRangeCm": "{min}–{max} 厘米",
+  "@speciesDetailRangeCm": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailCmValue": "{value} 厘米",
+  "@speciesDetailCmValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailUnknown": "未知",
+  "growthRateSlow": "慢",
+  "growthRateModerate": "中等",
+  "growthRateFast": "快",
+  "growthRateUnknown": "未知",
+  "growthFormUpright": "直立",
+  "growthFormTrailing": "垂吊",
+  "growthFormClimbing": "攀援",
+  "growthFormRosette": "莲座",
+  "growthFormTreeLike": "木本",
+  "growthFormClumping": "丛生",
+  "growthFormEpiphytic": "附生",
+  "growthFormSucculent": "多肉",
+  "growthFormFern": "蕨类",
+  "growthFormOrchid": "兰科",
+  "growthFormOther": "其他",
+  "difficultyEasy": "简单",
+  "difficultyMedium": "中等",
+  "difficultyHard": "困难",
+  "lightBrightDirect": "明亮直射光",
+  "lightBrightIndirect": "明亮散射光",
+  "lightMediumIndirect": "中等散射光",
+  "lightLowToBrightIndirect": "弱光到明亮散射光",
+  "lightLowToBright": "弱光到明亮光",
+
+  "dailyTitle": "每日花语",
+  "dailyReveal": "揭晓",
+  "dailyRevealHintTap": "点击揭晓",
+  "dailyRevealHintSlide": "滑动揭晓",
+  "dailyRevealHintHold": "长按揭晓",
+  "dailyRevealHintPull": "下拉揭晓",
+  "dailyRevealHintStamp": "盖章揭晓",
+  "dailyRevealHintFlip": "翻牌揭晓",
+  "dailyRevealHintTrace": "描摹揭晓",
+  "dailyInfoTitle": "关于每日花语",
+  "dailyInfoIntro": "每日花语是一个每天更新一次的温柔仪式，用来获得灵感与陪伴。",
+  "dailyInfoModeWesternZodiac": "星座：根据你的生日或手动选择的星座生成。",
+  "dailyInfoModeTarot": "塔罗：每天发四张牌并选择一张，你的选择将引导今日之花。",
+  "dailyInfoModeAuto": "{mode}：基于今日日期进行每日抽取，并结合个人信息进行个性化。",
+  "@dailyInfoModeAuto": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyInfoModeJustFlower": "仅花：最简单的仪式。轻点即可揭晓一朵为你个性化的今日花。",
+  "dailyInfoHowToReveal": "如何揭晓：{hint}",
+  "@dailyInfoHowToReveal": {
+    "placeholders": {
+      "hint": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyInfoChangeMode": "更改模式",
+  "dailySave": "保存",
+  "dailyShare": "分享",
+  "dailyCareToday": "今日养护",
+  "dailyHowToAppreciate": "今日观赏方式",
+  "dailyAiNoteTitle": "Botanica 小笺",
+  "plantCareAiTipTitle": "今日养护提示",
+  "dailyModeMissingTitle": "选择每日模式",
+  "dailyModeMissingBody": "选择一种传统（塔罗、黄历、符文…），Botanica 会为你生成专属的每日花语。",
+  "dailyModeMissingCta": "选择模式",
+  "dailyTarotNotDrawn": "今日抽牌",
+  "dailyTarotDrawTitle": "塔罗抽牌",
+  "dailyTarotDrawBody": "发四张牌，选一张 — 然后揭晓今日之花。",
+  "dailyTarotDrawCta": "发 4 张牌",
+  "dailyTarotCardLabel": "选择",
+  "dailyDeterministicNote": "每日花语是确定性的：同一天 + 语言 + 模式 + 个人信息会得到同一张卡片（方便分享）。",
+  "dailyContentUnavailableTitle": "每日花语不可用",
+  "dailyContentUnavailableBody": "Botanica 暂时无法加载今日花语内容，请重试。",
+  "dailyProfileMissingTitle": "完善个人信息",
+  "dailyProfileMissingBody": "请先在「我的」中设置个人关键字（例如昵称）或生日，让每日花语更贴合你。",
+  "dailyProfileMissingBodyZodiac": "请先在「我的」中设置你的生日或星座，让每日花语更贴合你。",
+  "dailyProfileMissingCta": "去设置",
+
+  "careKeyLight": "光照",
+  "careKeyWater": "浇水",
+  "careKeyTemperature": "温度",
+  "careKeyPetSafety": "宠物安全",
+
+  "profileTitle": "我的",
+  "profileSectionPreferences": "偏好",
+  "profileSectionPermissions": "权限",
+  "profileSectionData": "数据",
+  "profileSectionAbout": "关于",
+  "profileLanguage": "语言",
+  "profileUnits": "单位",
+  "profileHemisphereTitle": "半球",
+  "profileHemisphereBody": "用于季节性养护调整（冬季/夏季）。",
+  "hemisphereNorthern": "北半球",
+  "hemisphereSouthern": "南半球",
+  "profileBeliefMode": "每日模式",
+  "profileDailyProfileTitle": "每日个性化",
+  "profileDailyProfileBody": "为「{mode}」选择你的个人信息。",
+  "@profileDailyProfileBody": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "profileBirthdateTitle": "生日",
+  "profileBirthdateBody": "用于星座与黄历等模式的个性化。",
+  "profileDailySeedTitle": "个人关键字",
+  "profileDailySeedBody": "一段简短的关键字（比如昵称），用于个性化每日花语，但不会改变你的模式。",
+  "profileDailySeedHint": "例如：Aster",
+  "profileDailyProfileUseBirthdate": "使用生日",
+  "profileDailyProfileNotSet": "未设置",
+  "profileDailyProfileKeySet": "已设置",
+  "profileDailyProfileNotNeeded": "此模式无需个人信息。",
+  "profileDailyProfilePickModeFirst": "请先选择每日模式，再在这里进行设置。",
+  "profileDailyProfileTarotSubtitle": "在「每日」抽牌",
+  "profileDailyProfileAutoSubtitle": "自动（按日期）",
+  "profileDailyProfileTarotBody": "塔罗模式是每日小仪式：在「每日」里发四张牌并选择一张，然后揭晓今日之花。",
+  "profileDailyProfileTarotCta": "打开「每日」",
+  "profileDailyProfileAutoBody": "{mode} 会基于当天日期进行每日抽取，并结合个人信息进行个性化。",
+  "@profileDailyProfileAutoBody": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDailyProfileLocalDefault": "使用你的语言",
+  "profileLocalTraditionKeyTitle": "文化关键字",
+  "profileLocalTraditionKeyHint": "例如：global、china、japan…",
+  "profilePhotos": "照片",
+  "profileNotifications": "通知",
+  "profileLocation": "位置",
+  "profilePrivacy": "隐私",
+  "profileBackup": "备份",
+  "profileCredits": "致谢",
+  "profileDynamicColorTitle": "动态配色",
+  "profileDynamicColorBody": "在支持的设备上使用系统配色。",
+  "profileAiInsightsTitle": "AI 灵感",
+  "profileAiInsightsBody": "以不打扰的方式，在页面里生成小提示，让每日花语更贴合你。",
+  "profileAiKeyTitle": "AI API 密钥",
+  "profileAiKeyConfigured": "已设置",
+  "profileAiKeyNotSet": "未设置",
+  "profileAiKeyNotRequired": "不需要",
+  "profileAiKeySheetBody": "密钥将安全保存在本设备上，仅用于生成简短的页面内提示，并会按你的语言设置返回。",
+  "profileAiKeyNotRequiredBody": "此构建版本使用无需鉴权的代理服务，因此不需要 API 密钥。",
+  "profileAiKeySheetHint": "粘贴你的 API 密钥",
+  "profileAiKeySaved": "AI 密钥已保存。",
+  "profileAiKeyCleared": "AI 密钥已移除。",
+  "profileLanguageSystem": "跟随系统",
+
+  "creditsTitle": "致谢",
+  "creditsOpenSource": "开源",
+  "creditsFlutterCommunity": "Flutter 社区参考",
+  "creditsUiInspiration": "UI 灵感",
+  "creditsPlaceholderNote": "说明：本项目暂时使用白色 PNG 占位图，你可以在完成后替换为真实照片/插画资源。",
+
+  "unitsCelsius": "摄氏 (°C)",
+  "unitsFahrenheit": "华氏 (°F)",
+
+  "beliefModeWesternZodiac": "星座",
+  "beliefModeChineseZodiac": "生肖",
+  "beliefModeTarot": "塔罗抽牌",
+  "beliefModeLocalTraditions": "本地传统",
+  "beliefModeJustFlower": "只给我一朵花",
+  "beliefModeNotSet": "未设置",
+  "beliefModeAlmanac": "黄历",
+  "beliefModeOmikuji": "御神签",
+  "beliefModeRunes": "北欧符文",
+  "beliefModeOgham": "凯尔特欧甘字母",
+
+  "zodiacAries": "白羊座",
+  "zodiacTaurus": "金牛座",
+  "zodiacGemini": "双子座",
+  "zodiacCancer": "巨蟹座",
+  "zodiacLeo": "狮子座",
+  "zodiacVirgo": "处女座",
+  "zodiacLibra": "天秤座",
+  "zodiacScorpio": "天蝎座",
+  "zodiacSagittarius": "射手座",
+  "zodiacCapricorn": "摩羯座",
+  "zodiacAquarius": "水瓶座",
+  "zodiacPisces": "双鱼座",
+
+  "chineseZodiacRat": "生肖鼠",
+  "chineseZodiacOx": "生肖牛",
+  "chineseZodiacTiger": "生肖虎",
+  "chineseZodiacRabbit": "生肖兔",
+  "chineseZodiacDragon": "生肖龙",
+  "chineseZodiacSnake": "生肖蛇",
+  "chineseZodiacHorse": "生肖马",
+  "chineseZodiacGoat": "生肖羊",
+  "chineseZodiacMonkey": "生肖猴",
+  "chineseZodiacRooster": "生肖鸡",
+  "chineseZodiacDog": "生肖狗",
+  "chineseZodiacPig": "生肖猪",
+
+  "tarotTheFool": "愚者",
+  "tarotTheMagician": "魔术师",
+  "tarotTheHighPriestess": "女祭司",
+  "tarotTheEmpress": "女皇",
+  "tarotTheEmperor": "皇帝",
+  "tarotTheHierophant": "教皇",
+  "tarotTheLovers": "恋人",
+  "tarotTheChariot": "战车",
+  "tarotStrength": "力量",
+  "tarotTheHermit": "隐者",
+  "tarotWheelOfFortune": "命运之轮",
+  "tarotJustice": "正义",
+  "tarotTheHangedMan": "倒吊人",
+  "tarotDeath": "死神",
+  "tarotTemperance": "节制",
+  "tarotTheDevil": "恶魔",
+  "tarotTheTower": "高塔",
+  "tarotTheStar": "星星",
+  "tarotTheMoon": "月亮",
+  "tarotTheSun": "太阳",
+  "tarotJudgement": "审判",
+  "tarotTheWorld": "世界",
+
+  "omikujiDaikichi": "大吉",
+  "omikujiChukichi": "中吉",
+  "omikujiShokichi": "小吉",
+  "omikujiKichi": "吉",
+  "omikujiHankichi": "半吉",
+  "omikujiSuekichi": "末吉",
+  "omikujiKyo": "凶",
+  "omikujiDaikyo": "大凶",
+
+  "taskTypeWater": "浇水",
+  "taskTypeFertilize": "施肥",
+  "taskTypeMist": "喷雾",
+  "taskTypeRotate": "转盆",
+  "taskTypePrune": "修剪",
+  "taskTypeRepot": "换盆",
+  "taskTypeCheckPests": "检查虫害",
+  "taskTypeWipeLeaves": "擦叶",
+  "taskTypeSunlightAdjustment": "调整光照",
+
+  "notificationsTaskTitle": "{plant} · {task}",
+  "@notificationsTaskTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "task": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationsTaskBodyRoom": "位置：{room}",
+  "@notificationsTaskBodyRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationsTaskBodyNoRoom": "打开 Botanica 标记完成。",
+
+  "reasonHumidityLow": "湿度低 → 土壤更快变干",
+  "reasonHumidityHigh": "湿度高 → 土壤保持湿润更久",
+  "reasonHot": "温度高 → 蒸发更快",
+  "reasonWinter": "冬季 → 生长更慢",
+  "reasonOutdoor": "户外模式 → 更依赖天气预报",
+  "reasonIndoor": "室内模式 → 默认环境更稳定"
+}

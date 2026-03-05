@@ -1,0 +1,144 @@
+{
+  "entries": [
+    {
+      "key": "camellia",
+      "name": "山茶花",
+      "imagePath": "assets/placeholders/daily_flowers/camellia.png",
+      "meaningKeywords": ["优雅", "耐心", "倾心"],
+      "symbolism": "山茶花是一种“编辑部式”的美：克制、有层次、安静却自信。它提醒你，养护可以稳定而从容——看似毫不费力，其实来自持续的用心。",
+      "careBasics": {
+        "light": "明亮散射光",
+        "water": "保持微湿，表层略干再浇",
+        "temperature": "偏凉到温和；避开干燥热风",
+        "petSafety": "有宠物请谨慎摆放"
+      },
+      "appreciation": "观察重复的几何：花瓣、螺旋、纹理。写一句话，记录今天你想“稳稳做好的”一件事。"
+    },
+    {
+      "key": "lavender",
+      "name": "薰衣草",
+      "imagePath": "assets/placeholders/daily_flowers/lavender.png",
+      "meaningKeywords": ["平静", "清晰", "守护"],
+      "symbolism": "薰衣草像能闻得到的安定感。它是一种温柔的重启：清理思绪的桌面，开一扇窗，让一天变得更轻。",
+      "careBasics": {
+        "light": "全日照或非常明亮的光",
+        "water": "浇透后再等干；避免长期潮湿",
+        "temperature": "喜欢通风；土壤不要闷湿",
+        "petSafety": "避免宠物啃咬"
+      },
+      "appreciation": "做三次缓慢呼吸。每次呼气放松肩颈。留意空间里一种让你安心的颜色。"
+    },
+    {
+      "key": "jasmine",
+      "name": "茉莉",
+      "imagePath": "assets/placeholders/daily_flowers/jasmine.png",
+      "meaningKeywords": ["温柔", "夜色", "希望"],
+      "symbolism": "茉莉像一份轻柔的承诺。它提醒你：微小的仪式——光、浇水、关注——会在时间里变成香气。",
+      "careBasics": {
+        "light": "明亮光照，少量直射也可以",
+        "water": "保持湿润但不积水；别让它完全干透",
+        "temperature": "温和；避免冷风直吹",
+        "petSafety": "通常风险较低，但建议看护宠物"
+      },
+      "appreciation": "傍晚（或任何你暂停的时刻）说出一件你期待的小事。"
+    },
+    {
+      "key": "sunflower",
+      "name": "向日葵",
+      "imagePath": "assets/placeholders/daily_flowers/sunflower.png",
+      "meaningKeywords": ["乐观", "能量", "温暖"],
+      "symbolism": "向日葵是坦诚的能量。它面向光，并非因为生活容易，而是因为方向很重要。",
+      "careBasics": {
+        "light": "全日照 / 最强光照",
+        "water": "规律浇水；避免反复萎蔫",
+        "temperature": "喜欢温暖；防霜冻",
+        "petSafety": "通常对宠物较安全"
+      },
+      "appreciation": "站在光落到手背的地方，感受十秒温度。选一个你会“朝向光”完成的小任务。"
+    },
+    {
+      "key": "peony",
+      "name": "牡丹",
+      "imagePath": "assets/placeholders/daily_flowers/peony.png",
+      "meaningKeywords": ["丰盛", "浪漫", "自信"],
+      "symbolism": "牡丹不走极简——它走丰盛。它提醒你：用温柔占据空间，柔和的边界与坚定的存在可以并存。",
+      "careBasics": {
+        "light": "明亮光照；适量日照更利于开花",
+        "water": "深浇；略干再浇",
+        "temperature": "凉爽夜温更友好",
+        "petSafety": "有宠物请谨慎摆放"
+      },
+      "appreciation": "想一件你一直在“缩小”的事。今天给它多一点空间：时间、注意力或清晰的边界。"
+    },
+    {
+      "key": "lotus",
+      "name": "莲花",
+      "imagePath": "assets/placeholders/daily_flowers/lotus.png",
+      "meaningKeywords": ["新生", "安定", "韧性"],
+      "symbolism": "莲花教你理解对比：根在泥里，心向水面。它不是关于完美，而是关于回到中心、一次次地重来。",
+      "careBasics": {
+        "light": "非常明亮 / 日照",
+        "water": "喜水；保持持续湿润",
+        "temperature": "偏暖；避免冷水刺激",
+        "petSafety": "通常风险较低，但建议看护宠物"
+      },
+      "appreciation": "慢慢洗手，当作一次重启。水流过时，让一个小烦恼跟着离开。"
+    },
+    {
+      "key": "orchid",
+      "name": "兰花",
+      "imagePath": "assets/placeholders/daily_flowers/orchid.png",
+      "meaningKeywords": ["精致", "专注", "克制"],
+      "symbolism": "兰花回报的是精确，而不是更用力。光、浇水、时间点的一个小调整，可能就会带来完全不同的结果。",
+      "careBasics": {
+        "light": "明亮散射光",
+        "water": "浸透后沥干；不要让盆底积水",
+        "temperature": "喜欢稳定温暖；避免骤冷",
+        "petSafety": "通常对宠物较安全"
+      },
+      "appreciation": "把一件小事做得更精致：擦一片叶、清理台面、或把一杯茶泡得更漂亮。"
+    },
+    {
+      "key": "chrysanthemum",
+      "name": "菊花",
+      "imagePath": "assets/placeholders/daily_flowers/chrysanthemum.png",
+      "meaningKeywords": ["长久", "友谊", "平衡"],
+      "symbolism": "菊花是一种季节的智慧：该休息时就休息，该盛放时就盛放，同时把根系的稳定放在第一位。",
+      "careBasics": {
+        "light": "明亮光照 / 温和日照",
+        "water": "保持土壤微湿",
+        "temperature": "偏好凉爽空气",
+        "petSafety": "远离宠物（可能有毒）"
+      },
+      "appreciation": "为这一周写一个极简计划：一件“必须”、一件“想做”、一件“休息”。尽量现实。"
+    },
+    {
+      "key": "gardenia",
+      "name": "栀子花",
+      "imagePath": "assets/placeholders/daily_flowers/gardenia.png",
+      "meaningKeywords": ["纯净", "真挚", "守候"],
+      "symbolism": "栀子花温柔却坚定。它需要的是一致性：稳定的作息、适度的湿度，以及对缓慢进步的耐心。",
+      "careBasics": {
+        "light": "明亮光照；避开正午强光",
+        "water": "保持均匀湿润；避免忽干忽湿",
+        "temperature": "温暖并需要一定湿度",
+        "petSafety": "有宠物请谨慎摆放"
+      },
+      "appreciation": "今天留意一种气味：咖啡、肥皂、雨、或叶子。让它成为你的“锚点”片刻。"
+    },
+    {
+      "key": "hibiscus",
+      "name": "扶桑花",
+      "imagePath": "assets/placeholders/daily_flowers/hibiscus.png",
+      "meaningKeywords": ["喜悦", "活力", "大胆"],
+      "symbolism": "扶桑花像一个明亮的“是”。它提醒你：柔软与大胆可以同时存在。",
+      "careBasics": {
+        "light": "非常明亮 / 日照",
+        "water": "规律浇水；避免完全干透",
+        "temperature": "喜温暖；避开寒冷夜晚",
+        "petSafety": "通常风险较低，但建议看护宠物"
+      },
+      "appreciation": "今天用一点亮色：衣服、配件、杯垫都可以。让它帮你提气。"
+    }
+  ]
+}

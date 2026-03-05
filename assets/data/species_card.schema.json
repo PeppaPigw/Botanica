@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botanica.example/schema/species_seed.v1.schema.json",
+  "title": "Botanica Species Seed (v1)",
+  "description": "Schema that documents the plant-library metadata that powers Discover cards and species detail pages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["species"],
+  "properties": {
+    "species": {
+      "type": "array",
+      "description": "Seeded species list used by the app.",
+      "items": {
+        "$ref": "#/$defs/speciesEntry"
+      }
+    }
+  },
+  "$defs": {
+    "localeKey": {
+      "type": "string",
+      "description": "BCP-47-ish locale key (kept permissive for offline packs).",
+      "pattern": "^[A-Za-z]{2,3}([_-][A-Za-z0-9]{2,8})*$"
+    },
+    "speciesEntry": {
+      "type": "object",
+      "description": "A single species record with localized card data.",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable identifier used in routes and storage."
+        },
+        "scientificName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commonNames": {
+          "$ref": "#/$defs/localizedNameLists"
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["easy", "medium", "hard"]
+        },
+        "petSafe": {
+          "type": "boolean",
+          "description": "True when the species is safe around pets."
+        },
+        "light": {
+          "type": "string",
+          "enum": [
+            "bright_direct",
+            "bright_indirect",
+            "medium_indirect",
+            "low_to_bright_indirect",
+            "low_to_bright"
+          ]
+        },
+        "imagePath": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Local asset path used for the plant card image."
+        },
+        "history": {
+          "$ref": "#/$defs/localizedStrings"
+        },
+        "habit": {
+          "$ref": "#/$defs/localizedStrings"
+        },
+        "origin": {
+          "$ref": "#/$defs/originInfo"
+        },
+        "toxicity": {
+          "$ref": "#/$defs/toxicityInfo"
+        },
+        "growth": {
+          "$ref": "#/$defs/growthInfo"
+        },
+        "matureSize": {
+          "$ref": "#/$defs/matureSizeInfo"
+        },
+        "careDefaults": {
+          "$ref": "#/$defs/careDefaults"
+        }
+      },
+      "required": [
+        "id",
+        "scientificName",
+        "commonNames",
+        "difficulty",
+        "petSafe",
+        "light",
+        "imagePath",
+        "history",
+        "habit",
+        "origin",
+        "toxicity",
+        "growth",
+        "matureSize",
+        "careDefaults"
+      ]
+    },
+    "localizedNameLists": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/localeKey" },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      }
+    },
+    "localizedStrings": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/localeKey" },
+      "additionalProperties": { "type": "string" }
+    },
+    "careDefaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "waterBaseDays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fertilizeBaseDays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mistBaseDays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rotateBaseDays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pruneBaseDays": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "waterBaseDays",
+        "fertilizeBaseDays",
+        "mistBaseDays",
+        "rotateBaseDays",
+        "pruneBaseDays"
+      ]
+    },
+    "originInfo": {
+      "type": "object",
+      "description": "Native range / origin details.",
+      "additionalProperties": false,
+      "required": ["nativeRange"],
+      "properties": {
+        "nativeRange": { "$ref": "#/$defs/localizedStrings" },
+        "notes": { "$ref": "#/$defs/localizedStrings" }
+      }
+    },
+    "toxicityInfo": {
+      "type": "object",
+      "description": "Toxicity metadata; keep notes non-medical and cautious.",
+      "additionalProperties": false,
+      "required": ["pets"],
+      "properties": {
+        "pets": {
+          "type": "string",
+          "enum": ["pet_safe", "toxic", "unknown"]
+        },
+        "humans": {
+          "type": "string",
+          "enum": ["non_toxic", "mildly_toxic", "toxic", "unknown"]
+        },
+        "notes": { "$ref": "#/$defs/localizedStrings" }
+      }
+    },
+    "growthInfo": {
+      "type": "object",
+      "description": "Structured growth signals for quick facts and filtering.",
+      "additionalProperties": false,
+      "required": ["rate", "form"],
+      "properties": {
+        "rate": {
+          "type": "string",
+          "enum": ["slow", "moderate", "fast", "unknown"]
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "upright",
+            "trailing",
+            "climbing",
+            "rosette",
+            "tree_like",
+            "clumping",
+            "epiphytic",
+            "succulent",
+            "fern",
+            "orchid",
+            "other"
+          ]
+        },
+        "notes": { "$ref": "#/$defs/localizedStrings" }
+      }
+    },
+    "sizeRangeCm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "matureSizeInfo": {
+      "type": "object",
+      "description": "Approximate mature size (typically indoors / container-grown).",
+      "additionalProperties": false,
+      "required": ["heightCm", "spreadCm"],
+      "properties": {
+        "heightCm": { "$ref": "#/$defs/sizeRangeCm" },
+        "spreadCm": { "$ref": "#/$defs/sizeRangeCm" },
+        "vineLengthCm": { "$ref": "#/$defs/sizeRangeCm" },
+        "notes": { "$ref": "#/$defs/localizedStrings" }
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "entries": [
+    {
+      "key": "camellia",
+      "name": "Camellia",
+      "imagePath": "assets/placeholders/daily_flowers/camellia.png",
+      "meaningKeywords": ["Grace", "Patience", "Devotion"],
+      "symbolism": "Camellia is an editorial kind of beauty: composed, layered, and quietly confident. It reminds you that care can be steady and unhurried — the kind that looks effortless because it’s consistent.",
+      "careBasics": {
+        "light": "Bright, indirect light",
+        "water": "Keep evenly moist; let the surface dry slightly",
+        "temperature": "Cool to mild; avoid hot, dry air",
+        "petSafety": "Use caution around pets"
+      },
+      "appreciation": "Look for repeating geometry — petals, spirals, patterns. Write one sentence about what feels “steady” today."
+    },
+    {
+      "key": "lavender",
+      "name": "Lavender",
+      "imagePath": "assets/placeholders/daily_flowers/lavender.png",
+      "meaningKeywords": ["Calm", "Clarity", "Protection"],
+      "symbolism": "Lavender is calm you can smell. It’s a gentle reset: clearing the mental desk, opening a window, and letting the day feel lighter.",
+      "careBasics": {
+        "light": "Full sun / very bright light",
+        "water": "Water thoroughly, then allow to dry",
+        "temperature": "Likes airflow; avoid constantly damp soil",
+        "petSafety": "Keep out of reach of pets"
+      },
+      "appreciation": "Take three slow breaths. On each exhale, relax your shoulders. Notice one color in your space that feels soothing."
+    },
+    {
+      "key": "jasmine",
+      "name": "Jasmine",
+      "imagePath": "assets/placeholders/daily_flowers/jasmine.png",
+      "meaningKeywords": ["Tenderness", "Evening", "Hope"],
+      "symbolism": "Jasmine blooms like a soft promise. It’s a reminder that small rituals — light, water, attention — create fragrance over time.",
+      "careBasics": {
+        "light": "Bright light, some sun is fine",
+        "water": "Moist but not soggy; don’t let it bone‑dry",
+        "temperature": "Moderate; protect from cold drafts",
+        "petSafety": "Generally low risk, but supervise pets"
+      },
+      "appreciation": "At sunset (or whenever you pause), name one thing you’re looking forward to — even if it’s tiny."
+    },
+    {
+      "key": "sunflower",
+      "name": "Sunflower",
+      "imagePath": "assets/placeholders/daily_flowers/sunflower.png",
+      "meaningKeywords": ["Optimism", "Energy", "Warmth"],
+      "symbolism": "Sunflower is honest energy. It faces the light, not because life is easy, but because direction matters.",
+      "careBasics": {
+        "light": "Full sun / strongest light you have",
+        "water": "Regular water; don’t let it wilt repeatedly",
+        "temperature": "Warm is good; protect from frost",
+        "petSafety": "Generally pet‑safe"
+      },
+      "appreciation": "Stand where the light hits your hands. Feel the warmth for ten seconds. Choose one task you’ll do “toward the light.”"
+    },
+    {
+      "key": "peony",
+      "name": "Peony",
+      "imagePath": "assets/placeholders/daily_flowers/peony.png",
+      "meaningKeywords": ["Abundance", "Romance", "Confidence"],
+      "symbolism": "Peony doesn’t do minimalism — it does fullness. It’s a cue to take up space with kindness: soft edges, strong presence.",
+      "careBasics": {
+        "light": "Bright light; some sun helps blooms",
+        "water": "Deep watering; allow a little dry between",
+        "temperature": "Cool nights are beneficial",
+        "petSafety": "Use caution around pets"
+      },
+      "appreciation": "Pick one thing you’ve been shrinking. Give it a little more room today — time, attention, or a clear boundary."
+    },
+    {
+      "key": "lotus",
+      "name": "Lotus",
+      "imagePath": "assets/placeholders/daily_flowers/lotus.png",
+      "meaningKeywords": ["Renewal", "Stillness", "Resilience"],
+      "symbolism": "Lotus is a lesson in contrast: rooted in the mud, reaching for the surface. It’s not about perfection — it’s about returning to your center.",
+      "careBasics": {
+        "light": "Very bright light / sun",
+        "water": "Water‑loving; keep consistently wet",
+        "temperature": "Warm; avoid cold water",
+        "petSafety": "Generally low risk, but supervise pets"
+      },
+      "appreciation": "Wash your hands slowly, like a reset. As water runs, let one worry go with it."
+    },
+    {
+      "key": "orchid",
+      "name": "Orchid",
+      "imagePath": "assets/placeholders/daily_flowers/orchid.png",
+      "meaningKeywords": ["Refinement", "Focus", "Delicacy"],
+      "symbolism": "Orchid rewards precision. Not more effort — better attention. A small adjustment in light, water, or timing can change everything.",
+      "careBasics": {
+        "light": "Bright, indirect light",
+        "water": "Soak, then drain well; never leave in standing water",
+        "temperature": "Stable warmth; avoid sudden chills",
+        "petSafety": "Generally pet‑safe"
+      },
+      "appreciation": "Do one thing with extra care: wipe a leaf, clear a surface, or make your next cup of tea beautifully."
+    },
+    {
+      "key": "chrysanthemum",
+      "name": "Chrysanthemum",
+      "imagePath": "assets/placeholders/daily_flowers/chrysanthemum.png",
+      "meaningKeywords": ["Longevity", "Friendship", "Balance"],
+      "symbolism": "Chrysanthemum is seasonal wisdom. It teaches timing: rest when it’s time, bloom when the moment is right, and keep your roots steady.",
+      "careBasics": {
+        "light": "Bright light / gentle sun",
+        "water": "Keep soil slightly moist",
+        "temperature": "Prefers cooler air",
+        "petSafety": "Keep away from pets (may be toxic)"
+      },
+      "appreciation": "Make a small plan for the week: one “must”, one “nice”, one “rest”. Keep it realistic."
+    },
+    {
+      "key": "gardenia",
+      "name": "Gardenia",
+      "imagePath": "assets/placeholders/daily_flowers/gardenia.png",
+      "meaningKeywords": ["Purity", "Devotion", "Sincerity"],
+      "symbolism": "Gardenia is tender but determined. It asks for consistency: a stable routine, gentle humidity, and patience with slow progress.",
+      "careBasics": {
+        "light": "Bright light; avoid harsh midday sun",
+        "water": "Even moisture; don’t swing between drought and flood",
+        "temperature": "Warm with humidity",
+        "petSafety": "Use caution around pets"
+      },
+      "appreciation": "Notice a scent today — coffee, soap, rain, or leaves. Let it anchor you for a moment."
+    },
+    {
+      "key": "hibiscus",
+      "name": "Hibiscus",
+      "imagePath": "assets/placeholders/daily_flowers/hibiscus.png",
+      "meaningKeywords": ["Joy", "Vitality", "Boldness"],
+      "symbolism": "Hibiscus blooms like a bright yes. It’s a reminder that softness and boldness can live together.",
+      "careBasics": {
+        "light": "Very bright light / sun",
+        "water": "Regular water; avoid drying out completely",
+        "temperature": "Warm; protect from cold nights",
+        "petSafety": "Generally low risk, but supervise pets"
+      },
+      "appreciation": "Wear or use one bright color today — even a small accent. Let it lift your mood."
+    }
+  ]
+}

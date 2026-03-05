@@ -1,0 +1,649 @@
+{
+  "schemaVersion": "1.1.0",
+  "defaultLocale": "en",
+  "beliefModes": [
+    "just_flower",
+    "western_zodiac",
+    "tarot",
+    "almanac",
+    "omikuji",
+    "runes",
+    "ogham"
+  ],
+  "entries": [
+    {
+      "id": "chrysanthemum",
+      "flower": {
+        "scientificName": "Chrysanthemum × morifolium",
+        "tags": ["autumn", "cut_flower", "potted"]
+      },
+      "locales": {
+        "en": {
+          "name": "Chrysanthemum",
+          "aliases": ["Mum"],
+          "care": {
+            "light": "Bright light; morning sun is ideal.",
+            "water": "Keep evenly moist; avoid soggy soil.",
+            "temperature": "Prefers cool-to-mild temps; protect from heat spikes.",
+            "petSafety": "Toxic to cats/dogs if ingested."
+          },
+          "culturalNotesByRegion": {
+            "US": "Common in fall decor and bouquets.",
+            "CN": "Associated with autumn and resilience."
+          }
+        },
+        "zh": {
+          "name": "菊花",
+          "aliases": ["秋菊"],
+          "care": {
+            "light": "喜明亮光照，早晨日照更佳。",
+            "water": "保持土壤微湿，避免积水。",
+            "temperature": "喜凉爽，注意避免高温暴晒。",
+            "petSafety": "猫狗误食可能中毒。"
+          },
+          "culturalNotesByRegion": {
+            "CN": "常被视为清雅、坚韧与秋意的象征。"
+          }
+        }
+      },
+      "belief": {
+        "just_flower": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["steadiness", "clarity", "boundaries"],
+              "symbolism": "A quiet reminder that consistency beats intensity. Choose one small thing to do well today, then let the rest be simple.",
+              "appreciation": "Notice one color in the petals. Breathe in for 4 counts, out for 6. Write one sentence: “Today I will keep it steady by…”"
+            },
+            "zh": {
+              "meaningKeywords": ["沉稳", "清明", "分寸"],
+              "symbolism": "提醒你：稳定胜过用力。今天只把一件小事做好，其他就让它们简单一点。",
+              "appreciation": "观察花瓣里的一个颜色。吸气4拍、呼气6拍。写一句话：“今天我会用___来保持稳定。”"
+            }
+          }
+        },
+        "almanac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["seasonality", "discipline", "respect"],
+              "symbolism": "Almanac mode: it’s a good day to respect cycles — rest when it’s time to rest, and act cleanly when it’s time to act.",
+              "appreciation": "Do one tidy-up pass (60 seconds). Stop as soon as the timer ends."
+            },
+            "zh": {
+              "meaningKeywords": ["节律", "自律", "敬畏"],
+              "symbolism": "黄历模式：今天适合尊重节律——该休息就休息，该行动就干净利落。",
+              "appreciation": "做一次60秒的快速整理。时间到就停。"
+            }
+          }
+        },
+        "omikuji": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["autumn", "simplicity", "grace"],
+              "symbolism": "In many East Asian traditions, chrysanthemum carries an autumnal elegance: beauty that doesn’t rush.",
+              "appreciation": "Make tea or warm water. Take three mindful sips and name three things that feel “enough” today."
+            },
+            "zh": {
+              "meaningKeywords": ["秋意", "简淡", "清雅"],
+              "symbolism": "在一些东方传统里，菊花有清雅的秋意：不急不躁的美。",
+              "appreciation": "泡一杯茶或温水。慢慢喝三口，并说出三件“已经足够”的事。"
+            }
+          }
+        },
+        "western_zodiac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["steadiness", "clarity", "boundaries"],
+              "symbolism": "A quiet reminder that consistency beats intensity. Choose one small thing to do well today, then let the rest be simple.",
+              "appreciation": "Notice one color in the petals. Breathe in for 4 counts, out for 6. Write one sentence: “Today I will keep it steady by…”"
+            },
+            "zh": {
+              "meaningKeywords": ["沉稳", "清明", "分寸"],
+              "symbolism": "提醒你：稳定胜过用力。今天只把一件小事做好，其他就让它们简单一点。",
+              "appreciation": "观察花瓣里的一个颜色。吸气4拍、呼气6拍。写一句话：“今天我会用___来保持稳定。”"
+            }
+          }
+        },
+        "tarot": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["steadiness", "clarity", "boundaries"],
+              "symbolism": "A quiet reminder that consistency beats intensity. Choose one small thing to do well today, then let the rest be simple.",
+              "appreciation": "Notice one color in the petals. Breathe in for 4 counts, out for 6. Write one sentence: “Today I will keep it steady by…”"
+            },
+            "zh": {
+              "meaningKeywords": ["沉稳", "清明", "分寸"],
+              "symbolism": "提醒你：稳定胜过用力。今天只把一件小事做好，其他就让它们简单一点。",
+              "appreciation": "观察花瓣里的一个颜色。吸气4拍、呼气6拍。写一句话：“今天我会用___来保持稳定。”"
+            }
+          }
+        },
+        "runes": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["steadiness", "clarity", "boundaries"],
+              "symbolism": "A quiet reminder that consistency beats intensity. Choose one small thing to do well today, then let the rest be simple.",
+              "appreciation": "Notice one color in the petals. Breathe in for 4 counts, out for 6. Write one sentence: “Today I will keep it steady by…”"
+            },
+            "zh": {
+              "meaningKeywords": ["沉稳", "清明", "分寸"],
+              "symbolism": "提醒你：稳定胜过用力。今天只把一件小事做好，其他就让它们简单一点。",
+              "appreciation": "观察花瓣里的一个颜色。吸气4拍、呼气6拍。写一句话：“今天我会用___来保持稳定。”"
+            }
+          }
+        },
+        "ogham": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["steadiness", "clarity", "boundaries"],
+              "symbolism": "A quiet reminder that consistency beats intensity. Choose one small thing to do well today, then let the rest be simple.",
+              "appreciation": "Notice one color in the petals. Breathe in for 4 counts, out for 6. Write one sentence: “Today I will keep it steady by…”"
+            },
+            "zh": {
+              "meaningKeywords": ["沉稳", "清明", "分寸"],
+              "symbolism": "提醒你：稳定胜过用力。今天只把一件小事做好，其他就让它们简单一点。",
+              "appreciation": "观察花瓣里的一个颜色。吸气4拍、呼气6拍。写一句话：“今天我会用___来保持稳定。”"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "lotus",
+      "flower": { "scientificName": "Nelumbo nucifera", "tags": ["aquatic"] },
+      "locales": {
+        "en": {
+          "name": "Lotus",
+          "care": {
+            "light": "Full sun for best blooms.",
+            "water": "Grows in water; keep submerged in a suitable container/pond.",
+            "temperature": "Warm season plant; growth slows in cool weather.",
+            "petSafety": "Generally considered non-toxic."
+          }
+        },
+        "zh": {
+          "name": "莲花",
+          "care": {
+            "light": "全日照更易开花。",
+            "water": "水生植物，保持在适合的容器或池塘中。",
+            "temperature": "喜温暖，天气转凉会减缓生长。",
+            "petSafety": "通常认为无毒。"
+          }
+        }
+      },
+      "belief": {
+        "just_flower": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["renewal", "focus", "calm"],
+              "symbolism": "Lotus is a lesson in clean beginnings: keep your attention on what you can do next, not where you started.",
+              "appreciation": "Wash your hands slowly. As the water runs, pick one thought to release and one intention to keep."
+            },
+            "zh": {
+              "meaningKeywords": ["新生", "专注", "安定"],
+              "symbolism": "莲花像是在说：起点不重要，下一步更重要。把注意力放在当下能做的事上。",
+              "appreciation": "慢慢洗手。水流过时，放下一个念头，留下一个意图。"
+            }
+          }
+        },
+        "almanac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["patience", "inner_strength", "timing"],
+              "symbolism": "Almanac mode: the best growth happens in seasons. Today, do the part that belongs to you and let timing do the rest.",
+              "appreciation": "Choose one “seed action” that takes under 2 minutes. Do it now, then stop."
+            },
+            "zh": {
+              "meaningKeywords": ["耐心", "内在力量", "时机"],
+              "symbolism": "黄历模式：成长有它的季节。今天只做你该做的那一部分，其他交给时机。",
+              "appreciation": "选一个不超过2分钟的“播种动作”，立刻完成，然后就停。"
+            }
+          }
+        },
+        "omikuji": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["stillness", "water", "renewal"],
+              "symbolism": "Omikuji mode: let today be a small reset — not dramatic, just clean.",
+              "appreciation": "Rinse a cup or bowl, then drink water slowly. With each sip, name one thing you can start fresh."
+            },
+            "zh": {
+              "meaningKeywords": ["静", "水", "更新"],
+              "symbolism": "御神签模式：今天适合做一次小小的重启——不必轰烈，只要干净。",
+              "appreciation": "冲洗一个杯子或碗，再慢慢喝水。每一口都说出一件可以重新开始的事。"
+            }
+          }
+        },
+        "western_zodiac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["renewal", "focus", "calm"],
+              "symbolism": "Lotus is a lesson in clean beginnings: keep your attention on what you can do next, not where you started.",
+              "appreciation": "Wash your hands slowly. As the water runs, pick one thought to release and one intention to keep."
+            },
+            "zh": {
+              "meaningKeywords": ["新生", "专注", "安定"],
+              "symbolism": "莲花像是在说：起点不重要，下一步更重要。把注意力放在当下能做的事上。",
+              "appreciation": "慢慢洗手。水流过时，放下一个念头，留下一个意图。"
+            }
+          }
+        },
+        "tarot": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["renewal", "focus", "calm"],
+              "symbolism": "Lotus is a lesson in clean beginnings: keep your attention on what you can do next, not where you started.",
+              "appreciation": "Wash your hands slowly. As the water runs, pick one thought to release and one intention to keep."
+            },
+            "zh": {
+              "meaningKeywords": ["新生", "专注", "安定"],
+              "symbolism": "莲花像是在说：起点不重要，下一步更重要。把注意力放在当下能做的事上。",
+              "appreciation": "慢慢洗手。水流过时，放下一个念头，留下一个意图。"
+            }
+          }
+        },
+        "runes": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["renewal", "focus", "calm"],
+              "symbolism": "Lotus is a lesson in clean beginnings: keep your attention on what you can do next, not where you started.",
+              "appreciation": "Wash your hands slowly. As the water runs, pick one thought to release and one intention to keep."
+            },
+            "zh": {
+              "meaningKeywords": ["新生", "专注", "安定"],
+              "symbolism": "莲花像是在说：起点不重要，下一步更重要。把注意力放在当下能做的事上。",
+              "appreciation": "慢慢洗手。水流过时，放下一个念头，留下一个意图。"
+            }
+          }
+        },
+        "ogham": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["renewal", "focus", "calm"],
+              "symbolism": "Lotus is a lesson in clean beginnings: keep your attention on what you can do next, not where you started.",
+              "appreciation": "Wash your hands slowly. As the water runs, pick one thought to release and one intention to keep."
+            },
+            "zh": {
+              "meaningKeywords": ["新生", "专注", "安定"],
+              "symbolism": "莲花像是在说：起点不重要，下一步更重要。把注意力放在当下能做的事上。",
+              "appreciation": "慢慢洗手。水流过时，放下一个念头，留下一个意图。"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "orchid",
+      "flower": { "scientificName": "Phalaenopsis spp.", "tags": ["indoor", "orchid"] },
+      "locales": {
+        "en": {
+          "name": "Orchid",
+          "care": {
+            "light": "Bright, indirect light.",
+            "water": "Water sparingly; allow the medium to partly dry.",
+            "temperature": "Comfortable indoor range; avoid cold drafts.",
+            "petSafety": "Generally considered non-toxic."
+          }
+        },
+        "zh": {
+          "name": "蝴蝶兰",
+          "care": {
+            "light": "明亮散射光。",
+            "water": "少量浇水，基质略干再浇。",
+            "temperature": "室内常温即可，避免冷风直吹。",
+            "petSafety": "通常认为无毒。"
+          }
+        }
+      },
+      "belief": {
+        "just_flower": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["refinement", "patience", "presence"],
+              "symbolism": "Orchid energy is slow and intentional. Small adjustments compound into elegance.",
+              "appreciation": "Look for one detail you normally miss (a curve, a shadow). Describe it in 10 words."
+            },
+            "zh": {
+              "meaningKeywords": ["精致", "耐心", "在场"],
+              "symbolism": "蝴蝶兰的感觉是慢而笃定。小小的调整，会累积成优雅。",
+              "appreciation": "找一个你平时忽略的细节（弧度、阴影）。用10个字描述它。"
+            }
+          }
+        },
+        "western_zodiac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["refinement", "patience", "presence"],
+              "symbolism": "Orchid energy is slow and intentional. Small adjustments compound into elegance.",
+              "appreciation": "Look for one detail you normally miss (a curve, a shadow). Describe it in 10 words."
+            },
+            "zh": {
+              "meaningKeywords": ["精致", "耐心", "在场"],
+              "symbolism": "蝴蝶兰的感觉是慢而笃定。小小的调整，会累积成优雅。",
+              "appreciation": "找一个你平时忽略的细节（弧度、阴影）。用10个字描述它。"
+            }
+          }
+        },
+        "tarot": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["refinement", "patience", "presence"],
+              "symbolism": "Orchid energy is slow and intentional. Small adjustments compound into elegance.",
+              "appreciation": "Look for one detail you normally miss (a curve, a shadow). Describe it in 10 words."
+            },
+            "zh": {
+              "meaningKeywords": ["精致", "耐心", "在场"],
+              "symbolism": "蝴蝶兰的感觉是慢而笃定。小小的调整，会累积成优雅。",
+              "appreciation": "找一个你平时忽略的细节（弧度、阴影）。用10个字描述它。"
+            }
+          }
+        },
+        "almanac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["refinement", "patience", "presence"],
+              "symbolism": "Orchid energy is slow and intentional. Small adjustments compound into elegance.",
+              "appreciation": "Look for one detail you normally miss (a curve, a shadow). Describe it in 10 words."
+            },
+            "zh": {
+              "meaningKeywords": ["精致", "耐心", "在场"],
+              "symbolism": "蝴蝶兰的感觉是慢而笃定。小小的调整，会累积成优雅。",
+              "appreciation": "找一个你平时忽略的细节（弧度、阴影）。用10个字描述它。"
+            }
+          }
+        },
+        "omikuji": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["refinement", "patience", "presence"],
+              "symbolism": "Orchid energy is slow and intentional. Small adjustments compound into elegance.",
+              "appreciation": "Look for one detail you normally miss (a curve, a shadow). Describe it in 10 words."
+            },
+            "zh": {
+              "meaningKeywords": ["精致", "耐心", "在场"],
+              "symbolism": "蝴蝶兰的感觉是慢而笃定。小小的调整，会累积成优雅。",
+              "appreciation": "找一个你平时忽略的细节（弧度、阴影）。用10个字描述它。"
+            }
+          }
+        },
+        "runes": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["refinement", "patience", "presence"],
+              "symbolism": "Orchid energy is slow and intentional. Small adjustments compound into elegance.",
+              "appreciation": "Look for one detail you normally miss (a curve, a shadow). Describe it in 10 words."
+            },
+            "zh": {
+              "meaningKeywords": ["精致", "耐心", "在场"],
+              "symbolism": "蝴蝶兰的感觉是慢而笃定。小小的调整，会累积成优雅。",
+              "appreciation": "找一个你平时忽略的细节（弧度、阴影）。用10个字描述它。"
+            }
+          }
+        },
+        "ogham": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["refinement", "patience", "presence"],
+              "symbolism": "Orchid energy is slow and intentional. Small adjustments compound into elegance.",
+              "appreciation": "Look for one detail you normally miss (a curve, a shadow). Describe it in 10 words."
+            },
+            "zh": {
+              "meaningKeywords": ["精致", "耐心", "在场"],
+              "symbolism": "蝴蝶兰的感觉是慢而笃定。小小的调整，会累积成优雅。",
+              "appreciation": "找一个你平时忽略的细节（弧度、阴影）。用10个字描述它。"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rose",
+      "flower": { "scientificName": "Rosa spp.", "tags": ["fragrant", "thorny"] },
+      "locales": {
+        "en": {
+          "name": "Rose",
+          "aliases": ["Garden Rose"],
+          "care": {
+            "light": "Full sun (6+ hours) for best flowering.",
+            "water": "Deep water 1–2×/week; keep foliage dry when possible.",
+            "temperature": "Best around 15–26°C; protect from hard frost.",
+            "petSafety": "Non-toxic, but thorns can injure."
+          }
+        },
+        "zh": {
+          "name": "玫瑰",
+          "aliases": ["月季（常被混称）"],
+          "care": {
+            "light": "全日照（每天6小时以上）更易开花。",
+            "water": "每周深浇1–2次，尽量避免叶片长期潮湿。",
+            "temperature": "适宜15–26°C，严寒时注意防护。",
+            "petSafety": "通常无毒，但刺可能划伤。"
+          }
+        }
+      },
+      "belief": {
+        "just_flower": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["affection", "courage", "beauty"],
+              "symbolism": "Rose asks for sincerity. Give warmth freely, but keep your boundaries clear (thorns and all).",
+              "appreciation": "Smell something pleasant (soap, tea, a flower). Let it be the whole moment for 15 seconds."
+            },
+            "zh": {
+              "meaningKeywords": ["爱意", "勇气", "美感"],
+              "symbolism": "玫瑰提醒你真诚：把温柔给出去，也把边界留好（就像它的刺）。",
+              "appreciation": "闻一闻让你舒服的气味（香皂、茶、花）。用15秒只做这一件事。"
+            }
+          }
+        },
+        "western_zodiac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["heart", "bravery", "honesty"],
+              "symbolism": "Zodiac mode: lead with your heart, but tell the truth about what you can and can’t give today.",
+              "appreciation": "Write a 1-line note to someone (or yourself): “Here’s what I genuinely appreciate about you…”"
+            },
+            "zh": {
+              "meaningKeywords": ["真心", "勇敢", "坦诚"],
+              "symbolism": "星座模式：用真心行动，但也坦白今天你能给与不能给的。",
+              "appreciation": "写一句话给某个人（或自己）：“我真心欣赏你的是……”"
+            }
+          }
+        },
+        "tarot": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["choice", "devotion", "truth"],
+              "symbolism": "Tarot mode: the message is commitment — pick one thing that matters and give it an honest “yes”.",
+              "appreciation": "Place a hand over your chest and ask: “What do I truly want to protect today?” Write the first answer."
+            },
+            "zh": {
+              "meaningKeywords": ["选择", "投入", "真实"],
+              "symbolism": "塔罗模式：今天的信息是承诺——挑一件重要的事，对它真诚地说“是”。",
+              "appreciation": "把手放在胸口，问自己：“今天我真正想守护的是什么？”把第一反应写下来。"
+            }
+          }
+        },
+        "almanac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["affection", "courage", "beauty"],
+              "symbolism": "Rose asks for sincerity. Give warmth freely, but keep your boundaries clear (thorns and all).",
+              "appreciation": "Smell something pleasant (soap, tea, a flower). Let it be the whole moment for 15 seconds."
+            },
+            "zh": {
+              "meaningKeywords": ["爱意", "勇气", "美感"],
+              "symbolism": "玫瑰提醒你真诚：把温柔给出去，也把边界留好（就像它的刺）。",
+              "appreciation": "闻一闻让你舒服的气味（香皂、茶、花）。用15秒只做这一件事。"
+            }
+          }
+        },
+        "omikuji": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["affection", "courage", "beauty"],
+              "symbolism": "Rose asks for sincerity. Give warmth freely, but keep your boundaries clear (thorns and all).",
+              "appreciation": "Smell something pleasant (soap, tea, a flower). Let it be the whole moment for 15 seconds."
+            },
+            "zh": {
+              "meaningKeywords": ["爱意", "勇气", "美感"],
+              "symbolism": "玫瑰提醒你真诚：把温柔给出去，也把边界留好（就像它的刺）。",
+              "appreciation": "闻一闻让你舒服的气味（香皂、茶、花）。用15秒只做这一件事。"
+            }
+          }
+        },
+        "runes": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["affection", "courage", "beauty"],
+              "symbolism": "Rose asks for sincerity. Give warmth freely, but keep your boundaries clear (thorns and all).",
+              "appreciation": "Smell something pleasant (soap, tea, a flower). Let it be the whole moment for 15 seconds."
+            },
+            "zh": {
+              "meaningKeywords": ["爱意", "勇气", "美感"],
+              "symbolism": "玫瑰提醒你真诚：把温柔给出去，也把边界留好（就像它的刺）。",
+              "appreciation": "闻一闻让你舒服的气味（香皂、茶、花）。用15秒只做这一件事。"
+            }
+          }
+        },
+        "ogham": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["affection", "courage", "beauty"],
+              "symbolism": "Rose asks for sincerity. Give warmth freely, but keep your boundaries clear (thorns and all).",
+              "appreciation": "Smell something pleasant (soap, tea, a flower). Let it be the whole moment for 15 seconds."
+            },
+            "zh": {
+              "meaningKeywords": ["爱意", "勇气", "美感"],
+              "symbolism": "玫瑰提醒你真诚：把温柔给出去，也把边界留好（就像它的刺）。",
+              "appreciation": "闻一闻让你舒服的气味（香皂、茶、花）。用15秒只做这一件事。"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "sunflower",
+      "flower": { "scientificName": "Helianthus annuus", "tags": ["sun", "tall"] },
+      "locales": {
+        "en": {
+          "name": "Sunflower",
+          "care": {
+            "light": "Full sun.",
+            "water": "Water when top soil dries; avoid chronic drought in pots.",
+            "temperature": "Warm-season annual; dislikes frost.",
+            "petSafety": "Generally considered non-toxic."
+          }
+        },
+        "zh": {
+          "name": "向日葵",
+          "care": {
+            "light": "全日照。",
+            "water": "盆栽表土干了再浇，避免长期缺水。",
+            "temperature": "喜温暖，怕霜冻。",
+            "petSafety": "通常认为无毒。"
+          }
+        }
+      },
+      "belief": {
+        "just_flower": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["optimism", "vitality", "direction"],
+              "symbolism": "Sunflower is about choosing your light source. Your attention is fuel — spend it on what grows you.",
+              "appreciation": "Step near a window. Find the brightest spot and let your shoulders soften for one slow breath."
+            },
+            "zh": {
+              "meaningKeywords": ["乐观", "生命力", "方向"],
+              "symbolism": "向日葵提醒你选择自己的光。注意力就是燃料，把它给能让你生长的事。",
+              "appreciation": "走到窗边，找最亮的一处光，放松肩膀，慢慢呼吸一次。"
+            }
+          }
+        },
+        "western_zodiac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["fire", "confidence", "momentum"],
+              "symbolism": "Zodiac mode: act like the sun — be consistent, not perfect. Momentum is your magic today.",
+              "appreciation": "Pick one task you can start in 30 seconds. Start it, then decide if you want to continue."
+            },
+            "zh": {
+              "meaningKeywords": ["火象", "自信", "动能"],
+              "symbolism": "星座模式：像太阳一样行动——稳定，不必完美。今天的魔法是动能。",
+              "appreciation": "选一件30秒就能开始的事。先开始，再决定要不要继续。"
+            }
+          }
+        },
+        "tarot": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["clarity", "confidence", "warmth"],
+              "symbolism": "Tarot mode: today’s message is illumination — what becomes obvious when you stop negotiating with yourself?",
+              "appreciation": "Pick one decision you’ve been delaying. Write the simplest “yes/no” version of it, then choose."
+            },
+            "zh": {
+              "meaningKeywords": ["清晰", "自信", "温暖"],
+              "symbolism": "塔罗模式：今天的信息是照亮——当你不再和自己讨价还价，什么会变得明显？",
+              "appreciation": "选一个你一直拖延的决定，把它写成最简单的“是/否”问题，然后做选择。"
+            }
+          }
+        },
+        "almanac": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["optimism", "vitality", "direction"],
+              "symbolism": "Sunflower is about choosing your light source. Your attention is fuel — spend it on what grows you.",
+              "appreciation": "Step near a window. Find the brightest spot and let your shoulders soften for one slow breath."
+            },
+            "zh": {
+              "meaningKeywords": ["乐观", "生命力", "方向"],
+              "symbolism": "向日葵提醒你选择自己的光。注意力就是燃料，把它给能让你生长的事。",
+              "appreciation": "走到窗边，找最亮的一处光，放松肩膀，慢慢呼吸一次。"
+            }
+          }
+        },
+        "omikuji": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["optimism", "vitality", "direction"],
+              "symbolism": "Sunflower is about choosing your light source. Your attention is fuel — spend it on what grows you.",
+              "appreciation": "Step near a window. Find the brightest spot and let your shoulders soften for one slow breath."
+            },
+            "zh": {
+              "meaningKeywords": ["乐观", "生命力", "方向"],
+              "symbolism": "向日葵提醒你选择自己的光。注意力就是燃料，把它给能让你生长的事。",
+              "appreciation": "走到窗边，找最亮的一处光，放松肩膀，慢慢呼吸一次。"
+            }
+          }
+        },
+        "runes": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["optimism", "vitality", "direction"],
+              "symbolism": "Sunflower is about choosing your light source. Your attention is fuel — spend it on what grows you.",
+              "appreciation": "Step near a window. Find the brightest spot and let your shoulders soften for one slow breath."
+            },
+            "zh": {
+              "meaningKeywords": ["乐观", "生命力", "方向"],
+              "symbolism": "向日葵提醒你选择自己的光。注意力就是燃料，把它给能让你生长的事。",
+              "appreciation": "走到窗边，找最亮的一处光，放松肩膀，慢慢呼吸一次。"
+            }
+          }
+        },
+        "ogham": {
+          "locales": {
+            "en": {
+              "meaningKeywords": ["optimism", "vitality", "direction"],
+              "symbolism": "Sunflower is about choosing your light source. Your attention is fuel — spend it on what grows you.",
+              "appreciation": "Step near a window. Find the brightest spot and let your shoulders soften for one slow breath."
+            },
+            "zh": {
+              "meaningKeywords": ["乐观", "生命力", "方向"],
+              "symbolism": "向日葵提醒你选择自己的光。注意力就是燃料，把它给能让你生长的事。",
+              "appreciation": "走到窗边，找最亮的一处光，放松肩膀，慢慢呼吸一次。"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

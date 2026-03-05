@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botanica.example/schema/daily_flower_entries.v1.schema.json",
+  "title": "Botanica Daily Flower Database (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "defaultLocale", "beliefModes", "entries"],
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "defaultLocale": { "$ref": "#/$defs/localeKey" },
+    "beliefModes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/beliefModeKey" }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/dailyFlowerEntry" }
+    }
+  },
+  "$defs": {
+    "localeKey": {
+      "type": "string",
+      "description": "BCP-47-ish locale key (kept permissive for offline packs).",
+      "pattern": "^[A-Za-z]{2,3}([_-][A-Za-z0-9]{2,8})*$"
+    },
+    "beliefModeKey": {
+      "type": "string",
+      "enum": [
+        "just_flower",
+        "western_zodiac",
+        "tarot",
+        "almanac",
+        "omikuji",
+        "runes",
+        "ogham"
+      ]
+    },
+    "stringMap": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "careBasics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["light", "water", "temperature", "petSafety"],
+      "properties": {
+        "light": { "type": "string", "minLength": 1 },
+        "water": { "type": "string", "minLength": 1 },
+        "temperature": { "type": "string", "minLength": 1 },
+        "petSafety": { "type": "string", "minLength": 1 }
+      }
+    },
+    "baseLocaleContent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "care"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "care": { "$ref": "#/$defs/careBasics" },
+        "culturalNotesByRegion": {
+          "description": "Optional region/country-specific notes, e.g. US/CN/JP.",
+          "$ref": "#/$defs/stringMap"
+        }
+      }
+    },
+    "beliefLocaleContent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["meaningKeywords", "symbolism", "appreciation"],
+      "properties": {
+        "meaningKeywords": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 6,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "symbolism": { "type": "string", "minLength": 1 },
+        "appreciation": { "type": "string", "minLength": 1 },
+        "disclaimer": { "type": "string" }
+      }
+    },
+    "beliefContent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locales"],
+      "properties": {
+        "locales": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/$defs/beliefLocaleContent" },
+          "propertyNames": { "$ref": "#/$defs/localeKey" }
+        }
+      }
+    },
+    "flowerInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scientificName"],
+      "properties": {
+        "scientificName": { "type": "string", "minLength": 1 },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "dailyFlowerEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "flower", "locales", "belief"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_\\-]{2,64}$" },
+        "flower": { "$ref": "#/$defs/flowerInfo" },
+        "locales": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/$defs/baseLocaleContent" },
+          "propertyNames": { "$ref": "#/$defs/localeKey" }
+        },
+        "belief": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/$defs/beliefContent" },
+          "propertyNames": { "$ref": "#/$defs/beliefModeKey" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Some legacy Android plugin build scripts still expect a `flutter.*` object
+// (compileSdkVersion/minSdkVersion/etc) even when the app is using the newer
+// `dev.flutter.flutter-gradle-plugin` integration. Provide a lightweight
+// fallback for those plugins so Android builds stay stable.
+ext.flutter = [
+        compileSdkVersion: 34,
+        minSdkVersion    : 21,
+        targetSdkVersion : 34,
+        ndkVersion       : "26.1.10909125",
+]
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+subprojects { project ->
+    if (project.name != "app" && !project.ext.has("flutter")) {
+        project.ext.flutter = rootProject.ext.flutter
+    }
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}

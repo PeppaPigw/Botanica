@@ -1,0 +1,198 @@
+import 'package:flutter/widgets.dart';
+
+import 'enums.dart';
+
+class UserSettings {
+  const UserSettings({
+    required this.hasCompletedOnboarding,
+    required this.temperatureUnit,
+    required this.beliefMode,
+    required this.reminderTimePreference,
+    required this.hemisphere,
+    required this.localeCode,
+    required this.enableDynamicColor,
+    required this.enableAiInsights,
+    required this.careStreakDays,
+    required this.lastCareDate,
+    this.dailySeed,
+    this.birthDate,
+    this.westernZodiacSignId,
+    this.dismissedSeasonTipKey,
+  });
+
+  factory UserSettings.defaults() => const UserSettings(
+        hasCompletedOnboarding: false,
+        temperatureUnit: TemperatureUnit.celsius,
+        beliefMode: BeliefMode.unselected,
+        reminderTimePreference: ReminderTimePreference.morning,
+        hemisphere: Hemisphere.northern,
+        localeCode: null,
+        enableDynamicColor: true,
+        enableAiInsights: false,
+        careStreakDays: 0,
+        lastCareDate: null,
+        dailySeed: null,
+        birthDate: null,
+        westernZodiacSignId: null,
+      );
+
+  final bool hasCompletedOnboarding;
+  final TemperatureUnit temperatureUnit;
+  final BeliefMode beliefMode;
+  final ReminderTimePreference reminderTimePreference;
+  final Hemisphere hemisphere;
+  final String? localeCode;
+  final bool enableDynamicColor;
+  final bool enableAiInsights;
+  final int careStreakDays;
+  final DateTime? lastCareDate;
+  final String? dailySeed;
+  final DateTime? birthDate;
+  final String? westernZodiacSignId;
+  final String? dismissedSeasonTipKey;
+
+  Locale? get locale => localeCode == null ? null : Locale(localeCode!);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is UserSettings &&
+            other.hasCompletedOnboarding == hasCompletedOnboarding &&
+            other.temperatureUnit == temperatureUnit &&
+            other.beliefMode == beliefMode &&
+            other.reminderTimePreference == reminderTimePreference &&
+            other.hemisphere == hemisphere &&
+            other.localeCode == localeCode &&
+            other.enableDynamicColor == enableDynamicColor &&
+            other.enableAiInsights == enableAiInsights &&
+            other.careStreakDays == careStreakDays &&
+            other.lastCareDate == lastCareDate &&
+            other.dailySeed == dailySeed &&
+            other.birthDate == birthDate &&
+            other.westernZodiacSignId == westernZodiacSignId &&
+            other.dismissedSeasonTipKey == dismissedSeasonTipKey);
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        hasCompletedOnboarding,
+        temperatureUnit,
+        beliefMode,
+        reminderTimePreference,
+        hemisphere,
+        localeCode,
+        enableDynamicColor,
+        enableAiInsights,
+        careStreakDays,
+        lastCareDate,
+        dailySeed,
+        birthDate,
+        westernZodiacSignId,
+        dismissedSeasonTipKey,
+      );
+
+  static const Object _unset = Object();
+
+  UserSettings copyWith({
+    bool? hasCompletedOnboarding,
+    TemperatureUnit? temperatureUnit,
+    BeliefMode? beliefMode,
+    ReminderTimePreference? reminderTimePreference,
+    Hemisphere? hemisphere,
+    Object? localeCode = _unset,
+    bool? enableDynamicColor,
+    bool? enableAiInsights,
+    int? careStreakDays,
+    Object? lastCareDate = _unset,
+    Object? dailySeed = _unset,
+    Object? birthDate = _unset,
+    Object? westernZodiacSignId = _unset,
+    Object? dismissedSeasonTipKey = _unset,
+  }) {
+    return UserSettings(
+      hasCompletedOnboarding:
+          hasCompletedOnboarding ?? this.hasCompletedOnboarding,
+      temperatureUnit: temperatureUnit ?? this.temperatureUnit,
+      beliefMode: beliefMode ?? this.beliefMode,
+      reminderTimePreference:
+          reminderTimePreference ?? this.reminderTimePreference,
+      hemisphere: hemisphere ?? this.hemisphere,
+      localeCode: identical(localeCode, _unset)
+          ? this.localeCode
+          : localeCode as String?,
+      enableDynamicColor: enableDynamicColor ?? this.enableDynamicColor,
+      enableAiInsights: enableAiInsights ?? this.enableAiInsights,
+      careStreakDays: careStreakDays ?? this.careStreakDays,
+      lastCareDate: identical(lastCareDate, _unset)
+          ? this.lastCareDate
+          : lastCareDate as DateTime?,
+      dailySeed:
+          identical(dailySeed, _unset) ? this.dailySeed : dailySeed as String?,
+      birthDate: identical(birthDate, _unset)
+          ? this.birthDate
+          : birthDate as DateTime?,
+      westernZodiacSignId: identical(westernZodiacSignId, _unset)
+          ? this.westernZodiacSignId
+          : westernZodiacSignId as String?,
+      dismissedSeasonTipKey: identical(dismissedSeasonTipKey, _unset)
+          ? this.dismissedSeasonTipKey
+          : dismissedSeasonTipKey as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'hasCompletedOnboarding': hasCompletedOnboarding,
+        'temperatureUnit': temperatureUnit.id,
+        'beliefMode': beliefMode.id,
+        'reminderTimePreference': reminderTimePreference.id,
+        'hemisphere': hemisphere.id,
+        'localeCode': localeCode,
+        'enableDynamicColor': enableDynamicColor,
+        'enableAiInsights': enableAiInsights,
+        'careStreakDays': careStreakDays,
+        'lastCareDate':
+            lastCareDate == null ? null : _formatDateOnly(lastCareDate!),
+        'dailySeed': dailySeed,
+        'birthDate': birthDate == null ? null : _formatDateOnly(birthDate!),
+        'westernZodiacSignId': westernZodiacSignId,
+        'dismissedSeasonTipKey': dismissedSeasonTipKey,
+      };
+
+  static UserSettings fromJson(Map<String, dynamic> json) {
+    return UserSettings(
+      hasCompletedOnboarding:
+          (json['hasCompletedOnboarding'] as bool?) ?? false,
+      temperatureUnit:
+          TemperatureUnit.fromId(json['temperatureUnit'] as String?),
+      beliefMode: BeliefMode.fromId(json['beliefMode'] as String?),
+      reminderTimePreference: ReminderTimePreference.fromId(
+        json['reminderTimePreference'] as String?,
+      ),
+      hemisphere: Hemisphere.fromId(json['hemisphere'] as String?),
+      localeCode: json['localeCode'] as String?,
+      enableDynamicColor: (json['enableDynamicColor'] as bool?) ?? true,
+      enableAiInsights: (json['enableAiInsights'] as bool?) ?? false,
+      careStreakDays: (json['careStreakDays'] as num?)?.toInt() ?? 0,
+      lastCareDate: _parseDateOnly(json['lastCareDate']),
+      dailySeed: json['dailySeed'] as String?,
+      birthDate: _parseDateOnly(json['birthDate']),
+      westernZodiacSignId: json['westernZodiacSignId'] as String?,
+      dismissedSeasonTipKey: json['dismissedSeasonTipKey'] as String?,
+    );
+  }
+}
+
+String _formatDateOnly(DateTime date) {
+  final y = date.year.toString().padLeft(4, '0');
+  final m = date.month.toString().padLeft(2, '0');
+  final d = date.day.toString().padLeft(2, '0');
+  return '$y-$m-$d';
+}
+
+DateTime? _parseDateOnly(Object? raw) {
+  final s = raw is String ? raw.trim() : null;
+  if (s == null || s.isEmpty) return null;
+  final parsed = DateTime.tryParse(s);
+  if (parsed == null) return null;
+  return DateTime(parsed.year, parsed.month, parsed.day);
+}

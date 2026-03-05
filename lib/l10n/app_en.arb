@@ -1,0 +1,640 @@
+{
+  "appName": "Botanica",
+  "appTagline": "Your personal plant care companion — calm, beautiful, and thoughtful.",
+  "gardenNoScheduleYet": "No schedule yet",
+
+  "commonContinue": "Continue",
+  "commonSkip": "Skip",
+  "commonStart": "Start",
+  "commonDone": "Done",
+  "commonCancel": "Cancel",
+  "commonClear": "Clear",
+  "commonSave": "Save",
+  "commonClose": "Close",
+  "commonShow": "Show",
+  "commonHide": "Hide",
+  "commonLater": "Later",
+  "commonSearch": "Search",
+  "commonEdit": "Edit",
+  "commonAdd": "Add",
+  "commonSettings": "Settings",
+  "commonUnits": "Units",
+  "commonLanguage": "Language",
+  "commonAbout": "About",
+  "commonTryAgain": "Try again",
+  "commonComingSoon": "Coming soon",
+  "commonLoading": "Loading…",
+  "commonViewAll": "View all",
+  "commonWhy": "Why?",
+  "commonIdeal": "Ideal",
+  "commonTolerates": "Tolerates",
+  "commonSoil": "Soil",
+  "commonSoilPh": "Soil pH",
+  "commonWhen": "When",
+  "commonHow": "How",
+  "commonPestsAndDiseases": "Pests & diseases",
+  "commonPrevention": "Prevention",
+  "commonHeatwave": "Heatwave",
+  "commonFrost": "Frost",
+  "commonStorm": "Storm",
+  "commonHeavyRain": "Heavy rain",
+  "commonClimateHotDry": "Hot / Dry",
+  "commonClimateCoolWet": "Cool / Wet",
+  "commonClimateStrategies": "Climate strategies",
+  "resourcesTitle": "Resources",
+  "resourceWikipedia": "Wikipedia",
+  "resourceYouTube": "YouTube",
+  "resourceBaiduBaike": "Baidu Baike",
+  "resourceBilibili": "Bilibili",
+  "resourceGbif": "GBIF",
+  "resourceCareGuide": "Care guide",
+  "resourceCopyLink": "Copy link",
+  "resourceLinkCopied": "Link copied",
+  "stateLoadFailedTitle": "Couldn’t load",
+  "stateLoadFailedBody": "Check your connection and try again.",
+  "stateNotAvailableTitle": "Not available",
+  "stateNotAvailableBody": "This content isn’t available right now.",
+
+  "navGarden": "Garden",
+  "navCalendar": "Calendar",
+  "navDiscover": "Discover",
+  "navDaily": "Daily",
+  "navProfile": "Profile",
+
+  "calendarTitle": "Calendar",
+  "calendarFilterAll": "All",
+  "calendarPrevMonth": "Previous month",
+  "calendarNextMonth": "Next month",
+  "calendarSectionHistory": "Care history",
+  "calendarNoEvents": "No care logs for this day.",
+
+  "splashTagline": "Calm care, beautifully organized.",
+
+  "onboardingTitle1": "Your Garden, beautifully organized",
+  "onboardingBody1": "Track your plants, build a photo timeline, and keep notes without the clutter.",
+  "onboardingTitle2": "Smart care, tuned to your environment",
+  "onboardingBody2": "Humidity, temperature, season — Botanica explains why your schedule shifts.",
+  "onboardingTitle3": "Daily Flower ritual",
+  "onboardingBody3": "A gentle daily card: meaning, care basics, and a 60‑second appreciation prompt.",
+  "onboardingCta": "Start Botanica",
+
+  "permissionsTitle": "Set up what you need",
+  "permissionsSubtitle": "Enable everything now, or only when you use each feature.",
+  "permNotificationsTitle": "Notifications",
+  "permNotificationsBody": "So you never miss watering.",
+  "permLocationTitle": "Location",
+  "permLocationBody": "So care adapts to your climate.",
+  "permCameraTitle": "Camera & Photos",
+  "permCameraBody": "For growth journaling and plant scan.",
+  "permLocationServicesOff": "Location services are turned off.",
+  "permStatusEnabled": "Enabled",
+  "permStatusNotEnabled": "Not enabled",
+  "permStatusLimited": "Limited",
+  "permStatusProvisional": "Provisional",
+  "permStatusRestricted": "Restricted",
+  "permStatusBlocked": "Blocked",
+  "permActionEnable": "Enable",
+  "permActionOpenSettings": "Open settings",
+  "permissionsEnableAll": "Enable all now",
+  "permissionsNotNow": "Not now",
+  "permissionsPrivacyNote": "Botanica asks only when needed — you can change this later in Profile.",
+
+  "gardenTitle": "Garden",
+  "gardenTodayCardTitle": "Today",
+  "gardenLoadError": "Failed to load plants.",
+  "gardenTasksDueToday": "{count, plural, =0{No tasks due} =1{1 task due} other{{count} tasks due}}",
+  "@gardenTasksDueToday": {
+    "description": "Task count on Today card",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenCareStreakChip": "{days}-day streak",
+  "@gardenCareStreakChip": {
+    "description": "Chip label showing the user's current care streak",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeatherChip": "{condition} · {temp}°{unit} · {humidity}%",
+  "@gardenWeatherChip": {
+    "placeholders": {
+      "condition": {
+        "type": "String"
+      },
+      "temp": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "humidity": {
+        "type": "int"
+      }
+    }
+  },
+  "weatherClear": "Clear",
+  "weatherPartlyCloudy": "Partly cloudy",
+  "weatherCloudy": "Cloudy",
+  "weatherFog": "Fog",
+  "weatherDrizzle": "Drizzle",
+  "weatherRain": "Rain",
+  "weatherSnow": "Snow",
+  "weatherThunder": "Thunderstorm",
+  "weatherUnknown": "Weather",
+  "gardenQuickWatered": "Watered",
+  "gardenQuickSnooze": "Snooze",
+  "gardenQuickAddPlant": "Add plant",
+  "gardenEmptyTitle": "Start your garden",
+  "gardenEmptyBody": "Add your first plant to unlock a tailored care plan and daily tasks.",
+  "gardenEmptyCta": "Add your first plant",
+  "gardenAddPlantFab": "Add Plant",
+
+  "addPlantTitle": "Add Plant",
+  "addPlantMethodScan": "Scan",
+  "addPlantMethodLibrary": "From library",
+  "addPlantMethodManual": "Manual entry",
+  "addPlantScanTitle": "Scan your plant",
+  "addPlantScanBody": "Capture leaf + full plant for better results.",
+  "addPlantScanButton": "Scan now",
+  "addPlantLibraryTitle": "Choose a plant",
+  "addPlantManualTitle": "Tell us about it",
+  "addPlantConfirmTitle": "Confirm details",
+  "addPlantFieldNickname": "Nickname",
+  "addPlantFieldRoom": "Room",
+  "addPlantDefaultRoomLivingRoom": "Living room",
+  "addPlantDefaultSpeciesUnknown": "Unknown",
+  "addPlantFieldEnvironment": "Environment",
+  "addPlantEnvIndoor": "Indoor",
+  "addPlantEnvBalcony": "Balcony",
+  "addPlantEnvOutdoor": "Outdoor",
+  "addPlantReminderTime": "Reminder time",
+  "addPlantReminderMorning": "Morning",
+  "addPlantReminderEvening": "Evening",
+  "addPlantReminderCustom": "Custom",
+  "addPlantSaveButton": "Save to Garden",
+
+  "plantDetailOverview": "Overview",
+  "plantDetailCare": "Care",
+  "plantDetailJournal": "Journal",
+  "plantDetailLogs": "Logs",
+  "plantDetailLogsEmptyTitle": "No care logs yet",
+  "plantDetailLogsEmptyBody": "Complete a watering or care task and it will appear here.",
+  "tasksEmptyUpcoming": "No upcoming tasks",
+  "tasksEmptyOverdue": "All caught up!",
+  "plantDetailWaterNow": "Water now",
+  "plantDetailAddPhoto": "Add photo",
+  "plantDetailAddNote": "Add note",
+  "plantDetailMissingTitle": "Plant unavailable",
+  "plantDetailMissingBody": "This plant can’t be found. It may have been deleted.",
+  "plantDetailMissingCta": "Back to Garden",
+  "plantDetailNextWateringInDays": "Next watering in {days} days",
+  "@plantDetailNextWateringInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantDetailEnvironmentImpactTitle": "Environment impact",
+  "plantDetailEnvironmentImpactBaseAdjusted": "Base: {base} days · Adjusted: {adjusted} days",
+  "@plantDetailEnvironmentImpactBaseAdjusted": {
+    "placeholders": {
+      "base": {
+        "type": "int"
+      },
+      "adjusted": {
+        "type": "int"
+      }
+    }
+  },
+  "plantDetailEnvironmentStable": "Stable conditions — no adjustment today.",
+  "plantDetailDrynessLow": "Low dryness (slower drying)",
+  "plantDetailDrynessBalanced": "Balanced dryness",
+  "plantDetailDrynessHigh": "High dryness (faster drying)",
+  "plantDetailCareWaterBody": "Next watering is calculated from a base interval and adjusted by humidity, temperature, and season.",
+  "plantDetailCareLightBody": "Bright, indirect light is a great default for most indoor plants.",
+  "plantDetailCareTempTitle": "Temperature",
+  "plantDetailCareTempBody": "Avoid sudden cold drafts. Stable warmth helps predictable growth.",
+  "plantDetailJournalDesignNote": "Match framing overlay and compare slider are designed here; plug in camera/gallery later.",
+  "plantDetailJournalIntro": "A gentle timeline for photos and notes — your plant diary.",
+  "journalSectionPhotos": "Photos",
+  "diarySectionTitle": "Diary",
+  "diaryEmptyBody": "No notes yet. Add one to remember what changed.",
+  "diaryAddEntryTitle": "New diary entry",
+  "diaryAddEntryHint": "Write what you noticed today…",
+  "diaryAddEntryButton": "Add note",
+  "diaryEntryTitle": "Diary entry",
+  "diaryEntrySaved": "Saved to diary.",
+  "journalShareCardTitle": "Share card",
+  "journalShareCardText": "Made with Botanica",
+  "journalShareFailed": "Could not share — please try again.",
+  "journalAddPhotoTitle": "Add photo",
+  "journalAddPhotoCamera": "Camera",
+  "journalAddPhotoCameraBody": "Capture a new photo with an optional ghost overlay from your last shot.",
+  "journalAddPhotoGallery": "Gallery",
+  "journalAddPhotoGalleryBody": "Pick a photo from your library.",
+  "journalCaptureTitle": "Capture",
+  "journalCaptureTip": "Fill the frame and try to match your last photo for better comparisons.",
+  "journalFlash": "Flash",
+  "journalCameraPermissionNeeded": "Camera permission is required to capture photos.",
+  "journalPhotosPermissionNeeded": "Photos permission is required to pick images.",
+  "journalPhotoSaved": "Saved to journal.",
+  "journalEmptyBody": "No photos yet. Add one to start your growth timeline.",
+  "journalPhotoTitle": "Journal photo",
+  "journalPhotoNoNote": "No note",
+  "journalAddNoteTitle": "Add a note",
+  "journalAddNoteHint": "Optional: new leaf, repotted, etc.",
+  "journalCompareTitle": "Compare",
+  "journalCompareHint": "Drag left/right to compare.",
+  "journalPhotoMeta": "{date}",
+  "@journalPhotoMeta": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+
+  "scanTitle": "Scan",
+  "scanTryAgain": "Try again",
+  "scanCaptureTitle": "Scan your plant",
+  "scanCaptureTip": "Capture leaf + full plant for best results.",
+  "scanCameraPermissionNeeded": "Camera permission is required to scan plants.",
+  "scanProcessingBody": "Identifying your plant…",
+  "scanChooseCandidate": "Choose a match",
+  "scanRefinePetSafe": "Pet‑safe",
+  "scanRefineEasy": "Easy care",
+  "scanRefineLowLight": "Low light",
+  "scanAddToGarden": "Add to Garden",
+  "scanDeterministicNote": "Demo mode: results are deterministic offline placeholders. Plug in Kindwise/Gemini later.",
+
+  "tasksTitle": "Tasks",
+  "tasksTabToday": "Today",
+  "tasksTabUpcoming": "Upcoming",
+  "tasksTabOverdue": "Overdue",
+  "tasksCalendarToggle": "Calendar",
+  "tasksSeasonalTipsTitle": "Seasonal care tips",
+  "tipSpringRepot": "Spring: Repot if roots are crowded and growth has resumed.",
+  "tipSpringFertilize": "Spring: Resume light fertilizing as new growth starts.",
+  "tipSummerWaterMore": "Summer: Check soil more often — pots dry faster in heat.",
+  "tipSummerShadeOutdoor": "Summer: Protect balcony/outdoor plants from harsh midday sun.",
+  "tipAutumnReduceWater": "Autumn: Reduce watering as light and growth slow down.",
+  "tipAutumnBringIndoor": "Autumn: Bring sensitive plants indoors before cold nights.",
+  "tipWinterReduceFertilize": "Winter: Fertilize less and water less — growth slows.",
+  "tipWinterLowLight": "Winter: Move closer to light or use a grow light to prevent stretching.",
+  "tasksSnoozedUntil": "Snoozed until {date}",
+  "@tasksSnoozedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+
+  "discoverTitle": "Discover",
+  "discoverSearchHint": "Search plants, guides, and tips",
+  "discoverNoResultsTitle": "No matches",
+  "discoverNoResultsBody": "Try a different name, or search by scientific name.",
+  "discoverSectionCurated": "Curated plants",
+  "discoverSectionLibrary": "Plant library",
+  "discoverSectionGuides": "Guides",
+  "discoverFilters": "Filters",
+  "discoverFilterPetSafe": "Pet‑safe",
+  "discoverFilterDifficulty": "Difficulty",
+  "discoverFilterLight": "Light",
+  "discoverTagPetSafe": "Pet‑safe",
+  "discoverTagToxic": "Toxic",
+  "discoverGuideWateringTitle": "Watering basics",
+  "discoverGuideWateringBody": "Learn how to read soil moisture and avoid overwatering.",
+  "discoverGuideSoilTitle": "Soil & drainage",
+  "discoverGuideSoilBody": "Why airy mixes reduce root rot and help growth.",
+  "discoverGuidePestTitle": "Pest checklist",
+  "discoverGuidePestBody": "A quick weekly routine to catch issues early.",
+
+  "speciesDetailHistory": "History",
+  "speciesDetailHabit": "Growth habit",
+  "speciesDetailCareAtAGlance": "Care at a glance",
+  "speciesDetailWaterEvery": "Water every {days} days",
+  "@speciesDetailWaterEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailFertilizeEvery": "Fertilize every {days} days",
+  "@speciesDetailFertilizeEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailMistEvery": "Mist every {days} days",
+  "@speciesDetailMistEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailDetails": "Details",
+  "speciesDetailOrigin": "Origin",
+  "speciesDetailToxicity": "Toxicity",
+  "speciesDetailGrowth": "Growth",
+  "speciesDetailMatureSize": "Mature size",
+  "speciesDetailSizeHeight": "Height",
+  "speciesDetailSizeSpread": "Spread",
+  "speciesDetailSizeVineLength": "Vine length",
+  "speciesDetailRangeCm": "{min}–{max} cm",
+  "@speciesDetailRangeCm": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailCmValue": "{value} cm",
+  "@speciesDetailCmValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesDetailUnknown": "Unknown",
+  "growthRateSlow": "Slow",
+  "growthRateModerate": "Moderate",
+  "growthRateFast": "Fast",
+  "growthRateUnknown": "Unknown",
+  "growthFormUpright": "Upright",
+  "growthFormTrailing": "Trailing",
+  "growthFormClimbing": "Climbing",
+  "growthFormRosette": "Rosette",
+  "growthFormTreeLike": "Tree-like",
+  "growthFormClumping": "Clumping",
+  "growthFormEpiphytic": "Epiphytic",
+  "growthFormSucculent": "Succulent",
+  "growthFormFern": "Fern",
+  "growthFormOrchid": "Orchid",
+  "growthFormOther": "Other",
+  "difficultyEasy": "Easy",
+  "difficultyMedium": "Medium",
+  "difficultyHard": "Hard",
+  "lightBrightDirect": "Bright, direct",
+  "lightBrightIndirect": "Bright, indirect",
+  "lightMediumIndirect": "Medium, indirect",
+  "lightLowToBrightIndirect": "Low to bright, indirect",
+  "lightLowToBright": "Low to bright",
+
+  "dailyTitle": "Daily Flower",
+  "dailyReveal": "Reveal",
+  "dailyRevealHintTap": "Tap to reveal",
+  "dailyRevealHintSlide": "Slide to reveal",
+  "dailyRevealHintHold": "Hold to reveal",
+  "dailyRevealHintPull": "Pull to reveal",
+  "dailyRevealHintStamp": "Stamp to reveal",
+  "dailyRevealHintFlip": "Flip to reveal",
+  "dailyRevealHintTrace": "Trace to reveal",
+  "dailyInfoTitle": "About Daily Flower",
+  "dailyInfoIntro": "Daily Flower is a calm ritual that changes once per day.",
+  "dailyInfoModeWesternZodiac": "Western zodiac uses your birth date or your selected sign.",
+  "dailyInfoModeTarot": "Tarot is chosen by drawing four cards and selecting one.",
+  "dailyInfoModeAuto": "{mode} uses a daily draw from today’s date — personalized with your key.",
+  "@dailyInfoModeAuto": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyInfoModeJustFlower": "Just Flower is the simplest ritual. Tap to reveal a personalized bloom.",
+  "dailyInfoHowToReveal": "How to reveal: {hint}",
+  "@dailyInfoHowToReveal": {
+    "placeholders": {
+      "hint": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyInfoChangeMode": "Change mode",
+  "dailySave": "Save",
+  "dailyShare": "Share",
+  "dailyCareToday": "Care today",
+  "dailyHowToAppreciate": "How to appreciate today",
+  "dailyAiNoteTitle": "Botanica note",
+  "plantCareAiTipTitle": "Today's care tip",
+  "dailyModeMissingTitle": "Choose your Daily mode",
+  "dailyModeMissingBody": "Pick a tradition (tarot, almanac, rune…) and Botanica will personalize your Daily Flower.",
+  "dailyModeMissingCta": "Choose a mode",
+  "dailyTarotNotDrawn": "Draw today",
+  "dailyTarotDrawTitle": "Tarot draw",
+  "dailyTarotDrawBody": "Four cards are dealt. Choose one — Botanica will reveal today’s flower.",
+  "dailyTarotDrawCta": "Deal 4 cards",
+  "dailyTarotCardLabel": "Choose",
+  "dailyDeterministicNote": "Daily Flower is deterministic: same day + locale + mode + your profile yields the same card (great for sharing).",
+  "dailyContentUnavailableTitle": "Daily Flower unavailable",
+  "dailyContentUnavailableBody": "Botanica couldn’t load today’s flower content. Please try again.",
+  "dailyProfileMissingTitle": "Complete your profile",
+  "dailyProfileMissingBody": "Set a personal key in Profile (like a short seed phrase or your birth date) so Daily Flower can be personalized.",
+  "dailyProfileMissingBodyZodiac": "Set your birth date (or choose your sign) in Profile so Daily Flower can be personalized.",
+  "dailyProfileMissingCta": "Set up now",
+
+  "careKeyLight": "Light",
+  "careKeyWater": "Water",
+  "careKeyTemperature": "Temperature",
+  "careKeyPetSafety": "Pet safety",
+
+  "profileTitle": "Profile",
+  "profileSectionPreferences": "Preferences",
+  "profileSectionPermissions": "Permissions",
+  "profileSectionData": "Data",
+  "profileSectionAbout": "About",
+  "profileLanguage": "Language",
+  "profileUnits": "Units",
+  "profileHemisphereTitle": "Hemisphere",
+  "profileHemisphereBody": "Used for seasonal care adjustments (winter vs summer).",
+  "hemisphereNorthern": "Northern",
+  "hemisphereSouthern": "Southern",
+  "profileBeliefMode": "Daily mode",
+  "profileDailyProfileTitle": "Daily personalization",
+  "profileDailyProfileBody": "Choose your personal key for {mode}.",
+  "@profileDailyProfileBody": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "profileBirthdateTitle": "Birthdate",
+  "profileBirthdateBody": "Used for zodiac and almanac personalization.",
+  "profileDailySeedTitle": "Personal key",
+  "profileDailySeedBody": "A short seed phrase (like your nickname) that personalizes Daily Flower without changing your mode.",
+  "profileDailySeedHint": "e.g. Aster",
+  "profileDailyProfileUseBirthdate": "Use birthdate",
+  "profileDailyProfileNotSet": "Not set",
+  "profileDailyProfileKeySet": "Key set",
+  "profileDailyProfileNotNeeded": "No personal info needed.",
+  "profileDailyProfilePickModeFirst": "Choose your Daily mode first, then set up the details here.",
+  "profileDailyProfileTarotSubtitle": "Draw in Daily",
+  "profileDailyProfileAutoSubtitle": "Auto (today’s date)",
+  "profileDailyProfileTarotBody": "Tarot mode is a daily ritual. Open Daily, deal four cards, and choose one — then today’s flower is revealed.",
+  "profileDailyProfileTarotCta": "Open Daily",
+  "profileDailyProfileAutoBody": "{mode} uses a daily draw based on today’s date — personalized with your key.",
+  "@profileDailyProfileAutoBody": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDailyProfileLocalDefault": "Uses your language",
+  "profileLocalTraditionKeyTitle": "Culture key",
+  "profileLocalTraditionKeyHint": "e.g. global, china, japan…",
+  "profilePhotos": "Photos",
+  "profileNotifications": "Notifications",
+  "profileLocation": "Location",
+  "profilePrivacy": "Privacy",
+  "profileBackup": "Backup",
+  "profileCredits": "Credits",
+  "profileDynamicColorTitle": "Dynamic color",
+  "profileDynamicColorBody": "Use device palette when available.",
+  "profileAiInsightsTitle": "AI insights",
+  "profileAiInsightsBody": "Subtle on-page notes that personalize your Daily Flower ritual.",
+  "profileAiKeyTitle": "AI API key",
+  "profileAiKeyConfigured": "Configured",
+  "profileAiKeyNotSet": "Not set",
+  "profileAiKeyNotRequired": "Not required",
+  "profileAiKeySheetBody": "Stored securely on this device. Used only to generate short, on-page insights in your selected language.",
+  "profileAiKeyNotRequiredBody": "This build is configured to use an unauthenticated proxy, so no API key is needed.",
+  "profileAiKeySheetHint": "Paste your API key",
+  "profileAiKeySaved": "AI key saved.",
+  "profileAiKeyCleared": "AI key removed.",
+  "profileLanguageSystem": "System",
+
+  "creditsTitle": "Credits",
+  "creditsOpenSource": "Open‑source",
+  "creditsFlutterCommunity": "Flutter community references",
+  "creditsUiInspiration": "UI inspiration",
+  "creditsPlaceholderNote": "Note: this project uses white placeholder PNGs for imagery — replace assets later with real photography/illustrations.",
+
+  "unitsCelsius": "Celsius (°C)",
+  "unitsFahrenheit": "Fahrenheit (°F)",
+
+  "beliefModeWesternZodiac": "Western zodiac",
+  "beliefModeChineseZodiac": "Chinese zodiac",
+  "beliefModeTarot": "Tarot draw",
+  "beliefModeLocalTraditions": "Local traditions",
+  "beliefModeJustFlower": "Just give me a flower",
+  "beliefModeNotSet": "Not set",
+  "beliefModeAlmanac": "Almanac",
+  "beliefModeOmikuji": "Japan Omikuji",
+  "beliefModeRunes": "Nordic runes",
+  "beliefModeOgham": "Celtic ogham",
+
+  "zodiacAries": "Aries",
+  "zodiacTaurus": "Taurus",
+  "zodiacGemini": "Gemini",
+  "zodiacCancer": "Cancer",
+  "zodiacLeo": "Leo",
+  "zodiacVirgo": "Virgo",
+  "zodiacLibra": "Libra",
+  "zodiacScorpio": "Scorpio",
+  "zodiacSagittarius": "Sagittarius",
+  "zodiacCapricorn": "Capricorn",
+  "zodiacAquarius": "Aquarius",
+  "zodiacPisces": "Pisces",
+
+  "chineseZodiacRat": "Rat",
+  "chineseZodiacOx": "Ox",
+  "chineseZodiacTiger": "Tiger",
+  "chineseZodiacRabbit": "Rabbit",
+  "chineseZodiacDragon": "Dragon",
+  "chineseZodiacSnake": "Snake",
+  "chineseZodiacHorse": "Horse",
+  "chineseZodiacGoat": "Goat",
+  "chineseZodiacMonkey": "Monkey",
+  "chineseZodiacRooster": "Rooster",
+  "chineseZodiacDog": "Dog",
+  "chineseZodiacPig": "Pig",
+
+  "tarotTheFool": "The Fool",
+  "tarotTheMagician": "The Magician",
+  "tarotTheHighPriestess": "The High Priestess",
+  "tarotTheEmpress": "The Empress",
+  "tarotTheEmperor": "The Emperor",
+  "tarotTheHierophant": "The Hierophant",
+  "tarotTheLovers": "The Lovers",
+  "tarotTheChariot": "The Chariot",
+  "tarotStrength": "Strength",
+  "tarotTheHermit": "The Hermit",
+  "tarotWheelOfFortune": "Wheel of Fortune",
+  "tarotJustice": "Justice",
+  "tarotTheHangedMan": "The Hanged Man",
+  "tarotDeath": "Death",
+  "tarotTemperance": "Temperance",
+  "tarotTheDevil": "The Devil",
+  "tarotTheTower": "The Tower",
+  "tarotTheStar": "The Star",
+  "tarotTheMoon": "The Moon",
+  "tarotTheSun": "The Sun",
+  "tarotJudgement": "Judgement",
+  "tarotTheWorld": "The World",
+
+  "omikujiDaikichi": "Great blessing (Daikichi)",
+  "omikujiChukichi": "Middle blessing (Chūkichi)",
+  "omikujiShokichi": "Small blessing (Shōkichi)",
+  "omikujiKichi": "Blessing (Kichi)",
+  "omikujiHankichi": "Half blessing (Hankichi)",
+  "omikujiSuekichi": "Future blessing (Suekichi)",
+  "omikujiKyo": "Curse (Kyō)",
+  "omikujiDaikyo": "Great curse (Daikyō)",
+
+  "taskTypeWater": "Water",
+  "taskTypeFertilize": "Fertilize",
+  "taskTypeMist": "Mist",
+  "taskTypeRotate": "Rotate",
+  "taskTypePrune": "Prune",
+  "taskTypeRepot": "Repot",
+  "taskTypeCheckPests": "Check pests",
+  "taskTypeWipeLeaves": "Wipe leaves",
+  "taskTypeSunlightAdjustment": "Sunlight adjustment",
+
+  "notificationsTaskTitle": "{plant} · {task}",
+  "@notificationsTaskTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "task": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationsTaskBodyRoom": "In {room}",
+  "@notificationsTaskBodyRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationsTaskBodyNoRoom": "Open Botanica to mark it done.",
+
+  "reasonHumidityLow": "Low humidity → soil dries faster",
+  "reasonHumidityHigh": "High humidity → soil stays moist longer",
+  "reasonHot": "Warm temperature → higher evaporation",
+  "reasonWinter": "Winter season → slower growth",
+  "reasonOutdoor": "Outdoor mode → forecast weighted more",
+  "reasonIndoor": "Indoor mode → stable conditions assumed"
+}
