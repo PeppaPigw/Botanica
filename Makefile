@@ -1,8 +1,8 @@
 .PHONY: test test-integration
 
 test:
-\tflutter test --timeout 60s
+	flutter test --timeout 60s
 
 test-integration:
-\tbash scripts/test_integration.sh
+	bash scripts/test_integration.sh
 

@@ -81,14 +81,6 @@ flutter analyze
 flutter test --timeout 60s
 ```
 
-## Release builds & signing
-
-See `docs/release.md` for:
-
-- Release build commands + artifact paths
-- Android keystore signing (no secrets in git)
-- iOS bundle ID + signing notes
-
 ## Running tests
 
 Unit tests:
@@ -100,13 +92,35 @@ make test
 Integration tests (requires an emulator/simulator or attached device):
 
 ```bash
+# Runs unit tests + a quick integration smoke test by default.
 make test-integration
+```
+
+The script auto-selects an available iOS simulator (preferred) or Android
+emulator. If you don't have one running yet:
+
+```bash
+flutter emulators --launch apple_ios_simulator
 ```
 
 You can override the target device:
 
 ```bash
-BOTANICA_DEVICE="iPhone 16 Pro" bash scripts/test_integration.sh
+# Use a device id (preferred)
+BOTANICA_DEVICE_ID="<device-id>" make test-integration
+
+# Or use a device name / id prefix
+BOTANICA_DEVICE="iPhone" make test-integration
+```
+
+By default, `make test-integration` runs a quick smoke test:
+
+- `integration_test/app_smoke_test.dart`
+
+To run the full integration suite:
+
+```bash
+BOTANICA_INTEGRATION_ALL=true make test-integration
 ```
 
 ## AI support (proxy-first)
