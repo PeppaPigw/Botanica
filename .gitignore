@@ -36,6 +36,7 @@ tmp/
 ios/Pods/
 ios/.symlinks/
 android/.gradle/
+.gradle-user-home/
 
 # Symbolication related
 app.*.symbols
