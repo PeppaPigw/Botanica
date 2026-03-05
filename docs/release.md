@@ -16,11 +16,21 @@ iOS:
 
 ## Release builds (commands)
 
-This repo configures Gradle to allow TLS 1.3 in `android/gradle.properties`.
+Android builds use Gradle. This repo configures Gradle to allow TLS 1.3 in
+`android/gradle.properties`.
 
 If your machine has `~/.gradle/gradle.properties` pinned to TLS 1.2
-(e.g. `systemProp.https.protocols=TLSv1.2`) and you previously ran Gradle,
-restart the Gradle daemon so the project-level setting takes effect:
+(e.g. `systemProp.https.protocols=TLSv1.2`), Maven Central / Plugin Portal
+downloads may fail during release builds.
+
+Recommended (does not change global machine config): override TLS per build:
+
+```bash
+export GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2"
+```
+
+If you recently changed TLS settings (or after a failure), restart the Gradle
+daemon:
 
 ```bash
 cd android && ./gradlew --stop
@@ -28,10 +38,10 @@ cd android && ./gradlew --stop
 
 ```bash
 # Android APK
-flutter build apk --release
+GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build apk --release
 
 # Android App Bundle
-flutter build appbundle --release
+GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build appbundle --release
 
 # iOS (unsigned)
 flutter build ios --release --no-codesign
