@@ -16,8 +16,25 @@ iOS:
 
 ## Release builds (commands)
 
-Android builds use Gradle. This repo configures Gradle to allow TLS 1.3 in
-`android/gradle.properties`.
+Android builds use Gradle.
+
+### Gradle network pitfalls (macOS / local env)
+
+Some macOS setups configure a **system SOCKS proxy** (common with proxy apps).
+Java/Gradle will automatically pick this up via JVM system properties
+(`socksProxyHost` / `socksProxyPort`). If the proxy is unreachable or blocks
+Gradle traffic, Gradle downloads can fail with:
+
+- `javax.net.ssl.SSLHandshakeException: Remote host terminated the handshake`
+
+Recommended (does not change global machine config): disable SOCKS proxy just
+for the build command:
+
+```bash
+export JAVA_TOOL_OPTIONS="-DsocksProxyHost= -DsocksProxyPort="
+```
+
+This repo also configures Gradle to allow TLS 1.3 in `android/gradle.properties`.
 
 If your machine has `~/.gradle/gradle.properties` pinned to TLS 1.2
 (e.g. `systemProp.https.protocols=TLSv1.2`), Maven Central / Plugin Portal
@@ -29,6 +46,13 @@ Recommended (does not change global machine config): override TLS per build:
 export GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2"
 ```
 
+If you want to fully isolate from `~/.gradle/` (recommended for reproducible
+builds), set a project-local Gradle user home (gitignored):
+
+```bash
+export GRADLE_USER_HOME="$PWD/.gradle-user-home"
+```
+
 If you recently changed TLS settings (or after a failure), restart the Gradle
 daemon:
 
@@ -38,10 +62,16 @@ cd android && ./gradlew --stop
 
 ```bash
 # Android APK
-GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build apk --release
+JAVA_TOOL_OPTIONS="-DsocksProxyHost= -DsocksProxyPort=" \
+GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" \
+GRADLE_USER_HOME="$PWD/.gradle-user-home" \
+flutter build apk --release
 
 # Android App Bundle
-GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" flutter build appbundle --release
+JAVA_TOOL_OPTIONS="-DsocksProxyHost= -DsocksProxyPort=" \
+GRADLE_OPTS="-Dhttps.protocols=TLSv1.3,TLSv1.2" \
+GRADLE_USER_HOME="$PWD/.gradle-user-home" \
+flutter build appbundle --release
 
 # iOS (unsigned)
 flutter build ios --release --no-codesign
