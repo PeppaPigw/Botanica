@@ -85,7 +85,12 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  generate: true
+  # Keep Flutter's built-in code generation disabled so `flutter build` does not
+  # rewrite committed localization outputs in `lib/gen/l10n/`.
+  #
+  # When updating ARB files under `lib/l10n/`, regenerate via:
+  #   flutter gen-l10n
+  generate: false
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
