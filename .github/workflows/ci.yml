@@ -8,6 +8,20 @@ permissions:
   contents: read
 
 jobs:
+  gitleaks:
+    name: Secrets scan (gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run gitleaks
+        uses: gacts/gitleaks@v1
+
   flutter:
     runs-on: ubuntu-latest
     timeout-minutes: 30
