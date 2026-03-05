@@ -296,16 +296,19 @@ void main() {
     await tester.enterText(find.byType(TextField), 'zzzz');
     await tester.pumpAndSettle();
 
-    // Curated section no-results state is visible first.
-    expect(find.text('No matches'), findsOneWidget);
+    final curatedNoResultsCard =
+        find.byKey(const ValueKey('discover-no-results-curated'));
+    final libraryNoResultsCard =
+        find.byKey(const ValueKey('discover-no-results-library'));
+
+    expect(curatedNoResultsCard, findsOneWidget);
 
     // The library section may be lazily built below the fold (ListView), so
-    // scroll down to ensure it is built before asserting both states exist.
+    // scroll down to ensure it is built before asserting it exists.
     await tester.drag(find.byType(ListView), const Offset(0, -900));
     await tester.pumpAndSettle();
 
-    // Both curated and library sections surface their own no-results state.
-    expect(find.text('No matches'), findsNWidgets(2));
+    expect(libraryNoResultsCard, findsOneWidget);
   });
 
   testWidgets('Discover search matches names across locales',

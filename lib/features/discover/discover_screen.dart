@@ -224,6 +224,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
 
                   if (results.isEmpty) {
                     return BotanicaStateCard(
+                      key: const ValueKey('discover-no-results-curated'),
                       icon: Icons.search_off_rounded,
                       title: l10n.discoverNoResultsTitle,
                       body: l10n.discoverNoResultsBody,
@@ -467,6 +468,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
 
                   if (results.isEmpty) {
                     return BotanicaStateCard(
+                      key: const ValueKey('discover-no-results-library'),
                       icon: Icons.search_off_rounded,
                       title: l10n.discoverNoResultsTitle,
                       body: l10n.discoverNoResultsBody,
@@ -783,7 +785,9 @@ class _GuideCard extends StatelessWidget {
             behavior: SnackBarBehavior.floating,
             content: Row(
               children: [
-                Icon(Icons.construction_rounded, size: 18, color: Theme.of(context).colorScheme.inversePrimary),
+                Icon(Icons.construction_rounded,
+                    size: 18,
+                    color: Theme.of(context).colorScheme.inversePrimary),
                 const SizedBox(width: 10),
                 Text(l10n.commonComingSoon),
               ],
