@@ -52,3 +52,6 @@ app.*.map.json
 # Local AI proxy (never commit secrets)
 server/ai_proxy/.env
 server/ai_proxy/node_modules/
+
+# Local assistant/tooling state
+.claude/
