@@ -147,35 +147,55 @@ BOTANICA_REQUIRE_RELEASE_SIGNING=true
 
 ### CI injection (GitHub Actions example)
 
-Store secrets in GitHub Actions:
+This repo provides a **manual** GitHub Actions workflow to build a **signed**
+Android AAB:
 
-- `ANDROID_KEYSTORE_BASE64` (base64-encoded `.jks`)
-- `ANDROID_KEYSTORE_PASSWORD`
-- `ANDROID_KEY_PASSWORD`
-- `ANDROID_KEY_ALIAS`
+- Workflow: `.github/workflows/release.yml`
+- Trigger: **Actions → Release (signed Android AAB) → Run workflow**
+- Artifact: `botanica-android-aab-release` (includes AAB + `.sha256`)
 
-At workflow runtime, write the keystore + `android/key.properties` to disk
-(never commit them), then run `flutter build ... --release`.
+The workflow sets `BOTANICA_REQUIRE_RELEASE_SIGNING=true`, so if secrets are not
+configured the build will **fail loudly** (prevents accidentally producing a
+debug-signed "release" AAB).
 
-Minimal GitHub Actions snippet:
+#### Required GitHub Secrets (recommended names)
+
+- `BOTANICA_ANDROID_KEYSTORE_BASE64` (base64-encoded `.jks`)
+- `BOTANICA_ANDROID_KEYSTORE_PASSWORD`
+- `BOTANICA_ANDROID_KEY_ALIAS`
+- `BOTANICA_ANDROID_KEY_PASSWORD`
+
+At workflow runtime, the keystore + `android/key.properties` are written to
+disk (never committed), then `flutter build appbundle --release` runs.
+
+Minimal GitHub Actions snippet (matches the workflow):
 
 ```yaml
 - name: Write Android signing files
   env:
-    ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-    ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-    ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-    ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+    BOTANICA_ANDROID_KEYSTORE_BASE64: ${{ secrets.BOTANICA_ANDROID_KEYSTORE_BASE64 }}
+    BOTANICA_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.BOTANICA_ANDROID_KEYSTORE_PASSWORD }}
+    BOTANICA_ANDROID_KEY_ALIAS: ${{ secrets.BOTANICA_ANDROID_KEY_ALIAS }}
+    BOTANICA_ANDROID_KEY_PASSWORD: ${{ secrets.BOTANICA_ANDROID_KEY_PASSWORD }}
   run: |
-    mkdir -p android/keystore
-    echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/keystore/release.jks
+    mkdir -p android/app
+    echo "$BOTANICA_ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
 
     cat > android/key.properties <<EOF
-    storeFile=keystore/release.jks
-    storePassword=$ANDROID_KEYSTORE_PASSWORD
-    keyAlias=$ANDROID_KEY_ALIAS
-    keyPassword=$ANDROID_KEY_PASSWORD
+    storeFile=app/upload-keystore.jks
+    storePassword=$BOTANICA_ANDROID_KEYSTORE_PASSWORD
+    keyAlias=$BOTANICA_ANDROID_KEY_ALIAS
+    keyPassword=$BOTANICA_ANDROID_KEY_PASSWORD
     EOF
+```
+
+#### Download + verify SHA256
+
+After the workflow completes, download the artifact and verify:
+
+```bash
+shasum -a 256 app-release.aab
+cat app-release.aab.sha256
 ```
 
 ## iOS signing (publishable)

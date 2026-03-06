@@ -1,0 +1,93 @@
+name: Release (signed Android AAB)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android_aab:
+    name: Android AAB (release, signed)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      BOTANICA_REQUIRE_RELEASE_SIGNING: "true"
+      GRADLE_OPTS: -Dhttps.protocols=TLSv1.3,TLSv1.2
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.24.3"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Write Android signing files
+        env:
+          BOTANICA_ANDROID_KEYSTORE_BASE64: ${{ secrets.BOTANICA_ANDROID_KEYSTORE_BASE64 }}
+          BOTANICA_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.BOTANICA_ANDROID_KEYSTORE_PASSWORD }}
+          BOTANICA_ANDROID_KEY_ALIAS: ${{ secrets.BOTANICA_ANDROID_KEY_ALIAS }}
+          BOTANICA_ANDROID_KEY_PASSWORD: ${{ secrets.BOTANICA_ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          missing=0
+          for secret_name in \
+            BOTANICA_ANDROID_KEYSTORE_BASE64 \
+            BOTANICA_ANDROID_KEYSTORE_PASSWORD \
+            BOTANICA_ANDROID_KEY_ALIAS \
+            BOTANICA_ANDROID_KEY_PASSWORD
+          do
+            if [ -z "${!secret_name:-}" ]; then
+              echo "Missing required GitHub secret: ${secret_name}" >&2
+              missing=1
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+          mkdir -p android/app
+          printf '%s' "$BOTANICA_ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+
+          cat > android/key.properties <<EOF
+          storeFile=app/upload-keystore.jks
+          storePassword=$BOTANICA_ANDROID_KEYSTORE_PASSWORD
+          keyAlias=$BOTANICA_ANDROID_KEY_ALIAS
+          keyPassword=$BOTANICA_ANDROID_KEY_PASSWORD
+          EOF
+
+          chmod 600 android/key.properties android/app/upload-keystore.jks
+
+      - name: Build Android appbundle (release)
+        run: flutter build appbundle --release
+
+      - name: Generate SHA256
+        run: |
+          set -euo pipefail
+          sha256sum build/app/outputs/bundle/release/app-release.aab > build/app/outputs/bundle/release/app-release.aab.sha256
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: botanica-android-aab-release
+          if-no-files-found: error
+          path: |
+            build/app/outputs/bundle/release/app-release.aab
+            build/app/outputs/bundle/release/app-release.aab.sha256
