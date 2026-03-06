@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a reproducible problem in Botanica
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug!
+
+        If this is a security issue, please follow SECURITY.md instead of filing a public issue.
+
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of the bug.
+      placeholder: The app crashed when I opened the Discover screen...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List steps so we can reproduce the issue reliably.
+      placeholder: |
+        1. Go to ...
+        2. Tap ...
+        3. See error ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: It should show ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: Instead it shows ...
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      description: Android / iOS (and simulator/emulator or real device).
+      placeholder: Android (emulator)
+    validations:
+      required: true
+
+  - type: input
+    id: flutter_version
+    attributes:
+      label: Flutter version
+      description: Output of `flutter --version` (brief).
+      placeholder: stable 3.24.x
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots (optional)
+      description: Please redact any sensitive data before pasting.
+      render: shell

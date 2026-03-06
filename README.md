@@ -64,6 +64,12 @@ See `docs/release.md` for:
 - Android signing (`key.properties` / CI env vars)
 - iOS bundle id + signing notes
 
+## Contributing / Security / License
+
+- Contributing guide: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Security policy: [SECURITY.md](SECURITY.md)
+- License: [LICENSE](LICENSE)
+
 ## Weather (Open‑Meteo)
 
 Environment snapshots use Open‑Meteo’s free API: `https://open-meteo.com/en/docs`.
