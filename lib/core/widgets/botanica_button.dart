@@ -20,6 +20,7 @@ class BotanicaButton extends StatelessWidget {
     this.variant = BotanicaButtonVariant.filled,
     this.expand = false,
     this.semanticsLabel,
+    this.matchTextDirection = false,
   });
 
   final String label;
@@ -28,22 +29,29 @@ class BotanicaButton extends StatelessWidget {
   final BotanicaButtonVariant variant;
   final bool expand;
   final String? semanticsLabel;
+  final bool matchTextDirection;
 
   @override
   Widget build(BuildContext context) {
+    final labelText = Text(
+      label,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+
     final buttonChild = icon == null
-        ? Text(label)
+        ? labelText
         : Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 20),
+              Icon(
+                icon,
+                size: BotanicaTokens.iconSizeMd,
+                matchTextDirection: matchTextDirection,
+              ),
               const SizedBox(width: BotanicaTokens.spacingXs),
               Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: labelText,
               ),
             ],
           );

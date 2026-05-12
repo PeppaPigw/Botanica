@@ -1,3 +1,4 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,17 +35,17 @@ class PlantLogsTab extends ConsumerWidget {
                   children: [
                     Icon(
                       Icons.history_rounded,
-                      size: 40,
+                      size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingMd,
                       color: scheme.onSurface.withValues(alpha: 0.35),
                     ),
-                    const SizedBox(height: 14),
+                    BotanicaGaps.vSm,
                     Text(
                       l10n.plantDetailLogsEmptyTitle,
                       style: textTheme.titleMedium?.copyWith(
                         color: scheme.onSurface.withValues(alpha: 0.75),
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    BotanicaGaps.vXxs,
                     Text(
                       l10n.plantDetailLogsEmptyBody,
                       textAlign: TextAlign.center,
@@ -60,14 +61,14 @@ class PlantLogsTab extends ConsumerWidget {
                 (log) => Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: BotanicaGlassCard(
-                    padding: const EdgeInsets.all(12),
+                    padding: BotanicaTokens.cardPaddingDense,
                     child: Row(
                       children: [
                         Icon(
                           _iconForTask(log.type),
                           color: scheme.onSurface.withValues(alpha: 0.78),
                         ),
-                        const SizedBox(width: 10),
+                        BotanicaGaps.hSm,
                         Expanded(
                           child: Text(
                             '${_taskTypeLabel(l10n, log.type)} · ${MaterialLocalizations.of(context).formatShortMonthDay(log.timestamp)}',

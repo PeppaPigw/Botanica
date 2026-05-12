@@ -2,11 +2,12 @@
   "appName": "Botanica",
   "appTagline": "رفيقك الشخصي للعناية بالنباتات — هادئ، جميل، ومدروس.",
   "gardenNoScheduleYet": "لا يوجد جدول بعد",
-
   "commonContinue": "متابعة",
   "commonSkip": "تخطي",
   "commonStart": "ابدأ",
   "commonDone": "تم",
+  "commonOverdue": "متأخرة",
+  "commonUndo": "تراجع",
   "commonCancel": "إلغاء",
   "commonClear": "مسح",
   "commonSave": "حفظ",
@@ -25,6 +26,7 @@
   "commonComingSoon": "قريبًا",
   "commonLoading": "جارٍ التحميل…",
   "commonViewAll": "عرض الكل",
+  "commonConfirm": "تأكيد",
   "commonWhy": "لماذا؟",
   "commonIdeal": "مثالي",
   "commonTolerates": "يتحمل",
@@ -50,42 +52,43 @@
   "resourceCareGuide": "دليل العناية",
   "resourceCopyLink": "نسخ الرابط",
   "resourceLinkCopied": "تم نسخ الرابط",
+  "aiNoteCopied": "تم نسخ الملاحظة",
+  "aiNoteCopyAction": "انسخ الملاحظة",
   "stateLoadFailedTitle": "تعذّر التحميل",
   "stateLoadFailedBody": "تحقّق من اتصالك بالإنترنت ثم أعد المحاولة.",
   "stateNotAvailableTitle": "غير متاح",
   "stateNotAvailableBody": "هذا المحتوى غير متاح حالياً.",
-
   "navGarden": "الحديقة",
   "navCalendar": "التقويم",
   "navDiscover": "اكتشف",
   "navDaily": "اليومي",
   "navProfile": "الملف",
-
   "calendarTitle": "التقويم",
   "calendarFilterAll": "الكل",
+  "calendarFilterOther": "أخرى",
+  "calendarSectionConsistency": "اتساق الشهر",
   "calendarPrevMonth": "الشهر السابق",
   "calendarNextMonth": "الشهر التالي",
   "calendarSectionHistory": "سجل العناية",
   "calendarNoEvents": "لا توجد سجلات لهذا اليوم.",
-
   "splashTagline": "عناية هادئة، بتنظيم جميل.",
-
-  "onboardingTitle1": "حديقتك، بتنظيم أنيق",
-  "onboardingBody1": "تابع نباتاتك مع سجل صور وملاحظات دون فوضى.",
-  "onboardingTitle2": "عناية ذكية حسب بيئتك",
-  "onboardingBody2": "الرطوبة والحرارة والموسم — Botanica يشرح لماذا تتغير الجداول.",
-  "onboardingTitle3": "طقس زهرة اليوم",
-  "onboardingBody3": "بطاقة يومية لطيفة: معنى، أساسيات العناية، وتمرين تقدير لمدة 60 ثانية.",
-  "onboardingCta": "ابدأ Botanica",
-
-  "permissionsTitle": "إعداد ما تحتاجه",
-  "permissionsSubtitle": "فعّل الكل الآن أو عند استخدام كل ميزة.",
-  "permNotificationsTitle": "الإشعارات",
-  "permNotificationsBody": "حتى لا تفوت سقي النباتات.",
-  "permLocationTitle": "الموقع",
-  "permLocationBody": "لتكييف العناية حسب المناخ.",
-  "permCameraTitle": "الكاميرا والصور",
-  "permCameraBody": "لسجل النمو ومسح النبات.",
+  "onboardingTitle1": "ابث الحياة في مساحتك",
+  "onboardingBody1": "تابع نباتاتك، وكوّن سجلاً جميلاً، وازرع الهدوء ورقةً بورقة.",
+  "onboardingTitle2": "Botanica يتعلم من بيئتك",
+  "onboardingBody2": "عناية تتأقلم مع محيطك—سواء كان موسماً أو رطوبةً أو حرارة.",
+  "onboardingTitle3": "طقس يومي للنمو",
+  "onboardingBody3": "اكتشف نباتات جديدة بلطف وصفِّ ذهنك بإلهام نباتي يومي.",
+  "onboardingCta": "ادخل إلى حديقتك",
+  "permissionsTitle": "ننمو معاً",
+  "permissionsSubtitle": "اسمح لـ Botanica بالعناية بنباتاتك بسلاسة، أو اختر عندما تكون مستعداً.",
+  "permNotificationsTitle": "تذكيرات لطيفة",
+  "permNotificationsBody": "حتى لا يعطش أي منكما.",
+  "notificationsSoftAskTitle": "لا تفوّت يوم السقي",
+  "notificationsSoftAskBody": "يرسل Botanica تذكيرات هادئة في الوقت الذي تفضله، حتى تحصل كل نبتة على العناية قبل أن تذبل أوراقها.",
+  "permLocationTitle": "رؤية مناخية",
+  "permLocationBody": "عناية مخصصة تماماً للطقس المحلي لديك.",
+  "permCameraTitle": "سجل مرئي",
+  "permCameraBody": "التقط مراحل النمو وتعرف على النباتات بلمحة.",
   "permLocationServicesOff": "خدمات الموقع متوقفة.",
   "permStatusEnabled": "مفعّل",
   "permStatusNotEnabled": "غير مفعّل",
@@ -98,13 +101,44 @@
   "permissionsEnableAll": "فعّل الكل الآن",
   "permissionsNotNow": "ليس الآن",
   "permissionsPrivacyNote": "Botanica يطلب الأذونات عند الحاجة فقط — يمكنك تغيير ذلك لاحقًا من الملف.",
-
   "gardenTitle": "الحديقة",
   "gardenTodayCardTitle": "اليوم",
   "gardenLoadError": "تعذر تحميل النباتات.",
   "gardenTasksDueToday": "{count, plural, =0{لا مهام} =1{مهمة واحدة} other{{count} مهام}}",
+  "@gardenTasksDueToday": {
+    "description": "Task count on Today card",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenCareStreakChip": "{days} أيام متتالية",
+  "@gardenCareStreakChip": {
+    "description": "Chip label showing the user's current care streak",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "gardenWeatherChip": "{condition} · {temp}°{unit} · {humidity}%",
+  "@gardenWeatherChip": {
+    "placeholders": {
+      "condition": {
+        "type": "String"
+      },
+      "temp": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "humidity": {
+        "type": "int"
+      }
+    }
+  },
   "weatherClear": "صحو",
   "weatherPartlyCloudy": "غائم جزئياً",
   "weatherCloudy": "غائم",
@@ -116,12 +150,51 @@
   "weatherUnknown": "الطقس",
   "gardenQuickWatered": "تم السقي",
   "gardenQuickSnooze": "تأجيل",
+  "tasksSnoozeOneHour": "ساعة واحدة",
+  "tasksSnoozeThreeHours": "3 ساعات",
+  "tasksSnoozeTomorrow": "غدًا",
+  "tasksSnoozeTomorrowMorning": "صباح الغد",
+  "tasksSnoozeWeekend": "نهاية هذا الأسبوع",
+  "tasksSnoozeCustomTime": "وقت مخصص",
   "gardenQuickAddPlant": "إضافة نبات",
+  "gardenRoomsTitle": "الغرف",
+  "gardenRoomsAll": "كل الغرف",
+  "gardenRoomPlantCount": "{count, plural, =1{نبتة واحدة} other{{count} نباتات}}",
+  "@gardenRoomPlantCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenRoomsWaterAll": "سقِ الكل",
+  "gardenRoomsSnoozeAll": "أجّل الكل",
+  "gardenRoomsWateredCount": "تم سقي {count} {count, plural, zero{نبتة} one{نبتة} two{نبتتان} few{نباتات} many{نبتة} other{نبتة}} في الغرفة",
+  "@gardenRoomsWateredCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenSortTitle": "ترتيب حسب",
+  "gardenSortName": "الاسم",
+  "gardenSortCare": "يحتاج رعاية",
+  "gardenSortNewest": "الأحدث",
+  "gardenFilterArchived": "إظهار المؤرشفة",
+  "gardenSearchHint": "البحث في الحديقة...",
+  "gardenRoomsSnoozedCount": "تم تأجيل {count} مهام",
+  "@gardenRoomsSnoozedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenEmptyTitle": "ابدأ حديقتك",
   "gardenEmptyBody": "أضف أول نبات لتحصل على خطة عناية مخصصة ومهام يومية.",
   "gardenEmptyCta": "إضافة أول نبات",
   "gardenAddPlantFab": "إضافة نبات",
-
   "addPlantTitle": "إضافة نبات",
   "addPlantMethodScan": "مسح",
   "addPlantMethodLibrary": "من المكتبة",
@@ -145,15 +218,14 @@
   "addPlantReminderEvening": "مساءً",
   "addPlantReminderCustom": "مخصص",
   "addPlantSaveButton": "حفظ في الحديقة",
-
   "plantDetailOverview": "نظرة عامة",
   "plantDetailCare": "العناية",
   "plantDetailJournal": "اليوميات",
   "plantDetailLogs": "السجل",
   "plantDetailLogsEmptyTitle": "لا توجد سجلات رعاية بعد",
   "plantDetailLogsEmptyBody": "أكمل مهمة ري أو رعاية وستظهر هنا.",
-  "tasksEmptyUpcoming": "لا توجد مهام قادمة",
-  "tasksEmptyOverdue": "كل شيء على ما يرام!",
+  "tasksEmptySoon": "لا توجد مهام قريباً. أنت على دراية بكل شيء!",
+  "tasksEmptyWatch": "لا توجد مهام للمراقبة. حديقتك تستريح.",
   "plantDetailWaterNow": "اسقِ الآن",
   "plantDetailAddPhoto": "إضافة صورة",
   "plantDetailAddNote": "إضافة ملاحظة",
@@ -161,8 +233,25 @@
   "plantDetailMissingBody": "تعذّر العثور على هذه النبتة. ربما تم حذفها.",
   "plantDetailMissingCta": "العودة إلى الحديقة",
   "plantDetailNextWateringInDays": "السقي التالي خلال {days} أيام",
+  "@plantDetailNextWateringInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "plantDetailEnvironmentImpactTitle": "تأثير البيئة",
   "plantDetailEnvironmentImpactBaseAdjusted": "الأساس: {base} يوم · بعد التعديل: {adjusted} يوم",
+  "@plantDetailEnvironmentImpactBaseAdjusted": {
+    "placeholders": {
+      "base": {
+        "type": "int"
+      },
+      "adjusted": {
+        "type": "int"
+      }
+    }
+  },
   "plantDetailEnvironmentStable": "ظروف مستقرة — لا تعديل اليوم.",
   "plantDetailDrynessLow": "جفاف منخفض (يجف أبطأ)",
   "plantDetailDrynessBalanced": "جفاف متوازن",
@@ -171,6 +260,12 @@
   "plantDetailCareLightBody": "الضوء الساطع غير المباشر نقطة بداية ممتازة لمعظم النباتات الداخلية.",
   "plantDetailCareTempTitle": "الحرارة",
   "plantDetailCareTempBody": "تجنب تيارات الهواء الباردة المفاجئة. الدفء المستقر يساعد على نمو متوقع.",
+  "envLightLow": "إضاءة منخفضة",
+  "envLightMedium": "إضاءة متوسطة",
+  "envLightHigh": "إضاءة عالية",
+  "envLabelTemp": "الحرارة",
+  "envLabelHumidity": "الرطوبة",
+  "envLabelLight": "الضوء",
   "plantDetailJournalDesignNote": "تم تصميم طبقة مطابقة الإطار ومنزلق المقارنة هنا؛ اربط الكاميرا/المعرض لاحقًا.",
   "plantDetailJournalIntro": "خط زمني لطيف للصور والملاحظات — يوميات نبتتك.",
   "journalSectionPhotos": "الصور",
@@ -181,6 +276,19 @@
   "diaryAddEntryButton": "أضف ملاحظة",
   "diaryEntryTitle": "ملاحظة",
   "diaryEntrySaved": "تم الحفظ في اليوميات.",
+  "diaryEditEntryTitle": "تعديل الملاحظة",
+  "diaryEditConfirmTitle": "حفظ التغييرات؟",
+  "diaryEditConfirmBody": "سيتم تحديث هذه الملاحظة بتغييراتك.",
+  "diaryEntryUpdated": "تم تحديث الملاحظة.",
+  "diaryEntryDeleted": "تم حذف الملاحظة.",
+  "diaryEntryDeleteTitle": "حذف الملاحظة؟",
+  "diaryEntryDeleteBody": "سيؤدي هذا إلى إزالة الملاحظة من الخط الزمني. يمكنك التراجع مباشرة بعد الحذف.",
+  "diaryPromptGrowingWell": "ينمو جيدًا",
+  "diaryPromptNewLeaf": "ورقة جديدة",
+  "diaryPromptStruggling": "يعاني",
+  "diaryPromptRepotted": "تم تغيير الوعاء",
+  "diaryPromptBlooming": "مزهر",
+  "journalEntryActions": "إجراءات السجل",
   "journalShareCardTitle": "بطاقة مشاركة",
   "journalShareCardText": "صُنعت بواسطة Botanica",
   "journalShareFailed": "تعذّرت المشاركة. حاول مرة أخرى.",
@@ -195,6 +303,9 @@
   "journalCameraPermissionNeeded": "يلزم إذن الكاميرا لالتقاط الصور.",
   "journalPhotosPermissionNeeded": "يلزم إذن الصور لاختيار الصور.",
   "journalPhotoSaved": "تم الحفظ في السجل.",
+  "journalPhotoDeleted": "تم حذف الصورة.",
+  "journalPhotoDeleteTitle": "حذف الصورة؟",
+  "journalPhotoDeleteBody": "سيؤدي هذا إلى إزالة الصورة من سجل هذا النبات ومن التخزين المحلي. يمكنك التراجع مباشرة بعد الحذف.",
   "journalEmptyBody": "لا توجد صور بعد. أضف صورة لبدء خط الزمن.",
   "journalPhotoTitle": "صورة السجل",
   "journalPhotoNoNote": "بدون ملاحظة",
@@ -211,24 +322,47 @@
       }
     }
   },
-
+  "journalPhotoUnavailable": "الصورة غير متاحة",
+  "journalOverlayStrength": "قوة التراكب",
+  "journalPreviousPhoto": "الصورة السابقة",
+  "journalLimitedPhotosAccess": "تم تفعيل الوصول إلى الصور المحددة. يمكنك اختيار الصور المرئية أو تعديل الوصول من إعدادات iOS.",
   "scanTitle": "مسح",
   "scanTryAgain": "أعد المحاولة",
   "scanCaptureTitle": "امسح نباتك",
   "scanCaptureTip": "التقط ورقة وصورة كاملة للنبات لنتائج أفضل.",
   "scanCameraPermissionNeeded": "يلزم إذن الكاميرا لمسح النباتات.",
+  "scanCameraPermissionTitle": "الوصول إلى الكاميرا",
+  "scanCameraPermissionBody": "استخدم الكاميرا لمسح سريع، أو تصفح مكتبة النباتات دون منح الوصول.",
+  "scanUseCamera": "استخدم الكاميرا",
   "scanProcessingBody": "جارٍ التعرف على نباتك…",
   "scanChooseCandidate": "اختر المطابقة",
+  "scanRefineTitle": "لست متأكدًا؟ صَفِّ النتائج",
+  "scanRefineHelper": "أجب عن سؤال سريع لتضييق النتائج.",
+  "scanRefineFallbackNote": "لا توجد مطابقات دقيقة لهذه المرشحات بعد — نعرض أقرب النتائج.",
+  "scanConfidenceGuide": "مستوى الثقة مجرد دليل — قارن الشكل ووسوم العناية قبل الإضافة.",
+  "scanConfidenceStrongLabel": "ثقة عالية",
+  "scanConfidenceStrongBody": "تبدو قريبة من النبات الملتقط.",
+  "scanConfidenceLikelyLabel": "ثقة متوسطة",
+  "scanConfidenceLikelyBody": "قارن التفاصيل قبل الإضافة.",
+  "scanConfidencePossibleLabel": "ثقة منخفضة — جرّب زاوية أخرى",
+  "scanConfidencePossibleBody": "أفضل تخمين فقط؛ التقط زاوية أخرى إن أمكن.",
+  "scanRefineFlowering": "هل يزهر؟",
+  "scanRefineIndoorOutdoor": "داخلي أم خارجي؟",
+  "scanRefineSucculent": "نوع عصاري؟",
   "scanRefinePetSafe": "آمن للحيوانات",
   "scanRefineEasy": "سهل العناية",
   "scanRefineLowLight": "إضاءة منخفضة",
   "scanAddToGarden": "إضافة إلى الحديقة",
+  "scanBrowseLibrary": "تصفح المكتبة بدلًا من ذلك",
+  "scanTakingLongerTitle": "يستغرق وقتًا أطول من المتوقع",
+  "scanTakingLongerBody": "لم يكتمل المسح في الوقت المناسب. حاول مرة أخرى أو اختر نباتًا يدويًا.",
+  "scanNoResultTitle": "تعذّر التعرف على هذا النبات",
+  "scanNoResultBody": "جرّب زاوية أخرى مع تفاصيل الورقة، أو تصفح المكتبة.",
   "scanDeterministicNote": "وضع تجريبي: نتائج حتمية دون اتصال. اربط Kindwise/Gemini لاحقًا.",
-
   "tasksTitle": "المهام",
   "tasksTabToday": "اليوم",
-  "tasksTabUpcoming": "القادمة",
-  "tasksTabOverdue": "المتأخرة",
+  "tasksTabSoon": "قريباً",
+  "tasksTabWatch": "مراقبة",
   "tasksCalendarToggle": "التقويم",
   "tasksSeasonalTipsTitle": "نصائح موسمية للعناية",
   "tipSpringRepot": "الربيع: أعد الزراعة إذا كانت الجذور مزدحمة وبدأ النمو من جديد.",
@@ -248,7 +382,7 @@
       }
     }
   },
-
+  "tasksSkipped": "تم التخطي",
   "discoverTitle": "اكتشف",
   "discoverSearchHint": "ابحث عن نباتات وأدلة ونصائح",
   "discoverNoResultsTitle": "لا توجد نتائج",
@@ -268,7 +402,6 @@
   "discoverGuideSoilBody": "لماذا الخلطات الهوائية تقلل تعفن الجذور وتساعد النمو.",
   "discoverGuidePestTitle": "قائمة الآفات",
   "discoverGuidePestBody": "روتين أسبوعي سريع لاكتشاف المشاكل مبكرًا.",
-
   "speciesDetailHistory": "لمحة تاريخية",
   "speciesDetailHabit": "نمط النمو",
   "speciesDetailCareAtAGlance": "العناية باختصار",
@@ -347,7 +480,6 @@
   "lightMediumIndirect": "ضوء متوسط غير مباشر",
   "lightLowToBrightIndirect": "من خافت إلى ساطع غير مباشر",
   "lightLowToBright": "من خافت إلى ساطع",
-
   "dailyTitle": "زهرة اليوم",
   "dailyReveal": "اكشف",
   "dailyRevealHintTap": "اضغط للكشف",
@@ -400,17 +532,43 @@
   "dailyProfileMissingBody": "اضبط مفتاحًا شخصيًا في الملف الشخصي (كلمة قصيرة أو تاريخ الميلاد) لتخصيص زهرة اليوم.",
   "dailyProfileMissingBodyZodiac": "اضبط تاريخ ميلادك (أو اختر برجك) في الملف الشخصي لتخصيص زهرة اليوم.",
   "dailyProfileMissingCta": "الإعداد",
-
   "careKeyLight": "الضوء",
   "careKeyWater": "الماء",
   "careKeyTemperature": "الحرارة",
   "careKeyPetSafety": "سلامة الحيوانات",
-
   "profileTitle": "الملف",
   "profileSectionPreferences": "التفضيلات",
   "profileSectionPermissions": "الأذونات",
   "profileSectionData": "البيانات",
   "profileSectionAbout": "حول",
+  "storageHealthTitle": "حالة التخزين",
+  "storageHealthSubtitle": "راجع وسائط السجل ونظّف الملفات المؤقتة.",
+  "storageJournalPhotos": "صور السجل",
+  "storageUsed": "التخزين المستخدم",
+  "storagePhotoFiles": "ملفات الصور",
+  "storageJournalEntries": "إدخالات السجل",
+  "storagePhotoEntries": "إدخالات الصور",
+  "storageMissingPhotos": "صور مفقودة",
+  "storageCacheTitle": "ذاكرة مؤقتة",
+  "storageCacheBody": "يمسح بطاقات المشاركة والملفات المؤقتة دون حذف صور السجل.",
+  "storageClearCache": "مسح الذاكرة المؤقتة",
+  "storageCacheCleared": "تم مسح الذاكرة المؤقتة.",
+  "storageFileCount": "{count} ملفات",
+  "@storageFileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storageEntryCount": "{count} إدخالات",
+  "@storageEntryCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "profileLanguage": "اللغة",
   "profileUnits": "الوحدات",
   "profileHemisphereTitle": "نصف الكرة",
@@ -472,16 +630,13 @@
   "profileAiKeySaved": "تم حفظ مفتاح الذكاء الاصطناعي.",
   "profileAiKeyCleared": "تمت إزالة مفتاح الذكاء الاصطناعي.",
   "profileLanguageSystem": "النظام",
-
   "creditsTitle": "الاعتمادات",
   "creditsOpenSource": "مفتوح المصدر",
   "creditsFlutterCommunity": "مراجع مجتمع Flutter",
   "creditsUiInspiration": "إلهام الواجهة",
   "creditsPlaceholderNote": "ملاحظة: يستخدم هذا المشروع ملفات PNG بيضاء كصور مؤقتة — استبدل الأصول لاحقًا بصور/رسومات حقيقية.",
-
   "unitsCelsius": "مئوي (°C)",
   "unitsFahrenheit": "فهرنهايت (°F)",
-
   "beliefModeWesternZodiac": "الأبراج الغربية",
   "beliefModeChineseZodiac": "الأبراج الصينية",
   "beliefModeTarot": "التاروت",
@@ -492,7 +647,6 @@
   "beliefModeOmikuji": "أومي كوجي اليابانية",
   "beliefModeRunes": "رونات نوردية",
   "beliefModeOgham": "أوغام كلتية",
-
   "zodiacAries": "الحمل",
   "zodiacTaurus": "الثور",
   "zodiacGemini": "الجوزاء",
@@ -505,7 +659,6 @@
   "zodiacCapricorn": "الجدي",
   "zodiacAquarius": "الدلو",
   "zodiacPisces": "الحوت",
-
   "chineseZodiacRat": "الفأر",
   "chineseZodiacOx": "الثور",
   "chineseZodiacTiger": "النمر",
@@ -518,7 +671,6 @@
   "chineseZodiacRooster": "الديك",
   "chineseZodiacDog": "الكلب",
   "chineseZodiacPig": "الخنزير",
-
   "tarotTheFool": "الأحمق",
   "tarotTheMagician": "الساحر",
   "tarotTheHighPriestess": "الكاهنة الكبرى",
@@ -541,7 +693,6 @@
   "tarotTheSun": "الشمس",
   "tarotJudgement": "الحكم",
   "tarotTheWorld": "العالم",
-
   "omikujiDaikichi": "بركة عظيمة (دايكيتشي)",
   "omikujiChukichi": "بركة متوسطة (تشوكيتشي)",
   "omikujiShokichi": "بركة صغيرة (شوكيتشي)",
@@ -550,7 +701,6 @@
   "omikujiSuekichi": "بركة مستقبلية (سويكيتشي)",
   "omikujiKyo": "نحس (كيو)",
   "omikujiDaikyo": "نحس شديد (دايكيو)",
-
   "taskTypeWater": "سقي",
   "taskTypeFertilize": "تسميد",
   "taskTypeMist": "رش",
@@ -560,7 +710,6 @@
   "taskTypeCheckPests": "فحص الآفات",
   "taskTypeWipeLeaves": "مسح الأوراق",
   "taskTypeSunlightAdjustment": "تعديل الضوء",
-
   "notificationsTaskTitle": "{plant} · {task}",
   "@notificationsTaskTitle": {
     "placeholders": {
@@ -581,11 +730,249 @@
     }
   },
   "notificationsTaskBodyNoRoom": "افتح Botanica لوضعها كمنجزة.",
-
+  "notificationWaterTitle": "حان وقت سقي {plant}",
+  "@notificationWaterTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle": "سمّد {plant} اليوم",
+  "@notificationFertilizeTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle": "{plant} يحب بعض الرش",
+  "@notificationMistTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle": "دوّر {plant} ربع دورة",
+  "@notificationRotateTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle": "{plant} جاهز للتقليم",
+  "@notificationPruneTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
   "reasonHumidityLow": "رطوبة منخفضة → التربة تجف أسرع",
   "reasonHumidityHigh": "رطوبة عالية → التربة تبقى رطبة أطول",
   "reasonHot": "حرارة مرتفعة → تبخر أعلى",
+  "reasonSpring": "الربيع → عودة النمو",
+  "reasonSummer": "الصيف → نتح أعلى",
+  "reasonAutumn": "الخريف → تباطؤ النمو",
   "reasonWinter": "الشتاء → نمو أبطأ",
   "reasonOutdoor": "وضع خارجي → وزن أكبر للتنبؤات",
-  "reasonIndoor": "وضع داخلي → ظروف أكثر استقرارًا"
+  "reasonIndoor": "وضع داخلي → ظروف أكثر استقرارًا",
+  "gardenWellnessTitle": "صحة الحديقة",
+  "gardenWellnessSubtitle": "اعرض الدرجة والنباتات المهمة وعبء العناية",
+  "gardenWellnessEmptyTitle": "لا توجد نباتات بعد",
+  "gardenFilterEmptyTitle": "لا توجد نباتات تطابق هذا الفلتر.",
+  "gardenWellnessEmptyBody": "أضف أول نبتة لفتح صحة الحديقة.",
+  "gardenWellnessOverallScore": "الدرجة العامة",
+  "gardenWellnessOverdueChip": "{count, plural, =1{1 متأخرة} other{{count} متأخرة}}",
+  "@gardenWellnessOverdueChip": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessStatPlants": "النباتات",
+  "gardenWellnessStatRecentCare": "العناية الأخيرة",
+  "gardenWellnessStatAtRisk": "بحاجة إلى انتباه",
+  "gardenWellnessRoomPulseTitle": "حالة الغرف",
+  "gardenWellnessRoomPulseSummary": "{plantCount} نباتات · {overdueCount} متأخرة",
+  "@gardenWellnessRoomPulseSummary": {
+    "placeholders": {
+      "plantCount": {
+        "type": "int"
+      },
+      "overdueCount": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessRoomPulseStable": "مستقر",
+  "gardenWellnessRoomPulseAtRisk": "{count, plural, =1{1 بحاجة إلى انتباه} other{{count} بحاجة إلى انتباه}}",
+  "@gardenWellnessRoomPulseAtRisk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPrioritiesTitle": "أولويات اليوم",
+  "gardenWellnessFocusPlantsTitle": "النباتات المهمة",
+  "gardenWellnessScoreLabel": "الدرجة",
+  "gardenWellnessScoreFlourishing": "مزدهر",
+  "gardenWellnessScoreSteady": "مستقر",
+  "gardenWellnessScoreNeedsLittleCare": "يحتاج إلى قليل من العناية",
+  "gardenWellnessScoreNeedsAttention": "يحتاج إلى انتباه",
+  "gardenWellnessFocusReasonOverdueAndNoLog": "{count, plural, =1{1 مهمة متأخرة · لا يوجد سجل حديث} other{{count} مهام متأخرة · لا يوجد سجل حديث}}",
+  "@gardenWellnessFocusReasonOverdueAndNoLog": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessFocusReasonOverdue": "{count, plural, =1{1 مهمة متأخرة} other{{count} مهام متأخرة}}",
+  "@gardenWellnessFocusReasonOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessFocusReasonNoLog": "لا يوجد سجل حديث خلال 14 يومًا",
+  "gardenWellnessFocusReasonSteady": "يبدو مستقرًا",
+  "gardenWellnessPriorityAttentionTitle": "تحقق من {plantName}",
+  "@gardenWellnessPriorityAttentionTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyOverdueAndNoLog": "{count, plural, =1{1 مهمة متأخرة ولا يوجد سجل حديث.} other{{count} مهام متأخرة ولا يوجد سجل حديث.}}",
+  "@gardenWellnessPriorityAttentionBodyOverdueAndNoLog": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyOverdue": "{count, plural, =1{1 مهمة متأخرة تحتاج إلى انتباه.} other{{count} مهام متأخرة تحتاج إلى انتباه.}}",
+  "@gardenWellnessPriorityAttentionBodyOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyNoLog": "لا يوجد سجل حديث خلال آخر 14 يومًا.",
+  "gardenWellnessPriorityAttentionBodyCheckIn": "هذه النبتة تحتاج إلى تفقد سريع.",
+  "gardenWellnessPriorityDueTodayTitle": "حافظ على ترتيب اليوم",
+  "gardenWellnessPriorityDueTodayBody": "{count, plural, =1{1 مهمة مستحقة اليوم.} other{{count} مهام مستحقة اليوم.}}",
+  "@gardenWellnessPriorityDueTodayBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityRefreshHistoryTitle": "حدّث سجل العناية",
+  "gardenWellnessPriorityRefreshHistoryBody": "{count, plural, =1{1 نبتة تفتقد سجلًا حديثًا.} other{{count} نباتات تفتقد سجلًا حديثًا.}}",
+  "@gardenWellnessPriorityRefreshHistoryBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityCalmTitle": "استمتع بالهدوء",
+  "gardenWellnessPriorityCalmBody": "لا توجد أمور عاجلة اليوم — تبدو حديقتك مستقرة.",
+  "gardenWellnessRoomUnassigned": "غير محدد",
+  "editPlantTitle": "تعديل النبتة",
+  "editPlantSaveButton": "حفظ التغييرات",
+  "plantDetailMenuEdit": "تعديل النبتة",
+  "plantDetailMenuArchive": "أرشفة النبتة",
+  "plantDetailMenuDelete": "حذف النبتة",
+  "archivePlantTitle": "أرشفة {plantName}؟",
+  "@archivePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "archivePlantBody": "النباتات المؤرشفة مخفية من حديقتك ولكنها تحتفظ بتاريخها.",
+  "archivePlantConfirm": "أرشفة",
+  "deletePlantTitle": "حذف {plantName}؟",
+  "@deletePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePlantBody": "هذا يزيل النبتة وكل تاريخها بشكل دائم. لا يمكن التراجع عن هذا.",
+  "deletePlantConfirm": "حذف",
+  "restorePlantTitle": "استعادة {plantName}؟",
+  "@restorePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "restorePlantBody": "سيعيد هذا النبتة إلى حديقتك ويستأنف جدول العناية بها.",
+  "restorePlantConfirm": "استعادة",
+  "gardenStatusArchived": "مؤرشفة",
+  "archivePlantSuccess": "تم أرشفة النبات بنجاح",
+  "@archivePlantSuccess": {
+    "description": "Success message when a plant is archived"
+  },
+  "restorePlantSuccess": "تم استعادة النبات بنجاح",
+  "@restorePlantSuccess": {
+    "description": "Success message when a plant is restored"
+  },
+  "deletePlantSuccess": "تم حذف النبات بنجاح",
+  "@deletePlantSuccess": {
+    "description": "Success message when a plant is deleted"
+  },
+  "gardenSortName": "الاسم",
+  "@gardenSortName": {
+    "description": "Sort option by name"
+  },
+  "gardenSortSpecies": "النوع",
+  "@gardenSortSpecies": {
+    "description": "Sort option by species"
+  },
+  "gardenSortNeedsCare": "يحتاج إلى رعاية",
+  "@gardenSortNeedsCare": {
+    "description": "Sort option by needing care"
+  },
+  "gardenSortNewest": "الأحدث",
+  "@gardenSortNewest": {
+    "description": "Sort option by newest"
+  },
+  "gardenFilterAll": "الكل",
+  "@gardenFilterAll": {
+    "description": "Filter option for all plants"
+  },
+  "gardenFilterHealthy": "صحية",
+  "@gardenFilterHealthy": {
+    "description": "Filter option for healthy plants"
+  },
+  "gardenFilterNeedsCare": "تحتاج رعاية",
+  "@gardenFilterNeedsCare": {
+    "description": "Filter option for plants needing care"
+  },
+  "gardenFilterArchived": "مؤرشفة",
+  "@gardenFilterArchived": {
+    "description": "Filter option for archived plants"
+  },
+  "gardenSearchHint": "ابحث عن نباتات...",
+  "@gardenSearchHint": {
+    "description": "Hint text for garden search"
+  },
+  "gardenToggleCardMode": "تبديل وضع البطاقة",
+  "gardenToggleViewMode": "تبديل وضع العرض"
 }

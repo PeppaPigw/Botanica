@@ -13,12 +13,23 @@ class PhotosRepository {
 
   factory PhotosRepository.local() => PhotosRepository(LocalDb.photosBox);
 
-  List<PhotoEntry> forPlant(String plantId) {
+  List<PhotoEntry> all() {
     final items = _box.values
         .map((e) => PhotoEntry.fromJson(Map<String, dynamic>.from(e)))
-        .where((p) => p.plantId == plantId)
         .toList(growable: false)
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return items;
+  }
+
+  Stream<List<PhotoEntry>> watchAll() async* {
+    yield all();
+    yield* _box.watch().map((_) => all()).distinct(_listEq.equals);
+  }
+
+  List<PhotoEntry> forPlant(String plantId) {
+    final items = all()
+        .where((p) => p.plantId == plantId)
+        .toList(growable: false);
     return items;
   }
 

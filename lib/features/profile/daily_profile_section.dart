@@ -1,3 +1,4 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -88,24 +89,49 @@ Future<void> _showBeliefSheet(BuildContext context, WidgetRef ref) async {
                     fontWeight: FontWeight.w700,
                   ),
             ),
-            const SizedBox(height: 10),
-            ...items.map((it) {
-              final selected = it.$1 == current;
-              return ListTile(
-                key: ValueKey('belief-mode-${it.$1.name}'),
-                title: Text(it.$2),
-                trailing:
-                    selected ? const Icon(Icons.check_circle_rounded) : null,
-                onTap: () async {
-                  final settings = ref.read(settingsControllerProvider);
-                  await ref.read(settingsControllerProvider.notifier).update(
-                        settings.copyWith(beliefMode: it.$1),
-                      );
-                  if (!context.mounted) return;
-                  Navigator.of(context).pop();
-                },
-              );
-            }),
+            BotanicaGaps.vSm,
+            BotanicaGlassCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  ...items.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final it = entry.value;
+                    final selected = it.$1 == current;
+                    return Column(
+                      children: [
+                        ListTile(
+                          key: ValueKey('belief-mode-${it.$1.name}'),
+                          title: Text(it.$2),
+                          trailing: selected
+                              ? Icon(Icons.check_circle_rounded,
+                                  color: Theme.of(context).colorScheme.primary)
+                              : null,
+                          onTap: () async {
+                            final settings =
+                                ref.read(settingsControllerProvider);
+                            await ref
+                                .read(settingsControllerProvider.notifier)
+                                .update(
+                                  settings.copyWith(beliefMode: it.$1),
+                                );
+                            if (!context.mounted) return;
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        if (index < items.length - 1)
+                          ProfileDivider(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .outlineVariant
+                                .withValues(alpha: 0.35),
+                          ),
+                      ],
+                    );
+                  }),
+                ],
+              ),
+            ),
           ],
         ),
       );
@@ -220,7 +246,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                   Icons.vpn_key_rounded,
                   color: scheme.onSurface.withValues(alpha: 0.80),
                 ),
-                const SizedBox(width: 10),
+                BotanicaGaps.hSm,
                 Expanded(
                   child: Text(
                     l10n.profileDailySeedTitle,
@@ -241,7 +267,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                   ),
               ],
             ),
-            const SizedBox(height: 6),
+            BotanicaGaps.vXxs,
             Text(
               l10n.profileDailySeedBody,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -249,7 +275,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                     height: 1.35,
                   ),
             ),
-            const SizedBox(height: 12),
+            BotanicaGaps.vSm,
             TextField(
               controller: _seedController,
               textInputAction: TextInputAction.done,
@@ -261,7 +287,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
               onChanged: (_) => setState(() {}),
               onSubmitted: (_) => saveDailySeed(),
             ),
-            const SizedBox(height: 12),
+            BotanicaGaps.vSm,
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
@@ -295,7 +321,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                   Icons.cake_rounded,
                   color: scheme.onSurface.withValues(alpha: 0.80),
                 ),
-                const SizedBox(width: 10),
+                BotanicaGaps.hSm,
                 Expanded(
                   child: Text(
                     l10n.profileBirthdateTitle,
@@ -318,7 +344,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                   ),
               ],
             ),
-            const SizedBox(height: 6),
+            BotanicaGaps.vXxs,
             Text(
               formattedBirthDate ?? l10n.profileBirthdateBody,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -327,7 +353,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                   ),
             ),
             if (birthDate != null && derivedLabel != null) ...[
-              const SizedBox(height: 10),
+              BotanicaGaps.vSm,
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
@@ -362,10 +388,10 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                           children: [
                             Icon(
                               Icons.bolt_rounded,
-                              size: 18,
+                              size: BotanicaTokens.iconSizeSm,
                               color: scheme.onSurface.withValues(alpha: 0.80),
                             ),
-                            const SizedBox(width: 8),
+                            BotanicaGaps.hXs,
                             Text(
                               l10n.profileDailyProfileUseBirthdate,
                               style: Theme.of(context)
@@ -417,7 +443,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                           height: 1.4,
                         ),
                   ),
-                  const SizedBox(height: 12),
+                  BotanicaGaps.vSm,
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton.icon(
@@ -481,7 +507,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                     }
                   : null,
             ),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             _ZodiacPicker(
               title: l10n.beliefModeWesternZodiac,
               currentId: settings.westernZodiacSignId,
@@ -496,7 +522,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                 Navigator.of(context).pop();
               },
             ),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             modeDetails(),
           ],
         );
@@ -507,12 +533,12 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildSeedCard(),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             buildBirthDateCard(
               derivedLabel: null,
               onUseBirthDate: null,
             ),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             modeDetails(),
           ],
         );
@@ -527,12 +553,12 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildSeedCard(),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             buildBirthDateCard(
               derivedLabel: westernDerivedLabel,
               onUseBirthDate: null,
             ),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             modeDetails(),
           ],
         );
@@ -542,7 +568,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildSeedCard(),
-          const SizedBox(height: 14),
+          BotanicaGaps.vSm,
           modeDetails(),
         ],
       );
@@ -561,7 +587,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                   fontWeight: FontWeight.w700,
                 ),
           ),
-          const SizedBox(height: 6),
+          BotanicaGaps.vXxs,
           Text(
             l10n.profileDailyProfileBody(modeLabel),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -569,7 +595,7 @@ class _DailyProfileSheetState extends ConsumerState<_DailyProfileSheet> {
                   height: 1.35,
                 ),
           ),
-          const SizedBox(height: 14),
+          BotanicaGaps.vSm,
           buildBody(),
         ],
       ),
@@ -592,6 +618,8 @@ class _HintChip extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
+      constraints: const BoxConstraints(minHeight: 44),
+      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
@@ -602,11 +630,18 @@ class _HintChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18, color: scheme.onSurface.withValues(alpha: 0.82)),
-          const SizedBox(width: 8),
-          Text(
-            label,
-            style: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
+          Icon(icon,
+              size: BotanicaTokens.iconSizeSm,
+              color: scheme.onSurface.withValues(alpha: 0.82)),
+          BotanicaGaps.hXs,
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
+            ),
           ),
         ],
       ),
@@ -714,7 +749,13 @@ class _ZodiacPicker extends StatelessWidget {
         return ChoiceChip(
           selected: selected,
           onSelected: (_) => onSelect(id),
-          label: Text(labelForId(id)),
+          materialTapTargetSize: MaterialTapTargetSize.padded,
+          labelPadding: const EdgeInsets.symmetric(horizontal: 10),
+          label: Text(
+            labelForId(id),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         );
       }).toList(growable: false),
     );

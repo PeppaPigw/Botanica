@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../theme/botanica_tokens.dart';
+import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_fab_location.dart';
 import '../../core/widgets/botanica_nav_pill.dart';
 import '../../core/widgets/botanica_scaffold.dart';
@@ -39,6 +40,7 @@ class AppShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final currentIndex = _indexFromLocation();
+    final reduceMotion = botanicaReduceMotion(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewInsets = MediaQuery.viewInsetsOf(context);
     final horizontalInset = BotanicaTokens.pagePadding.left;
@@ -64,7 +66,17 @@ class AppShell extends StatelessWidget {
 
     return BotanicaScaffold(
       backgroundIntensity: bgIntensity,
-      body: child,
+      body: AnimatedSwitcher(
+        duration: reduceMotion ? Duration.zero : BotanicaTokens.motionMedium,
+        switchInCurve: BotanicaTokens.curveReveal,
+        switchOutCurve: BotanicaTokens.curveSettle,
+        transitionBuilder: (child, animation) =>
+            FadeTransition(opacity: animation, child: child),
+        child: KeyedSubtree(
+          key: ValueKey('tab-$currentIndex'),
+          child: child,
+        ),
+      ),
       floatingActionButton: currentIndex == 0
           ? FloatingActionButton(
               onPressed: () => context.push('${GardenScreen.location}/add'),

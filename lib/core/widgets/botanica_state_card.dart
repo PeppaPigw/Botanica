@@ -31,7 +31,7 @@ class BotanicaStateCard extends StatelessWidget {
 
     return BotanicaGlassCard(
       tier: tier,
-      padding: const EdgeInsets.all(14),
+      padding: BotanicaTokens.cardPaddingDense,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

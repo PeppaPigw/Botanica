@@ -15,14 +15,28 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "bright_indirect",
+      "tags": [
+        "beginner",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/monstera_deliciosa.png",
       "history": {
         "en": "Native to tropical forests of southern Mexico and Central America. Monstera became a modern design icon thanks to its dramatic, fenestrated leaves and architectural silhouette.",
-        "zh": "原产墨西哥南部与中美洲雨林。因独特的“开孔”叶片与建筑感轮廓而成为家居设计的标志性观叶植物。"
+        "zh": "原产墨西哥南部与中美洲雨林。因独特的“开孔”叶片与建筑感轮廓而成为家居设计的标志性观叶植物。",
+        "es": "Originaria de selvas tropicales del sur de México y Centroamérica; destaca por sus hojas perforadas y porte arquitectónico.",
+        "ar": "موطنها غابات جنوب المكسيك وأمريكا الوسطى الاستوائية، وتشتهر بأوراقها المثقبة وشكلها المعماري."
       },
       "habit": {
         "en": "A climbing aroid with aerial roots. Grows toward light and appreciates a support pole; let the top layer of soil dry slightly between waterings.",
-        "zh": "攀援型天南星科植物，会长出气生根并向光生长。适合立柱支撑；浇水遵循“表土稍干再浇”。"
+        "zh": "攀援型天南星科植物，会长出气生根并向光生长。适合立柱支撑；浇水遵循“表土稍干再浇”。",
+        "es": "Arácea trepadora con raíces aéreas; agradece un tutor y riegos cuando la capa superior del sustrato se seca.",
+        "ar": "نبات متسلق من القلقاسيات بجذور هوائية؛ يفضل دعامة ورياً بعد جفاف سطح التربة قليلاً."
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -56,7 +70,10 @@
         "fertilizeBaseDays": 30,
         "mistBaseDays": 3,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 90
+        "pruneBaseDays": 90,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 14,
+        "wipeLeavesBaseDays": 14
       }
     },
     {
@@ -74,14 +91,30 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "low_to_bright_indirect",
+      "tags": [
+        "beginner",
+        "low-light",
+        "air-purifying",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/epipremnum_aureum.png",
       "history": {
         "en": "Originating from the Solomon Islands, pothos became one of the most loved beginner houseplants for its forgiving nature and elegant trailing vines.",
-        "zh": "原产所罗门群岛。凭借耐养、适应性强与优雅的垂吊藤蔓，成为许多人的入门级室内绿植。"
+        "zh": "原产所罗门群岛。凭借耐养、适应性强与优雅的垂吊藤蔓，成为许多人的入门级室内绿植。",
+        "es": "Originario de las Islas Salomón, el pothos se popularizó por su tolerancia y sus enredaderas colgantes.",
+        "ar": "موطنه جزر سليمان، وأصبح من أشهر نباتات المبتدئين لتحمله وسوقه المتدلية الأنيقة."
       },
       "habit": {
         "en": "A fast-growing trailing or climbing vine. Tolerates low light, but variegation looks best in brighter indirect light; water when the top soil is dry.",
-        "zh": "生长迅速的垂吊/攀援藤本。耐弱光，但在更明亮的散射光下斑纹更漂亮；表土干了再浇水。"
+        "zh": "生长迅速的垂吊/攀援藤本。耐弱光，但在更明亮的散射光下斑纹更漂亮；表土干了再浇水。",
+        "es": "Enredadera rápida, colgante o trepadora; tolera poca luz, pero luce mejor con luz indirecta brillante.",
+        "ar": "كرمة سريعة النمو متدلية أو متسلقة؛ تتحمل الضوء الخافت وتزدهر أكثر في ضوء غير مباشر ساطع."
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -119,7 +152,10 @@
         "fertilizeBaseDays": 35,
         "mistBaseDays": 4,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 75
+        "pruneBaseDays": 75,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 21,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -136,14 +172,30 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "low_to_bright",
+      "tags": [
+        "beginner",
+        "low-light",
+        "air-purifying",
+        "drought-tolerant"
+      ],
       "imagePath": "assets/placeholders/species/sansevieria_trifasciata.png",
       "history": {
         "en": "Native to West Africa, snake plant is famous for thriving on neglect. It has long been grown as a durable indoor plant and is still a modern favorite.",
-        "zh": "原产西非。以“耐旱、耐养、几乎不需要操心”而闻名，是经典且经久不衰的室内绿植。"
+        "zh": "原产西非。以“耐旱、耐养、几乎不需要操心”而闻名，是经典且经久不衰的室内绿植。",
+        "es": "Originaria de África occidental, es apreciada como planta de interior resistente y de bajo mantenimiento.",
+        "ar": "موطنها غرب أفريقيا، وتشتهر كنبات داخلي شديد التحمل وقليل الاحتياج للعناية."
       },
       "habit": {
         "en": "An upright, drought-tolerant plant with thick leaves that store water. Prefer bright indirect light but adapts to low light; avoid frequent watering.",
-        "zh": "直立生长，叶片厚实可储水，耐旱。喜欢明亮散射光，也能适应弱光；浇水宁少勿多。"
+        "zh": "直立生长，叶片厚实可储水，耐旱。喜欢明亮散射光，也能适应弱光；浇水宁少勿多。",
+        "es": "Planta erguida y tolerante a la sequía, con hojas carnosas; evita regar con demasiada frecuencia.",
+        "ar": "نبات قائم يتحمل الجفاف بأوراق سميكة تخزن الماء؛ تجنب الري المتكرر."
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -177,7 +229,10 @@
         "fertilizeBaseDays": 60,
         "mistBaseDays": 0,
         "rotateBaseDays": 21,
-        "pruneBaseDays": 120
+        "pruneBaseDays": 120,
+        "repotBaseDays": 730,
+        "pestCheckBaseDays": 30,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -194,14 +249,24 @@
       "difficulty": "easy",
       "petSafe": true,
       "light": "bright_indirect",
+      "tags": [
+        "pet-safe",
+        "beginner",
+        "air-purifying",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/chlorophytum_comosum.png",
       "history": {
         "en": "Native to southern Africa, spider plant became popular as a resilient hanging plant. Its charming “spiderettes” make it easy to propagate and share.",
-        "zh": "原产非洲南部。因耐养、适合吊盆以及会长出可繁殖的“小吊兰”而广受欢迎，也很适合分享给朋友。"
+        "zh": "原产非洲南部。因耐养、适合吊盆以及会长出可繁殖的“小吊兰”而广受欢迎，也很适合分享给朋友。",
+        "es": "Originaria del sur de África, se hizo popular como planta colgante resistente y fácil de propagar.",
+        "ar": "موطنها جنوب أفريقيا، واشتهرت كنبات معلق قوي يسهل إكثاره من الخلفات الصغيرة."
       },
       "habit": {
         "en": "A clumping plant with arching leaves and runners that produce plantlets. Keep lightly moist, avoid soggy soil, and rotate for even growth.",
-        "zh": "丛生型，叶片拱形下垂，会抽匍匐茎结出小株。土壤保持微湿但不积水，适度转盆让生长更均匀。"
+        "zh": "丛生型，叶片拱形下垂，会抽匍匐茎结出小株。土壤保持微湿但不积水，适度转盆让生长更均匀。",
+        "es": "Forma matas con hojas arqueadas y estolones con hijuelos; prefiere humedad ligera sin encharcar.",
+        "ar": "ينمو في خصل بأوراق مقوسة وسوق تحمل خلفات؛ حافظ على رطوبة خفيفة دون إغراق."
       },
       "origin": {
         "nativeRange": {
@@ -235,7 +300,10 @@
         "fertilizeBaseDays": 30,
         "mistBaseDays": 3,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 90
+        "pruneBaseDays": 90,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 21,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -252,14 +320,27 @@
       "difficulty": "medium",
       "petSafe": false,
       "light": "bright_indirect",
+      "tags": [
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/ficus_lyrata.png",
       "history": {
         "en": "Native to West Africa, the fiddle-leaf fig rose to fame in contemporary interior design for its large, sculptural leaves and tree-like form.",
-        "zh": "原产西非。因大而有雕塑感的叶片与树形姿态而在现代室内设计中走红，被称为“空间气质担当”。"
+        "zh": "原产西非。因大而有雕塑感的叶片与树形姿态而在现代室内设计中走红，被称为“空间气质担当”。",
+        "es": "Originaria de África occidental, destaca en interiores por sus hojas grandes, escultóricas y porte de árbol.",
+        "ar": "موطنها غرب أفريقيا، وتبرز في الديكور الداخلي بأوراقها الكبيرة النحتية وشكلها الشجري."
       },
       "habit": {
         "en": "An upright woody plant that prefers stable conditions. Bright indirect light and consistent watering help it avoid leaf drop; avoid frequent moves and drafts.",
-        "zh": "木质直立生长，偏爱稳定环境。明亮散射光与规律浇水有助于减少落叶；尽量避免频繁挪动与冷风直吹。"
+        "zh": "木质直立生长，偏爱稳定环境。明亮散射光与规律浇水有助于减少落叶；尽量避免频繁挪动与冷风直吹。",
+        "es": "Planta leñosa erguida que necesita estabilidad, luz indirecta brillante y riego constante para evitar caída de hojas.",
+        "ar": "نبات خشبي قائم يفضل الثبات والضوء غير المباشر الساطع والري المنتظم لتقليل تساقط الأوراق."
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -293,7 +374,10 @@
         "fertilizeBaseDays": 28,
         "mistBaseDays": 2,
         "rotateBaseDays": 10,
-        "pruneBaseDays": 90
+        "pruneBaseDays": 90,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 14,
+        "wipeLeavesBaseDays": 7
       }
     },
     {
@@ -310,6 +394,11 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "low_to_bright_indirect",
+      "tags": [
+        "beginner",
+        "low-light",
+        "drought-tolerant"
+      ],
       "imagePath": "assets/placeholders/species/zz_plant.png",
       "history": {
         "en": "Native to eastern Africa, ZZ plant became a go-to office plant thanks to its tolerance of low light and irregular watering.",
@@ -318,6 +407,12 @@
       "habit": {
         "en": "A slow-growing plant with rhizomes that store water. Let the pot dry out between waterings; brighter indirect light encourages fuller growth.",
         "zh": "生长偏慢，地下根茎可储水。浇水要等盆土干透再浇；更明亮的散射光能让株型更饱满。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -351,7 +446,10 @@
         "fertilizeBaseDays": 75,
         "mistBaseDays": 0,
         "rotateBaseDays": 21,
-        "pruneBaseDays": 150
+        "pruneBaseDays": 150,
+        "repotBaseDays": 730,
+        "pestCheckBaseDays": 30,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -368,6 +466,12 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "medium_indirect",
+      "tags": [
+        "beginner",
+        "low-light",
+        "air-purifying",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/spathiphyllum_wallisii.png",
       "history": {
         "en": "Native to tropical regions of the Americas, peace lily became a classic indoor plant thanks to its glossy leaves and elegant white spathes.",
@@ -376,6 +480,12 @@
       "habit": {
         "en": "A shade-tolerant plant that enjoys consistent moisture. It will droop slightly when thirsty; keep it evenly damp but never soggy.",
         "zh": "耐阴，喜欢稳定的水分。缺水时会轻微下垂作为“提醒”；保持土壤均匀湿润但不要积水。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -409,7 +519,10 @@
         "fertilizeBaseDays": 30,
         "mistBaseDays": 3,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 90
+        "pruneBaseDays": 90,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 14,
+        "wipeLeavesBaseDays": 14
       }
     },
     {
@@ -426,6 +539,11 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "bright_direct",
+      "tags": [
+        "beginner",
+        "air-purifying",
+        "drought-tolerant"
+      ],
       "imagePath": "assets/placeholders/species/aloe_vera.png",
       "history": {
         "en": "Aloe has been cultivated for centuries and is cherished for its sculptural rosettes and historic use in skin care traditions.",
@@ -434,6 +552,12 @@
       "habit": {
         "en": "A drought-tolerant succulent that stores water in its leaves. Let the pot dry out completely between waterings and give it plenty of light.",
         "zh": "耐旱的多肉植物，叶片可储水。浇水要等盆土完全干透再浇，并给予充足光照。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -467,7 +591,10 @@
         "fertilizeBaseDays": 60,
         "mistBaseDays": 0,
         "rotateBaseDays": 21,
-        "pruneBaseDays": 180
+        "pruneBaseDays": 180,
+        "repotBaseDays": 730,
+        "pestCheckBaseDays": 30,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -484,6 +611,11 @@
       "difficulty": "hard",
       "petSafe": true,
       "light": "medium_indirect",
+      "tags": [
+        "pet-safe",
+        "low-light",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/calathea_orbifolia.png",
       "history": {
         "en": "Loved for its wide, striped leaves, orbifolia became a design favorite in modern homes — a living piece of pattern and texture.",
@@ -525,7 +657,10 @@
         "fertilizeBaseDays": 30,
         "mistBaseDays": 2,
         "rotateBaseDays": 10,
-        "pruneBaseDays": 150
+        "pruneBaseDays": 150,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 14,
+        "wipeLeavesBaseDays": 14
       }
     },
     {
@@ -543,6 +678,10 @@
       "difficulty": "easy",
       "petSafe": true,
       "light": "bright_indirect",
+      "tags": [
+        "pet-safe",
+        "beginner"
+      ],
       "imagePath": "assets/placeholders/species/pilea_peperomioides.png",
       "history": {
         "en": "A modern cult favorite, pilea is celebrated for its coin-shaped leaves and easy propagation — a plant made to share.",
@@ -584,7 +723,10 @@
         "fertilizeBaseDays": 35,
         "mistBaseDays": 0,
         "rotateBaseDays": 7,
-        "pruneBaseDays": 150
+        "pruneBaseDays": 150,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 21,
+        "wipeLeavesBaseDays": 14
       }
     },
     {
@@ -601,6 +743,10 @@
       "difficulty": "medium",
       "petSafe": false,
       "light": "bright_indirect",
+      "tags": [
+        "air-purifying",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/ficus_elastica.png",
       "history": {
         "en": "With thick, glossy leaves, rubber plant became a staple of mid‑century interiors and remains a timeless statement plant.",
@@ -609,6 +755,12 @@
       "habit": {
         "en": "An upright tree-like plant that enjoys stable light and occasional wiping of leaves. Water when the top layers dry.",
         "zh": "树状直立生长，喜欢稳定光照，叶面可偶尔擦拭除尘。浇水遵循“表层干了再浇”。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -642,7 +794,10 @@
         "fertilizeBaseDays": 28,
         "mistBaseDays": 2,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 120
+        "pruneBaseDays": 120,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 14,
+        "wipeLeavesBaseDays": 7
       }
     },
     {
@@ -659,6 +814,11 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "low_to_bright_indirect",
+      "tags": [
+        "beginner",
+        "low-light",
+        "air-purifying"
+      ],
       "imagePath": "assets/placeholders/species/dracaena_marginata.png",
       "history": {
         "en": "Dragon tree is prized for its minimal, architectural silhouette and tolerance of indoor conditions, making it a popular office companion.",
@@ -667,6 +827,12 @@
       "habit": {
         "en": "Slow-growing with narrow leaves. Let the pot dry partway between waterings; too much water is a common mistake.",
         "zh": "生长偏慢，叶片细长。浇水要等盆土部分干燥再浇；最常见的错误是浇水过勤。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -700,7 +866,10 @@
         "fertilizeBaseDays": 45,
         "mistBaseDays": 0,
         "rotateBaseDays": 21,
-        "pruneBaseDays": 180
+        "pruneBaseDays": 180,
+        "repotBaseDays": 730,
+        "pestCheckBaseDays": 21,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -717,6 +886,12 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "low_to_bright_indirect",
+      "tags": [
+        "beginner",
+        "low-light",
+        "air-purifying",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/philodendron_hederaceum.png",
       "history": {
         "en": "A beloved trailing plant in homes and studios, heartleaf philodendron is known for its soft heart-shaped leaves and forgiving nature.",
@@ -725,6 +900,12 @@
       "habit": {
         "en": "A trailing vine that can climb with support. Water when the top soil dries and pinch tips for bushier growth.",
         "zh": "垂吊藤本，也可攀援。表土干了再浇，适度摘心可促进更茂密的分枝。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -762,7 +943,10 @@
         "fertilizeBaseDays": 35,
         "mistBaseDays": 3,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 120
+        "pruneBaseDays": 120,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 21,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -780,6 +964,10 @@
       "difficulty": "medium",
       "petSafe": true,
       "light": "bright_indirect",
+      "tags": [
+        "pet-safe",
+        "drought-tolerant"
+      ],
       "imagePath": "assets/placeholders/species/hoya_carnosa.png",
       "history": {
         "en": "Hoya has long been grown for its thick leaves and fragrant star-shaped blooms — a patient plant with a rewarding payoff.",
@@ -825,7 +1013,10 @@
         "fertilizeBaseDays": 45,
         "mistBaseDays": 0,
         "rotateBaseDays": 21,
-        "pruneBaseDays": 180
+        "pruneBaseDays": 180,
+        "repotBaseDays": 730,
+        "pestCheckBaseDays": 21,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -842,6 +1033,12 @@
       "difficulty": "medium",
       "petSafe": true,
       "light": "medium_indirect",
+      "tags": [
+        "pet-safe",
+        "low-light",
+        "air-purifying",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/nephrolepis_exaltata.png",
       "history": {
         "en": "Ferns have decorated homes for generations. Boston fern remains a favorite for its soft texture and lush, classic look.",
@@ -883,7 +1080,10 @@
         "fertilizeBaseDays": 30,
         "mistBaseDays": 2,
         "rotateBaseDays": 10,
-        "pruneBaseDays": 120
+        "pruneBaseDays": 120,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 14,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -901,6 +1101,10 @@
       "difficulty": "medium",
       "petSafe": true,
       "light": "bright_indirect",
+      "tags": [
+        "pet-safe",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/phalaenopsis_orchid.png",
       "history": {
         "en": "Phalaenopsis orchids are widely loved for long-lasting blooms and elegant arching spikes — a symbol of calm, refined beauty.",
@@ -942,7 +1146,10 @@
         "fertilizeBaseDays": 21,
         "mistBaseDays": 0,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 240
+        "pruneBaseDays": 240,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 21,
+        "wipeLeavesBaseDays": 14
       }
     },
     {
@@ -959,6 +1166,10 @@
       "difficulty": "easy",
       "petSafe": false,
       "light": "bright_direct",
+      "tags": [
+        "beginner",
+        "drought-tolerant"
+      ],
       "imagePath": "assets/placeholders/species/crassula_ovata.png",
       "history": {
         "en": "A classic succulent often passed down as a long-lived houseplant. Jade plant is admired for its sturdy form and glossy leaves.",
@@ -967,6 +1178,12 @@
       "habit": {
         "en": "A slow-growing succulent with woody stems. Let it dry out between waterings and give it brighter light for compact growth.",
         "zh": "木质化茎干的多肉，生长偏慢。浇水等干透再浇；光照更足株型更紧凑。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -1000,7 +1217,10 @@
         "fertilizeBaseDays": 60,
         "mistBaseDays": 0,
         "rotateBaseDays": 21,
-        "pruneBaseDays": 240
+        "pruneBaseDays": 240,
+        "repotBaseDays": 730,
+        "pestCheckBaseDays": 30,
+        "wipeLeavesBaseDays": 30
       }
     },
     {
@@ -1018,6 +1238,11 @@
       "difficulty": "medium",
       "petSafe": false,
       "light": "medium_indirect",
+      "tags": [
+        "low-light",
+        "air-purifying",
+        "humidity-loving"
+      ],
       "imagePath": "assets/placeholders/species/anthurium_andraeanum.png",
       "history": {
         "en": "Anthurium became a beloved gift plant for its long-lasting colorful spathes and glossy, heart-shaped leaves.",
@@ -1026,6 +1251,12 @@
       "habit": {
         "en": "Prefers warmth and humidity. Keep it evenly moist with good drainage; avoid cold drafts and harsh sun.",
         "zh": "喜欢温暖与湿度。土壤保持均匀湿润且排水良好；避免冷风与强烈日晒。"
+      },
+      "careWarnings": {
+        "en": "Keep away from pets and children.",
+        "zh": "请远离宠物和儿童。",
+        "es": "Mantener lejos de mascotas y niños.",
+        "ar": "أبقِه بعيداً عن الحيوانات الأليفة والأطفال."
       },
       "origin": {
         "nativeRange": {
@@ -1059,7 +1290,10 @@
         "fertilizeBaseDays": 30,
         "mistBaseDays": 3,
         "rotateBaseDays": 14,
-        "pruneBaseDays": 180
+        "pruneBaseDays": 180,
+        "repotBaseDays": 365,
+        "pestCheckBaseDays": 14,
+        "wipeLeavesBaseDays": 14
       }
     }
   ]

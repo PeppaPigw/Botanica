@@ -2,6 +2,7 @@ import 'package:botanica/data/repositories/ai_cache_repository.dart';
 import 'package:botanica/domain/models/daily_flower.dart';
 import 'package:botanica/domain/models/enums.dart';
 import 'package:botanica/services/ai/ai_chat_client.dart';
+import 'package:botanica/services/ai/ai_config.dart';
 import 'package:botanica/services/ai/botanica_ai_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -119,6 +120,44 @@ void main() {
       expect(messages.first['content'], contains('Respond ONLY in Spanish'));
       expect(messages[1]['content'], contains('Language: es'));
     });
+
+    test('throttles repeated plant insight requests for same day and plant',
+        () async {
+      final cache = FakeAiCacheRepository();
+      final client = FakeAiChatClient(response: 'fresh insight');
+      final service = BotanicaAiService(cache: cache, client: client);
+
+      final first = await service.generatePlantInsight(
+        date: date,
+        localeCode: 'en',
+        plantId: 'plant-1',
+        plantNickname: 'Aloe',
+        speciesId: 'aloe_vera',
+        speciesName: 'Aloe vera',
+        scientificName: 'Aloe vera',
+        environmentMode: EnvironmentMode.indoor,
+        tempC: 22,
+        humidityPercent: 45,
+        nextTasks: const ['Water'],
+      );
+      final second = await service.generatePlantInsight(
+        date: date,
+        localeCode: 'en',
+        plantId: 'plant-1',
+        plantNickname: 'Aloe',
+        speciesId: 'aloe_vera',
+        speciesName: 'Aloe vera',
+        scientificName: 'Aloe vera',
+        environmentMode: EnvironmentMode.indoor,
+        tempC: 26,
+        humidityPercent: 35,
+        nextTasks: const ['Water', 'Rotate'],
+      );
+
+      expect(first, 'fresh insight');
+      expect(second, 'fresh insight');
+      expect(client.callCount, 1);
+    });
   });
 }
 
@@ -186,8 +225,16 @@ class FakeAiCacheRepository implements AiCacheRepository {
   }
 }
 
-class FakeAiChatClient implements AiChatClient {
-  FakeAiChatClient({required this.response});
+class FakeAiChatClient extends AiChatClient {
+  FakeAiChatClient({required this.response})
+      : super(
+          config: const AiConfig(
+            model: 'test-model',
+            authMode: AiAuthMode.none,
+            baseUrl: 'http://localhost:8787',
+            proxyToken: 'test-token',
+          ),
+        );
 
   final String response;
   int callCount = 0;

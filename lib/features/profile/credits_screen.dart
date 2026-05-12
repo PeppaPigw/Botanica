@@ -1,7 +1,8 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -14,7 +15,6 @@ class CreditsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return BotanicaPageScaffold(
@@ -31,8 +31,8 @@ class CreditsScreen extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 letterSpacing: -0.4,
               ),
-            ).animate().fadeIn(duration: 380.ms),
-            const SizedBox(height: 12),
+            ).animateSection(index: 0),
+            BotanicaGaps.vSm,
             const BotanicaGlassCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,14 +42,14 @@ class CreditsScreen extends StatelessWidget {
                     subtitle: 'Open-source plant tracking + reminders patterns',
                     link: 'https://github.com/MDeLuise/plant-it',
                   ),
-                  SizedBox(height: 10),
+                  BotanicaGaps.vSm,
                   _CreditRow(
                     title: 'SevenSquare-Tech/plant-care-app',
                     subtitle:
                         'Exploration / identification / reminders patterns',
                     link: 'https://github.com/SevenSquare-Tech/plant-care-app',
                   ),
-                  SizedBox(height: 10),
+                  BotanicaGaps.vSm,
                   _CreditRow(
                     title: 'abuanwar072/Plant-App-Flutter-UI',
                     subtitle: 'Polished card layouts + transitions inspiration',
@@ -57,8 +57,8 @@ class CreditsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ).animate().fadeIn(delay: 120.ms, duration: 420.ms),
-            const SizedBox(height: 16),
+            ).animateSection(index: 1),
+            BotanicaGaps.vBase,
             Text(
               l10n.creditsFlutterCommunity,
               style: textTheme.titleLarge?.copyWith(
@@ -66,26 +66,14 @@ class CreditsScreen extends StatelessWidget {
                 letterSpacing: -0.3,
               ),
             ),
-            const SizedBox(height: 10),
+            BotanicaGaps.vSm,
             const BotanicaGlassCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _PackageRow(
-                      name: 'flutter_riverpod', note: 'State management'),
-                  _PackageRow(name: 'go_router', note: 'Navigation'),
-                  _PackageRow(
-                      name: 'dynamic_color', note: 'Dynamic color schemes'),
-                  _PackageRow(name: 'google_fonts', note: 'Typography'),
-                  _PackageRow(name: 'flutter_animate', note: 'Micro‑motion'),
-                  _PackageRow(
-                      name: 'hive / hive_flutter',
-                      note: 'Offline-first local DB'),
-                  _PackageRow(name: 'flutter_slidable', note: 'Swipe actions'),
-                ],
+                children: _thirdPartyPackages,
               ),
-            ).animate().fadeIn(delay: 160.ms, duration: 420.ms),
-            const SizedBox(height: 16),
+            ).animateSection(index: 2),
+            BotanicaGaps.vBase,
             Text(
               l10n.creditsUiInspiration,
               style: textTheme.titleLarge?.copyWith(
@@ -93,7 +81,7 @@ class CreditsScreen extends StatelessWidget {
                 letterSpacing: -0.3,
               ),
             ),
-            const SizedBox(height: 10),
+            BotanicaGaps.vSm,
             const BotanicaGlassCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +92,7 @@ class CreditsScreen extends StatelessWidget {
                     link:
                         'https://dribbble.com/shots/18619889-Plant-Care-App-UI-Design',
                   ),
-                  SizedBox(height: 10),
+                  BotanicaGaps.vSm,
                   _CreditRow(
                     title: 'Planta (iOS)',
                     subtitle: 'Premium details and care explanations',
@@ -113,21 +101,46 @@ class CreditsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ).animate().fadeIn(delay: 200.ms, duration: 420.ms),
-            const SizedBox(height: 12),
-            Text(
-              l10n.creditsPlaceholderNote,
-              style: textTheme.bodySmall?.copyWith(
-                color: scheme.onSurface.withValues(alpha: 0.68),
-                height: 1.35,
-              ),
-            ).animate().fadeIn(delay: 220.ms, duration: 420.ms),
+            ).animateSection(index: 3),
           ],
         ),
       ),
     );
   }
 }
+
+const _thirdPartyPackages = <_PackageRow>[
+  _PackageRow(name: 'cupertino_icons', note: 'MIT'),
+  _PackageRow(name: 'intl', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'flutter_riverpod', note: 'MIT'),
+  _PackageRow(name: 'go_router', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'dynamic_color', note: 'Apache-2.0'),
+  _PackageRow(name: 'google_fonts', note: 'Apache-2.0'),
+  _PackageRow(name: 'flutter_animate', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'glassmorphism', note: 'Apache-2.0'),
+  _PackageRow(name: 'hive', note: 'Apache-2.0'),
+  _PackageRow(name: 'hive_flutter', note: 'Apache-2.0'),
+  _PackageRow(name: 'uuid', note: 'MIT'),
+  _PackageRow(name: 'collection', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'path_provider', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'flutter_slidable', note: 'MIT'),
+  _PackageRow(name: 'permission_handler', note: 'MIT'),
+  _PackageRow(name: 'geolocator', note: 'MIT'),
+  _PackageRow(name: 'dio', note: 'MIT'),
+  _PackageRow(name: 'characters', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'flutter_secure_storage', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'flutter_local_notifications', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'timezone', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'flutter_timezone', note: 'Apache-2.0'),
+  _PackageRow(name: 'camera', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'image_picker', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'path', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'crypto', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'cross_file', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'share_plus', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'flutter_lints', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'flutter_launcher_icons', note: 'MIT'),
+];
 
 class _CreditRow extends StatelessWidget {
   const _CreditRow({
@@ -150,7 +163,7 @@ class _CreditRow extends StatelessWidget {
       children: [
         Icon(Icons.link_rounded,
             color: scheme.onSurface.withValues(alpha: 0.70)),
-        const SizedBox(width: 10),
+        BotanicaGaps.hSm,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +175,7 @@ class _CreditRow extends StatelessWidget {
                   letterSpacing: -0.2,
                 ),
               ),
-              const SizedBox(height: 3),
+              BotanicaGaps.vMicro,
               Text(
                 subtitle,
                 style: textTheme.bodySmall?.copyWith(
@@ -170,7 +183,7 @@ class _CreditRow extends StatelessWidget {
                   height: 1.35,
                 ),
               ),
-              const SizedBox(height: 4),
+              BotanicaGaps.vTiny,
               Text(
                 link,
                 style: textTheme.bodySmall?.copyWith(
@@ -206,7 +219,7 @@ class _PackageRow extends StatelessWidget {
         children: [
           Icon(Icons.code_rounded,
               color: scheme.onSurface.withValues(alpha: 0.70)),
-          const SizedBox(width: 10),
+          BotanicaGaps.hSm,
           Expanded(
             child: Text(
               name,

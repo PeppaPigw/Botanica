@@ -19,6 +19,7 @@ class BotanicaAiService {
   static const Duration _dailyNoteTtl = Duration(hours: 24);
   static const Duration _plantInsightTtl = Duration(hours: 6);
   static const Duration _careTipTtl = Duration(hours: 2);
+  static const Duration _requestThrottleTtl = Duration(minutes: 5);
 
   final AiCacheRepository _cache;
   final AiChatClient _client;
@@ -32,8 +33,7 @@ class BotanicaAiService {
     required String? variantKey,
     required DailyFlowerContent content,
   }) {
-    final day =
-        '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+    final day = _formatDay(date);
     final seed = <String>[
       'daily_note_v1',
       day,
@@ -58,8 +58,7 @@ class BotanicaAiService {
     required int humidityPercent,
     required List<String> nextTasks,
   }) {
-    final day =
-        '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+    final day = _formatDay(date);
 
     final tempBucket = tempC.round().clamp(-40, 60);
     final humidityBucket =
@@ -103,11 +102,16 @@ class BotanicaAiService {
       variantKey: variantKey,
       content: content,
     );
-
-    final cached = _cache.readText(
-      cacheKey,
-      maxAge: _dailyNoteTtl,
+    final throttleKey = _dailyNoteThrottleKey(
+      date: date,
+      localeCode: localeCode,
+      beliefMode: beliefMode,
+      variantKey: variantKey,
+      content: content,
     );
+
+    final cached = _cache.readText(throttleKey) ??
+        _cache.readText(cacheKey, maxAge: _dailyNoteTtl);
     if (cached != null) return cached;
 
     final languageName =
@@ -140,6 +144,11 @@ class BotanicaAiService {
 
     final value = _sanitizeMultilineText(raw);
     await _cache.writeText(key: cacheKey, value: value, ttl: _dailyNoteTtl);
+    await _cache.writeText(
+      key: throttleKey,
+      value: value,
+      ttl: _requestThrottleTtl,
+    );
     return value;
   }
 
@@ -167,11 +176,16 @@ class BotanicaAiService {
       humidityPercent: humidityPercent,
       nextTasks: nextTasks,
     );
-
-    final cached = _cache.readText(
-      cacheKey,
-      maxAge: _plantInsightTtl,
+    final throttleKey = _plantRequestThrottleKey(
+      kind: 'plant_insight',
+      date: date,
+      localeCode: localeCode,
+      plantId: plantId,
+      environmentMode: environmentMode,
     );
+
+    final cached = _cache.readText(throttleKey) ??
+        _cache.readText(cacheKey, maxAge: _plantInsightTtl);
     if (cached != null) return cached;
 
     final languageName =
@@ -212,6 +226,11 @@ class BotanicaAiService {
       value: value,
       ttl: _plantInsightTtl,
     );
+    await _cache.writeText(
+      key: throttleKey,
+      value: value,
+      ttl: _requestThrottleTtl,
+    );
     return value;
   }
 
@@ -226,8 +245,7 @@ class BotanicaAiService {
     required int humidityPercent,
     required List<String> pendingTasks,
   }) {
-    final day =
-        '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+    final day = _formatDay(date);
 
     final tempBucket = tempC.round().clamp(-40, 60);
     final humidityBucket =
@@ -280,11 +298,16 @@ class BotanicaAiService {
       humidityPercent: humidityPercent,
       pendingTasks: pendingTasks,
     );
-
-    final cached = _cache.readText(
-      cacheKey,
-      maxAge: _careTipTtl,
+    final throttleKey = _plantRequestThrottleKey(
+      kind: 'care_tip',
+      date: date,
+      localeCode: localeCode,
+      plantId: plantId,
+      environmentMode: environmentMode,
     );
+
+    final cached = _cache.readText(throttleKey) ??
+        _cache.readText(cacheKey, maxAge: _careTipTtl);
     if (cached != null) return cached;
 
     final languageName =
@@ -321,8 +344,61 @@ class BotanicaAiService {
 
     final value = _sanitizeSingleSentence(raw);
     await _cache.writeText(key: cacheKey, value: value, ttl: _careTipTtl);
+    await _cache.writeText(
+      key: throttleKey,
+      value: value,
+      ttl: _requestThrottleTtl,
+    );
     return value;
   }
+
+  String _dailyNoteThrottleKey({
+    required DateTime date,
+    required String localeCode,
+    required BeliefMode beliefMode,
+    required String? variantKey,
+    required DailyFlowerContent content,
+  }) {
+    final day = _formatDay(date);
+    final seed = <String>[
+      'daily_note_throttle_v1',
+      day,
+      localeCode.trim().toLowerCase(),
+      beliefMode.id,
+      (variantKey ?? '').trim().toLowerCase(),
+      content.key.trim().toLowerCase(),
+    ].join('|');
+
+    final digest = sha1.convert(utf8.encode(seed)).toString();
+    return 'ai_throttle:$digest';
+  }
+
+  String _plantRequestThrottleKey({
+    required String kind,
+    required DateTime date,
+    required String localeCode,
+    required String plantId,
+    required EnvironmentMode environmentMode,
+  }) {
+    final day = _formatDay(date);
+    final seed = <String>[
+      '${kind}_throttle_v1',
+      day,
+      localeCode.trim().toLowerCase(),
+      plantId.trim().toLowerCase(),
+      environmentMode.id,
+    ].join('|');
+
+    final digest = sha1.convert(utf8.encode(seed)).toString();
+    return 'ai_throttle:$digest';
+  }
+}
+
+String _formatDay(DateTime date) {
+  final y = date.year.toString().padLeft(4, '0');
+  final m = date.month.toString().padLeft(2, '0');
+  final d = date.day.toString().padLeft(2, '0');
+  return '$y-$m-$d';
 }
 
 String _sanitizeMultilineText(String input) {

@@ -1,11 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../app/providers.dart';
@@ -13,6 +10,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../domain/models/diary_entry.dart';
 import '../../gen/l10n/app_localizations.dart';
+import '../../services/photos/share_card_export.dart';
 
 class DiaryShareCardScreen extends ConsumerStatefulWidget {
   const DiaryShareCardScreen({super.key, required this.entry});
@@ -46,25 +44,13 @@ class _DiaryShareCardScreenState extends ConsumerState<DiaryShareCardScreen> {
     final l10n = AppLocalizations.of(context);
 
     try {
-      final boundary = _repaintKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
-      if (boundary == null) {
-        throw StateError('Share card was not ready to render.');
-      }
-
-      final image = await boundary.toImage(pixelRatio: 3.0);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      if (byteData == null) {
-        throw StateError('Failed to encode share image.');
-      }
-      final Uint8List pngBytes = byteData.buffer.asUint8List();
-
-      final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/botanica-diary-${widget.entry.id}.png');
-      await file.writeAsBytes(pngBytes, flush: true);
+      final file = await exportShareCardPng(
+        repaintKey: _repaintKey,
+        fileName: 'botanica-diary-${widget.entry.id}.png',
+      );
 
       await Share.shareXFiles(
-        <XFile>[XFile(file.path)],
+        [file],
         text: l10n.journalShareCardText,
       );
     } catch (_) {
@@ -75,8 +61,8 @@ class _DiaryShareCardScreenState extends ConsumerState<DiaryShareCardScreen> {
           content: Row(
             children: [
               Icon(Icons.error_outline_rounded,
-                  size: 18, color: Theme.of(context).colorScheme.error),
-              const SizedBox(width: 10),
+                  size: BotanicaTokens.iconSizeSm, color: Theme.of(context).colorScheme.error),
+              BotanicaGaps.hSm,
               Expanded(child: Text(l10n.journalShareFailed)),
             ],
           ),
@@ -209,7 +195,7 @@ class _DiaryShareCard extends StatelessWidget {
               right: 18,
               bottom: 18,
               child: Container(
-                padding: const EdgeInsets.all(14),
+                padding: BotanicaTokens.cardPaddingDense,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(22),
                   color: scheme.surface.withValues(alpha: 0.80),
@@ -230,7 +216,7 @@ class _DiaryShareCard extends StatelessWidget {
                         letterSpacing: -0.4,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    BotanicaGaps.vTiny,
                     Text(
                       dateLabel,
                       style: textTheme.bodySmall?.copyWith(
@@ -238,16 +224,16 @@ class _DiaryShareCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    BotanicaGaps.vSm,
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(
                           Icons.format_quote_rounded,
-                          size: 18,
+                          size: BotanicaTokens.iconSizeSm,
                           color: scheme.primary.withValues(alpha: 0.85),
                         ),
-                        const SizedBox(width: 8),
+                        BotanicaGaps.hXs,
                         Expanded(
                           child: Text(
                             text,
@@ -261,15 +247,15 @@ class _DiaryShareCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    BotanicaGaps.vSm,
                     Row(
                       children: [
                         Icon(
                           Icons.spa_rounded,
-                          size: 16,
+                          size: BotanicaTokens.iconSizeSm,
                           color: scheme.primary.withValues(alpha: 0.85),
                         ),
-                        const SizedBox(width: 6),
+                        BotanicaGaps.hXxs,
                         Text(
                           brandName,
                           style: textTheme.labelLarge?.copyWith(

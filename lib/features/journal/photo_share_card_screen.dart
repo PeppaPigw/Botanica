@@ -1,11 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../app/providers.dart';
@@ -13,6 +10,8 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../gen/l10n/app_localizations.dart';
+import '../../services/photos/share_card_export.dart';
+import 'widgets/journal_photo_unavailable.dart';
 
 class PhotoShareCardScreen extends ConsumerStatefulWidget {
   const PhotoShareCardScreen({super.key, required this.entry});
@@ -46,25 +45,13 @@ class _PhotoShareCardScreenState extends ConsumerState<PhotoShareCardScreen> {
     final l10n = AppLocalizations.of(context);
 
     try {
-      final boundary = _repaintKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
-      if (boundary == null) {
-        throw StateError('Share card was not ready to render.');
-      }
-
-      final image = await boundary.toImage(pixelRatio: 3.0);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      if (byteData == null) {
-        throw StateError('Failed to encode share image.');
-      }
-      final Uint8List pngBytes = byteData.buffer.asUint8List();
-
-      final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/botanica-${widget.entry.id}.png');
-      await file.writeAsBytes(pngBytes, flush: true);
+      final file = await exportShareCardPng(
+        repaintKey: _repaintKey,
+        fileName: 'botanica-${widget.entry.id}.png',
+      );
 
       await Share.shareXFiles(
-        <XFile>[XFile(file.path)],
+        [file],
         text: l10n.journalShareCardText,
       );
     } catch (_) {
@@ -75,8 +62,8 @@ class _PhotoShareCardScreenState extends ConsumerState<PhotoShareCardScreen> {
           content: Row(
             children: [
               Icon(Icons.error_outline_rounded,
-                  size: 18, color: Theme.of(context).colorScheme.error),
-              const SizedBox(width: 10),
+                  size: BotanicaTokens.iconSizeSm, color: Theme.of(context).colorScheme.error),
+              BotanicaGaps.hSm,
               Expanded(child: Text(l10n.journalShareFailed)),
             ],
           ),
@@ -172,10 +159,8 @@ class _ShareCard extends StatelessWidget {
               File(photoPath),
               fit: BoxFit.cover,
               filterQuality: FilterQuality.high,
-              errorBuilder: (_, __, ___) => Image.asset(
-                'assets/placeholders/share/photo_fallback.png',
-                fit: BoxFit.cover,
-              ),
+              errorBuilder: (_, __, ___) =>
+                  const JournalPhotoUnavailable(),
             ),
             DecoratedBox(
               decoration: BoxDecoration(
@@ -196,7 +181,7 @@ class _ShareCard extends StatelessWidget {
               right: 18,
               bottom: 18,
               child: Container(
-                padding: const EdgeInsets.all(14),
+                padding: BotanicaTokens.cardPaddingDense,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(22),
                   color: scheme.surface.withValues(alpha: 0.78),
@@ -217,7 +202,7 @@ class _ShareCard extends StatelessWidget {
                         letterSpacing: -0.4,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    BotanicaGaps.vTiny,
                     Text(
                       dateLabel,
                       style: textTheme.bodySmall?.copyWith(
@@ -226,7 +211,7 @@ class _ShareCard extends StatelessWidget {
                       ),
                     ),
                     if (note != null) ...[
-                      const SizedBox(height: 10),
+                      BotanicaGaps.vSm,
                       Text(
                         note!,
                         maxLines: 3,
@@ -237,13 +222,13 @@ class _ShareCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                    const SizedBox(height: 10),
+                    BotanicaGaps.vSm,
                     Row(
                       children: [
                         Icon(Icons.spa_rounded,
-                            size: 16,
+                            size: BotanicaTokens.iconSizeSm,
                             color: scheme.primary.withValues(alpha: 0.85)),
-                        const SizedBox(width: 6),
+                        BotanicaGaps.hXxs,
                         Text(
                           brandName,
                           style: textTheme.labelLarge?.copyWith(

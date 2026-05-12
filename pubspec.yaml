@@ -79,6 +79,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -97,15 +98,17 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+
+    - assets/illustrations/
+    - assets/icons/
+    - assets/data/
+    - assets/images/
     - assets/placeholders/
     - assets/placeholders/species/
     - assets/placeholders/daily_flowers/
     - assets/placeholders/tarot/
     - assets/placeholders/onboarding/
     - assets/placeholders/share/
-    - assets/illustrations/
-    - assets/icons/
-    - assets/data/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

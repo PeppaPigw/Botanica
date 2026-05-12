@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
@@ -68,22 +67,20 @@ class BotanicaNotificationsService {
     }
   }
 
-  /// Stable 31-bit notification id derived from a task id.
-  ///
-  /// Must remain stable across app launches; do NOT use String.hashCode.
   @visibleForTesting
-  static int notificationIdForTaskId(String taskId) {
-    final digest = sha1.convert(utf8.encode(taskId)).bytes;
+  static int notificationIdForPlantTask(String plantId, TaskType taskType) {
+    final digest =
+        sha1.convert(utf8.encode('$plantId:${taskType.id}')).bytes;
     final value =
         (digest[0] << 24) | (digest[1] << 16) | (digest[2] << 8) | (digest[3]);
     final id = value & 0x7fffffff;
     return id == 0 ? 1 : id;
   }
 
-  Future<void> cancelTaskReminder(String taskId) async {
+  Future<void> cancelTaskReminder(TaskInstance task) async {
     await ensureInitialized();
     await _configureLocalTimezone(force: false);
-    await _plugin.cancel(notificationIdForTaskId(taskId));
+    await _plugin.cancel(notificationIdForPlantTask(task.plantId, task.type));
   }
 
   Future<void> cancelAll() async {
@@ -100,40 +97,28 @@ class BotanicaNotificationsService {
     await ensureInitialized();
     await _configureLocalTimezone(force: false);
 
-    if (task.isDone) {
-      await cancelTaskReminder(task.id);
+    if (task.isDismissed) {
+      await cancelTaskReminder(task);
       return;
     }
 
     final now = DateTime.now();
     if (!task.dueAt.isAfter(now)) {
-      // Don't schedule overdue reminders.
-      await cancelTaskReminder(task.id);
+      await cancelTaskReminder(task);
       return;
     }
 
     final locale = settings.locale ?? const Locale('en');
     final l10n = lookupAppLocalizations(locale);
 
-    final taskLabel = switch (task.type) {
-      TaskType.water => l10n.taskTypeWater,
-      TaskType.fertilize => l10n.taskTypeFertilize,
-      TaskType.mist => l10n.taskTypeMist,
-      TaskType.rotate => l10n.taskTypeRotate,
-      TaskType.prune => l10n.taskTypePrune,
-      TaskType.repot => l10n.taskTypeRepot,
-      TaskType.checkPests => l10n.taskTypeCheckPests,
-      TaskType.wipeLeaves => l10n.taskTypeWipeLeaves,
-      TaskType.sunlightAdjustment => l10n.taskTypeSunlightAdjustment,
-    };
-
-    final title = l10n.notificationsTaskTitle(plant.nickname, taskLabel);
+    final title =
+        notificationTitleForTaskType(l10n, task.type, plant.nickname);
     final body = plant.room.trim().isEmpty
         ? l10n.notificationsTaskBodyNoRoom
         : l10n.notificationsTaskBodyRoom(plant.room);
 
-    final id = notificationIdForTaskId(task.id);
-    final scheduled = tz.TZDateTime.from(task.dueAt, tz.local);
+    final id = notificationIdForPlantTask(task.plantId, task.type);
+    final scheduled = _toLocalTzDateTime(task.dueAt);
 
     final details = NotificationDetails(
       android: AndroidNotificationDetails(
@@ -162,6 +147,7 @@ class BotanicaNotificationsService {
         'type': 'task',
         'taskId': task.id,
         'plantId': plant.id,
+        'taskType': task.type.id,
       }),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
@@ -182,7 +168,7 @@ class BotanicaNotificationsService {
 
     final pending = tasks
         .where((t) =>
-            !t.isDone && t.dueAt.isAfter(now) && t.dueAt.isBefore(latest))
+            !t.isDismissed && t.dueAt.isAfter(now) && t.dueAt.isBefore(latest))
         .toList(growable: false)
       ..sort((a, b) => a.dueAt.compareTo(b.dueAt));
 
@@ -194,10 +180,8 @@ class BotanicaNotificationsService {
     }
 
     final desiredIds =
-        desiredTasks.map((t) => notificationIdForTaskId(t.id)).toSet();
+        desiredTasks.map((t) => notificationIdForPlantTask(t.plantId, t.type)).toSet();
 
-    // Avoid a "cancel all then reschedule" gap. If the app is killed mid-loop,
-    // existing notifications remain scheduled.
     final existing = await _plugin.pendingNotificationRequests();
     final existingTaskIds = <int>{};
     for (final req in existing) {
@@ -209,7 +193,7 @@ class BotanicaNotificationsService {
           existingTaskIds.add(req.id);
         }
       } catch (_) {
-        // Ignore invalid payloads from older versions or other notifications.
+        continue;
       }
     }
 
@@ -222,5 +206,42 @@ class BotanicaNotificationsService {
     for (final id in toCancel) {
       await _plugin.cancel(id);
     }
+  }
+
+  @visibleForTesting
+  static String notificationTitleForTaskType(
+    AppLocalizations l10n,
+    TaskType type,
+    String plant,
+  ) {
+    return switch (type) {
+      TaskType.water => l10n.notificationWaterTitle(plant),
+      TaskType.fertilize => l10n.notificationFertilizeTitle(plant),
+      TaskType.mist => l10n.notificationMistTitle(plant),
+      TaskType.rotate => l10n.notificationRotateTitle(plant),
+      TaskType.prune => l10n.notificationPruneTitle(plant),
+      TaskType.repot => l10n.notificationsTaskTitle(plant, l10n.taskTypeRepot),
+      TaskType.checkPests =>
+        l10n.notificationsTaskTitle(plant, l10n.taskTypeCheckPests),
+      TaskType.wipeLeaves =>
+        l10n.notificationsTaskTitle(plant, l10n.taskTypeWipeLeaves),
+      TaskType.sunlightAdjustment =>
+        l10n.notificationsTaskTitle(plant, l10n.taskTypeSunlightAdjustment),
+    };
+  }
+
+  tz.TZDateTime _toLocalTzDateTime(DateTime dateTimeLocal) {
+    final local = dateTimeLocal.toLocal();
+    return tz.TZDateTime(
+      tz.local,
+      local.year,
+      local.month,
+      local.day,
+      local.hour,
+      local.minute,
+      local.second,
+      local.millisecond,
+      local.microsecond,
+    );
   }
 }

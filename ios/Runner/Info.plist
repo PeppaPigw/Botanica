@@ -31,27 +31,22 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Botanica uses the camera to scan plants and capture growth photos.</string>
+	<string>Botanica uses the camera to photograph your plants for the growth journal.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Botanica uses your photo library to pick images for your growth journal.</string>
+	<string>Botanica accesses your photos to add plant images to your journal.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Botanica saves growth photos to your journal.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Botanica uses your location to fetch local humidity and temperature for environment-aware care.</string>
+	<string>Botanica uses your location to provide weather-adapted care recommendations.</string>
 </dict>
 </plist>

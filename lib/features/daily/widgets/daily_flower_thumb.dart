@@ -40,7 +40,7 @@ class DailyFlowerThumb extends StatelessWidget {
         filterQuality: FilterQuality.high,
         gaplessPlayback: true,
         errorBuilder: (_, __, ___) => Image.asset(
-          'assets/placeholders/white.png',
+          'assets/images/placeholder_flower.jpg',
           fit: BoxFit.cover,
           gaplessPlayback: true,
         ),

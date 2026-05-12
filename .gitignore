@@ -55,3 +55,45 @@ server/ai_proxy/node_modules/
 
 # Local assistant/tooling state
 .claude/
+.history/
+.agents/
+.codex/
+.cursor/
+.omx/
+.tmp/
+.mcp.json
+AGENTS.md
+PLAN.md
+analyze_output.txt
+patch_l10n.dart
+docs/
+.trellis/
+flutter_launcher_icons.yaml
+
+# Internal planning docs (not needed in repo)
+EXECUTION_PLAN.md
+UI.md
+
+# Local mobile signing materials (never commit)
+*.p12
+*.mobileprovision
+*.provisionprofile
+*.jks
+*.keystore
+*.pkcs12
+*.p8
+*.cer
+*.csr
+*.der
+*.pem
+*.key
+IOS 证书/
+*.passphrase
+*.password
+*.password.txt
+*password*.txt
+*passphrase*.txt
+key.properties
+signing.properties
+**/key.properties
+**/signing.properties

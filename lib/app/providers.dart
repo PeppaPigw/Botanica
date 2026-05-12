@@ -12,12 +12,16 @@ import '../data/repositories/logs_repository.dart';
 import '../data/repositories/photos_repository.dart';
 import '../data/repositories/plants_repository.dart';
 import '../data/repositories/plant_idea_repository.dart';
+import '../data/repositories/scan_result_cache_repository.dart';
 import '../data/repositories/settings_repository.dart';
+import '../data/repositories/species_favorites_repository.dart';
 import '../data/repositories/species_repository.dart';
 import '../data/repositories/tasks_repository.dart';
 import '../domain/models/care_log.dart';
+import '../domain/models/diary_entry.dart';
 import '../domain/models/enums.dart';
 import '../domain/models/environment_snapshot.dart';
+import '../domain/models/photo_entry.dart';
 import '../domain/models/plant.dart';
 import '../domain/models/plant_idea.dart';
 import '../domain/models/species.dart';
@@ -28,14 +32,16 @@ import '../domain/services/daily_flower_selector.dart';
 import '../domain/services/plant_health_score.dart';
 import '../domain/services/plant_id/fake_plant_identifier.dart';
 import '../domain/services/plant_id/plant_identifier.dart';
+import '../domain/services/seasonal_care_engine.dart';
 import '../services/environment/environment_service.dart';
 import '../services/environment/open_meteo_client.dart';
-import '../services/ai/ai_chat_client.dart';
 import '../services/ai/ai_config.dart';
+import '../services/ai/ai_chat_client.dart';
 import '../services/ai/botanica_ai_service.dart';
 import '../services/permissions/permissions_service.dart';
 import '../services/notifications/notifications_service.dart';
 import '../services/notifications/task_reminders_syncer.dart';
+import '../services/care/seasonal_task_rescheduler.dart';
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository.local();
@@ -176,17 +182,36 @@ final dailyFavoritesKeysProvider = StreamProvider<Set<String>>((ref) {
   return ref.read(dailyFavoritesRepositoryProvider).watchSavedKeys();
 });
 
-final aiConfigProvider = Provider<AiConfig>((ref) {
-  return AiConfig.fromEnvironment();
+final speciesFavoritesRepositoryProvider =
+    Provider<SpeciesFavoritesRepository>((ref) {
+  return SpeciesFavoritesRepository.local();
+});
+
+final speciesFavoriteIdsProvider = StreamProvider<List<String>>((ref) {
+  return ref.read(speciesFavoritesRepositoryProvider).watchIds();
+});
+
+final scanResultCacheRepositoryProvider =
+    Provider<ScanResultCacheRepository>((ref) {
+  return ScanResultCacheRepository.local();
+});
+
+final lastScanResultProvider = StreamProvider<CachedScanResult?>((ref) {
+  return ref.read(scanResultCacheRepositoryProvider).watchLast();
 });
 
 final aiCacheRepositoryProvider = Provider<AiCacheRepository>((ref) {
   return AiCacheRepository.local();
 });
 
+final aiConfigProvider = Provider<AiConfig>((ref) {
+  return AiConfig.fromEnvironment();
+});
+
 final aiChatClientProvider = Provider<AiChatClient>((ref) {
-  final config = ref.watch(aiConfigProvider);
-  return AiChatClient(config: config);
+  return AiChatClient(
+    config: ref.watch(aiConfigProvider),
+  );
 });
 
 final botanicaAiServiceProvider = Provider<BotanicaAiService>((ref) {
@@ -202,6 +227,10 @@ final dailyFlowerRepositoryProvider = Provider<DailyFlowerRepository>((ref) {
 
 final carePlanEngineProvider = Provider<CarePlanEngine>((ref) {
   return const CarePlanEngine();
+});
+
+final seasonalCareEngineProvider = Provider<SeasonalCareEngine>((ref) {
+  return SeasonalCareEngine(ref.watch(carePlanEngineProvider));
 });
 
 final dailyFlowerSelectorProvider = Provider<DailyFlowerSelector>((ref) {
@@ -280,8 +309,8 @@ class EnvironmentController extends Notifier<EnvironmentSnapshot> {
       state = next;
 
       final derivedHemisphere = next.derivedHemisphere;
+      final currentSettings = ref.read(settingsControllerProvider);
       if (derivedHemisphere != null) {
-        final currentSettings = ref.read(settingsControllerProvider);
         if (currentSettings.hemisphere != derivedHemisphere) {
           unawaited(
             ref.read(settingsControllerProvider.notifier).update(
@@ -290,6 +319,14 @@ class EnvironmentController extends Notifier<EnvironmentSnapshot> {
           );
         }
       }
+
+      unawaited(
+        ref.read(seasonalTaskReschedulerProvider).resyncPendingTasks(
+              now: DateTime.now(),
+              environment: next,
+              settings: currentSettings,
+            ),
+      );
     } finally {
       _inFlight = null;
     }
@@ -391,6 +428,20 @@ final plantsStreamProvider = StreamProvider<List<Plant>>((ref) async* {
 
 final tasksStreamProvider = StreamProvider<List<TaskInstance>>((ref) async* {
   yield* ref.read(tasksRepositoryProvider).watchAll();
+});
+
+final careLogsStreamProvider = StreamProvider<List<CareLog>>((ref) async* {
+  yield* ref.read(logsRepositoryProvider).watchAll();
+});
+
+final photoEntriesStreamProvider =
+    StreamProvider<List<PhotoEntry>>((ref) async* {
+  yield* ref.read(photosRepositoryProvider).watchAll();
+});
+
+final diaryEntriesStreamProvider =
+    StreamProvider<List<DiaryEntry>>((ref) async* {
+  yield* ref.read(diaryRepositoryProvider).watchAll();
 });
 
 final careLogsForPlantProvider =

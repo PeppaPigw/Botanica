@@ -1,3 +1,4 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class ModeRevealInteraction extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final reduceMotion = botanicaReduceMotion(context);
     final normalizedVariant = variantLabel.trim();
 
     final hint = switch (mode) {
@@ -83,11 +85,12 @@ class ModeRevealInteraction extends StatelessWidget {
               onReveal: onReveal,
               tarotCardId: variantKey,
             ),
-          BeliefMode.westernZodiac => _SlideToReveal(
-              accent: accent,
-              icon: Icons.brightness_5_rounded,
-              onReveal: onReveal,
-            ),
+              BeliefMode.westernZodiac => _SlideToReveal(
+                  accent: accent,
+                  icon: Icons.brightness_5_rounded,
+                  reduceMotion: reduceMotion,
+                  onReveal: onReveal,
+                ),
           BeliefMode.almanac => _StampToReveal(
               accent: accent,
               icon: Icons.menu_book_rounded,
@@ -137,7 +140,7 @@ class ModeRevealInteraction extends StatelessWidget {
               letterSpacing: -0.3,
             ),
           ),
-          const SizedBox(height: 6),
+          BotanicaGaps.vXxs,
           Text(
             hint,
             textAlign: TextAlign.center,
@@ -147,7 +150,7 @@ class ModeRevealInteraction extends StatelessWidget {
             ),
           ),
           if (canShowVariant) ...[
-            const SizedBox(height: 10),
+            BotanicaGaps.vSm,
             if (mode == BeliefMode.tarot &&
                 (variantKey ?? '').trim().isNotEmpty)
               TarotVariantBadge(
@@ -160,7 +163,7 @@ class ModeRevealInteraction extends StatelessWidget {
                 label: normalizedVariant,
               ),
           ],
-          const SizedBox(height: 18),
+          BotanicaGaps.vBase,
           interaction(),
         ],
       ),
@@ -184,6 +187,8 @@ class ModeVariantBadge extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
+      constraints: const BoxConstraints(minHeight: 44),
+      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
@@ -196,16 +201,20 @@ class ModeVariantBadge extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 16,
+            size: BotanicaTokens.iconSizeSm,
             color: scheme.onSurface.withValues(alpha: 0.78),
           ),
-          const SizedBox(width: 8),
-          Text(
-            label,
-            style: textTheme.labelLarge?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: scheme.onSurface.withValues(alpha: 0.78),
-              letterSpacing: -0.1,
+          BotanicaGaps.hXs,
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: scheme.onSurface.withValues(alpha: 0.78),
+                letterSpacing: -0.1,
+              ),
             ),
           ),
         ],
@@ -229,8 +238,6 @@ class _TapToReveal extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final reduceMotion = botanicaReduceMotion(context);
-
     final orb = Semantics(
       button: true,
       label: l10n.dailyReveal,
@@ -282,19 +289,22 @@ class _TapToReveal extends StatelessWidget {
       ),
     );
 
-    if (reduceMotion) return orb;
-
-    return orb
-        .animate(
-          onPlay: (controller) =>
-              controller.repeat(reverse: true, period: 2200.ms),
-        )
-        .scale(
-          begin: const Offset(1.0, 1.0),
-          end: const Offset(1.03, 1.03),
-          curve: Curves.easeInOut,
-        )
-        .fade(begin: 0.96, end: 1.0);
+    return orb.animateIfAllowed(
+      context,
+      (child) => child
+          .animate(
+            onPlay: (controller) => controller.repeat(
+              reverse: true,
+              period: BotanicaTokens.motionSpring * 5,
+            ),
+          )
+          .scale(
+            begin: const Offset(1.0, 1.0),
+            end: const Offset(1.03, 1.03),
+            curve: Curves.easeInOut,
+          )
+          .fade(begin: 0.96, end: 1.0),
+    );
   }
 }
 
@@ -302,11 +312,13 @@ class _SlideToReveal extends StatefulWidget {
   const _SlideToReveal({
     required this.accent,
     required this.icon,
+    required this.reduceMotion,
     required this.onReveal,
   });
 
   final Color accent;
   final IconData icon;
+  final bool reduceMotion;
   final VoidCallback onReveal;
 
   @override
@@ -355,6 +367,13 @@ class _SlideToRevealState extends State<_SlideToReveal>
 
   void _recoilToZero() {
     if (_completed) return;
+    if (widget.reduceMotion) {
+      setState(() {
+        _progress = 0;
+        _tickStage = 0;
+      });
+      return;
+    }
     if (_progress <= 0.0) {
       setState(() {
         _progress = 0;
@@ -487,7 +506,7 @@ class _SlideToRevealState extends State<_SlideToReveal>
                         child: Icon(
                           widget.icon,
                           color: scheme.onSurface.withValues(alpha: 0.80),
-                          size: 22,
+                          size: BotanicaTokens.iconSizeLg,
                         ),
                       ),
                     ),
@@ -543,7 +562,7 @@ class _HoldToRevealState extends State<_HoldToReveal> {
 
   void _tick() async {
     while (_holding && !_completed) {
-      await Future<void>.delayed(const Duration(milliseconds: 32));
+      await Future<void>.delayed(BotanicaTokens.motionFast ~/ 4);
       if (!mounted) return;
       if (!_holding || _completed) break;
 
@@ -649,11 +668,11 @@ class _HoldToRevealState extends State<_HoldToReveal> {
                     else
                       Icon(
                         widget.icon,
-                        size: 30,
+                        size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingTiny,
                         color: scheme.onSurface.withValues(alpha: 0.82),
                       ),
                     if (caption.isNotEmpty) ...[
-                      const SizedBox(height: 6),
+                      BotanicaGaps.vXxs,
                       Text(
                         caption,
                         maxLines: 1,
@@ -699,19 +718,13 @@ class _StampToRevealState extends State<_StampToReveal> {
   int _tickStage = 0;
   bool _pressed = false;
 
-  void _setPressed(bool value) {
-    if (_completed) return;
-    _pressed = value;
-    if (!_pressed) return;
-
-    setState(() {});
-
-    Future<void>.delayed(const Duration(milliseconds: 32), () {
+  void _tick() async {
+    while (_pressed && !_completed) {
+      await Future<void>.delayed(BotanicaTokens.motionFast ~/ 4);
       if (!mounted) return;
-      if (_completed) return;
-      if (!_pressed) return;
+      if (!_pressed || _completed) break;
 
-      final next = (_progress + 0.16).clamp(0.0, 1.0);
+      final next = (_progress + 0.08).clamp(0.0, 1.0);
       final stage = (next * 3).floor().clamp(0, 3);
       if (stage > _tickStage && stage < 3) {
         _tickStage = stage;
@@ -724,8 +737,25 @@ class _StampToRevealState extends State<_StampToReveal> {
         _completed = true;
         BotanicaHaptics.revealClimax();
         widget.onReveal();
+        break;
       }
-    });
+    }
+  }
+
+  void _setPressed(bool value) {
+    if (_completed) return;
+    _pressed = value;
+
+    if (!_pressed) {
+      setState(() {
+        _progress = 0;
+        _tickStage = 0;
+      });
+      return;
+    }
+
+    setState(() {});
+    _tick();
   }
 
   @override
@@ -823,7 +853,7 @@ class _StampToRevealState extends State<_StampToReveal> {
                   child: Center(
                     child: Icon(
                       widget.icon,
-                      size: 28,
+                      size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingMicro,
                       color: scheme.onSurface.withValues(alpha: 0.80),
                     ),
                   ),
@@ -922,7 +952,7 @@ class _PullToRevealState extends State<_PullToReveal> {
                   child: Icon(
                     widget.topIcon,
                     color: scheme.onSurface.withValues(alpha: 0.80),
-                    size: 28,
+                    size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingMicro,
                   ),
                 ),
               ),
@@ -950,13 +980,13 @@ class _PullToRevealState extends State<_PullToReveal> {
                 ),
                 child: Row(
                   children: [
-                    const SizedBox(width: 12),
+                    BotanicaGaps.hSm,
                     Icon(
                       widget.slipIcon,
-                      size: 22,
+                      size: BotanicaTokens.iconSizeLg,
                       color: scheme.onSurface.withValues(alpha: 0.78),
                     ),
-                    const SizedBox(width: 10),
+                    BotanicaGaps.hSm,
                     Expanded(
                       child: Text(
                         widget.slipLabel,
@@ -969,7 +999,7 @@ class _PullToRevealState extends State<_PullToReveal> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    BotanicaGaps.hSm,
                   ],
                 ),
               ),
@@ -1016,7 +1046,7 @@ class _FlipToRevealState extends State<_FlipToReveal>
     BotanicaHaptics.primaryPress();
     await _controller.forward();
     if (!mounted) return;
-    await Future<void>.delayed(const Duration(milliseconds: 120));
+    await Future<void>.delayed(BotanicaTokens.motionFast);
     if (!mounted) return;
     widget.onReveal();
   }
@@ -1043,7 +1073,7 @@ class _FlipToRevealState extends State<_FlipToReveal>
             child: Icon(
               Icons.style_rounded,
               color: scheme.onSurface.withValues(alpha: 0.78),
-              size: 30,
+              size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingTiny,
             ),
           ),
         );
@@ -1070,7 +1100,7 @@ class _FlipToRevealState extends State<_FlipToReveal>
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
                   errorBuilder: (_, __, ___) => Image.asset(
-                    'assets/placeholders/tarot/unknown.png',
+                    'assets/images/placeholder_tarot.jpg',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -1102,7 +1132,7 @@ class _FlipToRevealState extends State<_FlipToReveal>
                   Icons.auto_awesome_rounded,
                   color:
                       scheme.onSurface.withValues(alpha: hasCard ? 0.68 : 0.78),
-                  size: 30,
+                  size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingTiny,
                 ),
               ),
             ],
@@ -1203,7 +1233,7 @@ class _TraceToRevealState extends State<_TraceToReveal> {
       onPanEnd: (_) {
         if (_completed) return;
         // Reset after a brief pause to keep the ritual feeling intentional.
-        Future<void>.delayed(const Duration(milliseconds: 420), () {
+        Future<void>.delayed(BotanicaTokens.motionSlow, () {
           if (!mounted) return;
           if (_completed) return;
           setState(() {
@@ -1241,7 +1271,7 @@ class _TraceToRevealState extends State<_TraceToReveal> {
                       color: scheme.onSurface.withValues(alpha: 0.55),
                     ),
                     if (label.isNotEmpty) ...[
-                      const SizedBox(height: 8),
+                      BotanicaGaps.vXs,
                       Text(
                         label,
                         maxLines: 1,

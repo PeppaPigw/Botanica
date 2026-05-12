@@ -1,3 +1,4 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -127,22 +128,44 @@ Future<void> _showLanguageSheet(BuildContext context, WidgetRef ref) async {
                     fontWeight: FontWeight.w700,
                   ),
             ),
-            const SizedBox(height: 10),
-            ...items.map((it) {
-              final selected = it.$1 == current;
-              return ListTile(
-                title: Text(it.$2),
-                trailing:
-                    selected ? const Icon(Icons.check_circle_rounded) : null,
-                onTap: () async {
-                  await ref
-                      .read(settingsControllerProvider.notifier)
-                      .setLocaleCode(it.$1);
-                  if (!context.mounted) return;
-                  Navigator.of(context).pop();
-                },
-              );
-            }),
+            BotanicaGaps.vSm,
+            BotanicaGlassCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  ...items.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final it = entry.value;
+                    final selected = it.$1 == current;
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text(it.$2),
+                          trailing: selected
+                              ? Icon(Icons.check_circle_rounded,
+                                  color: Theme.of(context).colorScheme.primary)
+                              : null,
+                          onTap: () async {
+                            await ref
+                                .read(settingsControllerProvider.notifier)
+                                .setLocaleCode(it.$1);
+                            if (!context.mounted) return;
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        if (index < items.length - 1)
+                          ProfileDivider(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .outlineVariant
+                                .withValues(alpha: 0.35),
+                          ),
+                      ],
+                    );
+                  }),
+                ],
+              ),
+            ),
           ],
         ),
       );
@@ -176,23 +199,48 @@ Future<void> _showUnitsSheet(BuildContext context, WidgetRef ref) async {
                     fontWeight: FontWeight.w700,
                   ),
             ),
-            const SizedBox(height: 10),
-            ...items.map((it) {
-              final selected = it.$1 == current;
-              return ListTile(
-                title: Text(it.$2),
-                trailing:
-                    selected ? const Icon(Icons.check_circle_rounded) : null,
-                onTap: () async {
-                  final settings = ref.read(settingsControllerProvider);
-                  await ref.read(settingsControllerProvider.notifier).update(
-                        settings.copyWith(temperatureUnit: it.$1),
-                      );
-                  if (!context.mounted) return;
-                  Navigator.of(context).pop();
-                },
-              );
-            }),
+            BotanicaGaps.vSm,
+            BotanicaGlassCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  ...items.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final it = entry.value;
+                    final selected = it.$1 == current;
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text(it.$2),
+                          trailing: selected
+                              ? Icon(Icons.check_circle_rounded,
+                                  color: Theme.of(context).colorScheme.primary)
+                              : null,
+                          onTap: () async {
+                            final settings =
+                                ref.read(settingsControllerProvider);
+                            await ref
+                                .read(settingsControllerProvider.notifier)
+                                .update(
+                                  settings.copyWith(temperatureUnit: it.$1),
+                                );
+                            if (!context.mounted) return;
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        if (index < items.length - 1)
+                          ProfileDivider(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .outlineVariant
+                                .withValues(alpha: 0.35),
+                          ),
+                      ],
+                    );
+                  }),
+                ],
+              ),
+            ),
           ],
         ),
       );

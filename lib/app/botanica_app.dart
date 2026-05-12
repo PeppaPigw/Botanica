@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/environment/weather_code.dart';
 import '../gen/l10n/app_localizations.dart';
 import 'routing/app_router.dart';
+import 'theme/botanica_tokens.dart';
 import 'theme/botanica_theme.dart';
 import 'providers.dart';
 
@@ -44,8 +45,8 @@ class BotanicaApp extends ConsumerWidget {
             weatherKind: weatherKind,
           ),
           themeMode: ThemeMode.system,
-          themeAnimationDuration: const Duration(milliseconds: 420),
-          themeAnimationCurve: Curves.easeOutCubic,
+          themeAnimationDuration: BotanicaTokens.motionSpring,
+          themeAnimationCurve: BotanicaTokens.curveReveal,
           routerConfig: router,
         );
       },

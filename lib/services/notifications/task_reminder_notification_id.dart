@@ -1,9 +1,22 @@
+import '../../domain/models/enums.dart';
+import '../../domain/models/task_instance.dart';
+
 const String _taskReminderPayloadPrefix = 'botanica.task_reminder:';
 
-int taskReminderNotificationId(String taskInstanceId) {
-  final hash32 = _fnv1a32('task_reminder:$taskInstanceId');
+int taskReminderNotificationIdForPlantTask({
+  required String plantId,
+  required TaskType taskType,
+}) {
+  final hash32 = _fnv1a32('task_reminder:$plantId:${taskType.id}');
   final id31 = hash32 & 0x7fffffff;
   return id31 == 0 ? 1 : id31;
+}
+
+int taskReminderNotificationIdForTask(TaskInstance task) {
+  return taskReminderNotificationIdForPlantTask(
+    plantId: task.plantId,
+    taskType: task.type,
+  );
 }
 
 String taskReminderNotificationPayload(String taskInstanceId) {

@@ -1,16 +1,13 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/haptics/botanica_haptics.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../domain/models/daily_flower.dart';
 import '../../gen/l10n/app_localizations.dart';
+import '../../services/photos/share_card_export.dart';
 
 class DailyShareCardScreen extends StatefulWidget {
   const DailyShareCardScreen({
@@ -56,29 +53,16 @@ class _DailyShareCardScreenState extends State<DailyShareCardScreen> {
     final l10n = AppLocalizations.of(context);
 
     try {
-      final boundary = _repaintKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
-      if (boundary == null) {
-        throw StateError('Share card was not ready to render.');
-      }
-
-      final image = await boundary.toImage(pixelRatio: 3.0);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      if (byteData == null) {
-        throw StateError('Failed to encode share image.');
-      }
-      final Uint8List pngBytes = byteData.buffer.asUint8List();
-
-      final dir = await getTemporaryDirectory();
-      final file = File(
-        '${dir.path}/botanica-daily-${widget.entry.content.key}.png',
+      final file = await exportShareCardPng(
+        repaintKey: _repaintKey,
+        fileName: 'botanica-daily-${_shareCardFileKey(widget.entry)}.png',
       );
-      await file.writeAsBytes(pngBytes, flush: true);
 
       await Share.shareXFiles(
-        <XFile>[XFile(file.path)],
+        [file],
         text: l10n.journalShareCardText,
       );
+      BotanicaHaptics.completion();
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -87,8 +71,8 @@ class _DailyShareCardScreenState extends State<DailyShareCardScreen> {
           content: Row(
             children: [
               Icon(Icons.error_outline_rounded,
-                  size: 18, color: Theme.of(context).colorScheme.error),
-              const SizedBox(width: 10),
+                  size: BotanicaTokens.iconSizeSm, color: Theme.of(context).colorScheme.error),
+              BotanicaGaps.hSm,
               Expanded(child: Text(l10n.journalShareFailed)),
             ],
           ),
@@ -165,6 +149,7 @@ class _DailyShareCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final content = entry.content;
     final dateLabel = MaterialLocalizations.of(context).formatFullDate(
@@ -192,8 +177,8 @@ class _DailyShareCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon,
-                size: 16, color: scheme.onSurface.withValues(alpha: 0.72)),
-            const SizedBox(width: 6),
+                size: BotanicaTokens.iconSizeSm, color: scheme.onSurface.withValues(alpha: 0.72)),
+            BotanicaGaps.hXxs,
             Text(
               label,
               style: textTheme.labelMedium?.copyWith(
@@ -206,179 +191,235 @@ class _DailyShareCard extends StatelessWidget {
       );
     }
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(28),
-      child: SizedBox(
-        width: 360,
-        height: 450,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              'assets/illustrations/share_daily_bg.jpg',
-              fit: BoxFit.cover,
-              filterQuality: FilterQuality.high,
-            ),
-            if ((content.imagePath ?? '').trim().isNotEmpty)
-              Positioned(
-                right: -42,
-                top: 84,
-                bottom: 84,
-                child: IgnorePointer(
-                  child: Opacity(
-                    opacity: 0.45,
-                    child: Image.asset(
-                      content.imagePath!.trim(),
-                      width: 260,
-                      fit: BoxFit.cover,
-                      filterQuality: FilterQuality.high,
-                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(
+          color: isDark
+              ? scheme.outlineVariant.withValues(alpha: 0.64)
+              : scheme.outlineVariant.withValues(alpha: 0.48),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: scheme.shadow.withValues(alpha: isDark ? 0.32 : 0.16),
+            blurRadius: 26,
+            offset: const Offset(0, 18),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28),
+        child: SizedBox(
+          width: 360,
+          height: 450,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                'assets/illustrations/share_daily_bg.jpg',
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.high,
+              ),
+              if ((content.imagePath ?? '').trim().isNotEmpty)
+                Positioned(
+                  right: -42,
+                  top: 84,
+                  bottom: 84,
+                  child: IgnorePointer(
+                    child: Opacity(
+                      opacity: 0.45,
+                      child: Image.asset(
+                        content.imagePath!.trim(),
+                        width: 260,
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.high,
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    scheme.primaryContainer.withValues(alpha: 0.55),
-                    scheme.tertiaryContainer.withValues(alpha: 0.30),
-                    scheme.surface.withValues(alpha: 0.92),
-                  ],
-                  stops: const [0.0, 0.55, 1.0],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 18,
-              right: 18,
-              top: 18,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    content.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    dateLabel,
-                    style: textTheme.bodySmall?.copyWith(
-                      color: scheme.onSurface.withValues(alpha: 0.70),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      pill(
-                        icon: Icons.auto_awesome_rounded,
-                        label: modeLabel,
-                      ),
-                      pill(
-                        icon: Icons.tune_rounded,
-                        label: variantLabel,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 18,
-              right: 18,
-              bottom: 18,
-              child: Container(
-                padding: const EdgeInsets.all(14),
+              DecoratedBox(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
-                  color: scheme.surface.withValues(alpha: 0.80),
-                  border: Border.all(
-                    color: scheme.outlineVariant.withValues(alpha: 0.45),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: isDark
+                        ? [
+                            scheme.primaryContainer.withValues(alpha: 0.36),
+                            scheme.tertiaryContainer.withValues(alpha: 0.24),
+                            scheme.surface.withValues(alpha: 0.90),
+                          ]
+                        : [
+                            scheme.primaryContainer.withValues(alpha: 0.55),
+                            scheme.tertiaryContainer.withValues(alpha: 0.30),
+                            scheme.surface.withValues(alpha: 0.92),
+                          ],
+                    stops: const [0.0, 0.55, 1.0],
                   ),
                 ),
+              ),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: isDark
+                        ? [
+                            Colors.black.withValues(alpha: 0.18),
+                            Colors.transparent,
+                            Colors.black.withValues(alpha: 0.26),
+                          ]
+                        : [
+                            Colors.white.withValues(alpha: 0.08),
+                            Colors.transparent,
+                            scheme.surface.withValues(alpha: 0.12),
+                          ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 18,
+                right: 18,
+                top: 18,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Text(
+                      content.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    BotanicaGaps.vXxs,
+                    Text(
+                      dateLabel,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: scheme.onSurface.withValues(alpha: 0.70),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    BotanicaGaps.vSm,
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
                       children: [
-                        Icon(
-                          Icons.format_quote_rounded,
-                          size: 18,
-                          color: scheme.primary.withValues(alpha: 0.85),
+                        pill(
+                          icon: Icons.auto_awesome_rounded,
+                          label: modeLabel,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            content.symbolism,
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: scheme.onSurface.withValues(alpha: 0.82),
-                              height: 1.35,
-                            ),
-                          ),
+                        pill(
+                          icon: Icons.tune_rounded,
+                          label: variantLabel,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      l10n.dailyCareToday,
-                      style: textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -0.2,
-                      ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: 18,
+                right: 18,
+                bottom: 18,
+                child: Container(
+                  padding: BotanicaTokens.cardPaddingDense,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    color: isDark
+                        ? scheme.surfaceContainerHighest.withValues(alpha: 0.86)
+                        : scheme.surface.withValues(alpha: 0.80),
+                    border: Border.all(
+                      color: scheme.outlineVariant
+                          .withValues(alpha: isDark ? 0.58 : 0.45),
                     ),
-                    const SizedBox(height: 8),
-                    ...content.careBasics.entries.take(4).map(
-                          (e) => Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.format_quote_rounded,
+                            size: BotanicaTokens.iconSizeSm,
+                            color: scheme.primary.withValues(alpha: 0.85),
+                          ),
+                          BotanicaGaps.hXs,
+                          Expanded(
                             child: Text(
-                              '• ${careLabel(e.key)}: ${e.value}',
-                              style: textTheme.bodySmall?.copyWith(
-                                color: scheme.onSurface.withValues(alpha: 0.74),
+                              content.symbolism,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: scheme.onSurface.withValues(alpha: 0.82),
                                 height: 1.35,
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                      BotanicaGaps.vSm,
+                      Text(
+                        l10n.dailyCareToday,
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.2,
                         ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.spa_rounded,
-                          size: 16,
-                          color: scheme.onSurface.withValues(alpha: 0.70),
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          brandName,
-                          style: textTheme.labelMedium?.copyWith(
-                            color: scheme.onSurface.withValues(alpha: 0.72),
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0.2,
+                      ),
+                      BotanicaGaps.vXs,
+                      ...content.careBasics.entries.take(4).map(
+                            (e) => Padding(
+                              padding: const EdgeInsets.only(bottom: 6),
+                              child: Text(
+                                '• ${careLabel(e.key)}: ${e.value}',
+                                style: textTheme.bodySmall?.copyWith(
+                                  color:
+                                      scheme.onSurface.withValues(alpha: 0.74),
+                                  height: 1.35,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      BotanicaGaps.vSm,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.spa_rounded,
+                            size: BotanicaTokens.iconSizeSm,
+                            color: scheme.onSurface.withValues(alpha: 0.70),
+                          ),
+                          BotanicaGaps.hXxs,
+                          Text(
+                            brandName,
+                            style: textTheme.labelMedium?.copyWith(
+                              color: scheme.onSurface.withValues(alpha: 0.72),
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+String _shareCardFileKey(DailyFlowerEntry entry) {
+  final d = entry.date;
+  final date = '${d.year.toString().padLeft(4, '0')}'
+      '${d.month.toString().padLeft(2, '0')}'
+      '${d.day.toString().padLeft(2, '0')}';
+  final mode = entry.beliefMode.id.replaceAll(RegExp(r'[^a-zA-Z0-9_-]'), '-');
+  final content = entry.content.key.replaceAll(RegExp(r'[^a-zA-Z0-9_-]'), '-');
+  return '$date-$mode-$content';
 }

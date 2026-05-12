@@ -4,6 +4,7 @@ import 'package:botanica/domain/models/care_defaults.dart';
 import 'package:botanica/domain/models/care_log.dart';
 import 'package:botanica/domain/models/diary_entry.dart';
 import 'package:botanica/domain/models/enums.dart';
+import 'package:botanica/domain/models/local_time.dart';
 import 'package:botanica/domain/models/photo_entry.dart';
 import 'package:botanica/domain/models/plant.dart';
 import 'package:botanica/domain/models/plant_meta.dart';
@@ -20,7 +21,9 @@ void main() {
       room: 'living-room',
       environmentMode: EnvironmentMode.indoor,
       coverAsset: 'photos/p1.jpg',
+      coverPhotoPath: 'photos/custom-p1.jpg',
       createdAt: DateTime.utc(2026, 2, 1),
+      reminderTimeOverride: const LocalTime(hour: 8, minute: 30),
       meta: const PlantMeta(
         potDiameterCm: 14,
         soilType: 'all-purpose',
@@ -35,7 +38,9 @@ void main() {
     expect(restored.room, plant.room);
     expect(restored.environmentMode, plant.environmentMode);
     expect(restored.coverAsset, plant.coverAsset);
+    expect(restored.coverPhotoPath, plant.coverPhotoPath);
     expect(restored.createdAt, plant.createdAt);
+    expect(restored.reminderTimeOverride, plant.reminderTimeOverride);
     expect(restored.meta.potDiameterCm, plant.meta.potDiameterCm);
     expect(restored.meta.soilType, plant.meta.soilType);
     expect(restored.meta.lightLevel, plant.meta.lightLevel);
@@ -176,6 +181,7 @@ void main() {
       localeCode: 'es',
       enableDynamicColor: false,
       enableAiInsights: true,
+      aiPreferredEndpointIndex: 1,
       careStreakDays: 4,
       lastCareDate: DateTime(2026, 2, 20),
       birthDate: DateTime(1996, 5, 16),
@@ -192,6 +198,8 @@ void main() {
     expect(restored.localeCode, settings.localeCode);
     expect(restored.enableDynamicColor, settings.enableDynamicColor);
     expect(restored.enableAiInsights, settings.enableAiInsights);
+    expect(
+        restored.aiPreferredEndpointIndex, settings.aiPreferredEndpointIndex);
     expect(restored.birthDate, settings.birthDate);
     expect(restored.westernZodiacSignId, settings.westernZodiacSignId);
   });

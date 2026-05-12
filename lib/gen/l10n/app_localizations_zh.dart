@@ -30,6 +30,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get commonDone => '完成';
 
   @override
+  String get commonOverdue => '已逾期';
+
+  @override
+  String get commonUndo => '撤销';
+
+  @override
   String get commonCancel => '取消';
 
   @override
@@ -159,6 +165,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get resourceLinkCopied => '已复制链接';
 
   @override
+  String get aiNoteCopied => '笔记已复制';
+
+  @override
+  String get aiNoteCopyAction => '复制笔记';
+
+  @override
   String get stateLoadFailedTitle => '无法加载';
 
   @override
@@ -190,6 +202,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get calendarFilterAll => '全部';
+
+  @override
+  String get calendarFilterOther => '其他';
+
+  @override
+  String get calendarSectionConsistency => '月度一致性';
 
   @override
   String get calendarPrevMonth => '上个月';
@@ -238,6 +256,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get permNotificationsBody => '不错过浇水等养护。';
+
+  @override
+  String get notificationsSoftAskTitle => '不错过浇水日';
+
+  @override
+  String get notificationsSoftAskBody =>
+      'Botanica 会在你偏好的时间温和提醒，让每株植物在叶片低垂前得到照料。';
 
   @override
   String get permLocationTitle => '位置';
@@ -352,7 +377,64 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gardenQuickSnooze => '稍后提醒';
 
   @override
+  String get tasksSnoozeOneHour => '1小时';
+
+  @override
+  String get tasksSnoozeThreeHours => '3小时';
+
+  @override
+  String get tasksSnoozeTomorrow => '明天';
+
+  @override
+  String get tasksSnoozeTomorrowMorning => '明天上午';
+
+  @override
+  String get tasksSnoozeWeekend => '这个周末';
+
+  @override
+  String get tasksSnoozeCustomTime => '自定义时间';
+
+  @override
   String get gardenQuickAddPlant => '添加植物';
+
+  @override
+  String get gardenRoomsTitle => '房间';
+
+  @override
+  String get gardenRoomsAll => '全部房间';
+
+  @override
+  String get gardenToggleCardMode => '切换卡片模式';
+
+  @override
+  String get gardenToggleViewMode => '切换视图模式';
+
+  @override
+  String gardenRoomPlantCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 株植物',
+      one: '1 株植物',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenRoomsWaterAll => '全部浇水';
+
+  @override
+  String get gardenRoomsSnoozeAll => '全部延后';
+
+  @override
+  String gardenRoomsWateredCount(int count) {
+    return '已为 $count 株植物浇水';
+  }
+
+  @override
+  String gardenRoomsSnoozedCount(int count) {
+    return '已延后 $count 个任务';
+  }
 
   @override
   String get gardenEmptyTitle => '开始你的花园';
@@ -454,10 +536,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get plantDetailLogsEmptyBody => '完成一次浇水或养护任务后，记录会显示在这里。';
 
   @override
-  String get tasksEmptyUpcoming => '暂无即将到来的任务';
+  String get tasksEmptySoon => '近期暂无任务，做得好！';
 
   @override
-  String get tasksEmptyOverdue => '全部完成，做得好！';
+  String get tasksEmptyWatch => '暂无需要关注的任务。植物正在休息。';
 
   @override
   String get plantDetailWaterNow => '现在浇水';
@@ -545,6 +627,45 @@ class AppLocalizationsZh extends AppLocalizations {
   String get diaryEntrySaved => '已保存到日记。';
 
   @override
+  String get diaryEditEntryTitle => '编辑日记';
+
+  @override
+  String get diaryEditConfirmTitle => '保存更改？';
+
+  @override
+  String get diaryEditConfirmBody => '用你的修改更新这篇日记。';
+
+  @override
+  String get diaryEntryUpdated => '日记已更新。';
+
+  @override
+  String get diaryEntryDeleted => '日记已删除。';
+
+  @override
+  String get diaryEntryDeleteTitle => '删除日记？';
+
+  @override
+  String get diaryEntryDeleteBody => '这会从时间线中移除该日记。删除后可以立即撤销。';
+
+  @override
+  String get diaryPromptGrowingWell => '长势不错';
+
+  @override
+  String get diaryPromptNewLeaf => '新叶';
+
+  @override
+  String get diaryPromptStruggling => '状态吃力';
+
+  @override
+  String get diaryPromptRepotted => '已换盆';
+
+  @override
+  String get diaryPromptBlooming => '开花了';
+
+  @override
+  String get journalEntryActions => '条目操作';
+
+  @override
   String get journalShareCardTitle => '分享卡片';
 
   @override
@@ -587,6 +708,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get journalPhotoSaved => '已保存到记录。';
 
   @override
+  String get journalPhotoDeleted => '照片已删除。';
+
+  @override
+  String get journalPhotoDeleteTitle => '删除照片？';
+
+  @override
+  String get journalPhotoDeleteBody => '这会从这株植物的记录和本地存储中移除该照片。删除后可以立即撤销。';
+
+  @override
   String get journalEmptyBody => '还没有照片。添加一张开启生长时间轴。';
 
   @override
@@ -606,6 +736,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journalCompareHint => '左右拖动进行对比。';
+
+  @override
+  String get journalPhotoUnavailable => '照片不可用';
+
+  @override
+  String get journalOverlayStrength => '叠影强度';
+
+  @override
+  String get journalPreviousPhoto => '上一张照片';
+
+  @override
+  String get journalLimitedPhotosAccess =>
+      '当前为“选中的照片”权限。你可以选择已授权照片，也可以在 iOS 设置中调整访问范围。';
 
   @override
   String journalPhotoMeta(DateTime date) {
@@ -631,10 +774,58 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scanCameraPermissionNeeded => '需要相机权限才能识别植物。';
 
   @override
+  String get scanCameraPermissionTitle => '相机访问';
+
+  @override
+  String get scanCameraPermissionBody => '可以打开相机快速识别；也可以不授权，直接浏览植物库。';
+
+  @override
+  String get scanUseCamera => '使用相机';
+
+  @override
   String get scanProcessingBody => '正在识别植物…';
 
   @override
   String get scanChooseCandidate => '选择匹配项';
+
+  @override
+  String get scanRefineTitle => '不确定？进一步筛选结果';
+
+  @override
+  String get scanRefineHelper => '回答一个快速问题来缩小结果范围。';
+
+  @override
+  String get scanRefineFallbackNote => '这些筛选条件暂时没有完全匹配项——正在显示最接近的结果。';
+
+  @override
+  String get scanConfidenceGuide => '置信度仅供参考——添加前请对比外形和养护标签。';
+
+  @override
+  String get scanConfidenceStrongLabel => '高置信度';
+
+  @override
+  String get scanConfidenceStrongBody => '与拍摄植物看起来非常接近。';
+
+  @override
+  String get scanConfidenceLikelyLabel => '中等置信度';
+
+  @override
+  String get scanConfidenceLikelyBody => '添加前请对比细节。';
+
+  @override
+  String get scanConfidencePossibleLabel => '低置信度——换个角度再试';
+
+  @override
+  String get scanConfidencePossibleBody => '这只是最佳猜测——可以再拍一个角度。';
+
+  @override
+  String get scanRefineFlowering => '它在开花吗？';
+
+  @override
+  String get scanRefineIndoorOutdoor => '室内还是室外？';
+
+  @override
+  String get scanRefineSucculent => '多肉类型？';
 
   @override
   String get scanRefinePetSafe => '宠物友好';
@@ -649,6 +840,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scanAddToGarden => '添加到花园';
 
   @override
+  String get scanBrowseLibrary => '改为浏览植物库';
+
+  @override
+  String get scanTakingLongerTitle => '耗时比预期更久';
+
+  @override
+  String get scanTakingLongerBody => '本次识别未能及时完成。你可以重试，或手动选择植物。';
+
+  @override
+  String get scanNoResultTitle => '无法识别这株植物';
+
+  @override
+  String get scanNoResultBody => '换个角度拍摄叶片细节，或直接浏览植物库。';
+
+  @override
   String get scanDeterministicNote =>
       '演示模式：离线结果为可重复的占位识别，可后续接入 Kindwise/Gemini。';
 
@@ -659,10 +865,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tasksTabToday => '今日';
 
   @override
-  String get tasksTabUpcoming => '即将到来';
+  String get tasksTabSoon => '近期';
 
   @override
-  String get tasksTabOverdue => '已逾期';
+  String get tasksTabWatch => '观察';
 
   @override
   String get tasksCalendarToggle => '日历';
@@ -701,6 +907,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
     return '已延后至 $dateString';
   }
+
+  @override
+  String get tasksSkipped => '已跳过';
 
   @override
   String get discoverTitle => '发现';
@@ -1034,6 +1243,52 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get profileSectionAbout => '关于';
+
+  @override
+  String get storageHealthTitle => '存储健康';
+
+  @override
+  String get storageHealthSubtitle => '查看日记媒体并清理临时文件。';
+
+  @override
+  String get storageJournalPhotos => '日记照片';
+
+  @override
+  String get storageUsed => '已用存储';
+
+  @override
+  String get storagePhotoFiles => '照片文件';
+
+  @override
+  String get storageJournalEntries => '日记条目';
+
+  @override
+  String get storagePhotoEntries => '照片条目';
+
+  @override
+  String get storageMissingPhotos => '缺失照片';
+
+  @override
+  String get storageCacheTitle => '临时缓存';
+
+  @override
+  String get storageCacheBody => '清理生成的分享卡片和临时文件，不会删除你的日记照片。';
+
+  @override
+  String get storageClearCache => '清理缓存';
+
+  @override
+  String get storageCacheCleared => '临时缓存已清理。';
+
+  @override
+  String storageFileCount(int count) {
+    return '$count 个文件';
+  }
+
+  @override
+  String storageEntryCount(int count) {
+    return '$count 条';
+  }
 
   @override
   String get profileLanguage => '语言';
@@ -1436,6 +1691,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get notificationsTaskBodyNoRoom => '打开 Botanica 标记完成。';
 
   @override
+  String notificationWaterTitle(String plant) {
+    return '该给 $plant 浇水了';
+  }
+
+  @override
+  String notificationFertilizeTitle(String plant) {
+    return '今天给 $plant 施肥';
+  }
+
+  @override
+  String notificationMistTitle(String plant) {
+    return '$plant 想要一点喷雾';
+  }
+
+  @override
+  String notificationRotateTitle(String plant) {
+    return '给 $plant 转四分之一圈';
+  }
+
+  @override
+  String notificationPruneTitle(String plant) {
+    return '$plant 可以修剪了';
+  }
+
+  @override
   String get reasonHumidityLow => '湿度低 → 土壤更快变干';
 
   @override
@@ -1445,6 +1725,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reasonHot => '温度高 → 蒸发更快';
 
   @override
+  String get reasonSpring => '春季 → 生长恢复';
+
+  @override
+  String get reasonSummer => '夏季 → 蒸腾更强';
+
+  @override
+  String get reasonAutumn => '秋季 → 生长放缓';
+
+  @override
   String get reasonWinter => '冬季 → 生长更慢';
 
   @override
@@ -1452,4 +1741,288 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get reasonIndoor => '室内模式 → 默认环境更稳定';
+
+  @override
+  String get envLightLow => '低光';
+
+  @override
+  String get envLightMedium => '中等光照';
+
+  @override
+  String get envLightHigh => '高光';
+
+  @override
+  String get envLabelTemp => '温度';
+
+  @override
+  String get envLabelHumidity => '湿度';
+
+  @override
+  String get envLabelLight => '光照';
+
+  @override
+  String get gardenWellnessTitle => '花园健康';
+
+  @override
+  String get gardenWellnessSubtitle => '查看评分、重点植物与护理负荷';
+
+  @override
+  String get gardenWellnessEmptyTitle => '还没有植物';
+
+  @override
+  String get gardenFilterEmptyTitle => '没有符合该筛选条件的植物。';
+
+  @override
+  String get gardenWellnessEmptyBody => '添加第一株植物以开启花园健康。';
+
+  @override
+  String get gardenWellnessOverallScore => '综合评分';
+
+  @override
+  String gardenWellnessOverdueChip(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 项逾期',
+      one: '1 项逾期',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessStatPlants => '植物';
+
+  @override
+  String get gardenWellnessStatRecentCare => '最近护理';
+
+  @override
+  String get gardenWellnessStatAtRisk => '需关注';
+
+  @override
+  String get gardenWellnessRoomPulseTitle => '房间状态';
+
+  @override
+  String gardenWellnessRoomPulseSummary(int plantCount, int overdueCount) {
+    return '$plantCount 株植物 · $overdueCount 项逾期';
+  }
+
+  @override
+  String get gardenWellnessRoomPulseStable => '稳定';
+
+  @override
+  String gardenWellnessRoomPulseAtRisk(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 株需关注',
+      one: '1 株需关注',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPrioritiesTitle => '今日优先事项';
+
+  @override
+  String get gardenWellnessFocusPlantsTitle => '重点植物';
+
+  @override
+  String get gardenWellnessScoreLabel => '评分';
+
+  @override
+  String get gardenWellnessScoreFlourishing => '生长良好';
+
+  @override
+  String get gardenWellnessScoreSteady => '状态稳定';
+
+  @override
+  String get gardenWellnessScoreNeedsLittleCare => '需要稍加照料';
+
+  @override
+  String get gardenWellnessScoreNeedsAttention => '需要关注';
+
+  @override
+  String gardenWellnessFocusReasonOverdueAndNoLog(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 项逾期 · 缺少最近记录',
+      one: '1 项逾期 · 缺少最近记录',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gardenWellnessFocusReasonOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 项逾期',
+      one: '1 项逾期',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessFocusReasonNoLog => '14 天内没有最近记录';
+
+  @override
+  String get gardenWellnessFocusReasonSteady => '状态稳定';
+
+  @override
+  String gardenWellnessPriorityAttentionTitle(String plantName) {
+    return '看看 $plantName';
+  }
+
+  @override
+  String gardenWellnessPriorityAttentionBodyOverdueAndNoLog(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 项逾期且缺少最近记录。',
+      one: '1 项逾期且缺少最近记录。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gardenWellnessPriorityAttentionBodyOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 项逾期需要处理。',
+      one: '1 项逾期需要处理。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPriorityAttentionBodyNoLog => '最近 14 天没有新的记录。';
+
+  @override
+  String get gardenWellnessPriorityAttentionBodyCheckIn => '这株植物需要快速查看一下。';
+
+  @override
+  String get gardenWellnessPriorityDueTodayTitle => '把今天安排好';
+
+  @override
+  String gardenWellnessPriorityDueTodayBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '今天有 $count 项任务到期。',
+      one: '今天有 1 项任务到期。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPriorityRefreshHistoryTitle => '更新护理记录';
+
+  @override
+  String gardenWellnessPriorityRefreshHistoryBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 株植物缺少最近记录。',
+      one: '1 株植物缺少最近记录。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPriorityCalmTitle => '享受这份平静';
+
+  @override
+  String get gardenWellnessPriorityCalmBody => '今天没有紧急事项——你的花园状态稳定。';
+
+  @override
+  String get gardenWellnessRoomUnassigned => '未分配';
+
+  @override
+  String get editPlantTitle => '编辑植物';
+
+  @override
+  String get editPlantSaveButton => '保存更改';
+
+  @override
+  String get plantDetailMenuEdit => '编辑植物';
+
+  @override
+  String get plantDetailMenuArchive => '归档植物';
+
+  @override
+  String get plantDetailMenuDelete => '删除植物';
+
+  @override
+  String archivePlantTitle(String plantName) {
+    return '归档 $plantName？';
+  }
+
+  @override
+  String get archivePlantBody => '归档后的植物会从花园中隐藏，但会保留其历史记录。';
+
+  @override
+  String get archivePlantConfirm => '归档';
+
+  @override
+  String deletePlantTitle(String plantName) {
+    return '删除 $plantName？';
+  }
+
+  @override
+  String get deletePlantBody => '这会永久删除该植物及其全部历史记录，且无法撤销。';
+
+  @override
+  String get deletePlantConfirm => '删除';
+
+  @override
+  String restorePlantTitle(String plantName) {
+    return '恢复 $plantName？';
+  }
+
+  @override
+  String get restorePlantBody => '这会将该植物恢复到你的花园中，并继续其养护计划。';
+
+  @override
+  String get restorePlantConfirm => '恢复';
+
+  @override
+  String get gardenStatusArchived => '已归档';
+
+  @override
+  String get gardenSortTitle => '排序方式';
+
+  @override
+  String get gardenFilterArchived => '已归档';
+
+  @override
+  String get gardenSortCare => '护理需求';
+
+  @override
+  String get gardenSortName => '名称';
+
+  @override
+  String get gardenSortNewest => '最新添加';
+
+  @override
+  String get gardenSearchHint => '搜索花园...';
+
+  @override
+  String archivePlantSuccess(String nickname) {
+    return '$nickname 已归档。';
+  }
+
+  @override
+  String restorePlantSuccess(String nickname) {
+    return '$nickname 已恢复。';
+  }
+
+  @override
+  String deletePlantSuccess(String nickname) {
+    return '$nickname 已删除。';
+  }
+
+  @override
+  String get commonConfirm => '确认';
 }

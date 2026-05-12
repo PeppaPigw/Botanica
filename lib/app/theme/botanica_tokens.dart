@@ -87,6 +87,11 @@ class BotanicaTokens {
     vertical: spacingSm,
   );
 
+  static const double iconSizeXs = 14;
+  static const double iconSizeSm = 16;
+  static const double iconSizeMd = 20;
+  static const double iconSizeLg = 24;
+
   /// Glass tiers (semantic surfaces).
   ///
   /// These values power `BotanicaGlassTheme` so glass styling never drifts
@@ -104,6 +109,7 @@ class BotanicaTokens {
   static const Duration motionMedium = Duration(milliseconds: 220);
   static const Duration motionSlow = Duration(milliseconds: 360);
   static const Duration motionMicroFast = Duration(milliseconds: 80);
+  static const Duration motionStagger = Duration(milliseconds: 60);
   static const Duration motionSpring = Duration(milliseconds: 480);
 
   static const Curve curveSpring = Curves.elasticOut;

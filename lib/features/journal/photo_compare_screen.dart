@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
-import '../../core/widgets/botanica_background.dart';
+import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../gen/l10n/app_localizations.dart';
+import 'widgets/journal_photo_unavailable.dart';
 
 class PhotoCompareScreen extends StatelessWidget {
   const PhotoCompareScreen({
@@ -40,51 +42,52 @@ class PhotoCompareScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final canCompare =
+        File(beforePath).existsSync() && File(afterPath).existsSync();
 
-    return BotanicaBackground(
-      child: Scaffold(
+    return BotanicaPageScaffold(
+      appBar: AppBar(
+        title: Text(title),
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          title: Text(title),
-          backgroundColor: Colors.transparent,
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: BotanicaTokens.pagePadding.copyWith(bottom: 18),
-            child: Column(
-              children: [
-                Expanded(
-                  child: BotanicaGlassCard(
-                    padding: EdgeInsets.zero,
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(BotanicaTokens.radiusXL),
-                      child: PhotoCompare(
-                        before: FileImage(File(beforePath)),
-                        after: FileImage(File(afterPath)),
-                      ),
-                    ),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: BotanicaTokens.pagePadding.copyWith(bottom: 18),
+          child: Column(
+            children: [
+              Expanded(
+                child: BotanicaGlassCard(
+                  padding: EdgeInsets.zero,
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(BotanicaTokens.radiusXL),
+                    child: canCompare
+                        ? PhotoCompare(
+                            before: FileImage(File(beforePath)),
+                            after: FileImage(File(afterPath)),
+                          )
+                        : const JournalPhotoUnavailable(),
                   ),
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Icon(Icons.drag_indicator_rounded,
-                        color: scheme.onSurface.withValues(alpha: 0.70)),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        l10n.journalCompareHint,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: scheme.onSurface.withValues(alpha: 0.72),
-                              height: 1.35,
-                            ),
-                      ),
+              ),
+              BotanicaGaps.vSm,
+              Row(
+                children: [
+                  Icon(Icons.drag_indicator_rounded,
+                      color: scheme.onSurface.withValues(alpha: 0.70)),
+                  BotanicaGaps.hSm,
+                  Expanded(
+                    child: Text(
+                      l10n.journalCompareHint,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: scheme.onSurface.withValues(alpha: 0.72),
+                            height: 1.35,
+                          ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -107,7 +110,21 @@ class PhotoCompare extends StatefulWidget {
 }
 
 class _PhotoCompareState extends State<PhotoCompare> {
+  static const double _handleSize = 52;
+
   double _t = 0.55;
+
+  void _setPosition(double globalDx, BuildContext context) {
+    final box = context.findRenderObject() as RenderBox?;
+    if (box == null) return;
+    if (box.size.width <= 0) return;
+    final local = box.globalToLocal(Offset(globalDx, 0));
+    final min = (_handleSize / 2 / box.size.width).clamp(0.04, 0.5).toDouble();
+    final max = 1 - min;
+    setState(() {
+      _t = (local.dx / box.size.width).clamp(min, max).toDouble();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +135,13 @@ class _PhotoCompareState extends State<PhotoCompare> {
         final clipW = w * _t;
 
         return GestureDetector(
-          onHorizontalDragUpdate: (details) {
-            setState(() {
-              _t = (_t + details.delta.dx / w).clamp(0.04, 0.96);
-            });
-          },
+          behavior: HitTestBehavior.opaque,
+          onTapDown: (details) =>
+              _setPosition(details.globalPosition.dx, context),
+          onHorizontalDragStart: (details) =>
+              _setPosition(details.globalPosition.dx, context),
+          onHorizontalDragUpdate: (details) =>
+              _setPosition(details.globalPosition.dx, context),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -132,20 +151,32 @@ class _PhotoCompareState extends State<PhotoCompare> {
                 child: _PhotoLayer(image: widget.after),
               ),
               Positioned(
-                left: clipW - 1,
+                left: clipW - 2,
                 top: 0,
                 bottom: 0,
-                child: Container(
-                  width: 2,
-                  color: Colors.white.withValues(alpha: 0.75),
+                child: SizedBox(
+                  width: 4,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.24),
+                          blurRadius: 8,
+                        ),
+                      ],
+                    ),
+                    child: ColoredBox(
+                      color: Colors.white.withValues(alpha: 0.72),
+                    ),
+                  ),
                 ),
               ),
               Positioned(
-                left: clipW - 22,
-                top: (h / 2) - 22,
+                left: clipW - (_handleSize / 2),
+                top: (h / 2) - (_handleSize / 2),
                 child: Container(
-                  width: 44,
-                  height: 44,
+                  width: _handleSize,
+                  height: _handleSize,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.black.withValues(alpha: 0.25),
@@ -157,6 +188,7 @@ class _PhotoCompareState extends State<PhotoCompare> {
                   child: const Icon(
                     Icons.drag_handle_rounded,
                     color: Colors.white,
+                    size: 28,
                   ),
                 ),
               ),

@@ -20,6 +20,20 @@ void main() {
       expect(restored.humidity, snapshot.humidity);
       expect(restored.weatherCode, snapshot.weatherCode);
     });
+
+    test('fromJson handles legacy null lightLevel gracefully', () {
+      final json = <String, dynamic>{
+        'timestamp': '2026-02-20T12:00:00.000Z',
+        'tempC': 22.5,
+        'humidity': 55,
+        'weatherCode': 3,
+        'lightLevel': null, // explicitly testing the null mapping
+      };
+
+      final snapshot = EnvironmentSnapshot.fromJson(json);
+      expect(snapshot.lightLevel, isNull);
+      expect(snapshot.tempC, 22.5);
+    });
   });
 
   group('DrynessIndex', () {

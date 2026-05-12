@@ -1,13 +1,15 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
+import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/permissions/permissions_service.dart';
@@ -51,19 +53,16 @@ class PermissionsScreen extends ConsumerWidget {
           children: [
             Text(
               l10n.permissionsSubtitle,
-              style: textTheme.bodyMedium?.copyWith(
+              style: textTheme.bodyLarge?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.72),
-                height: 1.45,
+                height: 1.5,
+                letterSpacing: -0.2,
               ),
-            ).animate().fadeIn(duration: 380.ms),
-            const SizedBox(height: 18),
+            ).animateSection(index: 0),
+            BotanicaGaps.vBase,
             permissionsAsync.when(
-              data: (snapshot) => _PermissionCard(
-                icon: Icons.notifications_active_rounded,
-                title: l10n.permNotificationsTitle,
-                body: l10n.permNotificationsBody,
-                tint: scheme.primary,
-                delayMs: 40,
+              data: (snapshot) => _NotificationPermissionEducationCard(
+                staggerIndex: 1,
                 decision: snapshot.notifications,
                 onEnable: () => ref
                     .read(permissionsControllerProvider.notifier)
@@ -72,28 +71,20 @@ class PermissionsScreen extends ConsumerWidget {
                     .read(permissionsControllerProvider.notifier)
                     .openSettings(),
               ),
-              error: (_, __) => _PermissionCard(
-                icon: Icons.notifications_active_rounded,
-                title: l10n.permNotificationsTitle,
-                body: l10n.permNotificationsBody,
-                tint: scheme.primary,
-                delayMs: 40,
+              error: (_, __) => const _NotificationPermissionEducationCard(
+                staggerIndex: 1,
                 decision: null,
                 onEnable: null,
                 onOpenSettings: null,
               ),
-              loading: () => _PermissionCard(
-                icon: Icons.notifications_active_rounded,
-                title: l10n.permNotificationsTitle,
-                body: l10n.permNotificationsBody,
-                tint: scheme.primary,
-                delayMs: 40,
+              loading: () => const _NotificationPermissionEducationCard(
+                staggerIndex: 1,
                 decision: null,
                 onEnable: null,
                 onOpenSettings: null,
               ),
             ),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             permissionsAsync.when(
               data: (snapshot) => _PermissionCard(
                 icon: Icons.location_on_rounded,
@@ -102,7 +93,7 @@ class PermissionsScreen extends ConsumerWidget {
                     ? l10n.permLocationBody
                     : l10n.permLocationServicesOff,
                 tint: scheme.tertiary,
-                delayMs: 90,
+                staggerIndex: 2,
                 decision: snapshot.location.decision,
                 onEnable: () => ref
                     .read(permissionsControllerProvider.notifier)
@@ -116,7 +107,7 @@ class PermissionsScreen extends ConsumerWidget {
                 title: l10n.permLocationTitle,
                 body: l10n.permLocationBody,
                 tint: scheme.tertiary,
-                delayMs: 90,
+                staggerIndex: 2,
                 decision: null,
                 onEnable: null,
                 onOpenSettings: null,
@@ -126,20 +117,20 @@ class PermissionsScreen extends ConsumerWidget {
                 title: l10n.permLocationTitle,
                 body: l10n.permLocationBody,
                 tint: scheme.tertiary,
-                delayMs: 90,
+                staggerIndex: 2,
                 decision: null,
                 onEnable: null,
                 onOpenSettings: null,
               ),
             ),
-            const SizedBox(height: 14),
+            BotanicaGaps.vSm,
             permissionsAsync.when(
               data: (snapshot) => _PermissionCard(
                 icon: Icons.camera_alt_rounded,
                 title: l10n.permCameraTitle,
                 body: l10n.permCameraBody,
                 tint: scheme.secondary,
-                delayMs: 140,
+                staggerIndex: 3,
                 decision: _combine(snapshot.camera, snapshot.photos),
                 onEnable: () async {
                   final controller =
@@ -156,7 +147,7 @@ class PermissionsScreen extends ConsumerWidget {
                 title: l10n.permCameraTitle,
                 body: l10n.permCameraBody,
                 tint: scheme.secondary,
-                delayMs: 140,
+                staggerIndex: 3,
                 decision: null,
                 onEnable: null,
                 onOpenSettings: null,
@@ -166,22 +157,22 @@ class PermissionsScreen extends ConsumerWidget {
                 title: l10n.permCameraTitle,
                 body: l10n.permCameraBody,
                 tint: scheme.secondary,
-                delayMs: 140,
+                staggerIndex: 3,
                 decision: null,
                 onEnable: null,
                 onOpenSettings: null,
               ),
             ),
-            const SizedBox(height: 20),
+            BotanicaGaps.vMd,
             BotanicaGlassCard(
-              padding: const EdgeInsets.all(16),
+              padding: BotanicaTokens.cardPadding,
               child: Row(
                 children: [
                   Icon(
                     Icons.privacy_tip_rounded,
                     color: scheme.onSurface.withValues(alpha: 0.78),
                   ),
-                  const SizedBox(width: 12),
+                  BotanicaGaps.hSm,
                   Expanded(
                     child: Text(
                       l10n.permissionsPrivacyNote,
@@ -193,28 +184,23 @@ class PermissionsScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-            ).animate().fadeIn(delay: 220.ms, duration: 420.ms),
-            const SizedBox(height: 18),
+            ).animateSection(index: 4),
+            BotanicaGaps.vBase,
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
+                  child: BotanicaButton(
                     key: const ValueKey('permissions-not-now'),
+                    variant: BotanicaButtonVariant.outlined,
                     onPressed: () => _finish(ref, context),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(BotanicaTokens.radiusXL),
-                      ),
-                    ),
-                    child: Text(l10n.permissionsNotNow),
+                    label: l10n.permissionsNotNow,
                   ),
                 ),
-                const SizedBox(width: 12),
+                BotanicaGaps.hSm,
                 Expanded(
-                  child: FilledButton(
+                  child: BotanicaButton(
                     key: const ValueKey('permissions-enable-all'),
+                    variant: BotanicaButtonVariant.filled,
                     onPressed: () async {
                       final controller =
                           ref.read(permissionsControllerProvider.notifier);
@@ -225,18 +211,11 @@ class PermissionsScreen extends ConsumerWidget {
                       if (!context.mounted) return;
                       await _finish(ref, context);
                     },
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(BotanicaTokens.radiusXL),
-                      ),
-                    ),
-                    child: Text(l10n.permissionsEnableAll),
+                    label: l10n.permissionsEnableAll,
                   ),
                 ),
               ],
-            ).animate().fadeIn(delay: 260.ms, duration: 420.ms),
+            ).animateSection(index: 5),
           ],
         ),
       ),
@@ -250,7 +229,7 @@ class _PermissionCard extends StatelessWidget {
     required this.title,
     required this.body,
     required this.tint,
-    required this.delayMs,
+    required this.staggerIndex,
     required this.decision,
     required this.onEnable,
     required this.onOpenSettings,
@@ -260,7 +239,7 @@ class _PermissionCard extends StatelessWidget {
   final String title;
   final String body;
   final Color tint;
-  final int delayMs;
+  final int staggerIndex;
   final AppPermissionDecision? decision;
   final VoidCallback? onEnable;
   final VoidCallback? onOpenSettings;
@@ -280,7 +259,7 @@ class _PermissionCard extends StatelessWidget {
         resolved == AppPermissionDecision.permanentlyDenied;
 
     return BotanicaGlassCard(
-      padding: const EdgeInsets.all(16),
+      padding: BotanicaTokens.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -299,48 +278,44 @@ class _PermissionCard extends StatelessWidget {
               color: scheme.onSurface.withValues(alpha: 0.82),
             ),
           ),
-          const SizedBox(width: 14),
+          BotanicaGaps.hSm,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.2,
+                  style: textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: -0.4,
                   ),
                 ),
-                const SizedBox(height: 6),
+                BotanicaGaps.vXxs,
                 Text(
                   body,
                   style: textTheme.bodyMedium?.copyWith(
                     color: scheme.onSurface.withValues(alpha: 0.74),
-                    height: 1.35,
+                    height: 1.4,
                   ),
                 ),
-                const SizedBox(height: 10),
+                BotanicaGaps.vSm,
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: TextButton.icon(
+                  child: BotanicaButton(
+                    variant: BotanicaButtonVariant.text,
                     onPressed: isGranted
                         ? null
                         : (isPermanentlyDenied ? onOpenSettings : onEnable),
-                    icon: Icon(
-                      isGranted
-                          ? Icons.check_circle_rounded
-                          : (isPermanentlyDenied
-                              ? Icons.open_in_new_rounded
-                              : Icons.lock_open_rounded),
-                      size: 18,
-                    ),
-                    label: Text(
-                      isGranted
-                          ? l10n.permStatusEnabled
-                          : (isPermanentlyDenied
-                              ? l10n.permActionOpenSettings
-                              : l10n.permActionEnable),
-                    ),
+                    icon: isGranted
+                        ? Icons.check_circle_rounded
+                        : (isPermanentlyDenied
+                            ? Icons.open_in_new_rounded
+                            : Icons.lock_open_rounded),
+                    label: isGranted
+                        ? l10n.permStatusEnabled
+                        : (isPermanentlyDenied
+                            ? l10n.permActionOpenSettings
+                            : l10n.permActionEnable),
                   ),
                 ),
               ],
@@ -349,9 +324,109 @@ class _PermissionCard extends StatelessWidget {
         ],
       ),
     )
-        .animate()
-        .fadeIn(delay: delayMs.ms, duration: 420.ms)
-        .slideY(begin: 0.06, curve: Curves.easeOutCubic);
+        .animateSection(index: staggerIndex);
+  }
+}
+
+class _NotificationPermissionEducationCard extends StatelessWidget {
+  const _NotificationPermissionEducationCard({
+    required this.staggerIndex,
+    required this.decision,
+    required this.onEnable,
+    required this.onOpenSettings,
+  });
+
+  final int staggerIndex;
+  final AppPermissionDecision? decision;
+  final VoidCallback? onEnable;
+  final VoidCallback? onOpenSettings;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final resolved = decision;
+    final isGranted = resolved == AppPermissionDecision.granted ||
+        resolved == AppPermissionDecision.limited ||
+        resolved == AppPermissionDecision.provisional;
+
+    final isPermanentlyDenied =
+        resolved == AppPermissionDecision.permanentlyDenied;
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 46,
+                height: 46,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: scheme.primary.withValues(alpha: 0.16),
+                  border: Border.all(
+                    color: scheme.outlineVariant.withValues(alpha: 0.50),
+                  ),
+                ),
+                child: Icon(
+                  Icons.notifications_active_rounded,
+                  color: scheme.onSurface.withValues(alpha: 0.82),
+                ),
+              ),
+              BotanicaGaps.hSm,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.notificationsSoftAskTitle,
+                      style: textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -0.4,
+                      ),
+                    ),
+                    BotanicaGaps.vXxs,
+                    Text(
+                      l10n.notificationsSoftAskBody,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: scheme.onSurface.withValues(alpha: 0.74),
+                        height: 1.4,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          BotanicaGaps.vSm,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: BotanicaButton(
+              variant: BotanicaButtonVariant.text,
+              onPressed: isGranted
+                  ? null
+                  : (isPermanentlyDenied ? onOpenSettings : onEnable),
+              icon: isGranted
+                  ? Icons.check_circle_rounded
+                  : (isPermanentlyDenied
+                      ? Icons.open_in_new_rounded
+                      : Icons.lock_open_rounded),
+              label: isGranted
+                  ? l10n.permStatusEnabled
+                  : (isPermanentlyDenied
+                      ? l10n.permActionOpenSettings
+                      : l10n.permActionEnable),
+            ),
+          ),
+        ],
+      ),
+    )
+        .animateSection(index: staggerIndex);
   }
 }
 

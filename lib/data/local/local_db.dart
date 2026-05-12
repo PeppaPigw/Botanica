@@ -50,15 +50,27 @@ class LocalDb {
 
   static Future<void> _initInternal() async {
     await Hive.initFlutter();
-    _settingsBox = await Hive.openBox<Map>(settingsBoxName);
-    _plantsBox = await Hive.openBox<Map>(plantsBoxName);
-    _tasksBox = await Hive.openBox<Map>(tasksBoxName);
-    _logsBox = await Hive.openBox<Map>(logsBoxName);
-    _photosBox = await Hive.openBox<Map>(photosBoxName);
-    _diaryBox = await Hive.openBox<Map>(diaryBoxName);
-    _dailyDrawsBox = await Hive.openBox<Map>(dailyDrawsBoxName);
-    _dailyFavoritesBox = await Hive.openBox<Map>(dailyFavoritesBoxName);
-    _aiCacheBox = await Hive.openBox<Map>(aiCacheBoxName);
+    final boxes = await Future.wait([
+      Hive.openBox<Map>(settingsBoxName),
+      Hive.openBox<Map>(plantsBoxName),
+      Hive.openBox<Map>(tasksBoxName),
+      Hive.openBox<Map>(logsBoxName),
+      Hive.openBox<Map>(photosBoxName),
+      Hive.openBox<Map>(diaryBoxName),
+      Hive.openBox<Map>(dailyDrawsBoxName),
+      Hive.openBox<Map>(dailyFavoritesBoxName),
+      Hive.openBox<Map>(aiCacheBoxName),
+    ]);
+
+    _settingsBox = boxes[0];
+    _plantsBox = boxes[1];
+    _tasksBox = boxes[2];
+    _logsBox = boxes[3];
+    _photosBox = boxes[4];
+    _diaryBox = boxes[5];
+    _dailyDrawsBox = boxes[6];
+    _dailyFavoritesBox = boxes[7];
+    _aiCacheBox = boxes[8];
     _initialized = true;
   }
 }

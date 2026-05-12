@@ -89,6 +89,7 @@ class CarePlanEngine {
     Hemisphere hemisphere = Hemisphere.northern,
     DateTime? now,
     CareRuleEnvironmentProfile? environmentProfile,
+    bool applySeasonalFallback = true,
   }) {
     final referenceTime = now ?? DateTime.now();
     final profile =
@@ -116,19 +117,30 @@ class CarePlanEngine {
       }
     }
 
-    if (profile.seasonEnabled) {
-      final isWinter = CarePlanEngine.isWinter(
-        referenceTime,
+    if (profile.seasonEnabled && applySeasonalFallback) {
+      final currentSeason = CarePlanEngine.seasonFor(
         hemisphere: hemisphere,
+        month: referenceTime.month,
       );
-      if (isWinter) {
-        final winterMultiplier = profile.seasonMultipliers[Season.winter];
-        if (winterMultiplier != null) {
-          final weight = seasonWeight(environmentMode);
-          final effectiveWinterMultiplier =
-              1.0 + (winterMultiplier - 1.0) * weight;
-          multiplier *= effectiveWinterMultiplier;
-          reasons.add(CareAdjustmentReason.winterSeason);
+      final seasonMultiplier = profile.seasonMultipliers[currentSeason];
+      if (seasonMultiplier != null) {
+        final weight = seasonWeight(environmentMode);
+        final effectiveMultiplier = 1.0 + (seasonMultiplier - 1.0) * weight;
+        multiplier *= effectiveMultiplier;
+
+        switch (currentSeason) {
+          case Season.spring:
+            reasons.add(CareAdjustmentReason.springSeason);
+            break;
+          case Season.summer:
+            reasons.add(CareAdjustmentReason.summerSeason);
+            break;
+          case Season.autumn:
+            reasons.add(CareAdjustmentReason.autumnSeason);
+            break;
+          case Season.winter:
+            reasons.add(CareAdjustmentReason.winterSeason);
+            break;
         }
       }
     }
@@ -162,6 +174,7 @@ class CarePlanEngine {
     required EnvironmentMode environmentMode,
     Hemisphere hemisphere = Hemisphere.northern,
     DateTime? now,
+    bool applySeasonalFallback = true,
   }) {
     return adjustInterval(
       taskType: TaskType.water,
@@ -170,6 +183,7 @@ class CarePlanEngine {
       environmentMode: environmentMode,
       hemisphere: hemisphere,
       now: now,
+      applySeasonalFallback: applySeasonalFallback,
     );
   }
 
@@ -259,18 +273,20 @@ class CarePlanEngine {
         return 'Warm temperature (${environment.tempC.toStringAsFixed(1)}°C) '
             '→ interval ×${profile.temperatureHotMultiplier.toStringAsFixed(2)} '
             '(higher transpiration)';
+      case CareAdjustmentReason.springSeason:
+      case CareAdjustmentReason.summerSeason:
+      case CareAdjustmentReason.autumnSeason:
       case CareAdjustmentReason.winterSeason:
-        final isWinter =
-            CarePlanEngine.isWinter(referenceTime, hemisphere: hemisphere);
-        if (!isWinter) return 'Seasonal adjustment (winter) applied';
+        final currentSeason = CarePlanEngine.seasonFor(
+            hemisphere: hemisphere, month: referenceTime.month);
 
         final weight = seasonWeight(environmentMode);
-        final winterMultiplier =
-            profile.seasonMultipliers[Season.winter] ?? 1.0;
-        final effectiveWinterMultiplier =
-            1.0 + (winterMultiplier - 1.0) * weight;
-        return 'Winter season '
-            '→ interval ×${effectiveWinterMultiplier.toStringAsFixed(2)} '
+        final multiplier = profile.seasonMultipliers[currentSeason] ?? 1.0;
+        final effectiveMultiplier = 1.0 + (multiplier - 1.0) * weight;
+        final capitalizeName = currentSeason.name[0].toUpperCase() +
+            currentSeason.name.substring(1);
+        return '$capitalizeName season '
+            '→ interval ×${effectiveMultiplier.toStringAsFixed(2)} '
             '(weighted ${weight.toStringAsFixed(2)} for ${environmentMode.id})';
       case CareAdjustmentReason.outdoorMode:
         return 'Outdoor mode '

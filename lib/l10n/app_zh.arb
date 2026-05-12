@@ -2,11 +2,12 @@
   "appName": "Botanica",
   "appTagline": "你的私人植物养护伙伴 — 宁静、精美、用心。",
   "gardenNoScheduleYet": "暂无养护计划",
-
   "commonContinue": "继续",
   "commonSkip": "跳过",
   "commonStart": "开始",
   "commonDone": "完成",
+  "commonOverdue": "已逾期",
+  "commonUndo": "撤销",
   "commonCancel": "取消",
   "commonClear": "清除",
   "commonSave": "保存",
@@ -25,6 +26,7 @@
   "commonComingSoon": "即将推出",
   "commonLoading": "加载中…",
   "commonViewAll": "查看全部",
+  "commonConfirm": "确认",
   "commonWhy": "为什么？",
   "commonIdeal": "理想",
   "commonTolerates": "耐受",
@@ -50,26 +52,26 @@
   "resourceCareGuide": "养护指南",
   "resourceCopyLink": "复制链接",
   "resourceLinkCopied": "已复制链接",
+  "aiNoteCopied": "笔记已复制",
+  "aiNoteCopyAction": "复制笔记",
   "stateLoadFailedTitle": "无法加载",
   "stateLoadFailedBody": "请检查网络后重试。",
   "stateNotAvailableTitle": "暂不可用",
   "stateNotAvailableBody": "该内容暂时不可用。",
-
   "navGarden": "花园",
   "navCalendar": "日历",
   "navDiscover": "发现",
   "navDaily": "每日",
   "navProfile": "我的",
-
   "calendarTitle": "日历",
   "calendarFilterAll": "全部",
+  "calendarFilterOther": "其他",
+  "calendarSectionConsistency": "月度一致性",
   "calendarPrevMonth": "上个月",
   "calendarNextMonth": "下个月",
   "calendarSectionHistory": "养护记录",
   "calendarNoEvents": "这一天暂无记录。",
-
   "splashTagline": "宁静养护，优雅整理。",
-
   "onboardingTitle1": "你的花园，优雅有序",
   "onboardingBody1": "记录植物、建立照片时间轴、随手备注，不再杂乱。",
   "onboardingTitle2": "智能养护，随环境变化",
@@ -77,11 +79,12 @@
   "onboardingTitle3": "每日花语仪式",
   "onboardingBody3": "温柔的每日卡片：寓意、基础养护，以及 60 秒的观赏提示。",
   "onboardingCta": "开始使用 Botanica",
-
   "permissionsTitle": "设置你需要的权限",
   "permissionsSubtitle": "可一次性开启，也可在使用功能时再开启。",
   "permNotificationsTitle": "通知提醒",
   "permNotificationsBody": "不错过浇水等养护。",
+  "notificationsSoftAskTitle": "不错过浇水日",
+  "notificationsSoftAskBody": "Botanica 会在你偏好的时间温和提醒，让每株植物在叶片低垂前得到照料。",
   "permLocationTitle": "位置",
   "permLocationBody": "让养护根据气候自动调整。",
   "permCameraTitle": "相机与相册",
@@ -98,7 +101,6 @@
   "permissionsEnableAll": "现在全部开启",
   "permissionsNotNow": "暂不",
   "permissionsPrivacyNote": "Botanica 只在需要时才请求权限，你可以在「我的」中随时修改。",
-
   "gardenTitle": "花园",
   "gardenTodayCardTitle": "今日",
   "gardenLoadError": "加载植物失败。",
@@ -112,6 +114,14 @@
     }
   },
   "gardenCareStreakChip": "连续护理{days}天",
+  "@gardenCareStreakChip": {
+    "description": "Chip label showing the user's current care streak",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "gardenWeatherChip": "{condition} · {temp}°{unit} · {humidity}%",
   "@gardenWeatherChip": {
     "placeholders": {
@@ -140,12 +150,47 @@
   "weatherUnknown": "天气",
   "gardenQuickWatered": "已浇水",
   "gardenQuickSnooze": "稍后提醒",
+  "tasksSnoozeOneHour": "1小时",
+  "tasksSnoozeThreeHours": "3小时",
+  "tasksSnoozeTomorrow": "明天",
+  "tasksSnoozeTomorrowMorning": "明天上午",
+  "tasksSnoozeWeekend": "这个周末",
+  "tasksSnoozeCustomTime": "自定义时间",
   "gardenQuickAddPlant": "添加植物",
+  "gardenRoomsTitle": "房间",
+  "gardenRoomsAll": "全部房间",
+  "gardenRoomPlantCount": "{count, plural, =1{1 株植物} other{{count} 株植物}}",
+  "@gardenRoomPlantCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenRoomsWaterAll": "全部浇水",
+  "gardenRoomsSnoozeAll": "全部延后",
+  "gardenRoomsWateredCount": "已为 {count} 株植物浇水",
+  "@gardenRoomsWateredCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenRoomsSnoozedCount": "已延后 {count} 个任务",
+  "@gardenRoomsSnoozedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenEmptyTitle": "开始你的花园",
   "gardenEmptyBody": "添加第一株植物，获得专属养护计划与每日任务。",
+  "gardenToggleCardMode": "切换卡片模式",
+  "gardenToggleViewMode": "切换视图模式",
   "gardenEmptyCta": "添加第一株植物",
   "gardenAddPlantFab": "添加植物",
-
   "addPlantTitle": "添加植物",
   "addPlantMethodScan": "扫描",
   "addPlantMethodLibrary": "从植物库",
@@ -169,15 +214,14 @@
   "addPlantReminderEvening": "晚上",
   "addPlantReminderCustom": "自定义",
   "addPlantSaveButton": "保存到花园",
-
   "plantDetailOverview": "概览",
   "plantDetailCare": "养护",
   "plantDetailJournal": "记录",
   "plantDetailLogs": "日志",
   "plantDetailLogsEmptyTitle": "暂无养护日志",
   "plantDetailLogsEmptyBody": "完成一次浇水或养护任务后，记录会显示在这里。",
-  "tasksEmptyUpcoming": "暂无即将到来的任务",
-  "tasksEmptyOverdue": "全部完成，做得好！",
+  "tasksEmptySoon": "近期暂无任务，做得好！",
+  "tasksEmptyWatch": "暂无需要关注的任务。植物正在休息。",
   "plantDetailWaterNow": "现在浇水",
   "plantDetailAddPhoto": "添加照片",
   "plantDetailAddNote": "添加备注",
@@ -194,6 +238,16 @@
   },
   "plantDetailEnvironmentImpactTitle": "环境影响",
   "plantDetailEnvironmentImpactBaseAdjusted": "基础：{base} 天 · 调整后：{adjusted} 天",
+  "@plantDetailEnvironmentImpactBaseAdjusted": {
+    "placeholders": {
+      "base": {
+        "type": "int"
+      },
+      "adjusted": {
+        "type": "int"
+      }
+    }
+  },
   "plantDetailEnvironmentStable": "环境稳定——今天无需调整。",
   "plantDetailDrynessLow": "干燥指数低（干得更慢）",
   "plantDetailDrynessBalanced": "干燥指数适中",
@@ -202,6 +256,12 @@
   "plantDetailCareLightBody": "对多数室内植物来说，明亮散射光是很好的默认选择。",
   "plantDetailCareTempTitle": "温度",
   "plantDetailCareTempBody": "避免突然的冷风直吹。稳定的温暖有助于规律生长。",
+  "envLightLow": "低光",
+  "envLightMedium": "中等光照",
+  "envLightHigh": "高光",
+  "envLabelTemp": "温度",
+  "envLabelHumidity": "湿度",
+  "envLabelLight": "光照",
   "plantDetailJournalDesignNote": "这里已设计好对齐取景叠层与对比滑杆；后续可接入相机/相册。",
   "plantDetailJournalIntro": "用照片与文字记录成长——这是你的植物日记。",
   "journalSectionPhotos": "照片",
@@ -212,6 +272,19 @@
   "diaryAddEntryButton": "写日记",
   "diaryEntryTitle": "日记内容",
   "diaryEntrySaved": "已保存到日记。",
+  "diaryEditEntryTitle": "编辑日记",
+  "diaryEditConfirmTitle": "保存更改？",
+  "diaryEditConfirmBody": "用你的修改更新这篇日记。",
+  "diaryEntryUpdated": "日记已更新。",
+  "diaryEntryDeleted": "日记已删除。",
+  "diaryEntryDeleteTitle": "删除日记？",
+  "diaryEntryDeleteBody": "这会从时间线中移除该日记。删除后可以立即撤销。",
+  "diaryPromptGrowingWell": "长势不错",
+  "diaryPromptNewLeaf": "新叶",
+  "diaryPromptStruggling": "状态吃力",
+  "diaryPromptRepotted": "已换盆",
+  "diaryPromptBlooming": "开花了",
+  "journalEntryActions": "条目操作",
   "journalShareCardTitle": "分享卡片",
   "journalShareCardText": "由 Botanica 制作",
   "journalShareFailed": "分享失败，请重试。",
@@ -226,6 +299,9 @@
   "journalCameraPermissionNeeded": "需要相机权限才能拍摄照片。",
   "journalPhotosPermissionNeeded": "需要相册权限才能选择照片。",
   "journalPhotoSaved": "已保存到记录。",
+  "journalPhotoDeleted": "照片已删除。",
+  "journalPhotoDeleteTitle": "删除照片？",
+  "journalPhotoDeleteBody": "这会从这株植物的记录和本地存储中移除该照片。删除后可以立即撤销。",
   "journalEmptyBody": "还没有照片。添加一张开启生长时间轴。",
   "journalPhotoTitle": "记录照片",
   "journalPhotoNoNote": "无备注",
@@ -233,6 +309,10 @@
   "journalAddNoteHint": "可选：新叶、换盆等。",
   "journalCompareTitle": "对比",
   "journalCompareHint": "左右拖动进行对比。",
+  "journalPhotoUnavailable": "照片不可用",
+  "journalOverlayStrength": "叠影强度",
+  "journalPreviousPhoto": "上一张照片",
+  "journalLimitedPhotosAccess": "当前为“选中的照片”权限。你可以选择已授权照片，也可以在 iOS 设置中调整访问范围。",
   "journalPhotoMeta": "{date}",
   "@journalPhotoMeta": {
     "placeholders": {
@@ -242,24 +322,43 @@
       }
     }
   },
-
   "scanTitle": "识别",
   "scanTryAgain": "重试",
   "scanCaptureTitle": "识别你的植物",
   "scanCaptureTip": "同时拍摄叶片与整株，效果更好。",
   "scanCameraPermissionNeeded": "需要相机权限才能识别植物。",
+  "scanCameraPermissionTitle": "相机访问",
+  "scanCameraPermissionBody": "可以打开相机快速识别；也可以不授权，直接浏览植物库。",
+  "scanUseCamera": "使用相机",
   "scanProcessingBody": "正在识别植物…",
   "scanChooseCandidate": "选择匹配项",
+  "scanRefineTitle": "不确定？进一步筛选结果",
+  "scanRefineHelper": "回答一个快速问题来缩小结果范围。",
+  "scanRefineFallbackNote": "这些筛选条件暂时没有完全匹配项——正在显示最接近的结果。",
+  "scanConfidenceGuide": "置信度仅供参考——添加前请对比外形和养护标签。",
+  "scanConfidenceStrongLabel": "高置信度",
+  "scanConfidenceStrongBody": "与拍摄植物看起来非常接近。",
+  "scanConfidenceLikelyLabel": "中等置信度",
+  "scanConfidenceLikelyBody": "添加前请对比细节。",
+  "scanConfidencePossibleLabel": "低置信度——换个角度再试",
+  "scanConfidencePossibleBody": "这只是最佳猜测——可以再拍一个角度。",
+  "scanRefineFlowering": "它在开花吗？",
+  "scanRefineIndoorOutdoor": "室内还是室外？",
+  "scanRefineSucculent": "多肉类型？",
   "scanRefinePetSafe": "宠物友好",
   "scanRefineEasy": "易养护",
   "scanRefineLowLight": "耐低光",
   "scanAddToGarden": "添加到花园",
+  "scanBrowseLibrary": "改为浏览植物库",
+  "scanTakingLongerTitle": "耗时比预期更久",
+  "scanTakingLongerBody": "本次识别未能及时完成。你可以重试，或手动选择植物。",
+  "scanNoResultTitle": "无法识别这株植物",
+  "scanNoResultBody": "换个角度拍摄叶片细节，或直接浏览植物库。",
   "scanDeterministicNote": "演示模式：离线结果为可重复的占位识别，可后续接入 Kindwise/Gemini。",
-
   "tasksTitle": "任务",
   "tasksTabToday": "今日",
-  "tasksTabUpcoming": "即将到来",
-  "tasksTabOverdue": "已逾期",
+  "tasksTabSoon": "近期",
+  "tasksTabWatch": "观察",
   "tasksCalendarToggle": "日历",
   "tasksSeasonalTipsTitle": "季节护理小贴士",
   "tipSpringRepot": "春季：新生长开始且根系拥挤时，考虑换盆。",
@@ -279,7 +378,7 @@
       }
     }
   },
-
+  "tasksSkipped": "已跳过",
   "discoverTitle": "发现",
   "discoverSearchHint": "搜索植物、指南与技巧",
   "discoverNoResultsTitle": "未找到匹配结果",
@@ -299,7 +398,6 @@
   "discoverGuideSoilBody": "为什么疏松透气的介质能减少烂根并促进生长。",
   "discoverGuidePestTitle": "虫害检查清单",
   "discoverGuidePestBody": "每周 1 次的小流程，及早发现问题。",
-
   "speciesDetailHistory": "历史",
   "speciesDetailHabit": "生长习性",
   "speciesDetailCareAtAGlance": "养护速览",
@@ -378,7 +476,6 @@
   "lightMediumIndirect": "中等散射光",
   "lightLowToBrightIndirect": "弱光到明亮散射光",
   "lightLowToBright": "弱光到明亮光",
-
   "dailyTitle": "每日花语",
   "dailyReveal": "揭晓",
   "dailyRevealHintTap": "点击揭晓",
@@ -431,17 +528,43 @@
   "dailyProfileMissingBody": "请先在「我的」中设置个人关键字（例如昵称）或生日，让每日花语更贴合你。",
   "dailyProfileMissingBodyZodiac": "请先在「我的」中设置你的生日或星座，让每日花语更贴合你。",
   "dailyProfileMissingCta": "去设置",
-
   "careKeyLight": "光照",
   "careKeyWater": "浇水",
   "careKeyTemperature": "温度",
   "careKeyPetSafety": "宠物安全",
-
   "profileTitle": "我的",
   "profileSectionPreferences": "偏好",
   "profileSectionPermissions": "权限",
   "profileSectionData": "数据",
   "profileSectionAbout": "关于",
+  "storageHealthTitle": "存储健康",
+  "storageHealthSubtitle": "查看日记媒体并清理临时文件。",
+  "storageJournalPhotos": "日记照片",
+  "storageUsed": "已用存储",
+  "storagePhotoFiles": "照片文件",
+  "storageJournalEntries": "日记条目",
+  "storagePhotoEntries": "照片条目",
+  "storageMissingPhotos": "缺失照片",
+  "storageCacheTitle": "临时缓存",
+  "storageCacheBody": "清理生成的分享卡片和临时文件，不会删除你的日记照片。",
+  "storageClearCache": "清理缓存",
+  "storageCacheCleared": "临时缓存已清理。",
+  "storageFileCount": "{count} 个文件",
+  "@storageFileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storageEntryCount": "{count} 条",
+  "@storageEntryCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "profileLanguage": "语言",
   "profileUnits": "单位",
   "profileHemisphereTitle": "半球",
@@ -503,16 +626,13 @@
   "profileAiKeySaved": "AI 密钥已保存。",
   "profileAiKeyCleared": "AI 密钥已移除。",
   "profileLanguageSystem": "跟随系统",
-
   "creditsTitle": "致谢",
   "creditsOpenSource": "开源",
   "creditsFlutterCommunity": "Flutter 社区参考",
   "creditsUiInspiration": "UI 灵感",
   "creditsPlaceholderNote": "说明：本项目暂时使用白色 PNG 占位图，你可以在完成后替换为真实照片/插画资源。",
-
   "unitsCelsius": "摄氏 (°C)",
   "unitsFahrenheit": "华氏 (°F)",
-
   "beliefModeWesternZodiac": "星座",
   "beliefModeChineseZodiac": "生肖",
   "beliefModeTarot": "塔罗抽牌",
@@ -523,7 +643,6 @@
   "beliefModeOmikuji": "御神签",
   "beliefModeRunes": "北欧符文",
   "beliefModeOgham": "凯尔特欧甘字母",
-
   "zodiacAries": "白羊座",
   "zodiacTaurus": "金牛座",
   "zodiacGemini": "双子座",
@@ -536,7 +655,6 @@
   "zodiacCapricorn": "摩羯座",
   "zodiacAquarius": "水瓶座",
   "zodiacPisces": "双鱼座",
-
   "chineseZodiacRat": "生肖鼠",
   "chineseZodiacOx": "生肖牛",
   "chineseZodiacTiger": "生肖虎",
@@ -549,7 +667,6 @@
   "chineseZodiacRooster": "生肖鸡",
   "chineseZodiacDog": "生肖狗",
   "chineseZodiacPig": "生肖猪",
-
   "tarotTheFool": "愚者",
   "tarotTheMagician": "魔术师",
   "tarotTheHighPriestess": "女祭司",
@@ -572,7 +689,6 @@
   "tarotTheSun": "太阳",
   "tarotJudgement": "审判",
   "tarotTheWorld": "世界",
-
   "omikujiDaikichi": "大吉",
   "omikujiChukichi": "中吉",
   "omikujiShokichi": "小吉",
@@ -581,7 +697,6 @@
   "omikujiSuekichi": "末吉",
   "omikujiKyo": "凶",
   "omikujiDaikyo": "大凶",
-
   "taskTypeWater": "浇水",
   "taskTypeFertilize": "施肥",
   "taskTypeMist": "喷雾",
@@ -591,7 +706,6 @@
   "taskTypeCheckPests": "检查虫害",
   "taskTypeWipeLeaves": "擦叶",
   "taskTypeSunlightAdjustment": "调整光照",
-
   "notificationsTaskTitle": "{plant} · {task}",
   "@notificationsTaskTitle": {
     "placeholders": {
@@ -612,11 +726,264 @@
     }
   },
   "notificationsTaskBodyNoRoom": "打开 Botanica 标记完成。",
-
+  "notificationWaterTitle": "该给 {plant} 浇水了",
+  "@notificationWaterTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle": "今天给 {plant} 施肥",
+  "@notificationFertilizeTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle": "{plant} 想要一点喷雾",
+  "@notificationMistTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle": "给 {plant} 转四分之一圈",
+  "@notificationRotateTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle": "{plant} 可以修剪了",
+  "@notificationPruneTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
   "reasonHumidityLow": "湿度低 → 土壤更快变干",
   "reasonHumidityHigh": "湿度高 → 土壤保持湿润更久",
   "reasonHot": "温度高 → 蒸发更快",
+  "reasonSpring": "春季 → 生长恢复",
+  "reasonSummer": "夏季 → 蒸腾更强",
+  "reasonAutumn": "秋季 → 生长放缓",
   "reasonWinter": "冬季 → 生长更慢",
   "reasonOutdoor": "户外模式 → 更依赖天气预报",
-  "reasonIndoor": "室内模式 → 默认环境更稳定"
+  "reasonIndoor": "室内模式 → 默认环境更稳定",
+  "gardenWellnessTitle": "花园健康",
+  "gardenWellnessSubtitle": "查看评分、重点植物与护理负荷",
+  "gardenWellnessEmptyTitle": "还没有植物",
+  "gardenFilterEmptyTitle": "没有符合该筛选条件的植物。",
+  "gardenWellnessEmptyBody": "添加第一株植物以开启花园健康。",
+  "gardenWellnessOverallScore": "综合评分",
+  "gardenWellnessOverdueChip": "{count, plural, =1{1 项逾期} other{{count} 项逾期}}",
+  "@gardenWellnessOverdueChip": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessStatPlants": "植物",
+  "gardenWellnessStatRecentCare": "最近护理",
+  "gardenWellnessStatAtRisk": "需关注",
+  "gardenWellnessRoomPulseTitle": "房间状态",
+  "gardenWellnessRoomPulseSummary": "{plantCount} 株植物 · {overdueCount} 项逾期",
+  "@gardenWellnessRoomPulseSummary": {
+    "placeholders": {
+      "plantCount": {
+        "type": "int"
+      },
+      "overdueCount": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessRoomPulseStable": "稳定",
+  "gardenWellnessRoomPulseAtRisk": "{count, plural, =1{1 株需关注} other{{count} 株需关注}}",
+  "@gardenWellnessRoomPulseAtRisk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPrioritiesTitle": "今日优先事项",
+  "gardenWellnessFocusPlantsTitle": "重点植物",
+  "gardenWellnessScoreLabel": "评分",
+  "gardenWellnessScoreFlourishing": "生长良好",
+  "gardenWellnessScoreSteady": "状态稳定",
+  "gardenWellnessScoreNeedsLittleCare": "需要稍加照料",
+  "gardenWellnessScoreNeedsAttention": "需要关注",
+  "gardenWellnessFocusReasonOverdueAndNoLog": "{count, plural, =1{1 项逾期 · 缺少最近记录} other{{count} 项逾期 · 缺少最近记录}}",
+  "@gardenWellnessFocusReasonOverdueAndNoLog": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessFocusReasonOverdue": "{count, plural, =1{1 项逾期} other{{count} 项逾期}}",
+  "@gardenWellnessFocusReasonOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessFocusReasonNoLog": "14 天内没有最近记录",
+  "gardenWellnessFocusReasonSteady": "状态稳定",
+  "gardenWellnessPriorityAttentionTitle": "看看 {plantName}",
+  "@gardenWellnessPriorityAttentionTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyOverdueAndNoLog": "{count, plural, =1{1 项逾期且缺少最近记录。} other{{count} 项逾期且缺少最近记录。}}",
+  "@gardenWellnessPriorityAttentionBodyOverdueAndNoLog": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyOverdue": "{count, plural, =1{1 项逾期需要处理。} other{{count} 项逾期需要处理。}}",
+  "@gardenWellnessPriorityAttentionBodyOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyNoLog": "最近 14 天没有新的记录。",
+  "gardenWellnessPriorityAttentionBodyCheckIn": "这株植物需要快速查看一下。",
+  "gardenWellnessPriorityDueTodayTitle": "把今天安排好",
+  "gardenWellnessPriorityDueTodayBody": "{count, plural, =1{今天有 1 项任务到期。} other{今天有 {count} 项任务到期。}}",
+  "@gardenWellnessPriorityDueTodayBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityRefreshHistoryTitle": "更新护理记录",
+  "gardenWellnessPriorityRefreshHistoryBody": "{count, plural, =1{1 株植物缺少最近记录。} other{{count} 株植物缺少最近记录。}}",
+  "@gardenWellnessPriorityRefreshHistoryBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityCalmTitle": "享受这份平静",
+  "gardenWellnessPriorityCalmBody": "今天没有紧急事项——你的花园状态稳定。",
+  "gardenWellnessRoomUnassigned": "未分配",
+  "editPlantTitle": "编辑植物",
+  "editPlantSaveButton": "保存更改",
+  "plantDetailMenuEdit": "编辑植物",
+  "plantDetailMenuArchive": "归档植物",
+  "plantDetailMenuDelete": "删除植物",
+  "archivePlantTitle": "归档 {plantName}？",
+  "@archivePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "archivePlantBody": "归档后的植物会从花园中隐藏，但会保留其历史记录。",
+  "archivePlantConfirm": "归档",
+  "deletePlantTitle": "删除 {plantName}？",
+  "@deletePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePlantBody": "这会永久删除该植物及其全部历史记录，且无法撤销。",
+  "deletePlantConfirm": "删除",
+  "restorePlantTitle": "恢复 {plantName}？",
+  "@restorePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "restorePlantBody": "这会将该植物恢复到你的花园中，并继续其养护计划。",
+  "restorePlantConfirm": "恢复",
+  "gardenStatusArchived": "已归档",
+  "gardenFilterArchived": "已归档",
+  "@gardenFilterArchived": {
+    "description": "Filter option for archived plants"
+  },
+  "gardenSortTitle": "排序方式",
+  "gardenSortCare": "护理需求",
+  "gardenSortName": "名称",
+  "@gardenSortName": {
+    "description": "Sort option by name"
+  },
+  "gardenSortNewest": "最新添加",
+  "@gardenSortNewest": {
+    "description": "Sort option by newest"
+  },
+  "gardenSortSpecies": "物种",
+  "@gardenSortSpecies": {
+    "description": "Sort option by species"
+  },
+  "gardenSortNeedsCare": "需要护理",
+  "@gardenSortNeedsCare": {
+    "description": "Sort option by needing care"
+  },
+  "gardenFilterAll": "全部",
+  "@gardenFilterAll": {
+    "description": "Filter option for all plants"
+  },
+  "gardenFilterHealthy": "健康",
+  "@gardenFilterHealthy": {
+    "description": "Filter option for healthy plants"
+  },
+  "gardenFilterNeedsCare": "需要护理",
+  "@gardenFilterNeedsCare": {
+    "description": "Filter option for plants needing care"
+  },
+  "gardenSearchHint": "搜索花园...",
+  "@gardenSearchHint": {
+    "description": "Hint text for garden search"
+  },
+  "archivePlantSuccess": "{nickname} 已归档。",
+  "@archivePlantSuccess": {
+    "description": "Success message when a plant is archived",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "restorePlantSuccess": "{nickname} 已恢复。",
+  "@restorePlantSuccess": {
+    "description": "Success message when a plant is restored",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePlantSuccess": "{nickname} 已删除。",
+  "@deletePlantSuccess": {
+    "description": "Success message when a plant is deleted",
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  }
 }

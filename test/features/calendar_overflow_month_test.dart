@@ -4,6 +4,7 @@ import 'package:botanica/data/repositories/logs_repository.dart';
 import 'package:botanica/domain/models/care_log.dart';
 import 'package:botanica/domain/models/plant.dart';
 import 'package:botanica/domain/models/task_instance.dart';
+import 'package:botanica/domain/models/user_settings.dart';
 import 'package:botanica/features/calendar/calendar_screen.dart';
 import 'package:botanica/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,21 @@ class _FakeLogsRepository implements LogsRepository {
       Stream.value(const <CareLog>[]);
 }
 
+class _TestSettingsController extends SettingsController {
+  _TestSettingsController(this._settings);
+
+  UserSettings _settings;
+
+  @override
+  UserSettings build() => _settings;
+
+  @override
+  Future<void> update(UserSettings settings) async {
+    _settings = settings;
+    state = settings;
+  }
+}
+
 String _dateKey(DateTime date) {
   final y = date.year.toString().padLeft(4, '0');
   final m = date.month.toString().padLeft(2, '0');
@@ -57,6 +73,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            settingsControllerProvider.overrideWith(
+              () => _TestSettingsController(UserSettings.defaults()),
+            ),
             plantsStreamProvider.overrideWith(
               (ref) => Stream.value(const <Plant>[]),
             ),

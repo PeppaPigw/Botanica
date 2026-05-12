@@ -12,6 +12,7 @@ class UserSettings {
     required this.localeCode,
     required this.enableDynamicColor,
     required this.enableAiInsights,
+    required this.aiPreferredEndpointIndex,
     required this.careStreakDays,
     required this.lastCareDate,
     this.dailySeed,
@@ -29,6 +30,7 @@ class UserSettings {
         localeCode: null,
         enableDynamicColor: true,
         enableAiInsights: false,
+        aiPreferredEndpointIndex: 0,
         careStreakDays: 0,
         lastCareDate: null,
         dailySeed: null,
@@ -44,6 +46,7 @@ class UserSettings {
   final String? localeCode;
   final bool enableDynamicColor;
   final bool enableAiInsights;
+  final int aiPreferredEndpointIndex;
   final int careStreakDays;
   final DateTime? lastCareDate;
   final String? dailySeed;
@@ -65,6 +68,7 @@ class UserSettings {
             other.localeCode == localeCode &&
             other.enableDynamicColor == enableDynamicColor &&
             other.enableAiInsights == enableAiInsights &&
+            other.aiPreferredEndpointIndex == aiPreferredEndpointIndex &&
             other.careStreakDays == careStreakDays &&
             other.lastCareDate == lastCareDate &&
             other.dailySeed == dailySeed &&
@@ -83,6 +87,7 @@ class UserSettings {
         localeCode,
         enableDynamicColor,
         enableAiInsights,
+        aiPreferredEndpointIndex,
         careStreakDays,
         lastCareDate,
         dailySeed,
@@ -102,6 +107,7 @@ class UserSettings {
     Object? localeCode = _unset,
     bool? enableDynamicColor,
     bool? enableAiInsights,
+    int? aiPreferredEndpointIndex,
     int? careStreakDays,
     Object? lastCareDate = _unset,
     Object? dailySeed = _unset,
@@ -122,6 +128,8 @@ class UserSettings {
           : localeCode as String?,
       enableDynamicColor: enableDynamicColor ?? this.enableDynamicColor,
       enableAiInsights: enableAiInsights ?? this.enableAiInsights,
+      aiPreferredEndpointIndex:
+          aiPreferredEndpointIndex ?? this.aiPreferredEndpointIndex,
       careStreakDays: careStreakDays ?? this.careStreakDays,
       lastCareDate: identical(lastCareDate, _unset)
           ? this.lastCareDate
@@ -149,6 +157,7 @@ class UserSettings {
         'localeCode': localeCode,
         'enableDynamicColor': enableDynamicColor,
         'enableAiInsights': enableAiInsights,
+        'aiPreferredEndpointIndex': aiPreferredEndpointIndex,
         'careStreakDays': careStreakDays,
         'lastCareDate':
             lastCareDate == null ? null : _formatDateOnly(lastCareDate!),
@@ -172,6 +181,8 @@ class UserSettings {
       localeCode: json['localeCode'] as String?,
       enableDynamicColor: (json['enableDynamicColor'] as bool?) ?? true,
       enableAiInsights: (json['enableAiInsights'] as bool?) ?? false,
+      aiPreferredEndpointIndex:
+          (json['aiPreferredEndpointIndex'] as num?)?.toInt() ?? 0,
       careStreakDays: (json['careStreakDays'] as num?)?.toInt() ?? 0,
       lastCareDate: _parseDateOnly(json['lastCareDate']),
       dailySeed: json['dailySeed'] as String?,

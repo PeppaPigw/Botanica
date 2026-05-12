@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../domain/models/enums.dart';
 import '../../domain/models/environment_snapshot.dart';
 import 'environment_exceptions.dart';
 
@@ -24,7 +25,8 @@ class OpenMeteoClient {
         queryParameters: <String, dynamic>{
           'latitude': lat,
           'longitude': lon,
-          'current': 'temperature_2m,relative_humidity_2m,weather_code',
+          'current':
+              'temperature_2m,relative_humidity_2m,weather_code,cloud_cover,is_day',
           'temperature_unit': 'celsius',
           'timezone': tz,
         },
@@ -47,12 +49,23 @@ class OpenMeteoClient {
     final current = data['current'] as Map<String, dynamic>?;
     if (current == null) throw StateError('Open-Meteo missing current section');
 
-    final temp = (current['temperature_2m'] as num?)?.toDouble();
-    final humidity = (current['relative_humidity_2m'] as num?)?.toInt();
+    final temp = (current['temperature_2m'] as num?)?.toDouble() ?? 24;
+    final humidity = (current['relative_humidity_2m'] as num?)?.toInt() ?? 48;
     final code = (current['weather_code'] as num?)?.toInt();
+    final cloudCover = (current['cloud_cover'] as num?)?.toInt();
+    final isDay = (current['is_day'] as num?)?.toInt() ?? 1;
 
-    if (temp == null || humidity == null) {
-      throw StateError('Open-Meteo missing temperature/humidity');
+    LightLevel? lightLevel;
+    if (cloudCover != null) {
+      if (isDay == 0) {
+        lightLevel = LightLevel.low;
+      } else if (cloudCover < 30) {
+        lightLevel = LightLevel.high;
+      } else if (cloudCover < 70) {
+        lightLevel = LightLevel.medium;
+      } else {
+        lightLevel = LightLevel.low;
+      }
     }
 
     final time = DateTime.tryParse(current['time']?.toString() ?? '');
@@ -64,6 +77,7 @@ class OpenMeteoClient {
       weatherCode: code,
       latitude: lat,
       longitude: lon,
+      lightLevel: lightLevel,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import 'care_schedule_snapshot.dart';
 import 'enums.dart';
 
 class TaskInstance {
@@ -12,6 +13,7 @@ class TaskInstance {
     required this.createdAt,
     required this.completedAt,
     required this.adjustmentReasonIds,
+    this.scheduleSnapshot,
   });
 
   final String id;
@@ -22,18 +24,21 @@ class TaskInstance {
   final DateTime createdAt;
   final DateTime? completedAt;
   final List<String> adjustmentReasonIds;
-
+  final CareScheduleSnapshot? scheduleSnapshot;
   bool get isDone => status == TaskStatus.done;
+  bool get isDismissed =>
+      status == TaskStatus.done || status == TaskStatus.skipped;
 
   /// Pure overdue check. Prefer passing `DateTime.now()` from the call site so
   /// behavior stays deterministic in tests.
-  bool isOverdueAt(DateTime now) => !isDone && dueAt.isBefore(now);
+  bool isOverdueAt(DateTime now) => !isDismissed && dueAt.isBefore(now);
 
   TaskInstance copyWith({
     DateTime? dueAt,
     TaskStatus? status,
     DateTime? completedAt,
     List<String>? adjustmentReasonIds,
+    CareScheduleSnapshot? scheduleSnapshot,
   }) {
     return TaskInstance(
       id: id,
@@ -44,6 +49,7 @@ class TaskInstance {
       createdAt: createdAt,
       completedAt: completedAt ?? this.completedAt,
       adjustmentReasonIds: adjustmentReasonIds ?? this.adjustmentReasonIds,
+      scheduleSnapshot: scheduleSnapshot ?? this.scheduleSnapshot,
     );
   }
 
@@ -56,6 +62,8 @@ class TaskInstance {
         'createdAt': createdAt.toIso8601String(),
         'completedAt': completedAt?.toIso8601String(),
         'adjustmentReasonIds': adjustmentReasonIds,
+        if (scheduleSnapshot != null)
+          'scheduleSnapshot': scheduleSnapshot!.toJson(),
       };
 
   static TaskInstance fromJson(Map<String, dynamic> json) => TaskInstance(
@@ -74,6 +82,10 @@ class TaskInstance {
                 ?.map((e) => e.toString())
                 .toList(growable: false) ??
             const <String>[],
+        scheduleSnapshot: json['scheduleSnapshot'] == null
+            ? null
+            : CareScheduleSnapshot.fromJson(
+                json['scheduleSnapshot'] as Map<String, dynamic>),
       );
 
   @override
@@ -86,7 +98,8 @@ class TaskInstance {
       other.status == status &&
       other.createdAt == createdAt &&
       other.completedAt == completedAt &&
-      listEquals(other.adjustmentReasonIds, adjustmentReasonIds);
+      listEquals(other.adjustmentReasonIds, adjustmentReasonIds) &&
+      other.scheduleSnapshot == scheduleSnapshot;
 
   @override
   int get hashCode => Object.hash(
@@ -98,5 +111,6 @@ class TaskInstance {
         createdAt,
         completedAt,
         Object.hashAll(adjustmentReasonIds),
+        scheduleSnapshot,
       );
 }

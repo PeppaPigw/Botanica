@@ -6,12 +6,15 @@ import '../../features/add_plant/add_plant_screen.dart';
 import '../../features/calendar/calendar_screen.dart';
 import '../../features/daily/daily_screen.dart';
 import '../../features/discover/discover_screen.dart';
+import '../../features/garden/edit_plant_screen.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/onboarding/permissions_screen.dart';
 import '../../features/plant_detail/plant_detail_screen.dart';
 import '../../features/profile/credits_screen.dart';
+import '../../features/profile/garden_wellness_screen.dart';
 import '../../features/profile/profile_screen.dart';
+import '../../features/profile/storage_health_screen.dart';
 import '../../features/splash/splash_screen.dart';
 import '../../features/species/species_detail_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
@@ -79,9 +82,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: GardenScreen.location,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: GardenScreen(),
-            ),
+            pageBuilder: (context, state) {
+              final room = state.uri.queryParameters['room'];
+              return NoTransitionPage(
+                child: GardenScreen(initialSelectedRoom: room),
+              );
+            },
             routes: [
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
@@ -91,6 +97,17 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                   return MaterialPage(
                     fullscreenDialog: true,
                     child: AddPlantScreen(initialSpeciesId: speciesId),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: EditPlantScreen.subLocation,
+                pageBuilder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return MaterialPage(
+                    fullscreenDialog: true,
+                    child: EditPlantScreen(plantId: id),
                   );
                 },
               ),
@@ -175,6 +192,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               child: ProfileScreen(),
             ),
             routes: [
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: GardenWellnessScreen.subLocation,
+                pageBuilder: (context, state) => const MaterialPage(
+                  child: GardenWellnessScreen(),
+                ),
+              ),
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: StorageHealthScreen.subLocation,
+                pageBuilder: (context, state) => const MaterialPage(
+                  child: StorageHealthScreen(),
+                ),
+              ),
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
                 path: CreditsScreen.subLocation,

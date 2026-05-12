@@ -2,11 +2,12 @@
   "appName": "Botanica",
   "appTagline": "Tu compañero personal de cuidado de plantas — sereno, hermoso y atento.",
   "gardenNoScheduleYet": "Sin calendario aún",
-
   "commonContinue": "Continuar",
   "commonSkip": "Saltar",
   "commonStart": "Empezar",
   "commonDone": "Hecho",
+  "commonOverdue": "Atrasada",
+  "commonUndo": "Deshacer",
   "commonCancel": "Cancelar",
   "commonClear": "Borrar",
   "commonSave": "Guardar",
@@ -25,6 +26,7 @@
   "commonComingSoon": "Próximamente",
   "commonLoading": "Cargando…",
   "commonViewAll": "Ver todo",
+  "commonConfirm": "Confirmar",
   "commonWhy": "¿Por qué?",
   "commonIdeal": "Ideal",
   "commonTolerates": "Tolera",
@@ -50,42 +52,43 @@
   "resourceCareGuide": "Guía de cuidado",
   "resourceCopyLink": "Copiar enlace",
   "resourceLinkCopied": "Enlace copiado",
+  "aiNoteCopied": "Nota copiada",
+  "aiNoteCopyAction": "Copiar nota",
   "stateLoadFailedTitle": "No se pudo cargar",
   "stateLoadFailedBody": "Comprueba tu conexión y vuelve a intentarlo.",
   "stateNotAvailableTitle": "No disponible",
   "stateNotAvailableBody": "Este contenido no está disponible en este momento.",
-
   "navGarden": "Jardín",
   "navCalendar": "Calendario",
   "navDiscover": "Descubrir",
   "navDaily": "Diario",
   "navProfile": "Perfil",
-
   "calendarTitle": "Calendario",
   "calendarFilterAll": "Todas",
+  "calendarFilterOther": "Otras",
+  "calendarSectionConsistency": "Consistencia",
   "calendarPrevMonth": "Mes anterior",
   "calendarNextMonth": "Mes siguiente",
   "calendarSectionHistory": "Historial de cuidados",
   "calendarNoEvents": "No hay registros para este día.",
-
   "splashTagline": "Cuidado sereno, bellamente organizado.",
-
-  "onboardingTitle1": "Tu jardín, bellamente organizado",
-  "onboardingBody1": "Organiza tus plantas con una línea de tiempo de fotos y notas, sin desorden.",
-  "onboardingTitle2": "Cuidado inteligente, adaptado a tu entorno",
-  "onboardingBody2": "Humedad, temperatura, estación… Botanica explica por qué cambia tu rutina.",
-  "onboardingTitle3": "Ritual de Flor del Día",
-  "onboardingBody3": "Una carta diaria suave: significado, cuidados básicos y una apreciación de 60 segundos.",
-  "onboardingCta": "Empezar Botanica",
-
-  "permissionsTitle": "Configura lo necesario",
-  "permissionsSubtitle": "Actívalo todo ahora o solo cuando uses cada función.",
-  "permNotificationsTitle": "Notificaciones",
-  "permNotificationsBody": "Para no olvidar el riego.",
-  "permLocationTitle": "Ubicación",
-  "permLocationBody": "Para adaptar el cuidado al clima.",
-  "permCameraTitle": "Cámara y Fotos",
-  "permCameraBody": "Para el diario de crecimiento y escaneo.",
+  "onboardingTitle1": "Dale vida a tu espacio",
+  "onboardingBody1": "Sigue el rastro de tus plantas, crea una hermosa línea de tiempo y cultiva la calma.",
+  "onboardingTitle2": "Botanica aprende tu luz",
+  "onboardingBody2": "Un cuidado que se adapta a tu entorno: estación, humedad y temperatura.",
+  "onboardingTitle3": "Un ritual diario de crecimiento",
+  "onboardingBody3": "Descubre plantas con delicadeza y centra tu mente con inspiración botánica diaria.",
+  "onboardingCta": "Entrar a tu jardín",
+  "permissionsTitle": "Crecer juntos",
+  "permissionsSubtitle": "Permite que Botanica cuide tus plantas sin problemas, o elige cuando estés listo.",
+  "permNotificationsTitle": "Recordatorios Suaves",
+  "permNotificationsBody": "Para que ninguno de los dos pase sed.",
+  "notificationsSoftAskTitle": "No olvides el día de riego",
+  "notificationsSoftAskBody": "Botanica envía recordatorios tranquilos a la hora que prefieras, para que cada planta reciba cuidado antes de decaer.",
+  "permLocationTitle": "Conocimiento del Clima",
+  "permLocationBody": "Cuidado adaptado exactamente a tu clima local.",
+  "permCameraTitle": "Diario Visual",
+  "permCameraBody": "Captura el crecimiento e identifica plantas con un vistazo.",
   "permLocationServicesOff": "Los servicios de ubicación están desactivados.",
   "permStatusEnabled": "Activado",
   "permStatusNotEnabled": "No activado",
@@ -98,13 +101,44 @@
   "permissionsEnableAll": "Activar todo",
   "permissionsNotNow": "Ahora no",
   "permissionsPrivacyNote": "Botanica solo lo pide cuando lo necesitas — puedes cambiarlo más tarde en Perfil.",
-
   "gardenTitle": "Jardín",
   "gardenTodayCardTitle": "Hoy",
   "gardenLoadError": "No se pudieron cargar las plantas.",
   "gardenTasksDueToday": "{count, plural, =0{Sin tareas} =1{1 tarea} other{{count} tareas}}",
+  "@gardenTasksDueToday": {
+    "description": "Task count on Today card",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenCareStreakChip": "Racha de {days} días",
+  "@gardenCareStreakChip": {
+    "description": "Chip label showing the user's current care streak",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "gardenWeatherChip": "{condition} · {temp}°{unit} · {humidity}%",
+  "@gardenWeatherChip": {
+    "placeholders": {
+      "condition": {
+        "type": "String"
+      },
+      "temp": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "humidity": {
+        "type": "int"
+      }
+    }
+  },
   "weatherClear": "Despejado",
   "weatherPartlyCloudy": "Parcialmente nublado",
   "weatherCloudy": "Nublado",
@@ -116,12 +150,53 @@
   "weatherUnknown": "Tiempo",
   "gardenQuickWatered": "Regado",
   "gardenQuickSnooze": "Posponer",
+  "tasksSnoozeOneHour": "1 hora",
+  "tasksSnoozeThreeHours": "3 horas",
+  "tasksSnoozeTomorrow": "Mañana",
+  "tasksSnoozeTomorrowMorning": "Mañana por la mañana",
+  "tasksSnoozeWeekend": "Este fin de semana",
+  "tasksSnoozeCustomTime": "Hora personalizada",
   "gardenQuickAddPlant": "Añadir planta",
+  "gardenRoomsTitle": "Habitaciones",
+  "gardenRoomsAll": "Todas las habitaciones",
+  "gardenRoomPlantCount": "{count, plural, =1{1 planta} other{{count} plantas}}",
+  "@gardenRoomPlantCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenRoomsWaterAll": "Regar todo",
+  "gardenRoomsSnoozeAll": "Posponer todo",
+  "gardenRoomsWateredCount": "Regadas {count} {count, plural, =1{planta} other{plantas}} en la habitación",
+  "@gardenRoomsWateredCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenSortTitle": "Ordenar por",
+  "gardenSortName": "Nombre",
+  "gardenSortCare": "Necesita cuidado",
+  "gardenSortNewest": "Más nuevo",
+  "gardenFilterArchived": "Mostrar archivados",
+  "gardenSearchHint": "Buscar en el jardín...",
+  "gardenRoomsSnoozedCount": "Se pospusieron {count} tareas",
+  "@gardenRoomsSnoozedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenEmptyTitle": "Empieza tu jardín",
   "gardenEmptyBody": "Añade tu primera planta para un plan de cuidados a medida y tareas diarias.",
+  "gardenToggleCardMode": "Alternar modo de tarjeta",
+  "gardenToggleViewMode": "Alternar modo de vista",
   "gardenEmptyCta": "Añadir primera planta",
   "gardenAddPlantFab": "Añadir planta",
-
   "addPlantTitle": "Añadir planta",
   "addPlantMethodScan": "Escanear",
   "addPlantMethodLibrary": "Desde la biblioteca",
@@ -145,15 +220,14 @@
   "addPlantReminderEvening": "Tarde",
   "addPlantReminderCustom": "Personalizado",
   "addPlantSaveButton": "Guardar en Jardín",
-
   "plantDetailOverview": "Resumen",
   "plantDetailCare": "Cuidados",
   "plantDetailJournal": "Diario",
   "plantDetailLogs": "Registro",
   "plantDetailLogsEmptyTitle": "Sin registros de cuidado",
   "plantDetailLogsEmptyBody": "Completa una tarea de riego o cuidado y aparecerá aquí.",
-  "tasksEmptyUpcoming": "Sin tareas próximas",
-  "tasksEmptyOverdue": "¡Todo al día!",
+  "tasksEmptySoon": "Nada pendiente pronto. ¡Todo al día!",
+  "tasksEmptyWatch": "No hay tareas de vigilancia. Tu jardín descansa.",
   "plantDetailWaterNow": "Regar ahora",
   "plantDetailAddPhoto": "Añadir foto",
   "plantDetailAddNote": "Añadir nota",
@@ -161,8 +235,25 @@
   "plantDetailMissingBody": "No se encuentra esta planta. Es posible que se haya eliminado.",
   "plantDetailMissingCta": "Volver al jardín",
   "plantDetailNextWateringInDays": "Próximo riego en {days} días",
+  "@plantDetailNextWateringInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "plantDetailEnvironmentImpactTitle": "Impacto del entorno",
   "plantDetailEnvironmentImpactBaseAdjusted": "Base: {base} días · Ajustado: {adjusted} días",
+  "@plantDetailEnvironmentImpactBaseAdjusted": {
+    "placeholders": {
+      "base": {
+        "type": "int"
+      },
+      "adjusted": {
+        "type": "int"
+      }
+    }
+  },
   "plantDetailEnvironmentStable": "Condiciones estables — sin ajustes hoy.",
   "plantDetailDrynessLow": "Sequedad baja (se seca más lento)",
   "plantDetailDrynessBalanced": "Sequedad equilibrada",
@@ -171,6 +262,12 @@
   "plantDetailCareLightBody": "La luz brillante e indirecta es un buen punto de partida para muchas plantas.",
   "plantDetailCareTempTitle": "Temperatura",
   "plantDetailCareTempBody": "Evita corrientes frías repentinas. La calidez estable ayuda a un crecimiento predecible.",
+  "envLightLow": "Luz baja",
+  "envLightMedium": "Luz media",
+  "envLightHigh": "Luz alta",
+  "envLabelTemp": "Temp.",
+  "envLabelHumidity": "Humedad",
+  "envLabelLight": "Luz",
   "plantDetailJournalDesignNote": "Aquí están diseñados el overlay de encuadre y el comparador; conecta cámara/galería después.",
   "plantDetailJournalIntro": "Un timeline suave de fotos y notas: tu diario de la planta.",
   "journalSectionPhotos": "Fotos",
@@ -181,6 +278,19 @@
   "diaryAddEntryButton": "Añadir nota",
   "diaryEntryTitle": "Entrada del diario",
   "diaryEntrySaved": "Guardado en el diario.",
+  "diaryEditEntryTitle": "Editar entrada",
+  "diaryEditConfirmTitle": "¿Guardar cambios?",
+  "diaryEditConfirmBody": "Actualiza esta entrada del diario con tus cambios.",
+  "diaryEntryUpdated": "Entrada del diario actualizada.",
+  "diaryEntryDeleted": "Entrada del diario eliminada.",
+  "diaryEntryDeleteTitle": "¿Eliminar entrada del diario?",
+  "diaryEntryDeleteBody": "Esto elimina la entrada de la línea de tiempo. Puedes deshacerlo justo después.",
+  "diaryPromptGrowingWell": "Creciendo bien",
+  "diaryPromptNewLeaf": "Nueva hoja",
+  "diaryPromptStruggling": "Con dificultad",
+  "diaryPromptRepotted": "Trasplantada",
+  "diaryPromptBlooming": "Floreciendo",
+  "journalEntryActions": "Acciones de la entrada",
   "journalShareCardTitle": "Tarjeta para compartir",
   "journalShareCardText": "Hecho con Botanica",
   "journalShareFailed": "No se pudo compartir. Inténtalo de nuevo.",
@@ -195,6 +305,9 @@
   "journalCameraPermissionNeeded": "Se necesita permiso de cámara para capturar fotos.",
   "journalPhotosPermissionNeeded": "Se necesita permiso de fotos para elegir imágenes.",
   "journalPhotoSaved": "Guardado en el diario.",
+  "journalPhotoDeleted": "Foto eliminada.",
+  "journalPhotoDeleteTitle": "¿Eliminar foto?",
+  "journalPhotoDeleteBody": "Esto elimina la foto del diario de esta planta y del almacenamiento local. Puedes deshacerlo justo después.",
   "journalEmptyBody": "Aún no hay fotos. Añade una para comenzar la línea de tiempo.",
   "journalPhotoTitle": "Foto del diario",
   "journalPhotoNoNote": "Sin nota",
@@ -202,6 +315,10 @@
   "journalAddNoteHint": "Opcional: hoja nueva, trasplante, etc.",
   "journalCompareTitle": "Comparar",
   "journalCompareHint": "Arrastra a izquierda/derecha para comparar.",
+  "journalPhotoUnavailable": "Foto no disponible",
+  "journalOverlayStrength": "Intensidad de superposición",
+  "journalPreviousPhoto": "Foto anterior",
+  "journalLimitedPhotosAccess": "El acceso a fotos seleccionadas está activado. Puedes elegir fotos visibles o cambiar el acceso en Ajustes de iOS.",
   "journalPhotoMeta": "{date}",
   "@journalPhotoMeta": {
     "placeholders": {
@@ -211,24 +328,43 @@
       }
     }
   },
-
   "scanTitle": "Escanear",
   "scanTryAgain": "Reintentar",
   "scanCaptureTitle": "Escanea tu planta",
   "scanCaptureTip": "Captura la hoja y la planta completa para mejores resultados.",
   "scanCameraPermissionNeeded": "Se necesita permiso de cámara para escanear plantas.",
+  "scanCameraPermissionTitle": "Acceso a la cámara",
+  "scanCameraPermissionBody": "Usa la cámara para un escaneo rápido o explora la biblioteca sin conceder acceso.",
+  "scanUseCamera": "Usar cámara",
   "scanProcessingBody": "Identificando tu planta…",
   "scanChooseCandidate": "Elige una coincidencia",
+  "scanRefineTitle": "¿No estás seguro? Refina los resultados",
+  "scanRefineHelper": "Responde una pregunta rápida para acotar la lista.",
+  "scanRefineFallbackNote": "Aún no hay coincidencias exactas para estos filtros; mostramos los resultados más cercanos.",
+  "scanConfidenceGuide": "La confianza es solo una guía: compara la forma y las etiquetas de cuidado antes de añadir.",
+  "scanConfidenceStrongLabel": "Alta confianza",
+  "scanConfidenceStrongBody": "Se parece bastante a la planta capturada.",
+  "scanConfidenceLikelyLabel": "Confianza moderada",
+  "scanConfidenceLikelyBody": "Compara los detalles antes de añadir.",
+  "scanConfidencePossibleLabel": "Baja confianza — prueba otro ángulo",
+  "scanConfidencePossibleBody": "Es solo una suposición; captura otra vista si puedes.",
+  "scanRefineFlowering": "¿Está floreciendo?",
+  "scanRefineIndoorOutdoor": "¿Interior o exterior?",
+  "scanRefineSucculent": "¿Tipo suculenta?",
   "scanRefinePetSafe": "Apto para mascotas",
   "scanRefineEasy": "Fácil",
   "scanRefineLowLight": "Poca luz",
   "scanAddToGarden": "Añadir al jardín",
+  "scanBrowseLibrary": "Explorar biblioteca",
+  "scanTakingLongerTitle": "Está tardando más de lo esperado",
+  "scanTakingLongerBody": "El escaneo no terminó a tiempo. Inténtalo de nuevo o elige una planta manualmente.",
+  "scanNoResultTitle": "No se pudo identificar esta planta",
+  "scanNoResultBody": "Prueba otro ángulo con detalle de la hoja o explora la biblioteca.",
   "scanDeterministicNote": "Modo demo: resultados deterministas sin conexión. Conecta Kindwise/Gemini después.",
-
   "tasksTitle": "Tareas",
   "tasksTabToday": "Hoy",
-  "tasksTabUpcoming": "Próximas",
-  "tasksTabOverdue": "Atrasadas",
+  "tasksTabSoon": "Pronto",
+  "tasksTabWatch": "Vigilancia",
   "tasksCalendarToggle": "Calendario",
   "tasksSeasonalTipsTitle": "Consejos de temporada",
   "tipSpringRepot": "Primavera: trasplanta si las raíces están apretadas y el crecimiento ha vuelto.",
@@ -248,7 +384,7 @@
       }
     }
   },
-
+  "tasksSkipped": "Saltado",
   "discoverTitle": "Descubrir",
   "discoverSearchHint": "Busca plantas, guías y consejos",
   "discoverNoResultsTitle": "Sin resultados",
@@ -268,7 +404,6 @@
   "discoverGuideSoilBody": "Por qué las mezclas aireadas reducen la pudrición de raíces.",
   "discoverGuidePestTitle": "Lista de plagas",
   "discoverGuidePestBody": "Una rutina semanal rápida para detectar problemas temprano.",
-
   "speciesDetailHistory": "Historia",
   "speciesDetailHabit": "Hábito de crecimiento",
   "speciesDetailCareAtAGlance": "Cuidados de un vistazo",
@@ -347,7 +482,6 @@
   "lightMediumIndirect": "Luz indirecta media",
   "lightLowToBrightIndirect": "De poca a brillante indirecta",
   "lightLowToBright": "De poca a brillante",
-
   "dailyTitle": "Flor del Día",
   "dailyReveal": "Revelar",
   "dailyRevealHintTap": "Toca para revelar",
@@ -400,17 +534,43 @@
   "dailyProfileMissingBody": "Configura una clave personal en Perfil (una semilla corta o tu fecha de nacimiento) para personalizar la Flor del Día.",
   "dailyProfileMissingBodyZodiac": "Configura tu fecha de nacimiento (o elige tu signo) en Perfil para personalizar la Flor del Día.",
   "dailyProfileMissingCta": "Configurar",
-
   "careKeyLight": "Luz",
   "careKeyWater": "Riego",
   "careKeyTemperature": "Temperatura",
   "careKeyPetSafety": "Seguridad para mascotas",
-
   "profileTitle": "Perfil",
   "profileSectionPreferences": "Preferencias",
   "profileSectionPermissions": "Permisos",
   "profileSectionData": "Datos",
   "profileSectionAbout": "Acerca de",
+  "storageHealthTitle": "Estado del almacenamiento",
+  "storageHealthSubtitle": "Revisa los medios del diario y limpia archivos temporales.",
+  "storageJournalPhotos": "Fotos del diario",
+  "storageUsed": "Almacenamiento usado",
+  "storagePhotoFiles": "Archivos de foto",
+  "storageJournalEntries": "Entradas del diario",
+  "storagePhotoEntries": "Entradas con foto",
+  "storageMissingPhotos": "Fotos faltantes",
+  "storageCacheTitle": "Caché temporal",
+  "storageCacheBody": "Borra tarjetas compartidas generadas y archivos temporales sin eliminar tus fotos del diario.",
+  "storageClearCache": "Limpiar caché",
+  "storageCacheCleared": "Caché temporal limpiada.",
+  "storageFileCount": "{count} archivos",
+  "@storageFileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storageEntryCount": "{count} entradas",
+  "@storageEntryCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "profileLanguage": "Idioma",
   "profileUnits": "Unidades",
   "profileHemisphereTitle": "Hemisferio",
@@ -472,16 +632,13 @@
   "profileAiKeySaved": "Clave de IA guardada.",
   "profileAiKeyCleared": "Clave de IA eliminada.",
   "profileLanguageSystem": "Sistema",
-
   "creditsTitle": "Créditos",
   "creditsOpenSource": "Código abierto",
   "creditsFlutterCommunity": "Referencias de la comunidad Flutter",
   "creditsUiInspiration": "Inspiración UI",
   "creditsPlaceholderNote": "Nota: este proyecto usa PNG blancos de marcador de posición — reemplaza los assets más adelante por fotografías/ilustraciones reales.",
-
   "unitsCelsius": "Celsius (°C)",
   "unitsFahrenheit": "Fahrenheit (°F)",
-
   "beliefModeWesternZodiac": "Zodiaco occidental",
   "beliefModeChineseZodiac": "Zodiaco chino",
   "beliefModeTarot": "Tarot",
@@ -492,7 +649,6 @@
   "beliefModeOmikuji": "Omikuji japonés",
   "beliefModeRunes": "Runas nórdicas",
   "beliefModeOgham": "Ogham celta",
-
   "zodiacAries": "Aries",
   "zodiacTaurus": "Tauro",
   "zodiacGemini": "Géminis",
@@ -505,7 +661,6 @@
   "zodiacCapricorn": "Capricornio",
   "zodiacAquarius": "Acuario",
   "zodiacPisces": "Piscis",
-
   "chineseZodiacRat": "Rata",
   "chineseZodiacOx": "Buey",
   "chineseZodiacTiger": "Tigre",
@@ -518,7 +673,6 @@
   "chineseZodiacRooster": "Gallo",
   "chineseZodiacDog": "Perro",
   "chineseZodiacPig": "Cerdo",
-
   "tarotTheFool": "El Loco",
   "tarotTheMagician": "El Mago",
   "tarotTheHighPriestess": "La Sacerdotisa",
@@ -541,7 +695,6 @@
   "tarotTheSun": "El Sol",
   "tarotJudgement": "El Juicio",
   "tarotTheWorld": "El Mundo",
-
   "omikujiDaikichi": "Gran suerte (Daikichi)",
   "omikujiChukichi": "Suerte media (Chūkichi)",
   "omikujiShokichi": "Pequeña suerte (Shōkichi)",
@@ -550,7 +703,6 @@
   "omikujiSuekichi": "Suerte futura (Suekichi)",
   "omikujiKyo": "Mala suerte (Kyō)",
   "omikujiDaikyo": "Muy mala suerte (Daikyō)",
-
   "taskTypeWater": "Regar",
   "taskTypeFertilize": "Fertilizar",
   "taskTypeMist": "Rociar",
@@ -560,7 +712,6 @@
   "taskTypeCheckPests": "Revisar plagas",
   "taskTypeWipeLeaves": "Limpiar hojas",
   "taskTypeSunlightAdjustment": "Ajustar luz",
-
   "notificationsTaskTitle": "{plant} · {task}",
   "@notificationsTaskTitle": {
     "placeholders": {
@@ -581,11 +732,247 @@
     }
   },
   "notificationsTaskBodyNoRoom": "Abre Botanica para marcarlo como hecho.",
-
+  "notificationWaterTitle": "Hora de regar {plant}",
+  "@notificationWaterTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle": "Fertiliza {plant} hoy",
+  "@notificationFertilizeTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle": "A {plant} le encantaría un poco de humedad",
+  "@notificationMistTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle": "Dale a {plant} un cuarto de vuelta",
+  "@notificationRotateTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle": "{plant} está lista para podar",
+  "@notificationPruneTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
   "reasonHumidityLow": "Humedad baja → el sustrato se seca más rápido",
   "reasonHumidityHigh": "Humedad alta → el sustrato permanece húmedo más tiempo",
   "reasonHot": "Temperatura alta → más evaporación",
+  "reasonSpring": "Primavera → vuelve el crecimiento",
+  "reasonSummer": "Verano → más transpiración",
+  "reasonAutumn": "Otoño → el crecimiento se ralentiza",
   "reasonWinter": "Invierno → crecimiento más lento",
   "reasonOutdoor": "Modo exterior → mayor peso del pronóstico",
-  "reasonIndoor": "Modo interior → se asumen condiciones estables"
+  "reasonIndoor": "Modo interior → se asumen condiciones estables",
+  "gardenWellnessTitle": "Bienestar del jardín",
+  "gardenWellnessSubtitle": "Ver puntuación, plantas clave y carga de cuidado",
+  "gardenWellnessEmptyTitle": "Aún no hay plantas",
+  "gardenFilterEmptyTitle": "No hay plantas que coincidan con este filtro.",
+  "gardenWellnessEmptyBody": "Añade tu primera planta para desbloquear el bienestar del jardín.",
+  "gardenWellnessOverallScore": "Puntuación general",
+  "gardenWellnessOverdueChip": "{count, plural, =1{1 vencida} other{{count} vencidas}}",
+  "@gardenWellnessOverdueChip": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessStatPlants": "Plantas",
+  "gardenWellnessStatRecentCare": "Cuidado reciente",
+  "gardenWellnessStatAtRisk": "En riesgo",
+  "gardenWellnessRoomPulseTitle": "Pulso por habitación",
+  "gardenWellnessRoomPulseSummary": "{plantCount} plantas · {overdueCount} vencidas",
+  "@gardenWellnessRoomPulseSummary": {
+    "placeholders": {
+      "plantCount": {
+        "type": "int"
+      },
+      "overdueCount": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessRoomPulseStable": "estable",
+  "gardenWellnessRoomPulseAtRisk": "{count, plural, =1{1 en riesgo} other{{count} en riesgo}}",
+  "@gardenWellnessRoomPulseAtRisk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPrioritiesTitle": "Prioridades de hoy",
+  "gardenWellnessFocusPlantsTitle": "Plantas clave",
+  "gardenWellnessScoreLabel": "puntuación",
+  "gardenWellnessScoreFlourishing": "Floreciendo",
+  "gardenWellnessScoreSteady": "Estable",
+  "gardenWellnessScoreNeedsLittleCare": "Necesita un poco de cuidado",
+  "gardenWellnessScoreNeedsAttention": "Necesita atención",
+  "gardenWellnessFocusReasonOverdueAndNoLog": "{count, plural, =1{1 tarea vencida · Sin registro reciente} other{{count} tareas vencidas · Sin registro reciente}}",
+  "@gardenWellnessFocusReasonOverdueAndNoLog": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessFocusReasonOverdue": "{count, plural, =1{1 tarea vencida} other{{count} tareas vencidas}}",
+  "@gardenWellnessFocusReasonOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessFocusReasonNoLog": "Sin registro reciente en 14 días",
+  "gardenWellnessFocusReasonSteady": "Se ve estable",
+  "gardenWellnessPriorityAttentionTitle": "Revisa {plantName}",
+  "@gardenWellnessPriorityAttentionTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyOverdueAndNoLog": "{count, plural, =1{1 tarea vencida y sin registro reciente.} other{{count} tareas vencidas y sin registro reciente.}}",
+  "@gardenWellnessPriorityAttentionBodyOverdueAndNoLog": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyOverdue": "{count, plural, =1{1 tarea vencida necesita atención.} other{{count} tareas vencidas necesitan atención.}}",
+  "@gardenWellnessPriorityAttentionBodyOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityAttentionBodyNoLog": "No hay registro reciente en los últimos 14 días.",
+  "gardenWellnessPriorityAttentionBodyCheckIn": "Esta planta necesita una revisión rápida.",
+  "gardenWellnessPriorityDueTodayTitle": "Mantén el día en orden",
+  "gardenWellnessPriorityDueTodayBody": "{count, plural, =1{1 tarea vence hoy.} other{{count} tareas vencen hoy.}}",
+  "@gardenWellnessPriorityDueTodayBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityRefreshHistoryTitle": "Actualiza el historial de cuidado",
+  "gardenWellnessPriorityRefreshHistoryBody": "{count, plural, =1{1 planta no tiene un registro reciente.} other{{count} plantas no tienen un registro reciente.}}",
+  "@gardenWellnessPriorityRefreshHistoryBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWellnessPriorityCalmTitle": "Disfruta la calma",
+  "gardenWellnessPriorityCalmBody": "No hay asuntos urgentes hoy — tu jardín se ve estable.",
+  "gardenWellnessRoomUnassigned": "Sin asignar",
+  "editPlantTitle": "Editar planta",
+  "editPlantSaveButton": "Guardar cambios",
+  "plantDetailMenuEdit": "Editar planta",
+  "plantDetailMenuArchive": "Archivar planta",
+  "plantDetailMenuDelete": "Eliminar planta",
+  "archivePlantSuccess": "Planta archivada exitosamente",
+  "@archivePlantSuccess": {
+    "description": "Success message when a plant is archived"
+  },
+  "restorePlantSuccess": "Planta restaurada exitosamente",
+  "@restorePlantSuccess": {
+    "description": "Success message when a plant is restored"
+  },
+  "deletePlantSuccess": "Planta eliminada exitosamente",
+  "@deletePlantSuccess": {
+    "description": "Success message when a plant is deleted"
+  },
+  "gardenSortName": "Nombre",
+  "@gardenSortName": {
+    "description": "Sort option by name"
+  },
+  "gardenSortSpecies": "Especie",
+  "@gardenSortSpecies": {
+    "description": "Sort option by species"
+  },
+  "gardenSortNeedsCare": "Necesita cuidado",
+  "@gardenSortNeedsCare": {
+    "description": "Sort option by needing care"
+  },
+  "gardenSortNewest": "Más recientes",
+  "@gardenSortNewest": {
+    "description": "Sort option by newest"
+  },
+  "gardenFilterAll": "Todas",
+  "@gardenFilterAll": {
+    "description": "Filter option for all plants"
+  },
+  "gardenFilterHealthy": "Sanas",
+  "@gardenFilterHealthy": {
+    "description": "Filter option for healthy plants"
+  },
+  "gardenFilterNeedsCare": "Necesitan cuidado",
+  "@gardenFilterNeedsCare": {
+    "description": "Filter option for plants needing care"
+  },
+  "gardenFilterArchived": "Archivadas",
+  "@gardenFilterArchived": {
+    "description": "Filter option for archived plants"
+  },
+  "gardenSearchHint": "Buscar plantas...",
+  "@gardenSearchHint": {
+    "description": "Hint text for garden search"
+  },
+  "archivePlantTitle": "¿Archivar {plantName}?",
+  "@archivePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "archivePlantBody": "Las plantas archivadas se ocultan de su jardín pero conservan su historial.",
+  "archivePlantConfirm": "Archivar",
+  "deletePlantTitle": "¿Eliminar {plantName}?",
+  "@deletePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePlantBody": "Esto elimina permanentemente la planta y todo su historial. No se puede deshacer.",
+  "deletePlantConfirm": "Eliminar",
+  "restorePlantTitle": "¿Restaurar {plantName}?",
+  "@restorePlantTitle": {
+    "placeholders": {
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "restorePlantBody": "Esto devolverá la planta a su jardín y reanudará su cuidado.",
+  "restorePlantConfirm": "Restaurar",
+  "gardenStatusArchived": "Archivada"
 }

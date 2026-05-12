@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/screen_title.dart';
 import '../../gen/l10n/app_localizations.dart';
 import 'ai_settings_section.dart';
 import 'credits_screen.dart';
 import 'daily_profile_section.dart';
+import 'garden_wellness_screen.dart';
 import 'permissions_section.dart';
 import 'preferences_section.dart';
+import 'storage_health_screen.dart';
 import 'widgets/profile_section_widgets.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -29,42 +31,77 @@ class ProfileScreen extends ConsumerWidget {
         padding: BotanicaTokens.pagePaddingWithBottomNav(context),
         children: [
           BotanicaScreenTitle(l10n.navProfile)
-              .animate()
-              .fadeIn(duration: 380.ms),
+              .animateSection(index: 0),
           const SizedBox(height: BotanicaTokens.spacingBase),
-          const PreferencesSection(),
+          const PreferencesSection().animateSection(index: 1),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
-          const DailyProfileSection(),
+          const DailyProfileSection().animateSection(index: 2),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
-          const AiSettingsSection(),
+          const AiSettingsSection().animateSection(index: 3),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
-          const PermissionsSection(),
+          const PermissionsSection().animateSection(index: 4),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
-          ProfileSectionLabel(label: l10n.profileSectionAbout),
-          const SizedBox(height: BotanicaTokens.spacingSm),
-          BotanicaGlassCard(
-            padding: EdgeInsets.zero,
-            child: Column(
-              children: [
-                ProfileTile(
-                  icon: Icons.favorite_rounded,
-                  title: l10n.profileCredits,
-                  subtitle: l10n.creditsOpenSource,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ProfileSectionLabel(label: l10n.profileSectionData),
+              const SizedBox(height: BotanicaTokens.spacingSm),
+              BotanicaGlassCard(
+                padding: EdgeInsets.zero,
+                child: ProfileTile(
+                  icon: Icons.storage_rounded,
+                  title: l10n.storageHealthTitle,
+                  subtitle: l10n.storageHealthSubtitle,
                   onTap: () => context.push(
-                    '${ProfileScreen.location}/${CreditsScreen.subLocation}',
+                    '${ProfileScreen.location}/${StorageHealthScreen.subLocation}',
                   ),
                 ),
-                ProfileDivider(
-                    color: scheme.outlineVariant.withValues(alpha: 0.35)),
-                ProfileTile(
-                  icon: Icons.info_rounded,
-                  title: l10n.commonAbout,
-                  subtitle: l10n.appName,
-                  onTap: () => _showAbout(context),
+              ),
+            ],
+          ).animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingRelaxed),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ProfileSectionLabel(label: l10n.profileSectionAbout),
+              const SizedBox(height: BotanicaTokens.spacingSm),
+              BotanicaGlassCard(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    ProfileTile(
+                      icon: Icons.monitor_heart_rounded,
+                      title: l10n.gardenWellnessTitle,
+                      subtitle: l10n.gardenWellnessSubtitle,
+                      onTap: () => context.push(
+                        '${ProfileScreen.location}/${GardenWellnessScreen.subLocation}',
+                      ),
+                    ),
+                    ProfileDivider(
+                        color:
+                            scheme.outlineVariant.withValues(alpha: 0.35)),
+                    ProfileTile(
+                      icon: Icons.favorite_rounded,
+                      title: l10n.profileCredits,
+                      subtitle: l10n.creditsOpenSource,
+                      onTap: () => context.push(
+                        '${ProfileScreen.location}/${CreditsScreen.subLocation}',
+                      ),
+                    ),
+                    ProfileDivider(
+                        color:
+                            scheme.outlineVariant.withValues(alpha: 0.35)),
+                    ProfileTile(
+                      icon: Icons.info_rounded,
+                      title: l10n.commonAbout,
+                      subtitle: l10n.appName,
+                      onTap: () => _showAbout(context),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ).animate().fadeIn(delay: 240.ms, duration: 420.ms),
+              ),
+            ],
+          ).animateSection(index: 6),
         ],
       ),
     );

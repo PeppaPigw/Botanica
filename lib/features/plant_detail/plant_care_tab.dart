@@ -7,6 +7,7 @@ import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../core/i18n/species_labels.dart';
 import '../../core/widgets/botanica_gaps.dart';
+import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
@@ -14,6 +15,7 @@ import '../../domain/models/task_instance.dart';
 import '../../domain/models/enums.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/ai/ai_providers.dart';
+import 'widgets/care_adjustment_card.dart';
 
 class PlantCareTab extends ConsumerWidget {
   const PlantCareTab({
@@ -68,6 +70,7 @@ class PlantCareTab extends ConsumerWidget {
           );
         }
         return _IdeaCareTab(
+          plant: plant,
           idea: idea,
           localeCode: localeCode,
           leading: _AiCareTipSection(
@@ -103,6 +106,7 @@ class _GenericCareTab extends StatelessWidget {
           leading!,
           BotanicaGaps.vSm,
         ],
+        CareAdjustmentCard(plant: plant),
         _CareCard(
           icon: Icons.water_drop_rounded,
           title: l10n.taskTypeWater,
@@ -127,11 +131,13 @@ class _GenericCareTab extends StatelessWidget {
 
 class _IdeaCareTab extends StatelessWidget {
   const _IdeaCareTab({
+    required this.plant,
     required this.idea,
     required this.localeCode,
     this.leading,
   });
 
+  final Plant plant;
   final PlantIdea idea;
   final String localeCode;
   final Widget? leading;
@@ -193,8 +199,13 @@ class _IdeaCareTab extends StatelessWidget {
     final blocks = <Widget>[
       if (leading != null) ...[
         leading!,
-        const SizedBox(height: 12),
+        BotanicaGaps.vSm,
       ],
+      CareAdjustmentCard(
+        plant: plant,
+        plantIdea: idea,
+        fallbackWaterBaseDays: idea.careDefaults.waterBaseDays,
+      ),
       _CareCard(
         icon: Icons.water_drop_rounded,
         title: l10n.taskTypeWater,
@@ -204,26 +215,21 @@ class _IdeaCareTab extends StatelessWidget {
           if (waterWhy != null && waterWhy.trim().isNotEmpty) waterWhy.trim(),
         ].join('\n\n'),
       ),
-      const SizedBox(height: 12),
+      BotanicaGaps.vSm,
       _CareCard(
         icon: Icons.science_rounded,
         title: l10n.taskTypeFertilize,
         subtitle: baseFertilize,
-        body: [
-          if (fertilizeWhy != null && fertilizeWhy.trim().isNotEmpty)
-            fertilizeWhy.trim()
-          else
-            l10n.commonComingSoon,
-        ].join('\n\n'),
+        body: fertilizeWhy?.trim() ?? '',
       ),
-      const SizedBox(height: 12),
+      BotanicaGaps.vSm,
       _CareCard(
         icon: Icons.wb_sunny_rounded,
         title: l10n.careKeyLight,
         subtitle: lightLine,
         body: l10n.plantDetailCareLightBody,
       ),
-      const SizedBox(height: 12),
+      BotanicaGaps.vSm,
       _CareCard(
         icon: Icons.thermostat_rounded,
         title: l10n.plantDetailCareTempTitle,
@@ -237,13 +243,13 @@ class _IdeaCareTab extends StatelessWidget {
     ];
 
     if (baseMist != null) {
-      blocks.add(const SizedBox(height: 12));
+      blocks.add(BotanicaGaps.vSm);
       blocks.add(
         _CareCard(
           icon: Icons.blur_on_rounded,
           title: l10n.taskTypeMist,
           subtitle: baseMist,
-          body: l10n.commonWhy,
+          body: '',
         ),
       );
     }
@@ -260,7 +266,7 @@ class _IdeaCareTab extends StatelessWidget {
         pruneHow != null ||
         pestLines.isNotEmpty ||
         preventionLines.isNotEmpty) {
-      blocks.add(const SizedBox(height: 12));
+      blocks.add(BotanicaGaps.vSm);
       blocks.add(
         _CareCard(
           icon: Icons.content_cut_rounded,
@@ -334,7 +340,7 @@ class _IdeaCareTab extends StatelessWidget {
     }
 
     if (extremeLines.isNotEmpty) {
-      blocks.add(const SizedBox(height: 12));
+      blocks.add(BotanicaGaps.vSm);
       blocks.add(
         _CareCard(
           icon: Icons.thunderstorm_rounded,
@@ -370,43 +376,57 @@ class _CareCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = AppLocalizations.of(context);
 
-    return BotanicaGlassCard(
-      child: ExpansionTile(
-        tilePadding: EdgeInsets.zero,
-        childrenPadding: const EdgeInsets.only(top: 10),
-        shape: const Border(),
-        collapsedShape: const Border(),
-        leading: Icon(icon, color: scheme.onSurface.withValues(alpha: 0.80)),
-        title: Text(
-          title,
-          style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-        ),
-        subtitle: (subtitle == null || subtitle!.trim().isEmpty)
+    final hasBody = body.trim().isNotEmpty;
+    final leadingWidget = Icon(icon, color: scheme.onSurface.withValues(alpha: 0.80));
+    final titleWidget = Text(
+      title,
+      style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+    );
+    final subtitleWidget = (subtitle == null || subtitle!.trim().isEmpty)
+        ? (hasBody
             ? Text(
                 l10n.commonWhy,
                 style: textTheme.bodySmall?.copyWith(
                   color: scheme.onSurface.withValues(alpha: 0.65),
                 ),
               )
-            : Text(
-                subtitle!.trim(),
-                style: textTheme.bodySmall?.copyWith(
-                  color: scheme.onSurface.withValues(alpha: 0.72),
-                ),
-              ),
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              body,
-              style: textTheme.bodyMedium?.copyWith(
-                color: scheme.onSurface.withValues(alpha: 0.72),
-                height: 1.45,
-              ),
+            : null)
+        : Text(
+            subtitle!.trim(),
+            style: textTheme.bodySmall?.copyWith(
+              color: scheme.onSurface.withValues(alpha: 0.72),
             ),
-          ),
-        ],
-      ),
+          );
+
+    return BotanicaGlassCard(
+      child: hasBody
+          ? ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: const EdgeInsets.only(top: 10),
+              shape: const Border(),
+              collapsedShape: const Border(),
+              leading: leadingWidget,
+              title: titleWidget,
+              subtitle: subtitleWidget,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    body,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: scheme.onSurface.withValues(alpha: 0.72),
+                      height: 1.45,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: leadingWidget,
+              title: titleWidget,
+              subtitle: subtitleWidget,
+            ),
     );
   }
 }
@@ -434,7 +454,7 @@ class _AiCareTipSection extends ConsumerWidget {
     final ai = ref.read(botanicaAiServiceProvider);
     if (!ai.isConfigured) return const SizedBox.shrink();
 
-    final pending = tasks.where((t) => !t.isDone).toList(growable: false)
+    final pending = tasks.where((t) => !t.isDismissed).toList(growable: false)
       ..sort((a, b) => a.dueAt.compareTo(b.dueAt));
 
     final l10n = AppLocalizations.of(context);
@@ -487,7 +507,7 @@ class _AiCareTipSection extends ConsumerWidget {
                 Icons.auto_awesome_rounded,
                 color: scheme.onSurface.withValues(alpha: 0.78),
               ),
-              const SizedBox(width: 10),
+              BotanicaGaps.hSm,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -499,7 +519,7 @@ class _AiCareTipSection extends ConsumerWidget {
                             letterSpacing: -0.2,
                           ),
                     ),
-                    const SizedBox(height: 6),
+                    BotanicaGaps.vXxs,
                     Text(
                       value,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -540,17 +560,25 @@ class _AiTipSkeleton extends StatelessWidget {
       );
     }
 
-    return Column(
+    final reduceMotion = botanicaReduceMotion(context);
+
+    final skeleton = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         line(0.42),
-        const SizedBox(height: 12),
+        BotanicaGaps.vSm,
         line(0.95),
-        const SizedBox(height: 10),
+        BotanicaGaps.vSm,
         line(0.70),
       ],
-    ).animate(onPlay: (controller) => controller.repeat()).shimmer(
-          duration: 1200.ms,
+    );
+
+    if (reduceMotion) return skeleton;
+
+    return skeleton
+        .animate(onPlay: (controller) => controller.repeat())
+        .shimmer(
+          duration: BotanicaTokens.motionSlow * 3,
           color: scheme.onSurface.withValues(alpha: 0.08),
         );
   }

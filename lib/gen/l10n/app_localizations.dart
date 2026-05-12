@@ -144,6 +144,18 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get commonDone;
 
+  /// No description provided for @commonOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get commonOverdue;
+
+  /// No description provided for @commonUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get commonUndo;
+
   /// No description provided for @commonCancel.
   ///
   /// In en, this message translates to:
@@ -402,6 +414,18 @@ abstract class AppLocalizations {
   /// **'Link copied'**
   String get resourceLinkCopied;
 
+  /// No description provided for @aiNoteCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get aiNoteCopied;
+
+  /// No description provided for @aiNoteCopyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy note'**
+  String get aiNoteCopyAction;
+
   /// No description provided for @stateLoadFailedTitle.
   ///
   /// In en, this message translates to:
@@ -468,6 +492,18 @@ abstract class AppLocalizations {
   /// **'All'**
   String get calendarFilterAll;
 
+  /// No description provided for @calendarFilterOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get calendarFilterOther;
+
+  /// No description provided for @calendarSectionConsistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Month consistency'**
+  String get calendarSectionConsistency;
+
   /// No description provided for @calendarPrevMonth.
   ///
   /// In en, this message translates to:
@@ -501,91 +537,95 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Your Garden, beautifully organized'**
+  /// **'Breathe life into your space'**
   String get onboardingTitle1;
 
   /// No description provided for @onboardingBody1.
   ///
   /// In en, this message translates to:
-  /// **'Track your plants, build a photo timeline, and keep notes without the clutter.'**
+  /// **'Track your plants, build a beautiful timeline, and cultivate calm, one leaf at a time.'**
   String get onboardingBody1;
 
   /// No description provided for @onboardingTitle2.
   ///
   /// In en, this message translates to:
-  /// **'Smart care, tuned to your environment'**
+  /// **'Botanica learns your light'**
   String get onboardingTitle2;
 
   /// No description provided for @onboardingBody2.
   ///
   /// In en, this message translates to:
-  /// **'Humidity, temperature, season — Botanica explains why your schedule shifts.'**
+  /// **'Care that adapts to your environment—season, humidity, and temperature.'**
   String get onboardingBody2;
 
   /// No description provided for @onboardingTitle3.
   ///
   /// In en, this message translates to:
-  /// **'Daily Flower ritual'**
+  /// **'A daily ritual of growth'**
   String get onboardingTitle3;
 
   /// No description provided for @onboardingBody3.
   ///
   /// In en, this message translates to:
-  /// **'A gentle daily card: meaning, care basics, and a 60‑second appreciation prompt.'**
+  /// **'Gently discover new plants and center your mind with daily botanical inspiration.'**
   String get onboardingBody3;
 
   /// No description provided for @onboardingCta.
   ///
   /// In en, this message translates to:
-  /// **'Start Botanica'**
+  /// **'Enter your garden'**
   String get onboardingCta;
 
   /// No description provided for @permissionsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Set up what you need'**
+  /// **'Grow together'**
   String get permissionsTitle;
 
   /// No description provided for @permissionsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enable everything now, or only when you use each feature.'**
+  /// **'Allow Botanica to care for your plants seamlessly, or choose when you\'re ready.'**
   String get permissionsSubtitle;
 
   /// No description provided for @permNotificationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Notifications'**
+  /// **'Gentle Reminders'**
   String get permNotificationsTitle;
 
   /// No description provided for @permNotificationsBody.
   ///
   /// In en, this message translates to:
-  /// **'So you never miss watering.'**
+  /// **'So neither of you goes thirsty.'**
   String get permNotificationsBody;
+
+  String get notificationsSoftAskTitle;
+
+  String get notificationsSoftAskBody;
 
   /// No description provided for @permLocationTitle.
   ///
   /// In en, this message translates to:
-  /// **'Location'**
+  /// **'Climate Insight'**
   String get permLocationTitle;
 
   /// No description provided for @permLocationBody.
   ///
   /// In en, this message translates to:
-  /// **'So care adapts to your climate.'**
+  /// **'Care adapted exactly to your local weather.'**
   String get permLocationBody;
 
   /// No description provided for @permCameraTitle.
   ///
   /// In en, this message translates to:
-  /// **'Camera & Photos'**
+  /// **'Visual Journal'**
   String get permCameraTitle;
 
   /// No description provided for @permCameraBody.
   ///
   /// In en, this message translates to:
-  /// **'For growth journaling and plant scan.'**
+  /// **'Capture growth and identify plants with a glance.'**
   String get permCameraBody;
 
   /// No description provided for @permLocationServicesOff.
@@ -763,11 +803,93 @@ abstract class AppLocalizations {
   /// **'Snooze'**
   String get gardenQuickSnooze;
 
+  /// No description provided for @tasksSnoozeOneHour.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get tasksSnoozeOneHour;
+
+  /// No description provided for @tasksSnoozeThreeHours.
+  ///
+  /// In en, this message translates to:
+  /// **'3 hours'**
+  String get tasksSnoozeThreeHours;
+
+  /// No description provided for @tasksSnoozeTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tasksSnoozeTomorrow;
+
+  String get tasksSnoozeTomorrowMorning;
+
+  /// No description provided for @tasksSnoozeWeekend.
+  ///
+  /// In en, this message translates to:
+  /// **'This weekend'**
+  String get tasksSnoozeWeekend;
+
+  String get tasksSnoozeCustomTime;
+
   /// No description provided for @gardenQuickAddPlant.
   ///
   /// In en, this message translates to:
   /// **'Add plant'**
   String get gardenQuickAddPlant;
+
+  /// No description provided for @gardenRoomsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms'**
+  String get gardenRoomsTitle;
+
+  /// No description provided for @gardenRoomsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All rooms'**
+  String get gardenRoomsAll;
+
+  /// No description provided for @gardenToggleCardMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle Card Mode'**
+  String get gardenToggleCardMode;
+
+  /// No description provided for @gardenToggleViewMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle View Mode'**
+  String get gardenToggleViewMode;
+
+  /// No description provided for @gardenRoomPlantCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 plant} other{{count} plants}}'**
+  String gardenRoomPlantCount(int count);
+
+  /// No description provided for @gardenRoomsWaterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Water all'**
+  String get gardenRoomsWaterAll;
+
+  /// No description provided for @gardenRoomsSnoozeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Snooze all'**
+  String get gardenRoomsSnoozeAll;
+
+  /// No description provided for @gardenRoomsWateredCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Watered 1 plant} other {Watered {count} plants}}'**
+  String gardenRoomsWateredCount(int count);
+
+  /// No description provided for @gardenRoomsSnoozedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Snoozed 1 task} other {Snoozed {count} tasks}}'**
+  String gardenRoomsSnoozedCount(int count);
 
   /// No description provided for @gardenEmptyTitle.
   ///
@@ -967,17 +1089,17 @@ abstract class AppLocalizations {
   /// **'Complete a watering or care task and it will appear here.'**
   String get plantDetailLogsEmptyBody;
 
-  /// No description provided for @tasksEmptyUpcoming.
+  /// No description provided for @tasksEmptySoon.
   ///
   /// In en, this message translates to:
-  /// **'No upcoming tasks'**
-  String get tasksEmptyUpcoming;
+  /// **'Nothing due soon. You\'re all caught up!'**
+  String get tasksEmptySoon;
 
-  /// No description provided for @tasksEmptyOverdue.
+  /// No description provided for @tasksEmptyWatch.
   ///
   /// In en, this message translates to:
-  /// **'All caught up!'**
-  String get tasksEmptyOverdue;
+  /// **'No tasks to watch. Your garden is resting.'**
+  String get tasksEmptyWatch;
 
   /// No description provided for @plantDetailWaterNow.
   ///
@@ -1141,6 +1263,84 @@ abstract class AppLocalizations {
   /// **'Saved to diary.'**
   String get diaryEntrySaved;
 
+  /// No description provided for @diaryEditEntryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit diary entry'**
+  String get diaryEditEntryTitle;
+
+  /// No description provided for @diaryEditConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes?'**
+  String get diaryEditConfirmTitle;
+
+  /// No description provided for @diaryEditConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Update this diary entry with your changes.'**
+  String get diaryEditConfirmBody;
+
+  /// No description provided for @diaryEntryUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Diary entry updated.'**
+  String get diaryEntryUpdated;
+
+  /// No description provided for @diaryEntryDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Diary entry deleted.'**
+  String get diaryEntryDeleted;
+
+  /// No description provided for @diaryEntryDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete diary entry?'**
+  String get diaryEntryDeleteTitle;
+
+  /// No description provided for @diaryEntryDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the diary entry from the timeline. You can undo right after deleting.'**
+  String get diaryEntryDeleteBody;
+
+  /// No description provided for @diaryPromptGrowingWell.
+  ///
+  /// In en, this message translates to:
+  /// **'Growing well'**
+  String get diaryPromptGrowingWell;
+
+  /// No description provided for @diaryPromptNewLeaf.
+  ///
+  /// In en, this message translates to:
+  /// **'New leaf'**
+  String get diaryPromptNewLeaf;
+
+  /// No description provided for @diaryPromptStruggling.
+  ///
+  /// In en, this message translates to:
+  /// **'Struggling'**
+  String get diaryPromptStruggling;
+
+  /// No description provided for @diaryPromptRepotted.
+  ///
+  /// In en, this message translates to:
+  /// **'Repotted'**
+  String get diaryPromptRepotted;
+
+  /// No description provided for @diaryPromptBlooming.
+  ///
+  /// In en, this message translates to:
+  /// **'Blooming'**
+  String get diaryPromptBlooming;
+
+  /// No description provided for @journalEntryActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry actions'**
+  String get journalEntryActions;
+
   /// No description provided for @journalShareCardTitle.
   ///
   /// In en, this message translates to:
@@ -1225,6 +1425,24 @@ abstract class AppLocalizations {
   /// **'Saved to journal.'**
   String get journalPhotoSaved;
 
+  /// No description provided for @journalPhotoDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo deleted.'**
+  String get journalPhotoDeleted;
+
+  /// No description provided for @journalPhotoDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete photo?'**
+  String get journalPhotoDeleteTitle;
+
+  /// No description provided for @journalPhotoDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the photo from this plant\'s journal and local storage. You can undo right after deleting.'**
+  String get journalPhotoDeleteBody;
+
   /// No description provided for @journalEmptyBody.
   ///
   /// In en, this message translates to:
@@ -1267,6 +1485,30 @@ abstract class AppLocalizations {
   /// **'Drag left/right to compare.'**
   String get journalCompareHint;
 
+  /// No description provided for @journalPhotoUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo unavailable'**
+  String get journalPhotoUnavailable;
+
+  /// No description provided for @journalOverlayStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Overlay strength'**
+  String get journalOverlayStrength;
+
+  /// No description provided for @journalPreviousPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous photo'**
+  String get journalPreviousPhoto;
+
+  /// No description provided for @journalLimitedPhotosAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Photos access is on. You can choose visible photos, or update access in iOS Settings.'**
+  String get journalLimitedPhotosAccess;
+
   /// No description provided for @journalPhotoMeta.
   ///
   /// In en, this message translates to:
@@ -1303,6 +1545,24 @@ abstract class AppLocalizations {
   /// **'Camera permission is required to scan plants.'**
   String get scanCameraPermissionNeeded;
 
+  /// No description provided for @scanCameraPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access'**
+  String get scanCameraPermissionTitle;
+
+  /// No description provided for @scanCameraPermissionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the camera for a quick scan, or browse the plant library without granting access.'**
+  String get scanCameraPermissionBody;
+
+  /// No description provided for @scanUseCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Use camera'**
+  String get scanUseCamera;
+
   /// No description provided for @scanProcessingBody.
   ///
   /// In en, this message translates to:
@@ -1314,6 +1574,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a match'**
   String get scanChooseCandidate;
+
+  /// No description provided for @scanRefineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure? Refine results'**
+  String get scanRefineTitle;
+
+  /// No description provided for @scanRefineHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer a quick question to narrow the list.'**
+  String get scanRefineHelper;
+
+  /// No description provided for @scanRefineFallbackNote.
+  ///
+  /// In en, this message translates to:
+  /// **'No exact matches for these filters yet—showing closest results.'**
+  String get scanRefineFallbackNote;
+
+  /// No description provided for @scanConfidenceGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence is a guide only—compare shape and care tags before adding.'**
+  String get scanConfidenceGuide;
+
+  /// No description provided for @scanConfidenceStrongLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'High confidence'**
+  String get scanConfidenceStrongLabel;
+
+  /// No description provided for @scanConfidenceStrongBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Looks close to the captured plant.'**
+  String get scanConfidenceStrongBody;
+
+  /// No description provided for @scanConfidenceLikelyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate confidence'**
+  String get scanConfidenceLikelyLabel;
+
+  /// No description provided for @scanConfidenceLikelyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare details before adding.'**
+  String get scanConfidenceLikelyBody;
+
+  /// No description provided for @scanConfidencePossibleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Low confidence — try another angle'**
+  String get scanConfidencePossibleLabel;
+
+  /// No description provided for @scanConfidencePossibleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Best guess only—capture another view if you can.'**
+  String get scanConfidencePossibleBody;
+
+  /// No description provided for @scanRefineFlowering.
+  ///
+  /// In en, this message translates to:
+  /// **'Is it flowering?'**
+  String get scanRefineFlowering;
+
+  /// No description provided for @scanRefineIndoorOutdoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Indoor or outdoor?'**
+  String get scanRefineIndoorOutdoor;
+
+  /// No description provided for @scanRefineSucculent.
+  ///
+  /// In en, this message translates to:
+  /// **'Succulent type?'**
+  String get scanRefineSucculent;
 
   /// No description provided for @scanRefinePetSafe.
   ///
@@ -1339,6 +1677,36 @@ abstract class AppLocalizations {
   /// **'Add to Garden'**
   String get scanAddToGarden;
 
+  /// No description provided for @scanBrowseLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse library instead'**
+  String get scanBrowseLibrary;
+
+  /// No description provided for @scanTakingLongerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Taking longer than expected'**
+  String get scanTakingLongerTitle;
+
+  /// No description provided for @scanTakingLongerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The scan did not finish in time. Try again or choose a plant manually.'**
+  String get scanTakingLongerBody;
+
+  /// No description provided for @scanNoResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not identify this plant'**
+  String get scanNoResultTitle;
+
+  /// No description provided for @scanNoResultBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another angle with leaf detail, or browse the library instead.'**
+  String get scanNoResultBody;
+
   /// No description provided for @scanDeterministicNote.
   ///
   /// In en, this message translates to:
@@ -1357,17 +1725,17 @@ abstract class AppLocalizations {
   /// **'Today'**
   String get tasksTabToday;
 
-  /// No description provided for @tasksTabUpcoming.
+  /// No description provided for @tasksTabSoon.
   ///
   /// In en, this message translates to:
-  /// **'Upcoming'**
-  String get tasksTabUpcoming;
+  /// **'Soon'**
+  String get tasksTabSoon;
 
-  /// No description provided for @tasksTabOverdue.
+  /// No description provided for @tasksTabWatch.
   ///
   /// In en, this message translates to:
-  /// **'Overdue'**
-  String get tasksTabOverdue;
+  /// **'Watch'**
+  String get tasksTabWatch;
 
   /// No description provided for @tasksCalendarToggle.
   ///
@@ -1434,6 +1802,8 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Snoozed until {date}'**
   String tasksSnoozedUntil(DateTime date);
+
+  String get tasksSkipped;
 
   /// No description provided for @discoverTitle.
   ///
@@ -2070,6 +2440,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About'**
   String get profileSectionAbout;
+
+  /// No description provided for @storageHealthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage health'**
+  String get storageHealthTitle;
+
+  /// No description provided for @storageHealthSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review journal media and clear temporary files.'**
+  String get storageHealthSubtitle;
+
+  /// No description provided for @storageJournalPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal photos'**
+  String get storageJournalPhotos;
+
+  /// No description provided for @storageUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage used'**
+  String get storageUsed;
+
+  /// No description provided for @storagePhotoFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo files'**
+  String get storagePhotoFiles;
+
+  /// No description provided for @storageJournalEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal entries'**
+  String get storageJournalEntries;
+
+  /// No description provided for @storagePhotoEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo entries'**
+  String get storagePhotoEntries;
+
+  /// No description provided for @storageMissingPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing photos'**
+  String get storageMissingPhotos;
+
+  /// No description provided for @storageCacheTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary cache'**
+  String get storageCacheTitle;
+
+  /// No description provided for @storageCacheBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Clears generated share cards and temporary files without deleting your journal photos.'**
+  String get storageCacheBody;
+
+  /// No description provided for @storageClearCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear cache'**
+  String get storageClearCache;
+
+  /// No description provided for @storageCacheCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary cache cleared.'**
+  String get storageCacheCleared;
+
+  /// No description provided for @storageFileCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} files'**
+  String storageFileCount(int count);
+
+  /// No description provided for @storageEntryCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} entries'**
+  String storageEntryCount(int count);
 
   /// No description provided for @profileLanguage.
   ///
@@ -2851,6 +3305,16 @@ abstract class AppLocalizations {
   /// **'Open Botanica to mark it done.'**
   String get notificationsTaskBodyNoRoom;
 
+  String notificationWaterTitle(String plant);
+
+  String notificationFertilizeTitle(String plant);
+
+  String notificationMistTitle(String plant);
+
+  String notificationRotateTitle(String plant);
+
+  String notificationPruneTitle(String plant);
+
   /// No description provided for @reasonHumidityLow.
   ///
   /// In en, this message translates to:
@@ -2869,6 +3333,24 @@ abstract class AppLocalizations {
   /// **'Warm temperature → higher evaporation'**
   String get reasonHot;
 
+  /// No description provided for @reasonSpring.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring season → active growth'**
+  String get reasonSpring;
+
+  /// No description provided for @reasonSummer.
+  ///
+  /// In en, this message translates to:
+  /// **'Summer heat → more frequent watering'**
+  String get reasonSummer;
+
+  /// No description provided for @reasonAutumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Autumn season → easing into dormancy'**
+  String get reasonAutumn;
+
   /// No description provided for @reasonWinter.
   ///
   /// In en, this message translates to:
@@ -2886,6 +3368,414 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Indoor mode → stable conditions assumed'**
   String get reasonIndoor;
+
+  /// No description provided for @envLightLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Light'**
+  String get envLightLow;
+
+  /// No description provided for @envLightMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium Light'**
+  String get envLightMedium;
+
+  /// No description provided for @envLightHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High Light'**
+  String get envLightHigh;
+
+  /// No description provided for @envLabelTemp.
+  ///
+  /// In en, this message translates to:
+  /// **'Temp'**
+  String get envLabelTemp;
+
+  /// No description provided for @envLabelHumidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get envLabelHumidity;
+
+  /// No description provided for @envLabelLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get envLabelLight;
+
+  /// No description provided for @gardenWellnessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Wellness'**
+  String get gardenWellnessTitle;
+
+  /// No description provided for @gardenWellnessSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'See score, focus plants, and care load'**
+  String get gardenWellnessSubtitle;
+
+  /// No description provided for @gardenWellnessEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No plants yet'**
+  String get gardenWellnessEmptyTitle;
+
+  /// No description provided for @gardenFilterEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No plants match your filter.'**
+  String get gardenFilterEmptyTitle;
+
+  /// No description provided for @gardenWellnessEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first plant to unlock garden wellness.'**
+  String get gardenWellnessEmptyBody;
+
+  /// No description provided for @gardenWellnessOverallScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall score'**
+  String get gardenWellnessOverallScore;
+
+  /// No description provided for @gardenWellnessOverdueChip.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
+  String gardenWellnessOverdueChip(int count);
+
+  /// No description provided for @gardenWellnessStatPlants.
+  ///
+  /// In en, this message translates to:
+  /// **'Plants'**
+  String get gardenWellnessStatPlants;
+
+  /// No description provided for @gardenWellnessStatRecentCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent care'**
+  String get gardenWellnessStatRecentCare;
+
+  /// No description provided for @gardenWellnessStatAtRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'At risk'**
+  String get gardenWellnessStatAtRisk;
+
+  /// No description provided for @gardenWellnessRoomPulseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Room pulse'**
+  String get gardenWellnessRoomPulseTitle;
+
+  /// No description provided for @gardenWellnessRoomPulseSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{plantCount} plants · {overdueCount} overdue'**
+  String gardenWellnessRoomPulseSummary(int plantCount, int overdueCount);
+
+  /// No description provided for @gardenWellnessRoomPulseStable.
+  ///
+  /// In en, this message translates to:
+  /// **'stable'**
+  String get gardenWellnessRoomPulseStable;
+
+  /// No description provided for @gardenWellnessRoomPulseAtRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 at risk} other{{count} at risk}}'**
+  String gardenWellnessRoomPulseAtRisk(int count);
+
+  /// No description provided for @gardenWellnessPrioritiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s priorities'**
+  String get gardenWellnessPrioritiesTitle;
+
+  /// No description provided for @gardenWellnessFocusPlantsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus plants'**
+  String get gardenWellnessFocusPlantsTitle;
+
+  /// No description provided for @gardenWellnessScoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'score'**
+  String get gardenWellnessScoreLabel;
+
+  /// No description provided for @gardenWellnessScoreFlourishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Flourishing'**
+  String get gardenWellnessScoreFlourishing;
+
+  /// No description provided for @gardenWellnessScoreSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'Steady'**
+  String get gardenWellnessScoreSteady;
+
+  /// No description provided for @gardenWellnessScoreNeedsLittleCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a little care'**
+  String get gardenWellnessScoreNeedsLittleCare;
+
+  /// No description provided for @gardenWellnessScoreNeedsAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get gardenWellnessScoreNeedsAttention;
+
+  /// No description provided for @gardenWellnessFocusReasonOverdueAndNoLog.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue task · No recent log} other{{count} overdue tasks · No recent log}}'**
+  String gardenWellnessFocusReasonOverdueAndNoLog(int count);
+
+  /// No description provided for @gardenWellnessFocusReasonOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue task} other{{count} overdue tasks}}'**
+  String gardenWellnessFocusReasonOverdue(int count);
+
+  /// No description provided for @gardenWellnessFocusReasonNoLog.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent log in 14 days'**
+  String get gardenWellnessFocusReasonNoLog;
+
+  /// No description provided for @gardenWellnessFocusReasonSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking steady'**
+  String get gardenWellnessFocusReasonSteady;
+
+  /// No description provided for @gardenWellnessPriorityAttentionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check on {plantName}'**
+  String gardenWellnessPriorityAttentionTitle(String plantName);
+
+  /// No description provided for @gardenWellnessPriorityAttentionBodyOverdueAndNoLog.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue task and no recent log.} other{{count} overdue tasks and no recent log.}}'**
+  String gardenWellnessPriorityAttentionBodyOverdueAndNoLog(int count);
+
+  /// No description provided for @gardenWellnessPriorityAttentionBodyOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue task needs attention.} other{{count} overdue tasks need attention.}}'**
+  String gardenWellnessPriorityAttentionBodyOverdue(int count);
+
+  /// No description provided for @gardenWellnessPriorityAttentionBodyNoLog.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent log in the last 14 days.'**
+  String get gardenWellnessPriorityAttentionBodyNoLog;
+
+  /// No description provided for @gardenWellnessPriorityAttentionBodyCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'This plant needs a quick check-in.'**
+  String get gardenWellnessPriorityAttentionBodyCheckIn;
+
+  /// No description provided for @gardenWellnessPriorityDueTodayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep today on track'**
+  String get gardenWellnessPriorityDueTodayTitle;
+
+  /// No description provided for @gardenWellnessPriorityDueTodayBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 task is due today.} other{{count} tasks are due today.}}'**
+  String gardenWellnessPriorityDueTodayBody(int count);
+
+  /// No description provided for @gardenWellnessPriorityRefreshHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh care history'**
+  String get gardenWellnessPriorityRefreshHistoryTitle;
+
+  /// No description provided for @gardenWellnessPriorityRefreshHistoryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 plant is missing a recent log.} other{{count} plants are missing a recent log.}}'**
+  String gardenWellnessPriorityRefreshHistoryBody(int count);
+
+  /// No description provided for @gardenWellnessPriorityCalmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy the calm'**
+  String get gardenWellnessPriorityCalmTitle;
+
+  /// No description provided for @gardenWellnessPriorityCalmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No urgent issues today — your garden looks steady.'**
+  String get gardenWellnessPriorityCalmBody;
+
+  /// No description provided for @gardenWellnessRoomUnassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Unassigned'**
+  String get gardenWellnessRoomUnassigned;
+
+  /// No description provided for @editPlantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Plant'**
+  String get editPlantTitle;
+
+  /// No description provided for @editPlantSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get editPlantSaveButton;
+
+  /// No description provided for @plantDetailMenuEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit plant'**
+  String get plantDetailMenuEdit;
+
+  /// No description provided for @plantDetailMenuArchive.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive plant'**
+  String get plantDetailMenuArchive;
+
+  /// No description provided for @plantDetailMenuDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete plant'**
+  String get plantDetailMenuDelete;
+
+  /// No description provided for @archivePlantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive {plantName}?'**
+  String archivePlantTitle(String plantName);
+
+  /// No description provided for @archivePlantBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived plants are hidden from your garden but keep their history.'**
+  String get archivePlantBody;
+
+  /// No description provided for @archivePlantConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get archivePlantConfirm;
+
+  /// No description provided for @deletePlantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {plantName}?'**
+  String deletePlantTitle(String plantName);
+
+  /// No description provided for @deletePlantBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently removes the plant and all its history. This cannot be undone.'**
+  String get deletePlantBody;
+
+  /// No description provided for @deletePlantConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deletePlantConfirm;
+
+  /// No description provided for @restorePlantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore {plantName}?'**
+  String restorePlantTitle(String plantName);
+
+  /// No description provided for @restorePlantBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will return the plant to your garden and resume its care schedule.'**
+  String get restorePlantBody;
+
+  /// No description provided for @restorePlantConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get restorePlantConfirm;
+
+  /// No description provided for @gardenStatusArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get gardenStatusArchived;
+
+  /// No description provided for @gardenSortTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get gardenSortTitle;
+
+  /// No description provided for @gardenFilterArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get gardenFilterArchived;
+
+  /// No description provided for @gardenSortCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Care needs'**
+  String get gardenSortCare;
+
+  /// No description provided for @gardenSortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get gardenSortName;
+
+  /// No description provided for @gardenSortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest added'**
+  String get gardenSortNewest;
+
+  /// No description provided for @gardenSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search garden...'**
+  String get gardenSearchHint;
+
+  /// No description provided for @archivePlantSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'{nickname} archived.'**
+  String archivePlantSuccess(String nickname);
+
+  /// No description provided for @restorePlantSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'{nickname} restored.'**
+  String restorePlantSuccess(String nickname);
+
+  /// No description provided for @deletePlantSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'{nickname} deleted.'**
+  String deletePlantSuccess(String nickname);
+
+  /// No description provided for @commonConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get commonConfirm;
 }
 
 class _AppLocalizationsDelegate

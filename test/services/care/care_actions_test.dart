@@ -16,6 +16,7 @@ import 'package:botanica/domain/models/species.dart';
 import 'package:botanica/domain/models/task_instance.dart';
 import 'package:botanica/domain/models/user_settings.dart';
 import 'package:botanica/domain/services/care_plan_engine.dart';
+import 'package:botanica/domain/services/seasonal_care_engine.dart';
 import 'package:botanica/services/care/care_actions.dart';
 
 /// In-memory [SpeciesRepository] that bypasses rootBundle for tests.
@@ -85,7 +86,8 @@ void main() {
   final settings = UserSettings.defaults();
   Future<void> ignoreSettingsUpdate(UserSettings _) async {}
 
-  const engine = CarePlanEngine();
+  const carePlanEngine = CarePlanEngine();
+  const engine = SeasonalCareEngine(carePlanEngine);
 
   setUp(() async {
     tempDir =
@@ -119,7 +121,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: normalEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -143,6 +145,51 @@ void main() {
       expect(allTasks.first.id, nextTask.id);
     });
 
+    test('does not create duplicate next water task for the same due date',
+        () async {
+      final firstTask = await CareActions.waterNow(
+        plant: testPlant,
+        now: now,
+        pendingWaterTask: null,
+        tasksRepository: tasksRepo,
+        logsRepository: logsRepo,
+        speciesRepository: speciesRepo,
+        plantIdeaRepository: ideaRepo,
+        seasonalEngine: engine,
+        environment: normalEnvironment,
+        settings: settings,
+        updateSettings: ignoreSettingsUpdate,
+      );
+
+      final secondTask = await CareActions.waterNow(
+        plant: testPlant,
+        now: now,
+        pendingWaterTask: null,
+        tasksRepository: tasksRepo,
+        logsRepository: logsRepo,
+        speciesRepository: speciesRepo,
+        plantIdeaRepository: ideaRepo,
+        seasonalEngine: engine,
+        environment: normalEnvironment,
+        settings: settings,
+        updateSettings: ignoreSettingsUpdate,
+      );
+
+      expect(firstTask, isNotNull);
+      expect(secondTask, isNull);
+      expect(
+        tasksRepo
+            .getAll()
+            .where((task) =>
+                task.plantId == testPlant.id &&
+                task.type == TaskType.water &&
+                task.status == TaskStatus.pending)
+            .length,
+        1,
+      );
+      expect(logsRepo.forPlant(testPlant.id), hasLength(2));
+    });
+
     test('marks pending water task as done', () async {
       final pendingTask = TaskInstance(
         id: 'pending_water',
@@ -164,7 +211,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: normalEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -196,7 +243,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: hotDryEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -233,7 +280,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: normalEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -257,6 +304,72 @@ void main() {
       final logs = logsRepo.forPlant(testPlant.id);
       expect(logs, hasLength(1));
       expect(logs.first.type, TaskType.rotate);
+    });
+
+    test('does not create duplicate next task for the same due date', () async {
+      final firstRotateTask = TaskInstance(
+        id: 'rotate_1',
+        plantId: testPlant.id,
+        type: TaskType.rotate,
+        dueAt: now,
+        status: TaskStatus.pending,
+        createdAt: now.subtract(const Duration(days: 14)),
+        completedAt: null,
+        adjustmentReasonIds: const <String>[],
+      );
+      final secondRotateTask = TaskInstance(
+        id: 'rotate_2',
+        plantId: testPlant.id,
+        type: TaskType.rotate,
+        dueAt: now,
+        status: TaskStatus.pending,
+        createdAt: now.subtract(const Duration(days: 14)),
+        completedAt: null,
+        adjustmentReasonIds: const <String>[],
+      );
+      await tasksRepo.upsert(firstRotateTask);
+      await tasksRepo.upsert(secondRotateTask);
+
+      final firstNextTask = await CareActions.completeTask(
+        task: firstRotateTask,
+        plant: testPlant,
+        now: now,
+        tasksRepository: tasksRepo,
+        logsRepository: logsRepo,
+        speciesRepository: speciesRepo,
+        plantIdeaRepository: ideaRepo,
+        seasonalEngine: engine,
+        environment: normalEnvironment,
+        settings: settings,
+        updateSettings: ignoreSettingsUpdate,
+      );
+      final secondNextTask = await CareActions.completeTask(
+        task: secondRotateTask,
+        plant: testPlant,
+        now: now,
+        tasksRepository: tasksRepo,
+        logsRepository: logsRepo,
+        speciesRepository: speciesRepo,
+        plantIdeaRepository: ideaRepo,
+        seasonalEngine: engine,
+        environment: normalEnvironment,
+        settings: settings,
+        updateSettings: ignoreSettingsUpdate,
+      );
+
+      expect(firstNextTask, isNotNull);
+      expect(secondNextTask, isNull);
+      expect(
+        tasksRepo
+            .getAll()
+            .where((task) =>
+                task.plantId == testPlant.id &&
+                task.type == TaskType.rotate &&
+                task.status == TaskStatus.pending)
+            .length,
+        1,
+      );
+      expect(logsRepo.forPlant(testPlant.id), hasLength(2));
     });
 
     test('completes a mist task with environment adjustment', () async {
@@ -288,7 +401,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: borderlineDryEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -320,7 +433,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: normalEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -376,7 +489,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: winterEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -442,7 +555,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: normalEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -478,7 +591,7 @@ void main() {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: normalEnvironment,
         settings: settings,
         updateSettings: ignoreSettingsUpdate,
@@ -495,6 +608,45 @@ void main() {
       // A care log should be written.
       final logs = logsRepo.forPlant(testPlant.id);
       expect(logs, hasLength(1));
+    });
+  });
+
+  group('CareActions.skipTask', () {
+    test('skips current task and schedules next without logging care',
+        () async {
+      final rotateTask = TaskInstance(
+        id: 'rotate_skip_1',
+        plantId: testPlant.id,
+        type: TaskType.rotate,
+        dueAt: now,
+        status: TaskStatus.pending,
+        createdAt: now.subtract(const Duration(days: 14)),
+        completedAt: null,
+        adjustmentReasonIds: const <String>[],
+      );
+      await tasksRepo.upsert(rotateTask);
+
+      final nextTask = await CareActions.skipTask(
+        task: rotateTask,
+        plant: testPlant,
+        now: now,
+        tasksRepository: tasksRepo,
+        speciesRepository: speciesRepo,
+        plantIdeaRepository: ideaRepo,
+        seasonalEngine: engine,
+        environment: normalEnvironment,
+        settings: settings,
+      );
+
+      final skipped = tasksRepo.byId(rotateTask.id)!;
+      expect(skipped.status, TaskStatus.skipped);
+      expect(skipped.completedAt, isNull);
+
+      expect(nextTask, isNotNull);
+      expect(nextTask!.type, TaskType.rotate);
+      expect(nextTask.status, TaskStatus.pending);
+      expect(nextTask.dueAt.isAfter(now.add(const Duration(days: 13))), isTrue);
+      expect(logsRepo.forPlant(testPlant.id), isEmpty);
     });
   });
 }

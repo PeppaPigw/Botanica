@@ -74,19 +74,22 @@ class BotanicaChip extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
-          child: Container(
-            alignment: Alignment.center,
-            padding: padding ??
-                const EdgeInsets.symmetric(
-                  horizontal: BotanicaTokens.spacingSm,
-                  vertical: BotanicaTokens.spacingXs,
-                ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
-              color: bg,
-              border: Border.all(color: border),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+            child: Container(
+              alignment: Alignment.center,
+              padding: padding ??
+                  const EdgeInsets.symmetric(
+                    horizontal: BotanicaTokens.spacingSm,
+                    vertical: BotanicaTokens.spacingXs,
+                  ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
+                color: bg,
+                border: Border.all(color: border),
+              ),
+              child: content,
             ),
-            child: content,
           ),
         ),
       ),

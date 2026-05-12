@@ -3,6 +3,7 @@ import '../../data/repositories/logs_repository.dart';
 import '../../data/repositories/photos_repository.dart';
 import '../../data/repositories/plants_repository.dart';
 import '../../data/repositories/tasks_repository.dart';
+import '../photos/photo_storage.dart';
 
 class PlantActions {
   const PlantActions._();
@@ -18,9 +19,12 @@ class PlantActions {
     required LogsRepository logsRepository,
     required PhotosRepository photosRepository,
     required DiaryRepository diaryRepository,
+    PhotoStorage photoStorage = const PhotoStorage(),
   }) async {
+    final photos = photosRepository.forPlant(plantId);
     await tasksRepository.deleteForPlant(plantId);
     await logsRepository.deleteForPlant(plantId);
+    await photoStorage.deleteEntryFiles(photos);
     await photosRepository.deleteForPlant(plantId);
     await diaryRepository.deleteForPlant(plantId);
     await plantsRepository.delete(plantId);

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +16,7 @@ import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_gaps.dart';
 import '../../core/utils/motion_preferences.dart';
+import '../../core/widgets/botanica_animated_section.dart';
 import '../../domain/models/daily_flower.dart';
 import '../../domain/models/enums.dart';
 import '../../domain/services/daily_flower_mode.dart';
@@ -44,7 +44,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 12),
+    duration: BotanicaTokens.motionSpring * 25,
   );
 
   bool _revealed = false;
@@ -65,6 +65,15 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _revealDailyEntry(BeliefMode beliefMode) {
+    if (_revealed) return;
+    if (beliefMode == BeliefMode.justFlower ||
+        beliefMode == BeliefMode.tarot) {
+      BotanicaHaptics.revealClimax();
+    }
+    setState(() => _revealed = true);
   }
 
   @override
@@ -163,8 +172,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
             padding: BotanicaTokens.pagePaddingWithBottomNav(context),
             children: [
               BotanicaScreenTitle(l10n.navDaily)
-                  .animate()
-                  .fadeIn(duration: 380.ms),
+                  .animateSection(index: 0),
               BotanicaGaps.vSm,
               BotanicaGlassCard(
                 padding: BotanicaTokens.cardPaddingDense,
@@ -217,11 +225,11 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                     ),
                   ],
                 ),
-              ).animate().fadeIn(delay: 80.ms, duration: 420.ms),
+              ).animateSection(index: 1),
               if (!modeSelected) ...[
-                const SizedBox(height: 12),
+                BotanicaGaps.vSm,
                 BotanicaGlassCard(
-                  padding: const EdgeInsets.all(14),
+                  padding: BotanicaTokens.cardPaddingDense,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -231,7 +239,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                             Icons.tune_rounded,
                             color: scheme.onSurface.withValues(alpha: 0.82),
                           ),
-                          const SizedBox(width: 10),
+                          BotanicaGaps.hSm,
                           Expanded(
                             child: Text(
                               l10n.dailyModeMissingTitle,
@@ -242,7 +250,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      BotanicaGaps.vXxs,
                       Text(
                         l10n.dailyModeMissingBody,
                         style: textTheme.bodySmall?.copyWith(
@@ -250,7 +258,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                           height: 1.35,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      BotanicaGaps.vSm,
                       SizedBox(
                         width: double.infinity,
                         child: FilledButton.icon(
@@ -261,11 +269,11 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                       ),
                     ],
                   ),
-                ).animate().fadeIn(delay: 120.ms, duration: 420.ms),
+                ).animateSection(index: 2),
               ] else if (needsPersonalInfo) ...[
-                const SizedBox(height: 12),
+                BotanicaGaps.vSm,
                 BotanicaGlassCard(
-                  padding: const EdgeInsets.all(14),
+                  padding: BotanicaTokens.cardPaddingDense,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -275,7 +283,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                             Icons.person_rounded,
                             color: scheme.onSurface.withValues(alpha: 0.80),
                           ),
-                          const SizedBox(width: 10),
+                          BotanicaGaps.hSm,
                           Expanded(
                             child: Text(
                               l10n.dailyProfileMissingTitle,
@@ -286,7 +294,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      BotanicaGaps.vXxs,
                       Text(
                         profileMissingBody,
                         style: textTheme.bodySmall?.copyWith(
@@ -294,7 +302,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                           height: 1.35,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      BotanicaGaps.vSm,
                       SizedBox(
                         width: double.infinity,
                         child: FilledButton.icon(
@@ -305,9 +313,9 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                       ),
                     ],
                   ),
-                ).animate().fadeIn(delay: 120.ms, duration: 420.ms),
+                ).animateSection(index: 2),
               ] else if (needsTarotDraw) ...[
-                const SizedBox(height: 12),
+                BotanicaGaps.vSm,
                 TarotDrawFlowCard(
                   key: const ValueKey('tarot-draw-flow'),
                   options: DailyRituals.tarotDrawOptions(now),
@@ -318,10 +326,10 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                     if (!mounted) return;
                     setState(() => _revealed = true);
                   },
-                ).animate().fadeIn(delay: 120.ms, duration: 420.ms),
+                ).animateSection(index: 2),
               ],
               if (canShowEntry) ...[
-                const SizedBox(height: 16),
+                BotanicaGaps.vBase,
                 FutureBuilder(
                   future: repo.loadPool(localeCode),
                   builder: (context, snapshot) {
@@ -346,10 +354,11 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                         icon: Icons.cloud_off_rounded,
                         title: l10n.dailyContentUnavailableTitle,
                         body: l10n.dailyContentUnavailableBody,
-                        primaryAction: OutlinedButton.icon(
+                        primaryAction: BotanicaButton(
+                          variant: BotanicaButtonVariant.outlined,
                           onPressed: () => setState(() {}),
-                          icon: const Icon(Icons.refresh_rounded),
-                          label: Text(l10n.commonTryAgain),
+                          icon: Icons.refresh_rounded,
+                          label: l10n.commonTryAgain,
                         ),
                       );
                     }
@@ -383,11 +392,9 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                           variantLabel: variantLabel,
                           variantKey: variantKey,
                           revealed: _revealed,
-                          onReveal: () => setState(() => _revealed = true),
+                          onReveal: () => _revealDailyEntry(beliefMode),
                         )
-                            .animate()
-                            .fadeIn(duration: 420.ms)
-                            .slideY(begin: 0.06, curve: Curves.easeOutCubic),
+                            .animateSection(index: 3),
                         DailyAiNoteSection(
                           entry: entry,
                           localeCode: localeCode,
@@ -396,7 +403,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                           variantKey: variantKey,
                           visible: _revealed,
                         ),
-                        const SizedBox(height: 16),
+                        BotanicaGaps.vBase,
                         Row(
                           children: [
                             Expanded(
@@ -404,11 +411,13 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                                 onPressed: !_revealed
                                     ? null
                                     : () async {
-                                        BotanicaHaptics.selectionTick();
+                                        BotanicaHaptics.primaryPress();
                                         await favoritesRepo.toggleSaved(
                                           entry: entry,
                                           variantKey: variantKey,
                                         );
+                                        if (!mounted) return;
+                                        BotanicaHaptics.completion();
                                       },
                                 icon: Icon(
                                   isSaved
@@ -428,7 +437,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            BotanicaGaps.hSm,
                             Expanded(
                               child: FilledButton.icon(
                                 key: const ValueKey('daily-share-btn'),
@@ -456,12 +465,12 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                               ),
                             ),
                           ],
-                        ).animate().fadeIn(delay: 160.ms, duration: 420.ms),
+                        ).animateSection(index: 4),
                       ],
                     );
                   },
                 ),
-                const SizedBox(height: 16),
+                BotanicaGaps.vBase,
                 BotanicaGlassCard(
                   tier: GlassTier.subtle,
                   child: Row(
@@ -469,7 +478,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                     children: [
                       Icon(Icons.auto_awesome_rounded,
                           color: scheme.onSurface.withValues(alpha: 0.80)),
-                      const SizedBox(width: 12),
+                      BotanicaGaps.hSm,
                       Expanded(
                         child: Text(
                           l10n.dailyDeterministicNote,
@@ -481,7 +490,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                       ),
                     ],
                   ),
-                ).animate().fadeIn(delay: 220.ms, duration: 420.ms),
+                ).animateSection(index: 5),
               ],
             ],
           ),
@@ -530,7 +539,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                 children: [
                   Icon(Icons.info_outline_rounded,
                       color: scheme.onSurface.withValues(alpha: 0.80)),
-                  const SizedBox(width: 10),
+                  BotanicaGaps.hSm,
                   Expanded(
                     child: Text(
                       l10n.dailyInfoTitle,
@@ -547,9 +556,9 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              BotanicaGaps.vSm,
               BotanicaGlassCard(
-                padding: const EdgeInsets.all(14),
+                padding: BotanicaTokens.cardPaddingDense,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -560,7 +569,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                         letterSpacing: -0.2,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    BotanicaGaps.vXxs,
                     Text(
                       variantLabel,
                       style: textTheme.bodySmall?.copyWith(
@@ -568,7 +577,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                         height: 1.35,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    BotanicaGaps.vSm,
                     Text(
                       l10n.dailyInfoIntro,
                       style: textTheme.bodyMedium?.copyWith(
@@ -576,7 +585,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                         height: 1.45,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    BotanicaGaps.vSm,
                     Text(
                       modeBody(),
                       style: textTheme.bodyMedium?.copyWith(
@@ -584,7 +593,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                         height: 1.45,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    BotanicaGaps.vSm,
                     Text(
                       l10n.dailyInfoHowToReveal(hint),
                       style: textTheme.bodySmall?.copyWith(
@@ -595,7 +604,7 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              BotanicaGaps.vSm,
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton.icon(

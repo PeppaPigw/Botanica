@@ -1,8 +1,8 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'dart:io';
 
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
@@ -13,6 +13,8 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../core/i18n/plant_idea_search.dart';
 import '../../core/i18n/species_search.dart';
 import '../../core/widgets/botanica_bottom_action_bar.dart';
+import '../../core/widgets/botanica_animated_section.dart';
+import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_search_field.dart';
 import '../../core/widgets/botanica_state_card.dart';
@@ -34,11 +36,13 @@ class AddPlantScreen extends ConsumerStatefulWidget {
   const AddPlantScreen({
     super.key,
     this.initialSpeciesId,
+    this.scanFlowOpener,
   });
 
   static const String subLocation = 'add';
 
   final String? initialSpeciesId;
+  final Future<ScanResult?> Function(BuildContext context)? scanFlowOpener;
 
   @override
   ConsumerState<AddPlantScreen> createState() => _AddPlantScreenState();
@@ -170,7 +174,7 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
           ? ''
           : _roomController.text.trim(),
       environmentMode: _environmentMode,
-      coverAsset: 'assets/placeholders/species/unknown.png',
+      coverAsset: 'assets/images/placeholder_plant.jpg',
       createdAt: now,
       meta: const PlantMeta(),
     );
@@ -181,7 +185,7 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
     final speciesRepo = ref.read(speciesRepositoryProvider);
     final ideaRepo = ref.read(plantIdeaRepositoryProvider);
     final env = ref.read(environmentSnapshotProvider);
-    final engine = ref.read(carePlanEngineProvider);
+    final seasonalEngine = ref.read(seasonalCareEngineProvider);
     await ref
         .read(settingsControllerProvider.notifier)
         .setReminderTimePreference(_reminderPref);
@@ -193,65 +197,85 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
     if (_scanImagePath == null && defaultCover.isNotEmpty) {
       plant = plant.copyWith(coverAsset: defaultCover);
     }
-    final baseWaterDays = idea?.careDefaults.waterBaseDays ??
-        species?.careDefaults.waterBaseDays ??
-        7;
-    final baseMistDays = idea?.careDefaults.mistBaseDays ??
-        species?.careDefaults.mistBaseDays ??
-        0;
-    final baseFertilizeDays = idea?.careDefaults.fertilizeBaseDays ??
-        species?.careDefaults.fertilizeBaseDays ??
-        30;
-
-    final waterAdj = engine.adjustWatering(
-      baseDays: baseWaterDays,
-      environment: env,
-      environmentMode: plant.environmentMode,
-      hemisphere: settings.hemisphere,
+    final waterDecision = seasonalEngine.computeSchedule(
+      taskType: TaskType.water,
       now: now,
+      environment: env,
+      hemisphere: settings.hemisphere,
+      environmentMode: plant.environmentMode,
+      plantIdea: idea,
+      fallbackBaseDays: species?.careDefaults.waterBaseDays,
+    );
+
+    final mistDecision = ((idea?.careDefaults.mistBaseDays ?? 0) > 0 ||
+            (species?.careDefaults.mistBaseDays ?? 0) > 0)
+        ? seasonalEngine.computeSchedule(
+            taskType: TaskType.mist,
+            now: now,
+            environment: env,
+            hemisphere: settings.hemisphere,
+            environmentMode: plant.environmentMode,
+            plantIdea: idea,
+            fallbackBaseDays: species?.careDefaults.mistBaseDays,
+          )
+        : null;
+
+    final fertilizeDecision = seasonalEngine.computeSchedule(
+      taskType: TaskType.fertilize,
+      now: now,
+      environment: env,
+      hemisphere: settings.hemisphere,
+      environmentMode: plant.environmentMode,
+      plantIdea: idea,
+      fallbackBaseDays: species?.careDefaults.fertilizeBaseDays,
     );
 
     final tasks = <TaskInstance>[
-      TaskInstance(
-        id: _uuid.v4(),
-        plantId: plantId,
-        type: TaskType.water,
-        dueAt: _alignToReminderTime(
-          now.add(Duration(days: waterAdj.adjustedDays)),
-          _reminderPref,
-        ),
-        status: TaskStatus.pending,
-        createdAt: now,
-        completedAt: null,
-        adjustmentReasonIds: waterAdj.reasonIds,
-      ),
-      if (baseMistDays > 0)
+      if (waterDecision.dueAt != null)
         TaskInstance(
           id: _uuid.v4(),
           plantId: plantId,
-          type: TaskType.mist,
+          type: TaskType.water,
           dueAt: _alignToReminderTime(
-            now.add(Duration(days: baseMistDays)),
+            waterDecision.dueAt!,
             _reminderPref,
           ),
           status: TaskStatus.pending,
           createdAt: now,
           completedAt: null,
-          adjustmentReasonIds: const <String>[],
+          adjustmentReasonIds: waterDecision.snapshot.reasonIds,
+          scheduleSnapshot: waterDecision.snapshot,
         ),
-      TaskInstance(
-        id: _uuid.v4(),
-        plantId: plantId,
-        type: TaskType.fertilize,
-        dueAt: _alignToReminderTime(
-          now.add(Duration(days: baseFertilizeDays)),
-          _reminderPref,
+      if (mistDecision?.dueAt != null)
+        TaskInstance(
+          id: _uuid.v4(),
+          plantId: plantId,
+          type: TaskType.mist,
+          dueAt: _alignToReminderTime(
+            mistDecision!.dueAt!,
+            _reminderPref,
+          ),
+          status: TaskStatus.pending,
+          createdAt: now,
+          completedAt: null,
+          adjustmentReasonIds: mistDecision.snapshot.reasonIds,
+          scheduleSnapshot: mistDecision.snapshot,
         ),
-        status: TaskStatus.pending,
-        createdAt: now,
-        completedAt: null,
-        adjustmentReasonIds: const <String>[],
-      ),
+      if (fertilizeDecision.dueAt != null)
+        TaskInstance(
+          id: _uuid.v4(),
+          plantId: plantId,
+          type: TaskType.fertilize,
+          dueAt: _alignToReminderTime(
+            fertilizeDecision.dueAt!,
+            _reminderPref,
+          ),
+          status: TaskStatus.pending,
+          createdAt: now,
+          completedAt: null,
+          adjustmentReasonIds: fertilizeDecision.snapshot.reasonIds,
+          scheduleSnapshot: fertilizeDecision.snapshot,
+        ),
     ];
 
     // If the user scanned a photo, keep it as the initial cover + first journal
@@ -278,8 +302,8 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
         content: Row(
           children: [
             Icon(Icons.eco_rounded,
-                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
-            const SizedBox(width: 10),
+                size: BotanicaTokens.iconSizeSm, color: Theme.of(context).colorScheme.inversePrimary),
+            BotanicaGaps.hSm,
             Text('${l10n.commonDone}: ${plant.nickname}'),
           ],
         ),
@@ -346,7 +370,7 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
                   children: [
                     Icon(Icons.center_focus_strong_rounded,
                         color: scheme.onSurface.withValues(alpha: 0.80)),
-                    const SizedBox(width: 12),
+                    BotanicaGaps.hSm,
                     Expanded(
                       child: Text(
                         '${l10n.addPlantScanTitle}\n${l10n.addPlantScanBody}',
@@ -358,10 +382,10 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
                     ),
                   ],
                 ),
-              ).animate().fadeIn(duration: 420.ms).slideY(begin: 0.06),
+              ).animateSection(index: 0),
               const SizedBox(height: BotanicaTokens.spacingSm),
               BotanicaGlassCard(
-                padding: const EdgeInsets.all(16),
+                padding: BotanicaTokens.cardPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -376,7 +400,7 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
                             fit: BoxFit.cover,
                             filterQuality: FilterQuality.high,
                             errorBuilder: (_, __, ___) => Image.asset(
-                              'assets/placeholders/share/photo_fallback.png',
+                              'assets/images/placeholder_share.jpg',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -386,11 +410,14 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
                     ],
                     SizedBox(
                       width: double.infinity,
-                      child: FilledButton.icon(
+                      child: BotanicaButton(
+                        variant: BotanicaButtonVariant.outlined,
                         onPressed: () async {
                           final fallbackLocaleCode =
                               Localizations.localeOf(context).languageCode;
-                          final result = await ScanFlowScreen.open(context);
+                          final result =
+                              await (widget.scanFlowOpener?.call(context) ??
+                                  ScanFlowScreen.open(context));
                           if (result == null) return;
                           final localeCode =
                               ref.read(settingsControllerProvider).localeCode ??
@@ -414,8 +441,8 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
                             }
                           }
                         },
-                        icon: const Icon(Icons.center_focus_strong_rounded),
-                        label: Text(l10n.addPlantScanButton),
+                        icon: Icons.center_focus_strong_rounded,
+                        label: l10n.addPlantScanButton,
                       ),
                     ),
                   ],
@@ -541,7 +568,7 @@ class _MethodGrid extends StatelessWidget {
             onTap: () => onSelect(_AddMethod.scan),
           ),
         ),
-        const SizedBox(width: 12),
+        BotanicaGaps.hSm,
         Expanded(
           child: _MethodCard(
             selected: selected == _AddMethod.library,
@@ -551,7 +578,7 @@ class _MethodGrid extends StatelessWidget {
             onTap: () => onSelect(_AddMethod.library),
           ),
         ),
-        const SizedBox(width: 12),
+        BotanicaGaps.hSm,
         Expanded(
           child: _MethodCard(
             selected: selected == _AddMethod.manual,
@@ -592,7 +619,7 @@ class _MethodCard extends StatelessWidget {
       child: AnimatedContainer(
         duration: BotanicaTokens.motionFast,
         curve: Curves.easeOut,
-        padding: const EdgeInsets.all(14),
+        padding: BotanicaTokens.cardPaddingDense,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
           color: selected
@@ -607,7 +634,7 @@ class _MethodCard extends StatelessWidget {
         child: Column(
           children: [
             Icon(icon, color: scheme.onSurface.withValues(alpha: 0.85)),
-            const SizedBox(height: 8),
+            BotanicaGaps.vXs,
             Text(
               title,
               textAlign: TextAlign.center,
@@ -663,13 +690,13 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
                 letterSpacing: -0.3,
               ),
         ),
-        const SizedBox(height: 12),
+        BotanicaGaps.vSm,
         BotanicaSearchField(
           controller: _searchController,
           hintText: l10n.commonSearch,
           onChanged: (_) => setState(() {}),
         ),
-        const SizedBox(height: 12),
+        BotanicaGaps.vSm,
         ideasAsync.when(
           data: (ideas) {
             final query = _searchController.text;
@@ -698,7 +725,7 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              separatorBuilder: (_, __) => BotanicaGaps.vSm,
               itemBuilder: (context, index) {
                 final idea = filtered[index];
                 final selected = idea.plantId == widget.selectedSpeciesId;
@@ -711,7 +738,7 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
                   child: AnimatedContainer(
                     duration: BotanicaTokens.motionFast,
                     curve: Curves.easeOut,
-                    padding: const EdgeInsets.all(14),
+                    padding: BotanicaTokens.cardPaddingDense,
                     decoration: BoxDecoration(
                       borderRadius:
                           BorderRadius.circular(BotanicaTokens.radiusXL),
@@ -746,10 +773,31 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
                                   scheme.outlineVariant.withValues(alpha: 0.45),
                             ),
                           ),
-                          child: Icon(Icons.spa_rounded,
-                              color: scheme.onSurface.withValues(alpha: 0.78)),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(BotanicaTokens.radiusL),
+                            child: idea.imagePath.trim().isNotEmpty &&
+                                    !idea.imagePath
+                                        .trim()
+                                        .contains('unknown.png')
+                                ? Image.asset(
+                                    idea.imagePath.trim(),
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.medium,
+                                    errorBuilder: (_, __, ___) => Icon(
+                                      Icons.spa_rounded,
+                                      color: scheme.onSurface
+                                          .withValues(alpha: 0.78),
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.spa_rounded,
+                                    color: scheme.onSurface
+                                        .withValues(alpha: 0.78),
+                                  ),
+                          ),
                         ),
-                        const SizedBox(width: 12),
+                        BotanicaGaps.hSm,
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -764,7 +812,7 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
                                       letterSpacing: -0.2,
                                     ),
                               ),
-                              const SizedBox(height: 2),
+                              BotanicaGaps.vMicro,
                               Text(
                                 idea.scientificName,
                                 style: Theme.of(context)
@@ -776,7 +824,7 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
                                     ),
                               ),
                               if (habit != null && habit.trim().isNotEmpty) ...[
-                                const SizedBox(height: 6),
+                                BotanicaGaps.vXxs,
                                 Text(
                                   habit.trim(),
                                   maxLines: 1,
@@ -794,11 +842,12 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
                             ],
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        BotanicaGaps.hSm,
                         Icon(
                           selected
                               ? Icons.check_circle_rounded
                               : Icons.chevron_right_rounded,
+                          matchTextDirection: true,
                           color: scheme.onSurface.withValues(alpha: 0.72),
                         ),
                       ],
@@ -814,13 +863,14 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
               icon: Icons.cloud_off_rounded,
               title: l10n.stateLoadFailedTitle,
               body: l10n.stateLoadFailedBody,
-              primaryAction: OutlinedButton.icon(
+              primaryAction: BotanicaButton(
+                variant: BotanicaButtonVariant.outlined,
                 onPressed: () {
                   ref.invalidate(plantIdeaMapProvider);
                   ref.invalidate(plantIdeaListProvider);
                 },
-                icon: const Icon(Icons.refresh_rounded),
-                label: Text(l10n.commonTryAgain),
+                icon: Icons.refresh_rounded,
+                label: l10n.commonTryAgain,
               ),
             ),
           ),
@@ -879,7 +929,7 @@ class _Segmented<T> extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: 10),
+        BotanicaGaps.vSm,
         Wrap(
           spacing: 10,
           runSpacing: 10,
@@ -888,12 +938,20 @@ class _Segmented<T> extends StatelessWidget {
             return ChoiceChip(
               selected: selected,
               onSelected: (_) => onChanged(item.value),
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+              labelPadding: const EdgeInsets.symmetric(horizontal: 10),
               label: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(item.icon, size: 16),
-                  const SizedBox(width: 6),
-                  Text(item.label),
+                  Icon(item.icon, size: BotanicaTokens.iconSizeSm),
+                  BotanicaGaps.hXxs,
+                  Flexible(
+                    child: Text(
+                      item.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             );

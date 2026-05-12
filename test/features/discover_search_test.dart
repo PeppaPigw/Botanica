@@ -4,6 +4,7 @@ import 'package:botanica/app/providers.dart';
 import 'package:botanica/app/theme/botanica_theme.dart';
 import 'package:botanica/data/repositories/plant_idea_repository.dart';
 import 'package:botanica/domain/models/care_defaults.dart';
+import 'package:botanica/domain/models/plant.dart';
 import 'package:botanica/domain/models/species.dart';
 import 'package:botanica/domain/models/user_settings.dart';
 import 'package:botanica/features/discover/discover_screen.dart';
@@ -80,6 +81,23 @@ Map<String, dynamic> _ideaJson(String id, String name) {
   };
 }
 
+List<Override> _discoverOverrides({
+  required List<Species> species,
+  required PlantIdeaRepository repo,
+  UserSettings? settings,
+}) {
+  return [
+    settingsControllerProvider.overrideWith(
+      () => _TestSettingsController(settings ?? UserSettings.defaults()),
+    ),
+    speciesListProvider.overrideWith((ref) async => species),
+    plantsStreamProvider.overrideWith(
+      (ref) => Stream.value(const <Plant>[]),
+    ),
+    plantIdeaRepositoryProvider.overrideWithValue(repo),
+  ];
+}
+
 void main() {
   setUpAll(() {
     GoogleFonts.config.allowRuntimeFetching = false;
@@ -98,13 +116,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settingsControllerProvider.overrideWith(
-            () => _TestSettingsController(UserSettings.defaults()),
-          ),
-          speciesListProvider.overrideWith((ref) async => list),
-          plantIdeaRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: _discoverOverrides(species: list, repo: repo),
         child: MaterialApp(
           theme: BotanicaTheme.light(),
           locale: const Locale('en'),
@@ -118,10 +130,13 @@ void main() {
     await tester.pumpAndSettle();
 
     for (var i = 0; i < 6; i++) {
-      expect(find.text('Plant $i'), findsOneWidget);
+      expect(
+        find.byKey(ValueKey('discover-species-s$i')),
+        findsOneWidget,
+      );
     }
-    expect(find.text('Plant 6'), findsNothing);
-    expect(find.text('Plant 9'), findsNothing);
+    expect(find.byKey(const ValueKey('discover-species-s6')), findsNothing);
+    expect(find.byKey(const ValueKey('discover-species-s9')), findsNothing);
   });
 
   testWidgets('Discover shows full list when filters are active (empty query)',
@@ -137,13 +152,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settingsControllerProvider.overrideWith(
-            () => _TestSettingsController(UserSettings.defaults()),
-          ),
-          speciesListProvider.overrideWith((ref) async => list),
-          plantIdeaRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: _discoverOverrides(species: list, repo: repo),
         child: MaterialApp(
           theme: BotanicaTheme.light(),
           locale: const Locale('en'),
@@ -161,7 +170,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Filter is active, so results should not be truncated to 6.
-    expect(find.text('Plant 9'), findsOneWidget);
+    expect(find.byKey(const ValueKey('discover-species-s9')), findsOneWidget);
   });
 
   testWidgets('Discover keeps filter selection when filter sheet is dismissed',
@@ -177,13 +186,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settingsControllerProvider.overrideWith(
-            () => _TestSettingsController(UserSettings.defaults()),
-          ),
-          speciesListProvider.overrideWith((ref) async => list),
-          plantIdeaRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: _discoverOverrides(species: list, repo: repo),
         child: MaterialApp(
           theme: BotanicaTheme.light(),
           locale: const Locale('en'),
@@ -197,7 +200,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Curated mode: only top 6 visible.
-    expect(find.text('Plant 9'), findsNothing);
+    expect(find.byKey(const ValueKey('discover-species-s9')), findsNothing);
 
     // Apply a sheet-backed filter (difficulty) to activate full list mode.
     await tester.tap(find.byKey(const ValueKey('discover-filter-difficulty')));
@@ -208,7 +211,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Plant 9'), findsOneWidget);
+    expect(find.byKey(const ValueKey('discover-species-s9')), findsOneWidget);
 
     // Re-open the sheet, then dismiss it by tapping outside.
     await tester.tap(find.byKey(const ValueKey('discover-filter-difficulty')));
@@ -218,7 +221,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Dismissal should not clear the active filter selection.
-    expect(find.text('Plant 9'), findsOneWidget);
+    expect(find.byKey(const ValueKey('discover-species-s9')), findsOneWidget);
   });
 
   testWidgets('Discover shows all matches when searching',
@@ -234,13 +237,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settingsControllerProvider.overrideWith(
-            () => _TestSettingsController(UserSettings.defaults()),
-          ),
-          speciesListProvider.overrideWith((ref) async => list),
-          plantIdeaRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: _discoverOverrides(species: list, repo: repo),
         child: MaterialApp(
           theme: BotanicaTheme.light(),
           locale: const Locale('en'),
@@ -256,9 +253,9 @@ void main() {
     await tester.enterText(find.byType(TextField), 'Plant');
     await tester.pumpAndSettle();
 
-    expect(find.text('Plant 0'), findsOneWidget);
-    expect(find.text('Plant 6'), findsOneWidget);
-    expect(find.text('Plant 9'), findsOneWidget);
+    expect(find.byKey(const ValueKey('discover-species-s0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('discover-species-s6')), findsOneWidget);
+    expect(find.byKey(const ValueKey('discover-species-s9')), findsOneWidget);
   });
 
   testWidgets('Discover shows a no-results card for unmatched queries',
@@ -274,13 +271,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settingsControllerProvider.overrideWith(
-            () => _TestSettingsController(UserSettings.defaults()),
-          ),
-          speciesListProvider.overrideWith((ref) async => list),
-          plantIdeaRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: _discoverOverrides(species: list, repo: repo),
         child: MaterialApp(
           theme: BotanicaTheme.light(),
           locale: const Locale('en'),
@@ -350,15 +341,11 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settingsControllerProvider.overrideWith(
-            () => _TestSettingsController(
-              UserSettings.defaults().copyWith(localeCode: 'zh'),
-            ),
-          ),
-          speciesListProvider.overrideWith((ref) async => list),
-          plantIdeaRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: _discoverOverrides(
+          species: list,
+          repo: repo,
+          settings: UserSettings.defaults().copyWith(localeCode: 'zh'),
+        ),
         child: MaterialApp(
           theme: BotanicaTheme.light(),
           locale: const Locale('zh'),
@@ -376,6 +363,9 @@ void main() {
 
     // UI renders Chinese bestCommonName (settings locale is zh),
     // but search should still match the English common name.
-    expect(find.text('绿萝'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('discover-species-pothos')),
+      findsOneWidget,
+    );
   });
 }

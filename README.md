@@ -34,20 +34,11 @@ Credits + references are also shown in-app: **Profile → Credits**.
 - Generated output: `lib/gen/l10n/`
 - Currently included locales: **en**, **zh**, **es**, **ar** (RTL included)
 
-## Assets (temporary placeholders)
+## Assets
 
-The UI intentionally uses **placeholder PNGs** while you collect final imagery.
-Right now they are flat white so you can replace them later by dropping in the
-real assets with the same filenames (no code changes needed):
-
-- Species cards: `assets/placeholders/species/*.png` (including `unknown.png`)
-- Daily Flower thumbnails: `assets/placeholders/daily_flowers/*.png`
-- Tarot deck: `assets/placeholders/tarot/*.png` (including `unknown.png`)
-- Onboarding texture: `assets/placeholders/onboarding/onboarding_texture.png`
-- Share cards: `assets/placeholders/share/*.png`
-
-Replace with real photos/illustrations later without touching layout code.
-
+The UI represents a "Quiet Botanical Luxury" aesthetic with minimalist illustrations.
+In production, Botanica relies on a curated set of core assets to keep the application footprint light and fast.
+User-captured photos, care logs, and diary entries are securely managed via the offline-first Hive storage.
 ## Run
 
 ```bash

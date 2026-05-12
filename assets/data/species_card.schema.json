@@ -66,6 +66,9 @@
         "habit": {
           "$ref": "#/$defs/localizedStrings"
         },
+        "careWarnings": {
+          "$ref": "#/$defs/localizedStrings"
+        },
         "origin": {
           "$ref": "#/$defs/originInfo"
         },

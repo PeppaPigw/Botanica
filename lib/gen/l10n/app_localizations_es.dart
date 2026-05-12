@@ -31,6 +31,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonDone => 'Hecho';
 
   @override
+  String get commonOverdue => 'Atrasada';
+
+  @override
+  String get commonUndo => 'Deshacer';
+
+  @override
   String get commonCancel => 'Cancelar';
 
   @override
@@ -160,6 +166,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get resourceLinkCopied => 'Enlace copiado';
 
   @override
+  String get aiNoteCopied => 'Nota copiada';
+
+  @override
+  String get aiNoteCopyAction => 'Copiar nota';
+
+  @override
   String get stateLoadFailedTitle => 'No se pudo cargar';
 
   @override
@@ -195,6 +207,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarFilterAll => 'Todas';
 
   @override
+  String get calendarFilterOther => 'Otras';
+
+  @override
+  String get calendarSectionConsistency => 'Consistencia';
+
+  @override
   String get calendarPrevMonth => 'Mes anterior';
 
   @override
@@ -210,53 +228,62 @@ class AppLocalizationsEs extends AppLocalizations {
   String get splashTagline => 'Cuidado sereno, bellamente organizado.';
 
   @override
-  String get onboardingTitle1 => 'Tu jardín, bellamente organizado';
+  String get onboardingTitle1 => 'Dale vida a tu espacio';
 
   @override
   String get onboardingBody1 =>
-      'Organiza tus plantas con una línea de tiempo de fotos y notas, sin desorden.';
+      'Sigue el rastro de tus plantas, crea una hermosa línea de tiempo y cultiva la calma.';
 
   @override
-  String get onboardingTitle2 => 'Cuidado inteligente, adaptado a tu entorno';
+  String get onboardingTitle2 => 'Botanica aprende tu luz';
 
   @override
   String get onboardingBody2 =>
-      'Humedad, temperatura, estación… Botanica explica por qué cambia tu rutina.';
+      'Un cuidado que se adapta a tu entorno: estación, humedad y temperatura.';
 
   @override
-  String get onboardingTitle3 => 'Ritual de Flor del Día';
+  String get onboardingTitle3 => 'Un ritual diario de crecimiento';
 
   @override
   String get onboardingBody3 =>
-      'Una carta diaria suave: significado, cuidados básicos y una apreciación de 60 segundos.';
+      'Descubre plantas con delicadeza y centra tu mente con inspiración botánica diaria.';
 
   @override
-  String get onboardingCta => 'Empezar Botanica';
+  String get onboardingCta => 'Entrar a tu jardín';
 
   @override
-  String get permissionsTitle => 'Configura lo necesario';
+  String get permissionsTitle => 'Crecer juntos';
 
   @override
   String get permissionsSubtitle =>
-      'Actívalo todo ahora o solo cuando uses cada función.';
+      'Permite que Botanica cuide tus plantas sin problemas, o elige cuando estés listo.';
 
   @override
-  String get permNotificationsTitle => 'Notificaciones';
+  String get permNotificationsTitle => 'Recordatorios Suaves';
 
   @override
-  String get permNotificationsBody => 'Para no olvidar el riego.';
+  String get permNotificationsBody => 'Para que ninguno de los dos pase sed.';
 
   @override
-  String get permLocationTitle => 'Ubicación';
+  String get notificationsSoftAskTitle => 'No olvides el día de riego';
 
   @override
-  String get permLocationBody => 'Para adaptar el cuidado al clima.';
+  String get notificationsSoftAskBody =>
+      'Botanica envía recordatorios tranquilos a la hora que prefieras, para que cada planta reciba cuidado antes de decaer.';
 
   @override
-  String get permCameraTitle => 'Cámara y Fotos';
+  String get permLocationTitle => 'Conocimiento del Clima';
 
   @override
-  String get permCameraBody => 'Para el diario de crecimiento y escaneo.';
+  String get permLocationBody =>
+      'Cuidado adaptado exactamente a tu clima local.';
+
+  @override
+  String get permCameraTitle => 'Diario Visual';
+
+  @override
+  String get permCameraBody =>
+      'Captura el crecimiento e identifica plantas con un vistazo.';
 
   @override
   String get permLocationServicesOff =>
@@ -362,7 +389,70 @@ class AppLocalizationsEs extends AppLocalizations {
   String get gardenQuickSnooze => 'Posponer';
 
   @override
+  String get tasksSnoozeOneHour => '1 hora';
+
+  @override
+  String get tasksSnoozeThreeHours => '3 horas';
+
+  @override
+  String get tasksSnoozeTomorrow => 'Mañana';
+
+  @override
+  String get tasksSnoozeTomorrowMorning => 'Mañana por la mañana';
+
+  @override
+  String get tasksSnoozeWeekend => 'Este fin de semana';
+
+  @override
+  String get tasksSnoozeCustomTime => 'Hora personalizada';
+
+  @override
   String get gardenQuickAddPlant => 'Añadir planta';
+
+  @override
+  String get gardenRoomsTitle => 'Habitaciones';
+
+  @override
+  String get gardenRoomsAll => 'Todas las habitaciones';
+
+  @override
+  String get gardenToggleCardMode => 'Alternar modo de tarjeta';
+
+  @override
+  String get gardenToggleViewMode => 'Alternar modo de vista';
+
+  @override
+  String gardenRoomPlantCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plantas',
+      one: '1 planta',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenRoomsWaterAll => 'Regar todo';
+
+  @override
+  String get gardenRoomsSnoozeAll => 'Posponer todo';
+
+  @override
+  String gardenRoomsWateredCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'plantas',
+      one: 'planta',
+    );
+    return 'Regadas $count $_temp0 en la habitación';
+  }
+
+  @override
+  String gardenRoomsSnoozedCount(int count) {
+    return 'Se pospusieron $count tareas';
+  }
 
   @override
   String get gardenEmptyTitle => 'Empieza tu jardín';
@@ -467,10 +557,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Completa una tarea de riego o cuidado y aparecerá aquí.';
 
   @override
-  String get tasksEmptyUpcoming => 'Sin tareas próximas';
+  String get tasksEmptySoon => 'Nada pendiente pronto. ¡Todo al día!';
 
   @override
-  String get tasksEmptyOverdue => '¡Todo al día!';
+  String get tasksEmptyWatch =>
+      'No hay tareas de vigilancia. Tu jardín descansa.';
 
   @override
   String get plantDetailWaterNow => 'Regar ahora';
@@ -566,6 +657,47 @@ class AppLocalizationsEs extends AppLocalizations {
   String get diaryEntrySaved => 'Guardado en el diario.';
 
   @override
+  String get diaryEditEntryTitle => 'Editar entrada';
+
+  @override
+  String get diaryEditConfirmTitle => '¿Guardar cambios?';
+
+  @override
+  String get diaryEditConfirmBody =>
+      'Actualiza esta entrada del diario con tus cambios.';
+
+  @override
+  String get diaryEntryUpdated => 'Entrada del diario actualizada.';
+
+  @override
+  String get diaryEntryDeleted => 'Entrada del diario eliminada.';
+
+  @override
+  String get diaryEntryDeleteTitle => '¿Eliminar entrada del diario?';
+
+  @override
+  String get diaryEntryDeleteBody =>
+      'Esto elimina la entrada de la línea de tiempo. Puedes deshacerlo justo después.';
+
+  @override
+  String get diaryPromptGrowingWell => 'Creciendo bien';
+
+  @override
+  String get diaryPromptNewLeaf => 'Nueva hoja';
+
+  @override
+  String get diaryPromptStruggling => 'Con dificultad';
+
+  @override
+  String get diaryPromptRepotted => 'Trasplantada';
+
+  @override
+  String get diaryPromptBlooming => 'Floreciendo';
+
+  @override
+  String get journalEntryActions => 'Acciones de la entrada';
+
+  @override
   String get journalShareCardTitle => 'Tarjeta para compartir';
 
   @override
@@ -612,6 +744,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get journalPhotoSaved => 'Guardado en el diario.';
 
   @override
+  String get journalPhotoDeleted => 'Foto eliminada.';
+
+  @override
+  String get journalPhotoDeleteTitle => '¿Eliminar foto?';
+
+  @override
+  String get journalPhotoDeleteBody =>
+      'Esto elimina la foto del diario de esta planta y del almacenamiento local. Puedes deshacerlo justo después.';
+
+  @override
   String get journalEmptyBody =>
       'Aún no hay fotos. Añade una para comenzar la línea de tiempo.';
 
@@ -633,6 +775,19 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get journalCompareHint =>
       'Arrastra a izquierda/derecha para comparar.';
+
+  @override
+  String get journalPhotoUnavailable => 'Foto no disponible';
+
+  @override
+  String get journalOverlayStrength => 'Intensidad de superposición';
+
+  @override
+  String get journalPreviousPhoto => 'Foto anterior';
+
+  @override
+  String get journalLimitedPhotosAccess =>
+      'El acceso a fotos seleccionadas está activado. Puedes elegir fotos visibles o cambiar el acceso en Ajustes de iOS.';
 
   @override
   String journalPhotoMeta(DateTime date) {
@@ -660,10 +815,66 @@ class AppLocalizationsEs extends AppLocalizations {
       'Se necesita permiso de cámara para escanear plantas.';
 
   @override
+  String get scanCameraPermissionTitle => 'Acceso a la cámara';
+
+  @override
+  String get scanCameraPermissionBody =>
+      'Usa la cámara para un escaneo rápido o explora la biblioteca sin conceder acceso.';
+
+  @override
+  String get scanUseCamera => 'Usar cámara';
+
+  @override
   String get scanProcessingBody => 'Identificando tu planta…';
 
   @override
   String get scanChooseCandidate => 'Elige una coincidencia';
+
+  @override
+  String get scanRefineTitle => '¿No estás seguro? Refina los resultados';
+
+  @override
+  String get scanRefineHelper =>
+      'Responde una pregunta rápida para acotar la lista.';
+
+  @override
+  String get scanRefineFallbackNote =>
+      'Aún no hay coincidencias exactas para estos filtros; mostramos los resultados más cercanos.';
+
+  @override
+  String get scanConfidenceGuide =>
+      'La confianza es solo una guía: compara la forma y las etiquetas de cuidado antes de añadir.';
+
+  @override
+  String get scanConfidenceStrongLabel => 'Alta confianza';
+
+  @override
+  String get scanConfidenceStrongBody =>
+      'Se parece bastante a la planta capturada.';
+
+  @override
+  String get scanConfidenceLikelyLabel => 'Confianza moderada';
+
+  @override
+  String get scanConfidenceLikelyBody =>
+      'Compara los detalles antes de añadir.';
+
+  @override
+  String get scanConfidencePossibleLabel =>
+      'Baja confianza — prueba otro ángulo';
+
+  @override
+  String get scanConfidencePossibleBody =>
+      'Es solo una suposición; captura otra vista si puedes.';
+
+  @override
+  String get scanRefineFlowering => '¿Está floreciendo?';
+
+  @override
+  String get scanRefineIndoorOutdoor => '¿Interior o exterior?';
+
+  @override
+  String get scanRefineSucculent => '¿Tipo suculenta?';
 
   @override
   String get scanRefinePetSafe => 'Apto para mascotas';
@@ -678,6 +889,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scanAddToGarden => 'Añadir al jardín';
 
   @override
+  String get scanBrowseLibrary => 'Explorar biblioteca';
+
+  @override
+  String get scanTakingLongerTitle =>
+      'Está tardando más de lo esperado';
+
+  @override
+  String get scanTakingLongerBody =>
+      'El escaneo no terminó a tiempo. Inténtalo de nuevo o elige una planta manualmente.';
+
+  @override
+  String get scanNoResultTitle => 'No se pudo identificar esta planta';
+
+  @override
+  String get scanNoResultBody =>
+      'Prueba otro ángulo con detalle de la hoja o explora la biblioteca.';
+
+  @override
   String get scanDeterministicNote =>
       'Modo demo: resultados deterministas sin conexión. Conecta Kindwise/Gemini después.';
 
@@ -688,10 +917,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tasksTabToday => 'Hoy';
 
   @override
-  String get tasksTabUpcoming => 'Próximas';
+  String get tasksTabSoon => 'Pronto';
 
   @override
-  String get tasksTabOverdue => 'Atrasadas';
+  String get tasksTabWatch => 'Vigilancia';
 
   @override
   String get tasksCalendarToggle => 'Calendario';
@@ -738,6 +967,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
     return 'Pospuesto hasta $dateString';
   }
+
+  @override
+  String get tasksSkipped => 'Saltado';
 
   @override
   String get discoverTitle => 'Descubrir';
@@ -1084,6 +1316,54 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profileSectionAbout => 'Acerca de';
+
+  @override
+  String get storageHealthTitle => 'Estado del almacenamiento';
+
+  @override
+  String get storageHealthSubtitle =>
+      'Revisa los medios del diario y limpia archivos temporales.';
+
+  @override
+  String get storageJournalPhotos => 'Fotos del diario';
+
+  @override
+  String get storageUsed => 'Almacenamiento usado';
+
+  @override
+  String get storagePhotoFiles => 'Archivos de foto';
+
+  @override
+  String get storageJournalEntries => 'Entradas del diario';
+
+  @override
+  String get storagePhotoEntries => 'Entradas con foto';
+
+  @override
+  String get storageMissingPhotos => 'Fotos faltantes';
+
+  @override
+  String get storageCacheTitle => 'Caché temporal';
+
+  @override
+  String get storageCacheBody =>
+      'Borra tarjetas compartidas generadas y archivos temporales sin eliminar tus fotos del diario.';
+
+  @override
+  String get storageClearCache => 'Limpiar caché';
+
+  @override
+  String get storageCacheCleared => 'Caché temporal limpiada.';
+
+  @override
+  String storageFileCount(int count) {
+    return '$count archivos';
+  }
+
+  @override
+  String storageEntryCount(int count) {
+    return '$count entradas';
+  }
 
   @override
   String get profileLanguage => 'Idioma';
@@ -1496,6 +1776,31 @@ class AppLocalizationsEs extends AppLocalizations {
       'Abre Botanica para marcarlo como hecho.';
 
   @override
+  String notificationWaterTitle(String plant) {
+    return 'Hora de regar $plant';
+  }
+
+  @override
+  String notificationFertilizeTitle(String plant) {
+    return 'Fertiliza $plant hoy';
+  }
+
+  @override
+  String notificationMistTitle(String plant) {
+    return 'A $plant le encantaría un poco de humedad';
+  }
+
+  @override
+  String notificationRotateTitle(String plant) {
+    return 'Dale a $plant un cuarto de vuelta';
+  }
+
+  @override
+  String notificationPruneTitle(String plant) {
+    return '$plant está lista para podar';
+  }
+
+  @override
   String get reasonHumidityLow =>
       'Humedad baja → el sustrato se seca más rápido';
 
@@ -1507,6 +1812,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reasonHot => 'Temperatura alta → más evaporación';
 
   @override
+  String get reasonSpring => 'Primavera → vuelve el crecimiento';
+
+  @override
+  String get reasonSummer => 'Verano → más transpiración';
+
+  @override
+  String get reasonAutumn => 'Otoño → el crecimiento se ralentiza';
+
+  @override
   String get reasonWinter => 'Invierno → crecimiento más lento';
 
   @override
@@ -1514,4 +1828,300 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reasonIndoor => 'Modo interior → se asumen condiciones estables';
+
+  @override
+  String get envLightLow => 'Luz baja';
+
+  @override
+  String get envLightMedium => 'Luz media';
+
+  @override
+  String get envLightHigh => 'Luz alta';
+
+  @override
+  String get envLabelTemp => 'Temp.';
+
+  @override
+  String get envLabelHumidity => 'Humedad';
+
+  @override
+  String get envLabelLight => 'Luz';
+
+  @override
+  String get gardenWellnessTitle => 'Bienestar del jardín';
+
+  @override
+  String get gardenWellnessSubtitle =>
+      'Ver puntuación, plantas clave y carga de cuidado';
+
+  @override
+  String get gardenWellnessEmptyTitle => 'Aún no hay plantas';
+
+  @override
+  String get gardenFilterEmptyTitle =>
+      'No hay plantas que coincidan con este filtro.';
+
+  @override
+  String get gardenWellnessEmptyBody =>
+      'Añade tu primera planta para desbloquear el bienestar del jardín.';
+
+  @override
+  String get gardenWellnessOverallScore => 'Puntuación general';
+
+  @override
+  String gardenWellnessOverdueChip(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vencidas',
+      one: '1 vencida',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessStatPlants => 'Plantas';
+
+  @override
+  String get gardenWellnessStatRecentCare => 'Cuidado reciente';
+
+  @override
+  String get gardenWellnessStatAtRisk => 'En riesgo';
+
+  @override
+  String get gardenWellnessRoomPulseTitle => 'Pulso por habitación';
+
+  @override
+  String gardenWellnessRoomPulseSummary(int plantCount, int overdueCount) {
+    return '$plantCount plantas · $overdueCount vencidas';
+  }
+
+  @override
+  String get gardenWellnessRoomPulseStable => 'estable';
+
+  @override
+  String gardenWellnessRoomPulseAtRisk(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count en riesgo',
+      one: '1 en riesgo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPrioritiesTitle => 'Prioridades de hoy';
+
+  @override
+  String get gardenWellnessFocusPlantsTitle => 'Plantas clave';
+
+  @override
+  String get gardenWellnessScoreLabel => 'puntuación';
+
+  @override
+  String get gardenWellnessScoreFlourishing => 'Floreciendo';
+
+  @override
+  String get gardenWellnessScoreSteady => 'Estable';
+
+  @override
+  String get gardenWellnessScoreNeedsLittleCare =>
+      'Necesita un poco de cuidado';
+
+  @override
+  String get gardenWellnessScoreNeedsAttention => 'Necesita atención';
+
+  @override
+  String gardenWellnessFocusReasonOverdueAndNoLog(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tareas vencidas · Sin registro reciente',
+      one: '1 tarea vencida · Sin registro reciente',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gardenWellnessFocusReasonOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tareas vencidas',
+      one: '1 tarea vencida',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessFocusReasonNoLog =>
+      'Sin registro reciente en 14 días';
+
+  @override
+  String get gardenWellnessFocusReasonSteady => 'Se ve estable';
+
+  @override
+  String gardenWellnessPriorityAttentionTitle(String plantName) {
+    return 'Revisa $plantName';
+  }
+
+  @override
+  String gardenWellnessPriorityAttentionBodyOverdueAndNoLog(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tareas vencidas y sin registro reciente.',
+      one: '1 tarea vencida y sin registro reciente.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gardenWellnessPriorityAttentionBodyOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tareas vencidas necesitan atención.',
+      one: '1 tarea vencida necesita atención.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPriorityAttentionBodyNoLog =>
+      'No hay registro reciente en los últimos 14 días.';
+
+  @override
+  String get gardenWellnessPriorityAttentionBodyCheckIn =>
+      'Esta planta necesita una revisión rápida.';
+
+  @override
+  String get gardenWellnessPriorityDueTodayTitle => 'Mantén el día en orden';
+
+  @override
+  String gardenWellnessPriorityDueTodayBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tareas vencen hoy.',
+      one: '1 tarea vence hoy.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPriorityRefreshHistoryTitle =>
+      'Actualiza el historial de cuidado';
+
+  @override
+  String gardenWellnessPriorityRefreshHistoryBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plantas no tienen un registro reciente.',
+      one: '1 planta no tiene un registro reciente.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gardenWellnessPriorityCalmTitle => 'Disfruta la calma';
+
+  @override
+  String get gardenWellnessPriorityCalmBody =>
+      'No hay asuntos urgentes hoy — tu jardín se ve estable.';
+
+  @override
+  String get gardenWellnessRoomUnassigned => 'Sin asignar';
+
+  @override
+  String get editPlantTitle => 'Editar planta';
+
+  @override
+  String get editPlantSaveButton => 'Guardar cambios';
+
+  @override
+  String get plantDetailMenuEdit => 'Editar planta';
+
+  @override
+  String get plantDetailMenuArchive => 'Archivar planta';
+
+  @override
+  String get plantDetailMenuDelete => 'Eliminar planta';
+
+  @override
+  String archivePlantTitle(String plantName) {
+    return '¿Archivar $plantName?';
+  }
+
+  @override
+  String get archivePlantBody =>
+      'Las plantas archivadas se ocultan de su jardín pero conservan su historial.';
+
+  @override
+  String get archivePlantConfirm => 'Archivar';
+
+  @override
+  String deletePlantTitle(String plantName) {
+    return '¿Eliminar $plantName?';
+  }
+
+  @override
+  String get deletePlantBody =>
+      'Esto elimina permanentemente la planta y todo su historial. No se puede deshacer.';
+
+  @override
+  String get deletePlantConfirm => 'Eliminar';
+
+  @override
+  String restorePlantTitle(String plantName) {
+    return '¿Restaurar $plantName?';
+  }
+
+  @override
+  String get restorePlantBody =>
+      'Esto devolverá la planta a su jardín y reanudará su cuidado.';
+
+  @override
+  String get restorePlantConfirm => 'Restaurar';
+
+  @override
+  String get gardenStatusArchived => 'Archivada';
+
+  @override
+  String get gardenSortTitle => 'Ordenar por';
+
+  @override
+  String get gardenFilterArchived => 'Archivadas';
+
+  @override
+  String get gardenSortCare => 'Necesita cuidado';
+
+  @override
+  String get gardenSortName => 'Nombre';
+
+  @override
+  String get gardenSortNewest => 'Más recientes';
+
+  @override
+  String get gardenSearchHint => 'Buscar plantas...';
+
+  @override
+  String archivePlantSuccess(String nickname) {
+    return 'Planta archivada exitosamente';
+  }
+
+  @override
+  String restorePlantSuccess(String nickname) {
+    return 'Planta restaurada exitosamente';
+  }
+
+  @override
+  String deletePlantSuccess(String nickname) {
+    return 'Planta eliminada exitosamente';
+  }
+
+  @override
+  String get commonConfirm => 'Confirmar';
 }

@@ -81,6 +81,26 @@ class BotanicaTheme {
           ),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(
+            horizontal: BotanicaTokens.spacingLg,
+            vertical: BotanicaTokens.spacingMd,
+          ),
+          textStyle: textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.1,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+          ),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          minimumSize: const Size.square(44),
+        ),
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -139,7 +159,7 @@ class BotanicaTheme {
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           return IconThemeData(
-            size: 24,
+            size: BotanicaTokens.iconSizeLg,
             color: selected
                 ? scheme.onSurface.withValues(alpha: 0.92)
                 : scheme.onSurface.withValues(alpha: 0.72),
@@ -198,7 +218,7 @@ class BotanicaTheme {
     WeatherKind weatherKind = WeatherKind.unknown,
   }) {
     const scaffoldBg = Color(0xFF070B09);
-    const surface = Color(0xFF0C1411);
+    const surface = Color(0xFF325344);
 
     final scheme = (dynamicScheme ??
             ColorScheme.fromSeed(
@@ -263,6 +283,26 @@ class BotanicaTheme {
           ),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(
+            horizontal: BotanicaTokens.spacingLg,
+            vertical: BotanicaTokens.spacingMd,
+          ),
+          textStyle: textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.1,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+          ),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          minimumSize: const Size.square(44),
+        ),
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -311,7 +351,7 @@ class BotanicaTheme {
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           return IconThemeData(
-            size: 24,
+            size: BotanicaTokens.iconSizeLg,
             color: selected
                 ? scheme.onSurface.withValues(alpha: 0.94)
                 : scheme.onSurface.withValues(alpha: 0.70),
@@ -322,6 +362,27 @@ class BotanicaTheme {
             fontWeight: FontWeight.w800,
             letterSpacing: -0.1,
           ),
+        ),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: scheme.surfaceContainerHighest.withValues(alpha: 0.98),
+        contentTextStyle: textTheme.bodyMedium?.copyWith(
+          color: scheme.onSurface,
+          fontWeight: FontWeight.w600,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(BotanicaTokens.radiusL),
+        ),
+      ),
+      chipTheme: ChipThemeData(
+        side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.5)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
+        ),
+        labelStyle: textTheme.labelLarge?.copyWith(
+          color: scheme.onSurface,
+          fontWeight: FontWeight.w600,
         ),
       ),
       extensions: <ThemeExtension<dynamic>>[

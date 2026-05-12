@@ -1,3 +1,4 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/botanica_tokens.dart';
@@ -28,8 +29,8 @@ class PlantDetailPill extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: scheme.onSurface.withValues(alpha: 0.72)),
-          const SizedBox(width: 6),
+          Icon(icon, size: BotanicaTokens.iconSizeSm, color: scheme.onSurface.withValues(alpha: 0.72)),
+          BotanicaGaps.hXxs,
           Text(
             label,
             style: textTheme.labelMedium?.copyWith(

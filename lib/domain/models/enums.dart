@@ -13,6 +13,24 @@ enum TemperatureUnit {
       };
 }
 
+enum LightLevel {
+  low,
+  medium,
+  high;
+
+  String get id => switch (this) {
+        LightLevel.low => 'low',
+        LightLevel.medium => 'medium',
+        LightLevel.high => 'high',
+      };
+
+  static LightLevel fromId(String? id) => switch (id) {
+        'low' => LightLevel.low,
+        'high' => LightLevel.high,
+        _ => LightLevel.medium,
+      };
+}
+
 enum EnvironmentMode {
   indoor,
   balcony,
@@ -122,17 +140,20 @@ enum TaskType {
 enum TaskStatus {
   pending,
   done,
-  snoozed;
+  snoozed,
+  skipped;
 
   String get id => switch (this) {
         TaskStatus.pending => 'pending',
         TaskStatus.done => 'done',
         TaskStatus.snoozed => 'snoozed',
+        TaskStatus.skipped => 'skipped',
       };
 
   static TaskStatus fromId(String? id) => switch (id) {
         'done' => TaskStatus.done,
         'snoozed' => TaskStatus.snoozed,
+        'skipped' => TaskStatus.skipped,
         _ => TaskStatus.pending,
       };
 }
@@ -141,6 +162,9 @@ enum CareAdjustmentReason {
   humidityLow,
   humidityHigh,
   hotTemperature,
+  springSeason,
+  summerSeason,
+  autumnSeason,
   winterSeason,
   outdoorMode;
 
@@ -148,6 +172,9 @@ enum CareAdjustmentReason {
         CareAdjustmentReason.humidityLow => 'humidity_low',
         CareAdjustmentReason.humidityHigh => 'humidity_high',
         CareAdjustmentReason.hotTemperature => 'hot_temperature',
+        CareAdjustmentReason.springSeason => 'spring_season',
+        CareAdjustmentReason.summerSeason => 'summer_season',
+        CareAdjustmentReason.autumnSeason => 'autumn_season',
         CareAdjustmentReason.winterSeason => 'winter_season',
         CareAdjustmentReason.outdoorMode => 'outdoor_mode',
       };
@@ -186,5 +213,29 @@ enum Season {
         'summer' => Season.summer,
         'autumn' => Season.autumn,
         _ => Season.winter,
+      };
+}
+
+enum SeasonalSource {
+  defaultBase,
+  growingSeasonData,
+  dormantSeasonData,
+  winterFallback,
+  summerFallback;
+
+  String get id => switch (this) {
+        SeasonalSource.defaultBase => 'default_base',
+        SeasonalSource.growingSeasonData => 'growing_season_data',
+        SeasonalSource.dormantSeasonData => 'dormant_season_data',
+        SeasonalSource.winterFallback => 'winter_fallback',
+        SeasonalSource.summerFallback => 'summer_fallback',
+      };
+
+  static SeasonalSource fromId(String? id) => switch (id) {
+        'growing_season_data' => SeasonalSource.growingSeasonData,
+        'dormant_season_data' => SeasonalSource.dormantSeasonData,
+        'winter_fallback' => SeasonalSource.winterFallback,
+        'summer_fallback' => SeasonalSource.summerFallback,
+        _ => SeasonalSource.defaultBase,
       };
 }

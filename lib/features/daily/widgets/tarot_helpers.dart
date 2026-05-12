@@ -1,9 +1,11 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/botanica_tokens.dart';
 import '../../../core/haptics/botanica_haptics.dart';
+import '../../../core/utils/motion_preferences.dart';
 import '../../../core/widgets/glass_card.dart';
 import '../../../gen/l10n/app_localizations.dart';
 
@@ -34,9 +36,8 @@ String tarotLabel(AppLocalizations l10n, String id) => switch (id) {
     };
 
 String tarotAssetForId(String id) {
-  final normalized = id.trim().toLowerCase();
-  if (normalized.isEmpty) return 'assets/placeholders/tarot/unknown.png';
-  return 'assets/placeholders/tarot/$normalized.png';
+  // Using the newly generated asset for all tarot cards until specific ones are available
+  return 'assets/images/daily_tarot.png';
 }
 
 class TarotVariantBadge extends StatelessWidget {
@@ -75,13 +76,13 @@ class TarotVariantBadge extends StatelessWidget {
                 fit: BoxFit.cover,
                 filterQuality: FilterQuality.high,
                 errorBuilder: (_, __, ___) => Image.asset(
-                  'assets/placeholders/tarot/unknown.png',
+                  'assets/images/placeholder_tarot.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          BotanicaGaps.hSm,
           Text(
             label,
             style: textTheme.labelLarge?.copyWith(
@@ -173,11 +174,13 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
     if (_saving || _dealing || _dealt) return;
 
     BotanicaHaptics.primaryPress();
+    final reduceMotion = botanicaReduceMotion(context);
     setState(() {
       _dealt = true;
-      _dealing = true;
-      _dealStep = 0;
+      _dealing = !reduceMotion;
+      _dealStep = reduceMotion ? widget.options.length : 0;
     });
+    if (reduceMotion) return;
 
     for (var i = 0; i < widget.options.length; i++) {
       await Future<void>.delayed(BotanicaTokens.motionFast);
@@ -197,12 +200,17 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
     if (index < 0 || index >= widget.options.length) return;
 
     BotanicaHaptics.revealClimax();
+    final reduceMotion = botanicaReduceMotion(context);
     setState(() {
       _pickedIndex = index;
       _saving = true;
     });
 
-    await _revealController.forward(from: 0);
+    if (reduceMotion) {
+      _revealController.value = 1;
+    } else {
+      await _revealController.forward(from: 0);
+    }
 
     final id = widget.options[index];
     await widget.onSelect(id);
@@ -216,6 +224,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final reduceMotion = botanicaReduceMotion(context);
 
     Widget cardBack() {
       return DecoratedBox(
@@ -238,7 +247,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
           child: Icon(
             Icons.style_rounded,
             color: scheme.onSurface.withValues(alpha: 0.70),
-            size: 28,
+            size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingMicro,
           ),
         ),
       );
@@ -252,7 +261,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
           fit: BoxFit.cover,
           filterQuality: FilterQuality.high,
           errorBuilder: (_, __, ___) => Image.asset(
-            'assets/placeholders/tarot/unknown.png',
+            'assets/images/placeholder_tarot.jpg',
             fit: BoxFit.cover,
           ),
         ),
@@ -260,7 +269,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
     }
 
     return BotanicaGlassCard(
-      padding: const EdgeInsets.all(14),
+      padding: BotanicaTokens.cardPaddingDense,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -270,7 +279,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
                 Icons.style_rounded,
                 color: scheme.onSurface.withValues(alpha: 0.80),
               ),
-              const SizedBox(width: 10),
+              BotanicaGaps.hSm,
               Expanded(
                 child: Text(
                   l10n.dailyTarotDrawTitle,
@@ -282,7 +291,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          BotanicaGaps.vXxs,
           Text(
             l10n.dailyTarotDrawBody,
             style: textTheme.bodySmall?.copyWith(
@@ -290,7 +299,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
               height: 1.35,
             ),
           ),
-          const SizedBox(height: 14),
+          BotanicaGaps.vSm,
           if (!_dealt)
             SizedBox(
               width: double.infinity,
@@ -371,7 +380,7 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
                   Widget face() {
                     if (selected && hasPick) {
                       return _FlipCard(
-                        t: revealT,
+                        t: reduceMotion ? 1 : revealT,
                         back: cardBack(),
                         front: cardFront(id),
                       );
@@ -380,7 +389,9 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
                   }
 
                   final child = AnimatedContainer(
-                    duration: BotanicaTokens.motionMedium,
+                    duration: reduceMotion
+                        ? Duration.zero
+                        : BotanicaTokens.motionMedium,
                     curve: BotanicaTokens.curveReveal,
                     width: cardWidth,
                     height: cardHeight,
@@ -409,16 +420,20 @@ class _TarotDrawFlowCardState extends State<TarotDrawFlowCard>
                   );
 
                   return AnimatedPositioned(
-                    duration: BotanicaTokens.motionSlow,
+                    duration:
+                        reduceMotion ? Duration.zero : BotanicaTokens.motionSlow,
                     curve: BotanicaTokens.curveReveal,
                     left: basePos.dx,
                     top: basePos.dy,
                     child: AnimatedRotation(
-                      duration: BotanicaTokens.motionSlow,
+                      duration:
+                          reduceMotion ? Duration.zero : BotanicaTokens.motionSlow,
                       curve: BotanicaTokens.curveReveal,
                       turns: turns,
                       child: AnimatedOpacity(
-                        duration: BotanicaTokens.motionMedium,
+                        duration: reduceMotion
+                            ? Duration.zero
+                            : BotanicaTokens.motionMedium,
                         curve: BotanicaTokens.curveReveal,
                         opacity: fadeOut,
                         child: Transform.translate(

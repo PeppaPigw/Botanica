@@ -1,8 +1,11 @@
+import 'dart:ui';
+
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
-import 'glass_card.dart';
+import '../utils/motion_preferences.dart';
 
 @immutable
 class BotanicaNavDestination {
@@ -35,100 +38,181 @@ class BotanicaNavPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final reduceMotion = botanicaReduceMotion(context);
 
-    return BotanicaGlassCard(
-      tier: GlassTier.subtle,
-      padding: const EdgeInsets.symmetric(
-        horizontal: BotanicaTokens.spacingXxs,
-        vertical: BotanicaTokens.spacingTiny,
-      ),
-      borderRadius: BotanicaTokens.radiusPill,
-      child: SizedBox(
-        height: 56,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final count = destinations.length;
-            final safeIndex = currentIndex.clamp(0, count - 1);
-            const minHitWidth = 48.0;
+    final glass = Theme.of(context).extension<BotanicaGlassTheme>();
+    final recipe = glass?.subtle ??
+        const BotanicaGlassRecipe(
+          blurSigma: 18,
+          backgroundOpacity: 0.66,
+          borderOpacity: 0.38,
+          shadowOpacity: 0.08,
+          shadowBlurRadius: 24,
+          shadowOffsetY: 14,
+        );
 
-            // A premium pill pattern: the selected tab can expand to show a
-            // label inline while preserving 48px+ tap targets for all items.
-            const selectedFlex = 2;
-            final expandedUnitWidth = constraints.maxWidth / (count + 1);
-            final canExpandSelected = expandedUnitWidth >= minHitWidth;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: recipe.blurSigma + 4,
+          sigmaY: recipe.blurSigma + 4,
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: BotanicaTokens.spacingXxs,
+            vertical: BotanicaTokens.spacingTiny,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                scheme.surface.withValues(
+                  alpha: recipe.backgroundOpacity + 0.08,
+                ),
+                scheme.surface.withValues(alpha: recipe.backgroundOpacity),
+              ],
+            ),
+            border: Border.all(
+              color: scheme.outlineVariant.withValues(alpha: 0.32),
+              width: 0.8,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: scheme.shadow.withValues(alpha: recipe.shadowOpacity),
+                blurRadius: recipe.shadowBlurRadius,
+                offset: Offset(0, recipe.shadowOffsetY),
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Material(
+                color: Colors.transparent,
+                child: SizedBox(
+                  height: 56,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final count = destinations.length;
+                      final safeIndex = currentIndex.clamp(0, count - 1);
+                      const minHitWidth = 48.0;
 
-            final unitWidth = canExpandSelected
-                ? expandedUnitWidth
-                : constraints.maxWidth / count;
-            final selectedWidth =
-                canExpandSelected ? unitWidth * selectedFlex : unitWidth;
+                      const selectedFlex = 2;
+                      final expandedUnitWidth =
+                          constraints.maxWidth / (count + 1);
+                      final canExpandSelected =
+                          expandedUnitWidth >= minHitWidth;
 
-            final showInlineLabel =
-                canExpandSelected ? selectedWidth >= 104 : unitWidth >= 92;
+                      final unitWidth = canExpandSelected
+                          ? expandedUnitWidth
+                          : constraints.maxWidth / count;
+                      final selectedWidth = canExpandSelected
+                          ? unitWidth * selectedFlex
+                          : unitWidth;
 
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                AnimatedPositioned(
-                  duration: BotanicaTokens.motionMedium,
-                  curve: Curves.easeOutCubic,
-                  left: unitWidth * safeIndex,
-                  top: 0,
-                  bottom: 0,
-                  width: selectedWidth,
-                  child: Padding(
-                    padding: const EdgeInsets.all(BotanicaTokens.spacingTiny),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(BotanicaTokens.radiusPill),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            scheme.primaryContainer.withValues(alpha: 0.62),
-                            scheme.surface.withValues(alpha: 0.25),
-                          ],
-                        ),
-                        border: Border.all(
-                          color: scheme.outlineVariant.withValues(alpha: 0.55),
-                        ),
-                      ),
+                      final showInlineLabel = canExpandSelected
+                          ? selectedWidth >= 104
+                          : unitWidth >= 92;
+
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AnimatedPositionedDirectional(
+                            duration: reduceMotion
+                                ? Duration.zero
+                                : BotanicaTokens.motionMedium,
+                            curve: Curves.easeOutCubic,
+                            start: unitWidth * safeIndex,
+                            top: 0,
+                            bottom: 0,
+                            width: selectedWidth,
+                            child: Padding(
+                              padding: const EdgeInsets.all(
+                                BotanicaTokens.spacingTiny,
+                              ),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    BotanicaTokens.radiusPill,
+                                  ),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      scheme.primaryContainer
+                                          .withValues(alpha: 0.62),
+                                      scheme.surface.withValues(alpha: 0.25),
+                                    ],
+                                  ),
+                                  border: Border.all(
+                                    color: scheme.outlineVariant
+                                        .withValues(alpha: 0.55),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              for (var index = 0;
+                                  index < destinations.length;
+                                  index++)
+                                AnimatedContainer(
+                                  duration: reduceMotion
+                                      ? Duration.zero
+                                      : BotanicaTokens.motionMedium,
+                                  curve: Curves.easeOutCubic,
+                                  width: canExpandSelected
+                                      ? (safeIndex == index
+                                          ? selectedWidth
+                                          : unitWidth)
+                                      : unitWidth,
+                                  child: _NavItem(
+                                    destination: destinations[index],
+                                    selected: safeIndex == index,
+                                    showInlineLabel: showInlineLabel,
+                                    labelStyle: (textTheme.labelLarge ??
+                                            textTheme.labelMedium ??
+                                            const TextStyle())
+                                        .copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 0,
+                                      color: scheme.onSurface
+                                          .withValues(alpha: 0.86),
+                                    ),
+                                    iconColor: scheme.onSurface.withValues(
+                                      alpha: safeIndex == index ? 0.92 : 0.72,
+                                    ),
+                                    onTap: () => onSelect(index),
+                                    reduceMotion: reduceMotion,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              PositionedDirectional(
+                top: 0,
+                start: BotanicaTokens.spacingMd,
+                end: BotanicaTokens.spacingMd,
+                height: 1,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.30),
+                    borderRadius: BorderRadius.circular(
+                      BotanicaTokens.radiusPill,
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    for (var index = 0; index < destinations.length; index++)
-                      AnimatedContainer(
-                        duration: BotanicaTokens.motionMedium,
-                        curve: Curves.easeOutCubic,
-                        width: canExpandSelected
-                            ? (safeIndex == index ? selectedWidth : unitWidth)
-                            : unitWidth,
-                        child: _NavItem(
-                          destination: destinations[index],
-                          selected: safeIndex == index,
-                          showInlineLabel: showInlineLabel,
-                          labelStyle: (textTheme.labelLarge ??
-                                  textTheme.labelMedium ??
-                                  const TextStyle())
-                              .copyWith(
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: -0.1,
-                            color: scheme.onSurface.withValues(alpha: 0.86),
-                          ),
-                          iconColor: scheme.onSurface.withValues(
-                            alpha: safeIndex == index ? 0.92 : 0.72,
-                          ),
-                          onTap: () => onSelect(index),
-                        ),
-                      ),
-                  ],
-                ),
-              ],
-            );
-          },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -143,6 +227,7 @@ class _NavItem extends StatelessWidget {
     required this.showInlineLabel,
     required this.labelStyle,
     required this.iconColor,
+    required this.reduceMotion,
   });
 
   final BotanicaNavDestination destination;
@@ -151,6 +236,7 @@ class _NavItem extends StatelessWidget {
   final bool showInlineLabel;
   final TextStyle labelStyle;
   final Color iconColor;
+  final bool reduceMotion;
 
   @override
   Widget build(BuildContext context) {
@@ -160,18 +246,22 @@ class _NavItem extends StatelessWidget {
       final resolved = selected ? destination.selectedIcon : destination.icon;
 
       return AnimatedScale(
-        duration: BotanicaTokens.motionFast,
+        duration: reduceMotion ? Duration.zero : BotanicaTokens.motionFast,
         curve: Curves.easeOutCubic,
         scale: selected ? 1.06 : 1,
         child: AnimatedSwitcher(
-          duration: BotanicaTokens.motionFast,
+          duration: reduceMotion ? Duration.zero : BotanicaTokens.motionFast,
           switchInCurve: Curves.easeOutCubic,
           switchOutCurve: Curves.easeInCubic,
+          transitionBuilder: (child, animation) {
+            if (reduceMotion) return child;
+            return FadeTransition(opacity: animation, child: child);
+          },
           child: Icon(
             resolved,
             key: ValueKey<IconData>(resolved),
             color: iconColor,
-            size: 24,
+            size: BotanicaTokens.iconSizeLg,
           ),
         ),
       );
@@ -184,10 +274,11 @@ class _NavItem extends StatelessWidget {
       );
 
       return AnimatedSwitcher(
-        duration: BotanicaTokens.motionMedium,
+        duration: reduceMotion ? Duration.zero : BotanicaTokens.motionMedium,
         switchInCurve: Curves.easeOutCubic,
         switchOutCurve: Curves.easeInCubic,
         transitionBuilder: (child, animation) {
+          if (reduceMotion) return child;
           return FadeTransition(
             opacity: animation,
             child: SlideTransition(
@@ -232,7 +323,7 @@ class _NavItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           icon(),
-          const SizedBox(height: 4),
+          BotanicaGaps.vTiny,
           FittedBox(
             fit: BoxFit.scaleDown,
             child: label(),
@@ -254,7 +345,8 @@ class _NavItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
             child: Center(
               child: AnimatedContainer(
-                duration: BotanicaTokens.motionMedium,
+                duration:
+                    reduceMotion ? Duration.zero : BotanicaTokens.motionMedium,
                 curve: Curves.easeOutCubic,
                 padding: EdgeInsets.symmetric(
                   horizontal: selected ? BotanicaTokens.spacingTiny : 0,

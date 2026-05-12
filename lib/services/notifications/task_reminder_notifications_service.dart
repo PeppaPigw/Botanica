@@ -147,7 +147,7 @@ class FlutterLocalTaskReminderNotificationsService
   @override
   Future<void> cancelForTask(TaskInstance task) async {
     await init();
-    await _plugin.cancel(taskReminderNotificationId(task.id));
+    await _plugin.cancel(taskReminderNotificationIdForTask(task));
   }
 
   @override
@@ -164,10 +164,10 @@ class FlutterLocalTaskReminderNotificationsService
     for (final task in tasks) {
       final scheduledAt =
           (reminderAtResolver?.call(task) ?? task.dueAt).toLocal();
-      if (task.isDone) continue;
+      if (task.isDismissed) continue;
       if (!scheduledAt.isAfter(now)) continue;
 
-      final id = taskReminderNotificationId(task.id);
+      final id = taskReminderNotificationIdForTask(task);
       desiredById[id] = taskReminderNotificationPayload(task.id);
     }
 
@@ -198,9 +198,9 @@ class FlutterLocalTaskReminderNotificationsService
     DateTime? reminderAt,
     TaskReminderNotificationContent? content,
   }) async {
-    final id = taskReminderNotificationId(task.id);
+    final id = taskReminderNotificationIdForTask(task);
 
-    if (task.isDone) {
+    if (task.isDismissed) {
       await _plugin.cancel(id);
       return;
     }
@@ -300,7 +300,14 @@ class FlutterLocalTaskReminderNotificationsService
     };
 
     return TaskReminderNotificationContent(
-      title: 'Plant care reminder',
+      title: switch (task.type) {
+        TaskType.water => 'Time to water your plant',
+        TaskType.fertilize => 'Fertilize your plant today',
+        TaskType.mist => 'Your plant would love some misting',
+        TaskType.rotate => 'Give your plant a quarter turn',
+        TaskType.prune => 'Your plant is ready for pruning',
+        _ => 'Plant care reminder',
+      },
       body: '$verb task is due.',
     );
   }

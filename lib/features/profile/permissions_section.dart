@@ -1,12 +1,14 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_state_card.dart';
+import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/permissions/permissions_service.dart';
@@ -99,20 +101,21 @@ class PermissionsSection extends ConsumerWidget {
                 ),
               ],
             ),
-          ).animate().fadeIn(delay: 200.ms, duration: 420.ms),
+          ).animateSection(index: 0),
           error: (_, __) => BotanicaStateCard(
             icon: Icons.cloud_off_rounded,
             title: l10n.stateLoadFailedTitle,
             body: l10n.stateLoadFailedBody,
-            primaryAction: OutlinedButton.icon(
+            primaryAction: BotanicaButton(
+              variant: BotanicaButtonVariant.outlined,
               onPressed: () =>
                   ref.read(permissionsControllerProvider.notifier).refresh(),
-              icon: const Icon(Icons.refresh_rounded),
-              label: Text(l10n.commonTryAgain),
+              icon: Icons.refresh_rounded,
+              label: l10n.commonTryAgain,
             ),
-          ).animate().fadeIn(delay: 200.ms, duration: 420.ms),
+          ).animateSection(index: 0),
           loading: () => BotanicaGlassCard(
-            padding: const EdgeInsets.all(16),
+            padding: BotanicaTokens.cardPadding,
             child: Row(
               children: [
                 SizedBox(
@@ -125,7 +128,7 @@ class PermissionsSection extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                BotanicaGaps.hSm,
                 Text(
                   l10n.commonLoading,
                   style: textTheme.bodyMedium?.copyWith(
@@ -134,7 +137,7 @@ class PermissionsSection extends ConsumerWidget {
                 ),
               ],
             ),
-          ).animate().fadeIn(delay: 200.ms, duration: 420.ms),
+          ).animateSection(index: 0),
         ),
       ],
     );

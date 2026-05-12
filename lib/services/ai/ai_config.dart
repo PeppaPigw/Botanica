@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 enum AiAuthMode {
   /// Calls an unauthenticated proxy (recommended for production).
   none,
@@ -37,7 +39,7 @@ class AiConfig {
         'BOTANICA_AI_BASE_URL',
         // Default to a local proxy for development. For devices/emulators you
         // may need to override this (e.g. Android emulator: 10.0.2.2).
-        defaultValue: 'http://localhost:8787',
+        defaultValue: kReleaseMode ? 'https://ai.botanica-app.com/v1' : 'http://localhost:8787',
       ),
       model: const String.fromEnvironment(
         'BOTANICA_AI_MODEL',

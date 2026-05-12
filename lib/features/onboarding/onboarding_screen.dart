@@ -1,8 +1,10 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../gen/l10n/app_localizations.dart';
 import 'permissions_screen.dart';
@@ -46,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _OnboardingPageData(
         title: l10n.onboardingTitle1,
         body: l10n.onboardingBody1,
-        imagePath: 'assets/illustrations/onboarding_garden.jpg',
+        imagePath: 'assets/images/onboarding/onboarding_1.png',
         fallbackIcon: Icons.collections_bookmark_rounded,
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -60,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _OnboardingPageData(
         title: l10n.onboardingTitle2,
         body: l10n.onboardingBody2,
-        imagePath: 'assets/illustrations/onboarding_smart_care.jpg',
+        imagePath: 'assets/images/onboarding/onboarding_2.png',
         fallbackIcon: Icons.eco_rounded,
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -74,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _OnboardingPageData(
         title: l10n.onboardingTitle3,
         body: l10n.onboardingBody3,
-        imagePath: 'assets/illustrations/onboarding_daily_flower.jpg',
+        imagePath: 'assets/images/onboarding/onboarding_3.png',
         fallbackIcon: Icons.auto_awesome_rounded,
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -103,7 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              BotanicaGaps.vXs,
               Expanded(
                 child: PageView.builder(
                   controller: _controller,
@@ -116,12 +118,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 18),
+              BotanicaGaps.vBase,
               _Dots(
                 count: pages.length,
                 index: _pageIndex,
               ),
-              const SizedBox(height: 18),
+              BotanicaGaps.vBase,
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
@@ -139,7 +141,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       : l10n.onboardingCta),
                 ),
               ),
-              const SizedBox(height: 10),
+              BotanicaGaps.vSm,
               Text(
                 l10n.appName,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -187,78 +189,90 @@ class _OnboardingPage extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+    final visual = Container(
+      width: double.infinity,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+        border: Border.all(
+          color: scheme.outlineVariant.withValues(alpha: 0.45),
+        ),
+      ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            data.imagePath,
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.high,
+            errorBuilder: (_, __, ___) => DecoratedBox(
+              decoration: BoxDecoration(gradient: data.gradient),
+              child: Center(
+                child: Icon(
+                  data.fallbackIcon,
+                  size: 46,
+                  color: scheme.onSurface.withValues(alpha: 0.78),
+                ),
+              ),
+            ),
+          ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  scheme.surface.withValues(alpha: 0.15),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
     return Column(
       children: [
         Expanded(
-          child: Container(
-            width: double.infinity,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
-              border: Border.all(
-                color: scheme.outlineVariant.withValues(alpha: 0.45),
-              ),
-            ),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Image.asset(
-                  data.imagePath,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.high,
-                  errorBuilder: (_, __, ___) => DecoratedBox(
-                    decoration: BoxDecoration(gradient: data.gradient),
-                    child: Center(
-                      child: Icon(
-                        data.fallbackIcon,
-                        size: 46,
-                        color: scheme.onSurface.withValues(alpha: 0.78),
-                      ),
-                    ),
-                  ),
+          child: visual.animateIfAllowed(
+            context,
+            (child) => child
+                .animate(
+                  target: active ? 1 : 0,
+                )
+                .scale(
+                  begin: const Offset(0.97, 0.97),
+                  end: const Offset(1.0, 1.0),
+                  duration: BotanicaTokens.motionMedium,
+                  curve: BotanicaTokens.curveReveal,
+                )
+                .fadeIn(
+                  duration: BotanicaTokens.motionMedium,
+                  delay: BotanicaTokens.motionStagger * index,
+                  curve: BotanicaTokens.curveReveal,
                 ),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        scheme.surface.withValues(alpha: 0.15),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-              .animate(
-                target: active ? 1 : 0,
-              )
-              .scale(
-                begin: const Offset(0.97, 0.97),
-                end: const Offset(1.0, 1.0),
-                duration: 420.ms,
-                curve: Curves.easeOutCubic,
-              )
-              .fadeIn(duration: 420.ms, delay: (index * 60).ms),
+          ),
         ),
-        const SizedBox(height: 22),
+        BotanicaGaps.vLg,
         Text(
           data.title,
           textAlign: TextAlign.center,
-          style: textTheme.headlineSmall?.copyWith(
+          style: textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w600,
-            letterSpacing: -0.3,
+            letterSpacing: -0.5,
           ),
         ),
-        const SizedBox(height: 10),
-        Text(
-          data.body,
-          textAlign: TextAlign.center,
-          style: textTheme.bodyMedium?.copyWith(
-            color: scheme.onSurface.withValues(alpha: 0.74),
-            height: 1.45,
+        BotanicaGaps.vSm,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            data.body,
+            textAlign: TextAlign.center,
+            style: textTheme.bodyLarge?.copyWith(
+              color: scheme.onSurface.withValues(alpha: 0.74),
+              height: 1.5,
+            ),
           ),
         ),
       ],

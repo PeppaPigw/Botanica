@@ -13,12 +13,23 @@ class DiaryRepository {
 
   factory DiaryRepository.local() => DiaryRepository(LocalDb.diaryBox);
 
-  List<DiaryEntry> forPlant(String plantId) {
+  List<DiaryEntry> all() {
     final items = _box.values
         .map((e) => DiaryEntry.fromJson(Map<String, dynamic>.from(e)))
-        .where((p) => p.plantId == plantId)
         .toList(growable: false)
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return items;
+  }
+
+  Stream<List<DiaryEntry>> watchAll() async* {
+    yield all();
+    yield* _box.watch().map((_) => all()).distinct(_listEq.equals);
+  }
+
+  List<DiaryEntry> forPlant(String plantId) {
+    final items = all()
+        .where((p) => p.plantId == plantId)
+        .toList(growable: false);
     return items;
   }
 

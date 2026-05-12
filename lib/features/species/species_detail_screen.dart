@@ -1,5 +1,5 @@
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +7,10 @@ import 'package:go_router/go_router.dart';
 import '../../app/providers.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../core/i18n/species_labels.dart';
+import '../../core/widgets/botanica_animated_section.dart';
+import '../../core/widgets/botanica_chip.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
+import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../domain/models/plant_idea.dart';
@@ -53,14 +56,16 @@ class SpeciesDetailScreen extends ConsumerWidget {
               icon: Icons.cloud_off_rounded,
               title: l10n.stateLoadFailedTitle,
               body: l10n.stateLoadFailedBody,
-              primaryAction: OutlinedButton.icon(
+              primaryAction: BotanicaButton(
+                variant: BotanicaButtonVariant.outlined,
                 onPressed: () => ref.invalidate(speciesListProvider),
-                icon: const Icon(Icons.refresh_rounded),
-                label: Text(l10n.commonTryAgain),
+                icon: Icons.refresh_rounded,
+                label: l10n.commonTryAgain,
               ),
-              secondaryAction: TextButton(
+              secondaryAction: BotanicaButton(
+                variant: BotanicaButtonVariant.text,
                 onPressed: () => context.pop(),
-                child: Text(l10n.commonClose),
+                label: l10n.commonClose,
               ),
             ),
           ),
@@ -96,18 +101,20 @@ class SpeciesDetailScreen extends ConsumerWidget {
                     icon: Icons.cloud_off_rounded,
                     title: l10n.stateLoadFailedTitle,
                     body: l10n.stateLoadFailedBody,
-                    primaryAction: OutlinedButton.icon(
+                    primaryAction: BotanicaButton(
+                      variant: BotanicaButtonVariant.outlined,
                       onPressed: () {
                         ref.invalidate(plantIdeaMapProvider);
                         ref.invalidate(plantIdeaListProvider);
                         ref.invalidate(plantIdeaByIdProvider(speciesId));
                       },
-                      icon: const Icon(Icons.refresh_rounded),
-                      label: Text(l10n.commonTryAgain),
+                      icon: Icons.refresh_rounded,
+                      label: l10n.commonTryAgain,
                     ),
-                    secondaryAction: TextButton(
+                    secondaryAction: BotanicaButton(
+                      variant: BotanicaButtonVariant.text,
                       onPressed: () => context.pop(),
-                      child: Text(l10n.commonClose),
+                      label: l10n.commonClose,
                     ),
                   ),
                 ),
@@ -124,10 +131,11 @@ class SpeciesDetailScreen extends ConsumerWidget {
                         icon: Icons.spa_rounded,
                         title: l10n.stateNotAvailableTitle,
                         body: l10n.stateNotAvailableBody,
-                        primaryAction: OutlinedButton.icon(
+                        primaryAction: BotanicaButton(
+                          variant: BotanicaButtonVariant.outlined,
                           onPressed: () => context.pop(),
-                          icon: const Icon(Icons.close_rounded),
-                          label: Text(l10n.commonClose),
+                          icon: Icons.close_rounded,
+                          label: l10n.commonClose,
                         ),
                       ),
                     ),
@@ -139,7 +147,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
               final habit = idea.habit(localeCode);
               final history = idea.history(localeCode);
               final image = idea.imagePath.trim().isEmpty
-                  ? 'assets/placeholders/species/unknown.png'
+                  ? 'assets/images/placeholder_plant.jpg'
                   : idea.imagePath.trim();
 
               return BotanicaPageScaffold(
@@ -161,7 +169,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
                                 errorBuilder: (_, __, ___) => Image.asset(
-                                  'assets/placeholders/species/unknown.png',
+                                  'assets/images/placeholder_plant.jpg',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -173,8 +181,8 @@ class SpeciesDetailScreen extends ConsumerWidget {
                                     stops: const [0.0, 0.45, 1.0],
                                     colors: [
                                       Colors.transparent,
-                                      scheme.surface.withValues(alpha: 0.15),
-                                      scheme.surface.withValues(alpha: 0.72),
+                                      scheme.surface.withValues(alpha: 0.35),
+                                      scheme.surface.withValues(alpha: 0.95),
                                     ],
                                   ),
                                 ),
@@ -201,7 +209,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                                           letterSpacing: -0.6,
                                         ),
                                       ),
-                                      const SizedBox(height: 4),
+                                      BotanicaGaps.vTiny,
                                       Text(
                                         idea.scientificName,
                                         style: textTheme.bodyMedium?.copyWith(
@@ -212,7 +220,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                                       ),
                                       if (habit != null &&
                                           habit.trim().isNotEmpty) ...[
-                                        const SizedBox(height: 8),
+                                        BotanicaGaps.vXs,
                                         Text(
                                           habit.trim(),
                                           maxLines: 2,
@@ -231,10 +239,10 @@ class SpeciesDetailScreen extends ConsumerWidget {
                             ],
                           ),
                         ),
-                      ).animate().fadeIn(duration: 420.ms).slideY(begin: 0.04),
-                      const SizedBox(height: 14),
+                      ).animateSection(index: 0),
+                      BotanicaGaps.vSm,
                       BotanicaGlassCard(
-                        padding: const EdgeInsets.all(14),
+                        padding: BotanicaTokens.cardPaddingDense,
                         child: Wrap(
                           spacing: 10,
                           runSpacing: 10,
@@ -266,11 +274,11 @@ class SpeciesDetailScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
-                      ).animate().fadeIn(delay: 120.ms, duration: 420.ms),
-                      const SizedBox(height: 14),
+                      ).animateSection(index: 1),
+                      BotanicaGaps.vSm,
                       if (habit != null && habit.trim().isNotEmpty) ...[
                         _SectionHeader(title: l10n.speciesDetailHabit),
-                        const SizedBox(height: 10),
+                        BotanicaGaps.vSm,
                         BotanicaGlassCard(
                           child: Text(
                             habit.trim(),
@@ -279,12 +287,12 @@ class SpeciesDetailScreen extends ConsumerWidget {
                               height: 1.5,
                             ),
                           ),
-                        ).animate().fadeIn(delay: 150.ms, duration: 420.ms),
-                        const SizedBox(height: 14),
+                        ).animateSection(index: 2),
+                        BotanicaGaps.vSm,
                       ],
                       if (history != null && history.trim().isNotEmpty) ...[
                         _SectionHeader(title: l10n.speciesDetailHistory),
-                        const SizedBox(height: 10),
+                        BotanicaGaps.vSm,
                         BotanicaGlassCard(
                           child: Text(
                             history.trim(),
@@ -293,45 +301,71 @@ class SpeciesDetailScreen extends ConsumerWidget {
                               height: 1.5,
                             ),
                           ),
-                        ).animate().fadeIn(delay: 170.ms, duration: 420.ms),
-                        const SizedBox(height: 14),
+                        ).animateSection(index: 3),
+                        BotanicaGaps.vSm,
                       ],
                       _SectionHeader(title: l10n.speciesDetailCareAtAGlance),
-                      const SizedBox(height: 10),
-                      BotanicaGlassCard(
-                        padding: const EdgeInsets.all(14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _FactRow(
-                              icon: Icons.water_drop_rounded,
-                              title: l10n.taskTypeWater,
-                              value: l10n.speciesDetailWaterEvery(
-                                idea.careDefaults.waterBaseDays,
-                              ),
+                      BotanicaGaps.vSm,
+                      _CareFactsGrid(
+                        facts: [
+                          _CareFact(
+                            icon: Icons.water_drop_rounded,
+                            title: l10n.taskTypeWater,
+                            value: l10n.speciesDetailWaterEvery(
+                              idea.careDefaults.waterBaseDays,
                             ),
-                            const SizedBox(height: 10),
-                            _FactRow(
-                              icon: Icons.science_rounded,
-                              title: l10n.taskTypeFertilize,
-                              value: l10n.speciesDetailFertilizeEvery(
-                                idea.careDefaults.fertilizeBaseDays,
-                              ),
+                          ),
+                          _CareFact(
+                            icon: Icons.wb_sunny_rounded,
+                            title: l10n.careKeyLight,
+                            value: (idea.light ?? '').trim().isEmpty
+                                ? l10n.speciesDetailUnknown
+                                : lightLabel(l10n, idea.light!.trim()),
+                          ),
+                          _CareFact(
+                            icon: Icons.school_rounded,
+                            title: l10n.discoverFilterDifficulty,
+                            value: (idea.difficulty ?? '').trim().isEmpty
+                                ? l10n.speciesDetailUnknown
+                                : difficultyLabel(
+                                    l10n,
+                                    idea.difficulty!.trim(),
+                                  ),
+                          ),
+                          _CareFact(
+                            icon: Icons.pets_rounded,
+                            title: l10n.speciesDetailToxicity,
+                            value: idea.petSafe
+                                ? l10n.discoverTagPetSafe
+                                : l10n.discoverTagToxic,
+                          ),
+                          _CareFact(
+                            icon: Icons.trending_up_rounded,
+                            title: l10n.speciesDetailGrowth,
+                            value: (idea.growth?.rate ?? '').trim().isEmpty
+                                ? l10n.speciesDetailUnknown
+                                : _growthRateLabel(
+                                    l10n,
+                                    idea.growth!.rate!.trim(),
+                                  ),
+                          ),
+                          _CareFact(
+                            icon: Icons.straighten_rounded,
+                            title: l10n.speciesDetailDetails,
+                            value: idea.growth?.matureSizeCm == null
+                                ? l10n.speciesDetailUnknown
+                                : _ideaMatureSizeLabel(
+                                    l10n,
+                                    idea.growth!.matureSizeCm!,
+                                  ),
                             ),
-                            if (idea.careDefaults.mistBaseDays > 0) ...[
-                              const SizedBox(height: 10),
-                              _FactRow(
-                                icon: Icons.blur_on_rounded,
-                                title: l10n.taskTypeMist,
-                                value: l10n.speciesDetailMistEvery(
-                                  idea.careDefaults.mistBaseDays,
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ).animate().fadeIn(delay: 200.ms, duration: 420.ms),
-                      const SizedBox(height: 14),
+                        ],
+                      ).animateSection(index: 4),
+                      if (idea.tags.isNotEmpty) ...[
+                        BotanicaGaps.vSm,
+                        _GoodForTags(tags: idea.tags).animateSection(index: 5),
+                      ],
+                      BotanicaGaps.vSm,
                       _ResourcesSection(idea: idea),
                       SizedBox(
                         width: double.infinity,
@@ -351,7 +385,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                             ),
                           ),
                         ),
-                      ).animate().fadeIn(delay: 240.ms, duration: 420.ms),
+                      ).animateSection(index: 5),
                     ],
                   ),
                 ),
@@ -367,10 +401,11 @@ class SpeciesDetailScreen extends ConsumerWidget {
         final origin = resolvedSpecies.originNativeRange(localeCode);
         final toxicity = resolvedSpecies.toxicity;
         final toxicityNote = resolvedSpecies.toxicityNotes(localeCode);
+        final careWarning = resolvedSpecies.careWarnings(localeCode);
         final growth = resolvedSpecies.growth;
         final size = resolvedSpecies.matureSize;
         final image = (resolvedSpecies.imagePath ?? '').trim().isEmpty
-            ? 'assets/placeholders/species/unknown.png'
+            ? 'assets/images/placeholder_plant.jpg'
             : resolvedSpecies.imagePath!.trim();
 
         return BotanicaPageScaffold(
@@ -391,7 +426,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                           errorBuilder: (_, __, ___) => Image.asset(
-                            'assets/placeholders/species/unknown.png',
+                            'assets/images/placeholder_plant.jpg',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -403,8 +438,8 @@ class SpeciesDetailScreen extends ConsumerWidget {
                               stops: const [0.0, 0.45, 1.0],
                               colors: [
                                 Colors.transparent,
-                                scheme.surface.withValues(alpha: 0.15),
-                                scheme.surface.withValues(alpha: 0.72),
+                                scheme.surface.withValues(alpha: 0.35),
+                                scheme.surface.withValues(alpha: 0.95),
                               ],
                             ),
                           ),
@@ -424,7 +459,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                                     letterSpacing: -0.6,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                BotanicaGaps.vTiny,
                                 Text(
                                   species.scientificName,
                                   style: textTheme.bodyMedium?.copyWith(
@@ -435,7 +470,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                                 ),
                                 if (habit != null &&
                                     habit.trim().isNotEmpty) ...[
-                                  const SizedBox(height: 8),
+                                  BotanicaGaps.vXs,
                                   Text(
                                     habit.trim(),
                                     maxLines: 2,
@@ -454,10 +489,10 @@ class SpeciesDetailScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                ).animate().fadeIn(duration: 420.ms).slideY(begin: 0.04),
-                const SizedBox(height: 14),
+                ).animateSection(index: 0),
+                BotanicaGaps.vSm,
                 BotanicaGlassCard(
-                  padding: const EdgeInsets.all(14),
+                  padding: BotanicaTokens.cardPaddingDense,
                   child: Wrap(
                     spacing: 10,
                     runSpacing: 10,
@@ -483,11 +518,11 @@ class SpeciesDetailScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                ).animate().fadeIn(delay: 120.ms, duration: 420.ms),
-                const SizedBox(height: 14),
+                ).animateSection(index: 1),
+                BotanicaGaps.vSm,
                 if (habit != null && habit.trim().isNotEmpty) ...[
                   _SectionHeader(title: l10n.speciesDetailHabit),
-                  const SizedBox(height: 10),
+                  BotanicaGaps.vSm,
                   BotanicaGlassCard(
                     child: Text(
                       habit.trim(),
@@ -496,12 +531,12 @@ class SpeciesDetailScreen extends ConsumerWidget {
                         height: 1.5,
                       ),
                     ),
-                  ).animate().fadeIn(delay: 150.ms, duration: 420.ms),
-                  const SizedBox(height: 14),
+                  ).animateSection(index: 2),
+                  BotanicaGaps.vSm,
                 ],
                 if (history != null && history.trim().isNotEmpty) ...[
                   _SectionHeader(title: l10n.speciesDetailHistory),
-                  const SizedBox(height: 10),
+                  BotanicaGaps.vSm,
                   BotanicaGlassCard(
                     child: Text(
                       history.trim(),
@@ -510,15 +545,15 @@ class SpeciesDetailScreen extends ConsumerWidget {
                         height: 1.5,
                       ),
                     ),
-                  ).animate().fadeIn(delay: 180.ms, duration: 420.ms),
-                  const SizedBox(height: 14),
+                  ).animateSection(index: 3),
+                  BotanicaGaps.vSm,
                 ],
                 if (origin != null ||
                     toxicity != null ||
                     growth != null ||
                     size != null) ...[
                   _SectionHeader(title: l10n.speciesDetailDetails),
-                  const SizedBox(height: 10),
+                  BotanicaGaps.vSm,
                   BotanicaGlassCard(
                     padding: BotanicaTokens.cardPaddingDense,
                     child: Column(
@@ -530,7 +565,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                           value: origin ?? l10n.speciesDetailUnknown,
                         ),
                         if (toxicity != null) ...[
-                          const SizedBox(height: 10),
+                          BotanicaGaps.vSm,
                           _FactRow(
                             icon: Icons.pets_rounded,
                             title: l10n.speciesDetailToxicity,
@@ -538,7 +573,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                           ),
                         ],
                         if (growth != null) ...[
-                          const SizedBox(height: 10),
+                          BotanicaGaps.vSm,
                           _FactRow(
                             icon: Icons.trending_up_rounded,
                             title: l10n.speciesDetailGrowth,
@@ -546,20 +581,20 @@ class SpeciesDetailScreen extends ConsumerWidget {
                           ),
                         ],
                         if (size != null) ...[
-                          const SizedBox(height: 10),
+                          BotanicaGaps.vSm,
                           _FactRow(
                             icon: Icons.straighten_rounded,
                             title: l10n.speciesDetailSizeHeight,
                             value: _rangeCm(l10n, size.heightCm),
                           ),
-                          const SizedBox(height: 10),
+                          BotanicaGaps.vSm,
                           _FactRow(
                             icon: Icons.open_in_full_rounded,
                             title: l10n.speciesDetailSizeSpread,
                             value: _rangeCm(l10n, size.spreadCm),
                           ),
                           if (size.vineLengthCm != null) ...[
-                            const SizedBox(height: 10),
+                            BotanicaGaps.vSm,
                             _FactRow(
                               icon: Icons.ssid_chart_rounded,
                               title: l10n.speciesDetailSizeVineLength,
@@ -569,10 +604,38 @@ class SpeciesDetailScreen extends ConsumerWidget {
                         ],
                       ],
                     ),
-                  ).animate().fadeIn(delay: 190.ms, duration: 420.ms),
+                  ).animateSection(index: 4),
+                  if (careWarning != null &&
+                      careWarning.trim().isNotEmpty) ...[
+                    BotanicaGaps.vSm,
+                    BotanicaGlassCard(
+                      padding: BotanicaTokens.cardPaddingDense,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.warning_amber_rounded,
+                            size: BotanicaTokens.iconSizeMd,
+                            color: scheme.error.withValues(alpha: 0.86),
+                          ),
+                          BotanicaGaps.hSm,
+                          Expanded(
+                            child: Text(
+                              careWarning.trim(),
+                              style: textTheme.bodySmall?.copyWith(
+                                color: scheme.onSurface.withValues(alpha: 0.78),
+                                height: 1.4,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).animateSection(index: 5),
+                  ],
                   if (toxicityNote != null &&
                       toxicityNote.trim().isNotEmpty) ...[
-                    const SizedBox(height: 10),
+                    BotanicaGaps.vSm,
                     BotanicaGlassCard(
                       padding: BotanicaTokens.cardPaddingDense,
                       child: Row(
@@ -580,10 +643,10 @@ class SpeciesDetailScreen extends ConsumerWidget {
                         children: [
                           Icon(
                             Icons.info_outline_rounded,
-                            size: 20,
+                            size: BotanicaTokens.iconSizeMd,
                             color: scheme.onSurface.withValues(alpha: 0.78),
                           ),
-                          const SizedBox(width: 10),
+                          BotanicaGaps.hSm,
                           Expanded(
                             child: Text(
                               toxicityNote.trim(),
@@ -595,46 +658,59 @@ class SpeciesDetailScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                    ).animate().fadeIn(delay: 205.ms, duration: 420.ms),
+                    ).animateSection(index: 5),
                   ],
-                  const SizedBox(height: 14),
+                  BotanicaGaps.vSm,
                 ],
                 _SectionHeader(title: l10n.speciesDetailCareAtAGlance),
-                const SizedBox(height: 10),
-                BotanicaGlassCard(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _FactRow(
-                        icon: Icons.water_drop_rounded,
-                        title: l10n.taskTypeWater,
-                        value: l10n.speciesDetailWaterEvery(
-                          species.careDefaults.waterBaseDays,
-                        ),
+                BotanicaGaps.vSm,
+                _CareFactsGrid(
+                  facts: [
+                    _CareFact(
+                      icon: Icons.water_drop_rounded,
+                      title: l10n.taskTypeWater,
+                      value: l10n.speciesDetailWaterEvery(
+                        species.careDefaults.waterBaseDays,
                       ),
-                      const SizedBox(height: 10),
-                      _FactRow(
-                        icon: Icons.science_rounded,
-                        title: l10n.taskTypeFertilize,
-                        value: l10n.speciesDetailFertilizeEvery(
-                          species.careDefaults.fertilizeBaseDays,
-                        ),
-                      ),
-                      if (species.careDefaults.mistBaseDays > 0) ...[
-                        const SizedBox(height: 10),
-                        _FactRow(
-                          icon: Icons.blur_on_rounded,
-                          title: l10n.taskTypeMist,
-                          value: l10n.speciesDetailMistEvery(
-                            species.careDefaults.mistBaseDays,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ).animate().fadeIn(delay: 200.ms, duration: 420.ms),
-                const SizedBox(height: 14),
+                    ),
+                    _CareFact(
+                      icon: Icons.wb_sunny_rounded,
+                      title: l10n.careKeyLight,
+                      value: lightLabel(l10n, species.light),
+                    ),
+                    _CareFact(
+                      icon: Icons.school_rounded,
+                      title: l10n.discoverFilterDifficulty,
+                      value: difficultyLabel(l10n, species.difficulty),
+                    ),
+                    _CareFact(
+                      icon: Icons.pets_rounded,
+                      title: l10n.speciesDetailToxicity,
+                      value: species.petSafe
+                          ? l10n.discoverTagPetSafe
+                          : l10n.discoverTagToxic,
+                    ),
+                    _CareFact(
+                      icon: Icons.trending_up_rounded,
+                      title: l10n.speciesDetailGrowth,
+                      value: growth == null
+                          ? l10n.speciesDetailUnknown
+                          : _growthRateLabel(l10n, growth.rate),
+                    ),
+                    _CareFact(
+                      icon: Icons.straighten_rounded,
+                      title: l10n.speciesDetailDetails,
+                      value: size == null
+                          ? l10n.speciesDetailUnknown
+                          : _speciesMatureSizeLabel(l10n, size),
+                    ),
+                  ],
+                ).animateSection(index: 6),
+                if (species.tags.isNotEmpty) ...[
+                  BotanicaGaps.vSm,
+                  _GoodForTags(tags: species.tags).animateSection(index: 7),
+                ],
+                BotanicaGaps.vSm,
                 ideaAsync.when(
                   loading: () => const SizedBox.shrink(),
                   error: (_, __) => const SizedBox.shrink(),
@@ -657,7 +733,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                ).animate().fadeIn(delay: 240.ms, duration: 420.ms),
+                ).animateSection(index: 7),
               ],
             ),
           ),
@@ -678,7 +754,7 @@ class _SectionHeader extends StatelessWidget {
       title,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w800,
-            letterSpacing: -0.3,
+            letterSpacing: 0,
           ),
     );
   }
@@ -705,8 +781,8 @@ class _Tag extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: scheme.onSurface.withValues(alpha: 0.72)),
-          const SizedBox(width: 6),
+          Icon(icon, size: BotanicaTokens.iconSizeSm, color: scheme.onSurface.withValues(alpha: 0.72)),
+          BotanicaGaps.hXxs,
           Text(
             label,
             style: textTheme.labelMedium?.copyWith(
@@ -814,7 +890,7 @@ class _ResourcesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _SectionHeader(title: l10n.resourcesTitle),
-        const SizedBox(height: 10),
+        BotanicaGaps.vSm,
         BotanicaGlassCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -831,7 +907,134 @@ class _ResourcesSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        BotanicaGaps.vSm,
+      ],
+    );
+  }
+}
+
+class _CareFact {
+  const _CareFact({
+    required this.icon,
+    required this.title,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String title;
+  final String value;
+}
+
+class _CareFactsGrid extends StatelessWidget {
+  const _CareFactsGrid({required this.facts});
+
+  final List<_CareFact> facts;
+
+  @override
+  Widget build(BuildContext context) {
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final itemWidth =
+              (constraints.maxWidth - BotanicaTokens.spacingSm) / 2;
+          return Wrap(
+            spacing: BotanicaTokens.spacingSm,
+            runSpacing: BotanicaTokens.spacingSm,
+            children: [
+              for (final fact in facts)
+                SizedBox(
+                  width: itemWidth,
+                  child: _CareFactTile(fact: fact),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _CareFactTile extends StatelessWidget {
+  const _CareFactTile({required this.fact});
+
+  final _CareFact fact;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      constraints: const BoxConstraints(minHeight: 86),
+      padding: const EdgeInsets.all(BotanicaTokens.spacingSm),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(BotanicaTokens.radiusL),
+        color: scheme.surface.withValues(alpha: 0.45),
+        border:
+            Border.all(color: scheme.outlineVariant.withValues(alpha: 0.38)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            fact.icon,
+            size: BotanicaTokens.iconSizeSm,
+            color: scheme.onSurface.withValues(alpha: 0.72),
+          ),
+          BotanicaGaps.vXs,
+          Text(
+            fact.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: textTheme.labelMedium?.copyWith(
+              color: scheme.onSurface.withValues(alpha: 0.62),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          BotanicaGaps.vMicro,
+          Text(
+            fact.value,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: textTheme.bodySmall?.copyWith(
+              color: scheme.onSurface.withValues(alpha: 0.82),
+              fontWeight: FontWeight.w800,
+              height: 1.2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GoodForTags extends StatelessWidget {
+  const _GoodForTags({required this.tags});
+
+  final List<String> tags;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
+    final normalized = tags
+        .map((tag) => tag.trim())
+        .where((tag) => tag.isNotEmpty)
+        .toList(growable: false);
+    if (normalized.isEmpty) return const SizedBox.shrink();
+
+    return Wrap(
+      spacing: BotanicaTokens.spacingXs,
+      runSpacing: BotanicaTokens.spacingXs,
+      children: [
+        for (final tag in normalized)
+          BotanicaChip(
+            label: _goodForTagLabel(l10n, tag),
+            icon: _goodForTagIcon(tag),
+            tint: scheme.tertiary,
+            selected: true,
+          ),
       ],
     );
   }
@@ -876,9 +1079,9 @@ class _ResourceRow extends StatelessWidget {
               content: Row(
                 children: [
                   Icon(Icons.content_copy_rounded,
-                      size: 18,
+                      size: BotanicaTokens.iconSizeSm,
                       color: Theme.of(context).colorScheme.inversePrimary),
-                  const SizedBox(width: 10),
+                  BotanicaGaps.hSm,
                   Text(l10n.resourceLinkCopied),
                 ],
               ),
@@ -899,9 +1102,9 @@ class _ResourceRow extends StatelessWidget {
             content: Row(
               children: [
                 Icon(Icons.content_copy_rounded,
-                    size: 18,
+                    size: BotanicaTokens.iconSizeSm,
                     color: Theme.of(context).colorScheme.inversePrimary),
-                const SizedBox(width: 10),
+                BotanicaGaps.hSm,
                 Text(l10n.resourceLinkCopied),
               ],
             ),
@@ -930,8 +1133,8 @@ class _FactRow extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(icon, size: 20, color: scheme.onSurface.withValues(alpha: 0.78)),
-        const SizedBox(width: 10),
+        Icon(icon, size: BotanicaTokens.iconSizeMd, color: scheme.onSurface.withValues(alpha: 0.78)),
+        BotanicaGaps.hSm,
         Expanded(
           child: Text(
             title,
@@ -993,9 +1196,61 @@ String _growthFormLabel(AppLocalizations l10n, String raw) {
   };
 }
 
+String _speciesMatureSizeLabel(AppLocalizations l10n, SpeciesMatureSize size) {
+  final height = _rangeCm(l10n, size.heightCm);
+  final spread = _rangeCm(l10n, size.spreadCm);
+  return '$height · $spread';
+}
+
+String _ideaMatureSizeLabel(
+  AppLocalizations l10n,
+  PlantIdeaMatureSizeCm size,
+) {
+  final height = size.heightCm == null
+      ? l10n.speciesDetailUnknown
+      : _ideaRangeCm(l10n, size.heightCm!);
+  final spread = size.spreadCm == null
+      ? l10n.speciesDetailUnknown
+      : _ideaRangeCm(l10n, size.spreadCm!);
+  if (height == l10n.speciesDetailUnknown) return spread;
+  if (spread == l10n.speciesDetailUnknown) return height;
+  return '$height · $spread';
+}
+
+String _ideaRangeCm(AppLocalizations l10n, PlantIdeaIntRange range) {
+  if (range.min == range.max) {
+    return l10n.speciesDetailCmValue(range.min);
+  }
+  return l10n.speciesDetailRangeCm(range.min, range.max);
+}
+
 String _rangeCm(AppLocalizations l10n, SizeRangeCm range) {
   if (range.min == range.max) {
     return l10n.speciesDetailCmValue(range.min);
   }
   return l10n.speciesDetailRangeCm(range.min, range.max);
+}
+
+String _goodForTagLabel(AppLocalizations l10n, String raw) {
+  return switch (raw.trim().toLowerCase()) {
+    'pet-safe' || 'pet_safe' => l10n.discoverTagPetSafe,
+    'beginner' => 'Beginner',
+    'low-light' || 'low_light' => 'Low light',
+    'air-purifying' || 'air_purifying' => 'Air-purifying',
+    final value => value
+        .split(RegExp('[-_]'))
+        .where((part) => part.isNotEmpty)
+        .map((part) => '${part[0].toUpperCase()}${part.substring(1)}')
+        .join(' '),
+  };
+}
+
+IconData _goodForTagIcon(String raw) {
+  return switch (raw.trim().toLowerCase()) {
+    'pet-safe' || 'pet_safe' => Icons.pets_rounded,
+    'beginner' => Icons.school_rounded,
+    'low-light' || 'low_light' => Icons.nights_stay_rounded,
+    'air-purifying' || 'air_purifying' => Icons.air_rounded,
+    _ => Icons.local_florist_rounded,
+  };
 }

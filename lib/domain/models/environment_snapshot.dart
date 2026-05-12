@@ -8,6 +8,7 @@ class EnvironmentSnapshot {
     this.weatherCode,
     this.latitude,
     this.longitude,
+    this.lightLevel,
   });
 
   final DateTime timestamp;
@@ -16,6 +17,7 @@ class EnvironmentSnapshot {
   final int? weatherCode;
   final double? latitude;
   final double? longitude;
+  final LightLevel? lightLevel;
 
   Hemisphere? get derivedHemisphere {
     final lat = latitude;
@@ -30,6 +32,7 @@ class EnvironmentSnapshot {
         'weatherCode': weatherCode,
         'latitude': latitude,
         'longitude': longitude,
+        'lightLevel': lightLevel?.id,
       };
 
   static EnvironmentSnapshot fromJson(Map<String, dynamic> json) =>
@@ -41,6 +44,9 @@ class EnvironmentSnapshot {
         weatherCode: (json['weatherCode'] as num?)?.toInt(),
         latitude: (json['latitude'] as num?)?.toDouble(),
         longitude: (json['longitude'] as num?)?.toDouble(),
+        lightLevel: json['lightLevel'] != null
+            ? LightLevel.fromId(json['lightLevel'] as String)
+            : null,
       );
 
   @override
@@ -51,9 +57,10 @@ class EnvironmentSnapshot {
       other.humidity == humidity &&
       other.weatherCode == weatherCode &&
       other.latitude == latitude &&
-      other.longitude == longitude;
+      other.longitude == longitude &&
+      other.lightLevel == lightLevel;
 
   @override
-  int get hashCode =>
-      Object.hash(timestamp, tempC, humidity, weatherCode, latitude, longitude);
+  int get hashCode => Object.hash(
+      timestamp, tempC, humidity, weatherCode, latitude, longitude, lightLevel);
 }

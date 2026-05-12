@@ -48,6 +48,10 @@ void main() {
 
     const plantAId = 'plant_a';
     const plantBId = 'plant_b';
+    final photoAFile = File('${dir.path}/photo_a.jpg');
+    final photoBFile = File('${dir.path}/photo_b.jpg');
+    await photoAFile.writeAsBytes(<int>[1, 2, 3]);
+    await photoBFile.writeAsBytes(<int>[4, 5, 6]);
 
     await plantsRepo.upsert(
       Plant(
@@ -116,7 +120,18 @@ void main() {
       PhotoEntry(
         id: 'photo_a',
         plantId: plantAId,
-        filePath: '/tmp/a.jpg',
+        filePath: photoAFile.path,
+        createdAt: now,
+        note: null,
+        hash: null,
+      ),
+    );
+
+    await photosRepo.add(
+      PhotoEntry(
+        id: 'photo_b',
+        plantId: plantBId,
+        filePath: photoBFile.path,
         createdAt: now,
         note: null,
         hash: null,
@@ -146,9 +161,12 @@ void main() {
     expect(logsRepo.forPlant(plantAId), isEmpty);
     expect(photosRepo.forPlant(plantAId), isEmpty);
     expect(diaryRepo.forPlant(plantAId), isEmpty);
+    expect(photoAFile.existsSync(), isFalse);
 
     // Unrelated plant remains.
     expect(plantsRepo.byId(plantBId), isNotNull);
     expect(tasksRepo.forPlant(plantBId), isNotEmpty);
+    expect(photosRepo.forPlant(plantBId), isNotEmpty);
+    expect(photoBFile.existsSync(), isTrue);
   });
 }

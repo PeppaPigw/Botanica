@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:botanica/core/haptics/botanica_haptics.dart';
+import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,9 +11,11 @@ import 'package:uuid/uuid.dart';
 import '../../app/providers.dart';
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
-import '../../core/widgets/botanica_background.dart';
 import '../../core/widgets/botanica_bottom_action_bar.dart';
+import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_button.dart';
+import '../../core/widgets/botanica_chip.dart';
+import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_sheet.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/glass_card.dart';
@@ -26,7 +28,10 @@ import '../../domain/services/dryness_index.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_actions.dart';
 import '../../services/permissions/permissions_service.dart';
+import '../../services/photos/image_compression.dart';
 import '../../services/photos/photo_storage.dart';
+import '../garden/edit_plant_screen.dart';
+import '../garden/garden_screen.dart';
 import '../journal/journal_capture_screen.dart';
 import 'plant_care_tab.dart';
 import 'plant_journal_tab.dart';
@@ -121,14 +126,11 @@ class _LoadingScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return BotanicaBackground(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: CircularProgressIndicator(
-            valueColor:
-                AlwaysStoppedAnimation(scheme.primary.withValues(alpha: 0.7)),
-          ),
+    return BotanicaPageScaffold(
+      body: Center(
+        child: CircularProgressIndicator(
+          valueColor:
+              AlwaysStoppedAnimation(scheme.primary.withValues(alpha: 0.7)),
         ),
       ),
     );
@@ -152,30 +154,27 @@ class _ErrorScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return BotanicaBackground(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: Padding(
-            padding: BotanicaTokens.pagePadding,
-            child: BotanicaStateCard(
-              icon: Icons.cloud_off_rounded,
-              title: title,
-              body: body,
-              primaryAction: BotanicaButton(
-                variant: BotanicaButtonVariant.outlined,
-                icon: Icons.refresh_rounded,
-                label: l10n.commonTryAgain,
-                onPressed: onRetry,
-              ),
-              secondaryAction: onBack == null
-                  ? null
-                  : BotanicaButton(
-                      onPressed: onBack,
-                      variant: BotanicaButtonVariant.text,
-                      label: l10n.commonClose,
-                    ),
+    return BotanicaPageScaffold(
+      body: Center(
+        child: Padding(
+          padding: BotanicaTokens.pagePadding,
+          child: BotanicaStateCard(
+            icon: Icons.cloud_off_rounded,
+            title: title,
+            body: body,
+            primaryAction: BotanicaButton(
+              variant: BotanicaButtonVariant.outlined,
+              icon: Icons.refresh_rounded,
+              label: l10n.commonTryAgain,
+              onPressed: onRetry,
             ),
+            secondaryAction: onBack == null
+                ? null
+                : BotanicaButton(
+                    onPressed: onBack,
+                    variant: BotanicaButtonVariant.text,
+                    label: l10n.commonClose,
+                  ),
           ),
         ),
       ),
@@ -200,26 +199,24 @@ class _NotFoundScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return BotanicaBackground(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: Padding(
-            padding: BotanicaTokens.pagePadding,
-            child: BotanicaStateCard(
-              icon: Icons.local_florist_rounded,
-              title: title,
-              body: body,
-              primaryAction: BotanicaButton(
-                icon: Icons.arrow_back_rounded,
-                label: l10n.plantDetailMissingCta,
-                onPressed: onBack,
-              ),
-              secondaryAction: BotanicaButton(
-                onPressed: onRetry,
-                variant: BotanicaButtonVariant.text,
-                label: l10n.commonTryAgain,
-              ),
+    return BotanicaPageScaffold(
+      body: Center(
+        child: Padding(
+          padding: BotanicaTokens.pagePadding,
+          child: BotanicaStateCard(
+            icon: Icons.local_florist_rounded,
+            title: title,
+            body: body,
+            primaryAction: BotanicaButton(
+              icon: Icons.arrow_back_rounded,
+              matchTextDirection: true,
+              label: l10n.plantDetailMissingCta,
+              onPressed: onBack,
+            ),
+            secondaryAction: BotanicaButton(
+              onPressed: onRetry,
+              variant: BotanicaButtonVariant.text,
+              label: l10n.commonTryAgain,
             ),
           ),
         ),
@@ -273,7 +270,7 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
     setState(() => _watering = true);
 
     try {
-      HapticFeedback.lightImpact();
+      BotanicaHaptics.primaryPress();
 
       final now = DateTime.now();
       final tasksRepo = ref.read(tasksRepositoryProvider);
@@ -281,11 +278,11 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
       final speciesRepo = ref.read(speciesRepositoryProvider);
       final ideaRepo = ref.read(plantIdeaRepositoryProvider);
       final env = ref.read(environmentSnapshotProvider);
-      final engine = ref.read(carePlanEngineProvider);
+      final engine = ref.read(seasonalCareEngineProvider);
       final settings = ref.read(settingsControllerProvider);
 
       final pendingWater = widget.tasks
-          .where((t) => t.type == TaskType.water && !t.isDone)
+          .where((t) => t.type == TaskType.water && !t.isDismissed)
           .toList(growable: false)
         ..sort((a, b) => a.dueAt.compareTo(b.dueAt));
 
@@ -297,7 +294,7 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
         logsRepository: logsRepo,
         speciesRepository: speciesRepo,
         plantIdeaRepository: ideaRepo,
-        engine: engine,
+        seasonalEngine: engine,
         environment: env,
         settings: settings,
         updateSettings: (next) =>
@@ -306,16 +303,16 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
 
       if (!mounted) return;
       final l10n = AppLocalizations.of(context);
-      HapticFeedback.mediumImpact();
+      BotanicaHaptics.completion();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
               Icon(Icons.water_drop_rounded,
-                  size: 18,
+                  size: BotanicaTokens.iconSizeSm,
                   color: Theme.of(context).colorScheme.inversePrimary),
-              const SizedBox(width: 10),
+              BotanicaGaps.hSm,
               Text('${l10n.taskTypeWater} · ${l10n.commonDone}'),
             ],
           ),
@@ -363,7 +360,7 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            BotanicaGaps.vSm,
             ListTile(
               leading: const Icon(Icons.photo_camera_rounded),
               title: Text(l10n.journalAddPhotoCamera),
@@ -393,9 +390,9 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
             content: Row(
               children: [
                 Icon(Icons.no_photography_rounded,
-                    size: 18,
+                    size: BotanicaTokens.iconSizeSm,
                     color: Theme.of(context).colorScheme.inversePrimary),
-                const SizedBox(width: 10),
+                BotanicaGaps.hSm,
                 Expanded(child: Text(l10n.journalCameraPermissionNeeded)),
               ],
             ),
@@ -432,9 +429,9 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
             content: Row(
               children: [
                 Icon(Icons.photo_library_rounded,
-                    size: 18,
+                    size: BotanicaTokens.iconSizeSm,
                     color: Theme.of(context).colorScheme.inversePrimary),
-                const SizedBox(width: 10),
+                BotanicaGaps.hSm,
                 Expanded(child: Text(l10n.journalPhotosPermissionNeeded)),
               ],
             ),
@@ -442,11 +439,30 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
         );
         return;
       }
+      if (decision == AppPermissionDecision.limited) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Row(
+              children: [
+                Icon(Icons.photo_library_rounded,
+                    size: BotanicaTokens.iconSizeSm,
+                    color: Theme.of(context).colorScheme.inversePrimary),
+                BotanicaGaps.hSm,
+                Expanded(child: Text(l10n.journalLimitedPhotosAccess)),
+              ],
+            ),
+          ),
+        );
+      }
 
       final picker = ImagePicker();
+      const preset = ImageCompressionPresets.journalPhoto;
       final picked = await picker.pickImage(
         source: ImageSource.gallery,
-        imageQuality: 92,
+        maxWidth: preset.pickerMaxDimension,
+        maxHeight: preset.pickerMaxDimension,
+        imageQuality: preset.quality,
       );
       if (picked == null) return;
 
@@ -467,15 +483,18 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            Icon(Icons.photo_camera_rounded,
-                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
-            const SizedBox(width: 10),
-            Text(l10n.journalPhotoSaved),
-          ],
+          content: Row(
+            children: [
+              Icon(
+                Icons.photo_camera_rounded,
+                size: BotanicaTokens.iconSizeSm,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              BotanicaGaps.hSm,
+              Text(l10n.journalPhotoSaved),
+            ],
+          ),
         ),
-      ),
     );
   }
 
@@ -498,15 +517,18 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            Icon(Icons.edit_note_rounded,
-                size: 18, color: Theme.of(context).colorScheme.inversePrimary),
-            const SizedBox(width: 10),
-            Text(l10n.diaryEntrySaved),
-          ],
+          content: Row(
+            children: [
+              Icon(
+                Icons.edit_note_rounded,
+                size: BotanicaTokens.iconSizeSm,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              BotanicaGaps.hSm,
+              Text(l10n.diaryEntrySaved),
+            ],
+          ),
         ),
-      ),
     );
   }
 
@@ -519,6 +541,13 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
       dismissLabel: l10n.commonCancel,
       minLines: 4,
       maxLines: 8,
+      prompts: [
+        l10n.diaryPromptGrowingWell,
+        l10n.diaryPromptNewLeaf,
+        l10n.diaryPromptStruggling,
+        l10n.diaryPromptRepotted,
+        l10n.diaryPromptBlooming,
+      ],
     );
   }
 
@@ -541,6 +570,7 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
     required String dismissLabel,
     required int minLines,
     required int maxLines,
+    List<String> prompts = const <String>[],
   }) async {
     return showBotanicaModalSheet<String?>(
       context: context,
@@ -553,6 +583,7 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
         dismissLabel: dismissLabel,
         minLines: minLines,
         maxLines: maxLines,
+        prompts: prompts,
       ),
     );
   }
@@ -569,10 +600,12 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
       humidityPercent: env.humidity,
     );
 
-    final nextTasks =
-        widget.tasks.where((t) => !t.isDone).take(4).toList(growable: false);
+    final nextTasks = widget.tasks
+        .where((t) => !t.isDismissed)
+        .take(4)
+        .toList(growable: false);
     final nextWater = widget.tasks
-        .where((t) => t.type == TaskType.water && !t.isDone)
+        .where((t) => t.type == TaskType.water && !t.isDismissed)
         .toList(growable: false)
       ..sort((a, b) => a.dueAt.compareTo(b.dueAt));
 
@@ -595,11 +628,13 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
     }
 
     final heroCoverPath = _resolvePlantCoverPath(
+      coverPhotoPath: widget.plant.coverPhotoPath,
       coverAsset: widget.plant.coverAsset,
       speciesImagePath: species?.imagePath,
     );
 
-    final rawCover = (widget.plant.coverAsset ?? '').trim();
+    final rawCover =
+        (widget.plant.coverPhotoPath ?? widget.plant.coverAsset ?? '').trim();
     final hasUserPhotoCover =
         rawCover.isNotEmpty && !rawCover.startsWith('assets/');
 
@@ -608,223 +643,329 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
     return DefaultTabController(
       length: 4,
       initialIndex: initialIndex,
-      child: BotanicaBackground(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              SliverAppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                pinned: true,
-                stretch: true,
-                stretchTriggerOffset: 160,
-                onStretchTrigger: _waterNow,
-                expandedHeight: 320,
-                leading: IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.arrow_back_rounded),
-                  tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+      child: BotanicaPageScaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              pinned: true,
+              stretch: true,
+              stretchTriggerOffset: 160,
+              onStretchTrigger: _waterNow,
+              expandedHeight: 320,
+              leading: IconButton(
+                onPressed: () => context.pop(),
+                icon: const Icon(
+                  Icons.arrow_back_rounded,
+                  matchTextDirection: true,
                 ),
-                actions: [
-                  IconButton(
-                    onPressed: null,
-                    icon: const Icon(Icons.more_horiz_rounded),
-                    tooltip: MaterialLocalizations.of(context).showMenuTooltip,
-                  ),
-                  const SizedBox(width: 6),
-                ],
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              scheme.primaryContainer.withValues(alpha: 0.55),
-                              scheme.tertiaryContainer.withValues(alpha: 0.25),
-                              scheme.surface.withValues(alpha: 0.15),
-                            ],
+                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+              ),
+              actions: [
+                PopupMenuButton<String>(
+                  icon: const Icon(Icons.more_horiz_rounded),
+                  tooltip: MaterialLocalizations.of(context).showMenuTooltip,
+                  onSelected: (action) async {
+                    if (action == 'edit') {
+                      context.push(
+                        '${GardenScreen.location}/${EditPlantScreen.subLocation}'
+                            .replaceFirst(':id', widget.plant.id),
+                      );
+                    } else if (action == 'archive') {
+                      final plantsRepo = ref.read(plantsRepositoryProvider);
+                      await plantsRepo
+                          .upsert(widget.plant.copyWith(isArchived: true));
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(l10n
+                                  .archivePlantSuccess(widget.plant.nickname))),
+                        );
+                        context.pop(); // Pop back to garden
+                      }
+                    } else if (action == 'restore') {
+                      final plantsRepo = ref.read(plantsRepositoryProvider);
+                      await plantsRepo
+                          .upsert(widget.plant.copyWith(isArchived: false));
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(l10n
+                                  .restorePlantSuccess(widget.plant.nickname))),
+                        );
+                      }
+                    } else if (action == 'delete') {
+                      final confirm = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text(
+                              l10n.deletePlantTitle(widget.plant.nickname)),
+                          content: Text(l10n.deletePlantBody),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(false),
+                              child: Text(l10n.commonCancel),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(true),
+                              child: Text(l10n.deletePlantConfirm,
+                                  style: TextStyle(
+                                      color: Theme.of(ctx).colorScheme.error)),
+                            ),
+                          ],
+                        ),
+                      );
+                      if (confirm == true) {
+                        final plantsRepo = ref.read(plantsRepositoryProvider);
+                        final tasksRepo = ref.read(tasksRepositoryProvider);
+                        final logsRepo = ref.read(logsRepositoryProvider);
+                        final diariesRepo = ref.read(diaryRepositoryProvider);
+                        final photosRepo = ref.read(photosRepositoryProvider);
+
+                        await PlantActions.deletePlantCascade(
+                          plantId: widget.plant.id,
+                          plantsRepository: plantsRepo,
+                          tasksRepository: tasksRepo,
+                          logsRepository: logsRepo,
+                          photosRepository: photosRepo,
+                          diaryRepository: diariesRepo,
+                        );
+
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(l10n.deletePlantSuccess(
+                                    widget.plant.nickname))),
+                          );
+                          context.pop();
+                        }
+                      }
+                    }
+                  },
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        value: 'edit',
+                        child: Text(l10n.editPlantTitle),
+                      ),
+                      if (!widget.plant.isArchived)
+                        PopupMenuItem(
+                          value: 'archive',
+                          child: Text(
+                              l10n.archivePlantTitle(widget.plant.nickname)),
+                        )
+                      else
+                        PopupMenuItem(
+                          value: 'restore',
+                          child: Text(
+                              l10n.restorePlantTitle(widget.plant.nickname)),
+                        ),
+                      PopupMenuItem(
+                        value: 'delete',
+                        child: Text(
+                          l10n.deletePlantTitle(widget.plant.nickname),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.error,
                           ),
                         ),
                       ),
-                      Opacity(
-                        opacity: hasUserPhotoCover ? 0.85 : 0.70,
+                    ];
+                  },
+                ),
+                BotanicaGaps.hXxs,
+              ],
+              flexibleSpace: FlexibleSpaceBar(
+                background: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            scheme.primaryContainer.withValues(alpha: 0.55),
+                            scheme.tertiaryContainer.withValues(alpha: 0.25),
+                            scheme.surface.withValues(alpha: 0.15),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Opacity(
+                      opacity: hasUserPhotoCover ? 0.85 : 0.70,
+                      child: Hero(
+                        tag: widget.plant.id,
                         child: _CoverImage(path: heroCoverPath),
                       ),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: const [0.0, 0.5, 1.0],
-                            colors: [
-                              Colors.transparent,
-                              scheme.surface.withValues(alpha: 0.10),
-                              scheme.surface.withValues(alpha: 0.75),
-                            ],
-                          ),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: const [0.0, 0.5, 1.0],
+                          colors: [
+                            Colors.transparent,
+                            scheme.surface.withValues(alpha: 0.35),
+                            scheme.surface.withValues(alpha: 0.95),
+                          ],
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 18),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.plant.nickname,
-                                style: textTheme.headlineMedium?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: -0.6,
-                                ),
-                              ).animate().fadeIn(duration: 420.ms).slideY(
-                                  begin: 0.08, curve: Curves.easeOutCubic),
-                              const SizedBox(height: 6),
-                              Wrap(
-                                spacing: 10,
-                                runSpacing: 10,
-                                children: [
-                                  PlantDetailPill(
-                                    icon: Icons.water_drop_rounded,
-                                    label: dueInDays == null
-                                        ? l10n.gardenNoScheduleYet
-                                        : l10n.plantDetailNextWateringInDays(
-                                            dueInDays.clamp(0, 999)),
-                                  ),
-                                  PlantDetailPill(
-                                    icon: Icons.opacity_rounded,
-                                    label: '${env.humidity}%',
-                                  ),
-                                  PlantDetailPill(
-                                    icon: Icons.local_florist_rounded,
-                                    label: _environmentModeLabel(
-                                      l10n,
-                                      widget.plant.environmentMode,
-                                    ),
-                                  ),
-                                ],
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 18),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.plant.nickname,
+                              style: textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.6,
                               ),
-                              const SizedBox(height: 10),
-                              Text(
-                                _drynessLabel(l10n, dryness),
-                                style: textTheme.bodySmall?.copyWith(
-                                  color:
-                                      scheme.onSurface.withValues(alpha: 0.72),
+                            ).animateSection(index: 0),
+                            BotanicaGaps.vXxs,
+                            Wrap(
+                              spacing: 10,
+                              runSpacing: 10,
+                              children: [
+                                PlantDetailPill(
+                                  icon: Icons.water_drop_rounded,
+                                  label: dueInDays == null
+                                      ? l10n.gardenNoScheduleYet
+                                      : l10n.plantDetailNextWateringInDays(
+                                          dueInDays.clamp(0, 999)),
                                 ),
-                              ),
-                              const SizedBox(height: 6),
-                              LinearProgressIndicator(
-                                value: dryness,
-                                minHeight: 8,
-                                borderRadius: BorderRadius.circular(999),
-                                backgroundColor: scheme.outlineVariant
-                                    .withValues(alpha: 0.35),
-                                valueColor: AlwaysStoppedAnimation(
-                                  Color.lerp(scheme.tertiary, scheme.primary,
-                                      dryness)!,
+                                PlantDetailPill(
+                                  icon: Icons.opacity_rounded,
+                                  label: '${env.humidity}%',
                                 ),
-                              ),
-                              const SizedBox(height: 14),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 120),
-                          child: Text(
-                            l10n.taskTypeWater,
-                            style: textTheme.labelLarge?.copyWith(
-                              color: scheme.onSurface.withValues(alpha: 0.0),
+                                PlantDetailPill(
+                                  icon: Icons.local_florist_rounded,
+                                  label: _environmentModeLabel(
+                                    l10n,
+                                    widget.plant.environmentMode,
+                                  ),
+                                ),
+                              ],
                             ),
+                            BotanicaGaps.vSm,
+                            Text(
+                              _drynessLabel(l10n, dryness),
+                              style: textTheme.bodySmall?.copyWith(
+                                color: scheme.onSurface.withValues(alpha: 0.72),
+                              ),
+                            ),
+                            BotanicaGaps.vXxs,
+                            LinearProgressIndicator(
+                              value: dryness,
+                              minHeight: 8,
+                              borderRadius: BorderRadius.circular(999),
+                              backgroundColor:
+                                  scheme.outlineVariant.withValues(alpha: 0.35),
+                              valueColor: AlwaysStoppedAnimation(
+                                Color.lerp(
+                                    scheme.tertiary, scheme.primary, dryness)!,
+                              ),
+                            ),
+                            BotanicaGaps.vSm,
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 120),
+                        child: Text(
+                          l10n.taskTypeWater,
+                          style: textTheme.labelLarge?.copyWith(
+                            color: scheme.onSurface.withValues(alpha: 0.0),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                bottom: TabBar(
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
-                  indicatorColor: scheme.primary.withValues(alpha: 0.8),
-                  dividerColor: scheme.outlineVariant.withValues(alpha: 0.35),
-                  tabs: [
-                    Tab(
-                      key: const ValueKey('plant-detail-tab-overview'),
-                      text: l10n.plantDetailOverview,
-                    ),
-                    Tab(
-                      key: const ValueKey('plant-detail-tab-care'),
-                      text: l10n.plantDetailCare,
-                    ),
-                    Tab(
-                      key: const ValueKey('plant-detail-tab-journal'),
-                      text: l10n.plantDetailJournal,
-                    ),
-                    Tab(
-                      key: const ValueKey('plant-detail-tab-logs'),
-                      text: l10n.plantDetailLogs,
                     ),
                   ],
                 ),
               ),
-            ],
-            body: TabBarView(
-              children: [
-                PlantOverviewTab(
-                  plant: widget.plant,
-                  nextTasks: nextTasks,
-                ),
-                PlantCareTab(plant: widget.plant, tasks: widget.tasks),
-                PlantJournalTab(
-                  plant: widget.plant,
-                  onAddPhoto: _addPhoto,
-                  onAddNote: _addDiaryEntry,
-                ),
-                PlantLogsTab(plantId: widget.plant.id),
-              ],
+              bottom: TabBar(
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                indicatorColor: scheme.primary.withValues(alpha: 0.8),
+                dividerColor: scheme.outlineVariant.withValues(alpha: 0.35),
+                tabs: [
+                  Tab(
+                    key: const ValueKey('plant-detail-tab-overview'),
+                    text: l10n.plantDetailOverview,
+                  ),
+                  Tab(
+                    key: const ValueKey('plant-detail-tab-care'),
+                    text: l10n.plantDetailCare,
+                  ),
+                  Tab(
+                    key: const ValueKey('plant-detail-tab-journal'),
+                    text: l10n.plantDetailJournal,
+                  ),
+                  Tab(
+                    key: const ValueKey('plant-detail-tab-logs'),
+                    text: l10n.plantDetailLogs,
+                  ),
+                ],
+              ),
             ),
+          ],
+          body: TabBarView(
+            children: [
+              PlantOverviewTab(
+                plant: widget.plant,
+                nextTasks: nextTasks,
+              ),
+              PlantCareTab(plant: widget.plant, tasks: widget.tasks),
+              PlantJournalTab(
+                plant: widget.plant,
+                onAddPhoto: _addPhoto,
+                onAddNote: _addDiaryEntry,
+              ),
+              PlantLogsTab(plantId: widget.plant.id),
+            ],
           ),
-          bottomNavigationBar: BotanicaBottomActionBar(
-            tier: GlassTier.subtle,
-            child: Row(
-              children: [
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: _watering ? null : _waterNow,
-                    icon: const Icon(Icons.water_drop_rounded),
-                    label: Text(l10n.plantDetailWaterNow),
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          BotanicaTokens.radiusPill,
-                        ),
+        ),
+        bottomNavigationBar: BotanicaBottomActionBar(
+          tier: GlassTier.subtle,
+          child: Row(
+            children: [
+              Expanded(
+                child: FilledButton.icon(
+                  onPressed: _watering ? null : _waterNow,
+                  icon: const Icon(Icons.water_drop_rounded),
+                  label: Text(l10n.plantDetailWaterNow),
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        BotanicaTokens.radiusPill,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
-                IconButton.filledTonal(
-                  onPressed: _addPhoto,
-                  icon: const Icon(Icons.photo_camera_rounded),
-                  tooltip: l10n.plantDetailAddPhoto,
-                ),
-                const SizedBox(width: 8),
-                IconButton.filledTonal(
-                  onPressed: _addDiaryEntry,
-                  icon: const Icon(Icons.edit_note_rounded),
-                  tooltip: l10n.plantDetailAddNote,
-                ),
-              ],
-            ),
+              ),
+              BotanicaGaps.hSm,
+              IconButton.filledTonal(
+                onPressed: _addPhoto,
+                icon: const Icon(Icons.photo_camera_rounded),
+                tooltip: l10n.plantDetailAddPhoto,
+              ),
+              BotanicaGaps.hXs,
+              IconButton.filledTonal(
+                onPressed: _addDiaryEntry,
+                icon: const Icon(Icons.edit_note_rounded),
+                tooltip: l10n.plantDetailAddNote,
+              ),
+            ],
           ),
         ),
       ),
@@ -840,7 +981,7 @@ class _CoverImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resolved = (path == null || path!.trim().isEmpty)
-        ? 'assets/placeholders/species/unknown.png'
+        ? 'assets/images/placeholder_plant.jpg'
         : path!.trim();
 
     if (resolved.startsWith('assets/')) {
@@ -853,7 +994,7 @@ class _CoverImage extends StatelessWidget {
       fit: BoxFit.cover,
       filterQuality: FilterQuality.high,
       errorBuilder: (_, __, ___) => Image.asset(
-        'assets/placeholders/species/unknown.png',
+        'assets/images/placeholder_plant.jpg',
         fit: BoxFit.cover,
       ),
     );
@@ -868,6 +1009,7 @@ class _TextPromptSheet extends StatefulWidget {
     required this.dismissLabel,
     required this.minLines,
     required this.maxLines,
+    this.prompts = const <String>[],
   });
 
   final String title;
@@ -876,6 +1018,7 @@ class _TextPromptSheet extends StatefulWidget {
   final String dismissLabel;
   final int minLines;
   final int maxLines;
+  final List<String> prompts;
 
   @override
   State<_TextPromptSheet> createState() => _TextPromptSheetState();
@@ -888,6 +1031,22 @@ class _TextPromptSheetState extends State<_TextPromptSheet> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _prependPrompt(String prompt) {
+    final current = _controller.text.trimLeft();
+    final prefix = '$prompt: ';
+    final next = current.isEmpty
+        ? prefix
+        : current.startsWith(prefix)
+            ? current
+            : '$prefix$current';
+
+    _controller.value = TextEditingValue(
+      text: next,
+      selection: TextSelection.collapsed(offset: next.length),
+    );
+    setState(() {});
   }
 
   @override
@@ -906,7 +1065,7 @@ class _TextPromptSheetState extends State<_TextPromptSheet> {
             children: [
               Icon(widget.icon,
                   color: scheme.onSurface.withValues(alpha: 0.82)),
-              const SizedBox(width: 10),
+              BotanicaGaps.hSm,
               Expanded(
                 child: Text(
                   widget.title,
@@ -923,7 +1082,30 @@ class _TextPromptSheetState extends State<_TextPromptSheet> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          BotanicaGaps.vSm,
+          if (widget.prompts.isNotEmpty) ...[
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Wrap(
+                spacing: BotanicaTokens.spacingXxs,
+                runSpacing: BotanicaTokens.spacingXxs,
+                children: [
+                  for (final prompt in widget.prompts)
+                    BotanicaChip(
+                      label: prompt,
+                      selected: _controller.text.trimLeft().startsWith(prompt),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: BotanicaTokens.spacingXs,
+                        vertical: BotanicaTokens.spacingTiny,
+                      ),
+                      textStyle: textTheme.labelSmall,
+                      onTap: () => _prependPrompt(prompt),
+                    ),
+                ],
+              ),
+            ),
+            BotanicaGaps.vSm,
+          ],
           BotanicaGlassCard(
             padding: BotanicaTokens.cardPaddingDense,
             child: TextField(
@@ -937,9 +1119,10 @@ class _TextPromptSheetState extends State<_TextPromptSheet> {
                 hintText: widget.hint,
                 prefixIcon: Icon(widget.icon),
               ),
+              onChanged: (_) => setState(() {}),
             ),
           ),
-          const SizedBox(height: 12),
+          BotanicaGaps.vSm,
           Row(
             children: [
               Expanded(
@@ -948,7 +1131,7 @@ class _TextPromptSheetState extends State<_TextPromptSheet> {
                   child: Text(widget.dismissLabel),
                 ),
               ),
-              const SizedBox(width: 12),
+              BotanicaGaps.hSm,
               Expanded(
                 child: FilledButton(
                   onPressed: () {
@@ -967,20 +1150,25 @@ class _TextPromptSheetState extends State<_TextPromptSheet> {
 }
 
 String _resolvePlantCoverPath({
+  required String? coverPhotoPath,
   required String? coverAsset,
   required String? speciesImagePath,
 }) {
+  final photo = (coverPhotoPath ?? '').trim();
   final cover = (coverAsset ?? '').trim();
   final species = (speciesImagePath ?? '').trim();
 
   final isGenericPlaceholder = cover.isEmpty ||
       cover.endsWith('/white.png') ||
       cover.endsWith('white.png') ||
-      cover == 'assets/placeholders/species/unknown.png';
+      cover.endsWith('/unknown.png') ||
+      cover.endsWith('unknown.png') ||
+      cover == 'assets/images/placeholder_plant.jpg';
 
+  if (photo.isNotEmpty) return photo;
   if (!isGenericPlaceholder) return cover;
   if (species.isNotEmpty) return species;
-  return 'assets/placeholders/species/unknown.png';
+  return 'assets/images/placeholder_plant.jpg';
 }
 
 String _drynessLabel(AppLocalizations l10n, double dryness) {
