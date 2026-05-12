@@ -1,44 +1,52 @@
 # Botanica
 
-Premium plant care for iOS + Android — offline-first, calm, and beautifully designed.
+Premium offline-first plant care app for iOS & Android. Calm, beautiful, and thoughtfully designed.
 
-This repository follows `TaskBook.md` and ships an MVP UI + architecture for:
+## Features
 
-- **Garden**: plant collection + “Today” tasks card
-- **Tasks**: swipe-to-complete + next scheduling
-- **Plant Detail**: parallax hero + “pull-to-water” (Sliver stretch trigger)
-- **Discover**: curated library + guides (search + chips)
-- **Daily Flower**: deterministic daily card (locale + belief mode)
-- **Profile**: language / units / mode + credits
+- **Garden** — Your plant collection with a premium “Today” card, room filtering, batch actions, and smart sorting
+- **Tasks** — Swipe-to-complete with haptic feedback, undo, snooze (1h/3h/tomorrow/weekend), and skip
+- **Plant Detail** — Hero cover photo, care tab with explainable rules, photo journal, growth comparison slider
+- **Discover** — 300+ plant library with recommendations, trending tags, favorites, and smart search
+- **Daily Flower** — 7 culture modes (Zodiac, Tarot, Almanac, Omikuji, Runes, Ogham, Just Flower) with unique reveal interactions
+- **Calendar** — Month grid with care history dots, day agenda, streak tracking
+- **Journal** — Photo + diary entries with mood chips, share cards, and match-framing overlay
+- **Scan** — Plant identification with confidence UI, refinement flow, and offline fallback
+- **Profile** — Language, units, belief mode, storage health, garden wellness
 
-## Tech stack (open-source)
+## Design
 
-- Flutter (Material 3)
-- `flutter_riverpod` (state)
-- `go_router` (navigation)
-- `hive` / `hive_flutter` (offline local DB, JSON Maps)
-- `flutter_animate` (micro-motion)
-- `dynamic_color` (Material You / dynamic schemes when available)
-- `google_fonts` (Fraunces + Plus Jakarta Sans pairing)
-- `flutter_slidable` (refined swipe actions)
-- `geolocator` (location)
-- Open‑Meteo (free weather API)
+- Editorial typography (Fraunces + Plus Jakarta Sans)
+- Glass morphism with semantic tiers (primary/secondary/subtle)
+- Weather-adaptive mood theme (Open-Meteo)
+- Tokenized motion system with reduce-motion support
+- Dark mode with validated contrast
+- RTL support (Arabic)
 
-Credits + references are also shown in-app: **Profile → Credits**.
+## Tech Stack
+
+- Flutter 3.24+ (Material 3)
+- `flutter_riverpod` — state management
+- `go_router` — declarative routing
+- `hive` / `hive_flutter` — offline-first local storage
+- `flutter_animate` — micro-motion & entrance animations
+- `dynamic_color` — Material You support
+- `google_fonts` — editorial font pairing
+- `flutter_slidable` — swipe actions
+- `geolocator` + Open-Meteo — weather-adapted care
+- `flutter_local_notifications` — DST-safe reminders
+- `camera` + `image_picker` — journal & scan
 
 ## Localization
 
-`gen_l10n` is configured via `l10n.yaml`.
+4 locales: **English**, **Chinese (中文)**, **Spanish (Español)**, **Arabic (العربية)**
 
-- ARB files: `lib/l10n/`
-- Generated output: `lib/gen/l10n/`
-- Currently included locales: **en**, **zh**, **es**, **ar** (RTL included)
+```bash
+flutter gen-l10n
+```
 
-## Assets
+ARB files: `lib/l10n/` | Generated: `lib/gen/l10n/`
 
-The UI represents a "Quiet Botanical Luxury" aesthetic with minimalist illustrations.
-In production, Botanica relies on a curated set of core assets to keep the application footprint light and fast.
-User-captured photos, care logs, and diary entries are securely managed via the offline-first Hive storage.
 ## Run
 
 ```bash
@@ -47,107 +55,27 @@ flutter gen-l10n
 flutter run
 ```
 
-## Release
-
-See `docs/release.md` for:
-
-- Reproducible release build commands
-- Android signing (`key.properties` / CI env vars)
-- iOS bundle id + signing notes
-
-## Contributing / Security / License
-
-- Contributing guide: [CONTRIBUTING.md](CONTRIBUTING.md)
-- Security policy: [SECURITY.md](SECURITY.md)
-- License: [LICENSE](LICENSE)
-
-## Weather (Open‑Meteo)
-
-Environment snapshots use Open‑Meteo’s free API: `https://open-meteo.com/en/docs`.
-
-Example:
+## Build
 
 ```bash
-curl "https://api.open-meteo.com/v1/forecast?latitude=45.52&longitude=-122.68&current=temperature_2m,relative_humidity_2m,weather_code&timezone=America/Los_Angeles"
+# iOS
+flutter build ios --release
+
+# Android (signed AAB)
+flutter build appbundle --release
 ```
 
-## Quality checks
+## Test
 
 ```bash
 flutter analyze
-flutter test --timeout 60s
+flutter test
 ```
 
-## Running tests
+## AI Support
 
-Unit tests:
+Optional AI insights via an OpenAI-compatible proxy (no API keys embedded in the binary). Users opt in via Profile. See `server/ai_proxy/` for proxy setup.
 
-```bash
-make test
-```
+## License
 
-Integration tests (requires an emulator/simulator or attached device):
-
-```bash
-# Runs unit tests + a quick integration smoke test by default.
-make test-integration
-```
-
-The script auto-selects an available iOS simulator (preferred) or Android
-emulator. If you don't have one running yet:
-
-```bash
-flutter emulators --launch apple_ios_simulator
-```
-
-You can override the target device:
-
-```bash
-# Use a device id (preferred)
-BOTANICA_DEVICE_ID="<device-id>" make test-integration
-
-# Or use a device name / id prefix
-BOTANICA_DEVICE="iPhone" make test-integration
-```
-
-By default, `make test-integration` runs a quick smoke test:
-
-- `integration_test/app_smoke_test.dart`
-
-To run the full integration suite:
-
-```bash
-BOTANICA_INTEGRATION_ALL=true make test-integration
-```
-
-## AI support (proxy-first)
-
-Botanica’s Flutter app is designed to **never embed long‑lived API keys** in the
-`.ipa` / `.apk`. Instead, the app calls an OpenAI‑compatible **proxy** you host,
-and the proxy attaches the upstream API key server‑side.
-
-The AI layer sits behind `BotanicaAiService` and uses OpenAI‑compatible chat
-completions while enforcing “reply in the user’s locale language”.
-Responses are cached in Hive with a short TTL to avoid repeated requests.
-
-### Configuration (safe)
-
-1. Deploy/run the proxy in `server/ai_proxy/` (see `server/ai_proxy/README.md`).
-
-2. Point Botanica at the proxy:
-
-```bash
-flutter run \
-  --dart-define=BOTANICA_AI_BASE_URL=http://localhost:8787 \
-  --dart-define=BOTANICA_AI_AUTH=none \
-  --dart-define=BOTANICA_AI_MODEL=gpt-4o-mini \
-  --dart-define=BOTANICA_PROXY_TOKEN=dev-token
-```
-
-Users can opt in/out via **Profile → AI insights**. There is no API key entry UI.
-
-Notes:
-
-- **iOS Simulator**: `http://localhost:8787` usually works.
-- **Android Emulator**: use `http://10.0.2.2:8787`.
-- **Real device**: use your Mac’s LAN IP (e.g. `http://192.168.1.23:8787`).
+See [LICENSE](LICENSE)
