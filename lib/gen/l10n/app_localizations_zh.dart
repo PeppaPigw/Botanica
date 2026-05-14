@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -2004,6 +2004,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get gardenSortNewest => '最新添加';
+
+  @override
+  String get gardenSortSpecies => '物种';
+
+  @override
+  String get gardenSortNeedsCare => '需要护理';
+
+  @override
+  String get gardenFilterAll => '全部';
+
+  @override
+  String get gardenFilterHealthy => '健康';
+
+  @override
+  String get gardenFilterNeedsCare => '需要护理';
 
   @override
   String get gardenSearchHint => '搜索花园...';

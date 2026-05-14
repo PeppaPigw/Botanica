@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -833,8 +833,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanRefineTitle => 'Not sure? Refine results';
 
   @override
-  String get scanRefineHelper =>
-      'Answer a quick question to narrow the list.';
+  String get scanRefineHelper => 'Answer a quick question to narrow the list.';
 
   @override
   String get scanRefineFallbackNote =>
@@ -2090,6 +2089,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gardenSortNewest => 'Newest added';
+
+  @override
+  String get gardenSortSpecies => 'Species';
+
+  @override
+  String get gardenSortNeedsCare => 'Needs care';
+
+  @override
+  String get gardenFilterAll => 'All';
+
+  @override
+  String get gardenFilterHealthy => 'Healthy';
+
+  @override
+  String get gardenFilterNeedsCare => 'Needs care';
 
   @override
   String get gardenSearchHint => 'Search garden...';

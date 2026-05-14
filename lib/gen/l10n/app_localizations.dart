@@ -600,8 +600,16 @@ abstract class AppLocalizations {
   /// **'So neither of you goes thirsty.'**
   String get permNotificationsBody;
 
+  /// No description provided for @notificationsSoftAskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Never miss watering day'**
   String get notificationsSoftAskTitle;
 
+  /// No description provided for @notificationsSoftAskBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Botanica sends calm reminders at your preferred time, so each plant gets care before leaves start to droop.'**
   String get notificationsSoftAskBody;
 
   /// No description provided for @permLocationTitle.
@@ -821,6 +829,10 @@ abstract class AppLocalizations {
   /// **'Tomorrow'**
   String get tasksSnoozeTomorrow;
 
+  /// No description provided for @tasksSnoozeTomorrowMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow morning'**
   String get tasksSnoozeTomorrowMorning;
 
   /// No description provided for @tasksSnoozeWeekend.
@@ -829,6 +841,10 @@ abstract class AppLocalizations {
   /// **'This weekend'**
   String get tasksSnoozeWeekend;
 
+  /// No description provided for @tasksSnoozeCustomTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom time'**
   String get tasksSnoozeCustomTime;
 
   /// No description provided for @gardenQuickAddPlant.
@@ -1803,6 +1819,10 @@ abstract class AppLocalizations {
   /// **'Snoozed until {date}'**
   String tasksSnoozedUntil(DateTime date);
 
+  /// No description provided for @tasksSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
   String get tasksSkipped;
 
   /// No description provided for @discoverTitle.
@@ -3305,14 +3325,34 @@ abstract class AppLocalizations {
   /// **'Open Botanica to mark it done.'**
   String get notificationsTaskBodyNoRoom;
 
+  /// No description provided for @notificationWaterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to water {plant}'**
   String notificationWaterTitle(String plant);
 
+  /// No description provided for @notificationFertilizeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fertilize {plant} today'**
   String notificationFertilizeTitle(String plant);
 
+  /// No description provided for @notificationMistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} would love some misting'**
   String notificationMistTitle(String plant);
 
+  /// No description provided for @notificationRotateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give {plant} a quarter turn'**
   String notificationRotateTitle(String plant);
 
+  /// No description provided for @notificationPruneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} is ready for pruning'**
   String notificationPruneTitle(String plant);
 
   /// No description provided for @reasonHumidityLow.
@@ -3723,7 +3763,7 @@ abstract class AppLocalizations {
   /// **'Sort by'**
   String get gardenSortTitle;
 
-  /// No description provided for @gardenFilterArchived.
+  /// Filter option for archived plants
   ///
   /// In en, this message translates to:
   /// **'Archived'**
@@ -3735,19 +3775,49 @@ abstract class AppLocalizations {
   /// **'Care needs'**
   String get gardenSortCare;
 
-  /// No description provided for @gardenSortName.
+  /// Sort option by name
   ///
   /// In en, this message translates to:
   /// **'Name'**
   String get gardenSortName;
 
-  /// No description provided for @gardenSortNewest.
+  /// Sort option by newest
   ///
   /// In en, this message translates to:
   /// **'Newest added'**
   String get gardenSortNewest;
 
-  /// No description provided for @gardenSearchHint.
+  /// Sort option by species
+  ///
+  /// In en, this message translates to:
+  /// **'Species'**
+  String get gardenSortSpecies;
+
+  /// Sort option by needing care
+  ///
+  /// In en, this message translates to:
+  /// **'Needs care'**
+  String get gardenSortNeedsCare;
+
+  /// Filter option for all plants
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get gardenFilterAll;
+
+  /// Filter option for healthy plants
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy'**
+  String get gardenFilterHealthy;
+
+  /// Filter option for plants needing care
+  ///
+  /// In en, this message translates to:
+  /// **'Needs care'**
+  String get gardenFilterNeedsCare;
+
+  /// Hint text for garden search
   ///
   /// In en, this message translates to:
   /// **'Search garden...'**
