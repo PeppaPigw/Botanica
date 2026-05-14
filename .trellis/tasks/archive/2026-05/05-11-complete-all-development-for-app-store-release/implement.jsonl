@@ -1,0 +1,3 @@
+{"file": "EXECUTION_PLAN.md", "reason": "Master checklist of all 205 items — source of truth for what's done and what remains"}
+{"file": "UI.md", "reason": "Complete UI/interaction design spec — tokens, templates, component kit, screen-by-screen rules"}
+{"file": "pubspec.yaml", "reason": "Dependencies and Flutter version constraints"}
