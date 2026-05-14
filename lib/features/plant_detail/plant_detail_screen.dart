@@ -30,6 +30,7 @@ import '../../services/care/care_actions.dart';
 import '../../services/permissions/permissions_service.dart';
 import '../../services/photos/image_compression.dart';
 import '../../services/photos/photo_storage.dart';
+import '../../services/plants/plant_actions.dart';
 import '../garden/edit_plant_screen.dart';
 import '../garden/garden_screen.dart';
 import '../journal/journal_capture_screen.dart';
@@ -209,7 +210,6 @@ class _NotFoundScaffold extends StatelessWidget {
             body: body,
             primaryAction: BotanicaButton(
               icon: Icons.arrow_back_rounded,
-              matchTextDirection: true,
               label: l10n.plantDetailMissingCta,
               onPressed: onBack,
             ),
@@ -658,7 +658,6 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
                 onPressed: () => context.pop(),
                 icon: const Icon(
                   Icons.arrow_back_rounded,
-                  matchTextDirection: true,
                 ),
                 tooltip: MaterialLocalizations.of(context).backButtonTooltip,
               ),

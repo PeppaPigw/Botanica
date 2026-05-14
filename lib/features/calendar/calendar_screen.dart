@@ -336,7 +336,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                               onPressed: () => _shiftMonth(-1),
                               icon: const Icon(
                                 Icons.chevron_left_rounded,
-                                matchTextDirection: true,
                               ),
                               tooltip: l10n.calendarPrevMonth,
                             ),
@@ -375,7 +374,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                               onPressed: () => _shiftMonth(1),
                               icon: const Icon(
                                 Icons.chevron_right_rounded,
-                                matchTextDirection: true,
                               ),
                               tooltip: l10n.calendarNextMonth,
                             ),
@@ -1051,7 +1049,6 @@ class _QuickWateredSheetState extends State<_QuickWateredSheet> {
                       onTap: () => Navigator.of(context).pop(plant),
                       trailing: Icon(
                         Icons.chevron_right_rounded,
-                        matchTextDirection: true,
                         color: scheme.onSurface.withValues(alpha: 0.55),
                       ),
                     ),
@@ -1158,7 +1155,6 @@ class _CalendarAgendaCard extends StatelessWidget {
               if (onTap != null)
                 Icon(
                   Icons.chevron_right_rounded,
-                  matchTextDirection: true,
                   color: scheme.onSurface.withValues(alpha: 0.35),
                 ),
             ],

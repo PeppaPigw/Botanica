@@ -14,12 +14,16 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../core/environment/weather_code.dart';
 import '../../core/haptics/botanica_haptics.dart';
 import '../../core/i18n/species_labels.dart';
+import '../../core/widgets/botanica_ambient_background.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_button.dart';
+import '../../core/widgets/botanica_celebration.dart';
 import '../../core/widgets/botanica_chip.dart';
 import '../../core/widgets/botanica_gaps.dart';
 import '../../core/widgets/botanica_press_scale.dart';
 import '../../core/widgets/botanica_search_field.dart';
+import '../../core/widgets/botanica_shimmer.dart';
+import '../../core/widgets/botanica_water_level.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/botanica_sheet.dart';
 import '../../core/widgets/screen_title.dart';
@@ -238,7 +242,15 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
     final conditionLabel = _weatherLabel(l10n, conditionKind);
 
     return SafeArea(
-      child: CustomScrollView(
+      child: Stack(
+        children: [
+          const Positioned.fill(
+            child: BotanicaAmbientBackground(
+              intensity: 0.08,
+              speed: 0.6,
+            ),
+          ),
+          CustomScrollView(
         slivers: [
           SliverPadding(
             padding: BotanicaTokens.pagePadding,
@@ -556,23 +568,18 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                 ),
               ),
             ),
-            loading: () => SliverPadding(
+            loading: () => const SliverPadding(
               padding: BotanicaTokens.pagePadding,
               sliver: SliverToBoxAdapter(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: BotanicaTokens.spacingXxl,
-                    ),
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(
-                          scheme.primary.withValues(alpha: 0.7)),
-                    ),
-                  ),
+                child: BotanicaListSkeleton(
+                  itemCount: 4,
+                  showHero: false,
                 ),
               ),
             ),
           ),
+        ],
+      ),
         ],
       ),
     );
@@ -603,6 +610,7 @@ class _TodayCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final hasTasks = todayDueTasks.isNotEmpty;
     final taskWidgets = <Widget>[];
@@ -623,89 +631,127 @@ class _TodayCard extends StatelessWidget {
       }
     }
 
+    final hour = DateTime.now().hour;
+    final timeGradient = _timeOfDayGradient(hour, scheme, isDark);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         BotanicaPressScale(
-          child: BotanicaGlassCard(
-            tier: GlassTier.primary,
-            padding: BotanicaTokens.cardPaddingRelaxed,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l10n.gardenTodayCardTitle,
-                            style: context.tsHeadline,
-                          ),
-                          BotanicaGaps.vMicro,
-                          Text(
-                            MaterialLocalizations.of(context)
-                                .formatFullDate(DateTime.now()),
-                            style: textTheme.bodySmall?.copyWith(
-                              color: scheme.onSurface.withValues(alpha: 0.55),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    BotanicaChip(
-                      icon: weatherIcon,
-                      label: weatherLabel,
-                      tint: scheme.onSurface,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: BotanicaTokens.spacingXs,
-                        vertical: BotanicaTokens.spacingTiny,
-                      ),
-                      iconSize: BotanicaTokens.iconSizeSm,
-                    ),
-                  ],
-                ),
-                BotanicaGaps.vSm,
-                Wrap(
-                  spacing: BotanicaTokens.spacingXs,
-                  runSpacing: BotanicaTokens.spacingXs,
-                  children: [
-                    if (hasTasks)
-                      BotanicaChip(
-                        icon: Icons.check_circle_rounded,
-                        label: l10n.gardenTasksDueToday(todayDueTasks.length),
-                        tint: scheme.primary,
-                        onTap: onOpenTasks,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: BotanicaTokens.spacingBase,
-                          vertical: BotanicaTokens.spacingSm,
-                        ),
-                      ),
-                    if (!hasTasks)
-                      BotanicaChip(
-                        icon: Icons.calendar_month_rounded,
-                        label: l10n.calendarTitle,
-                        tint: scheme.tertiary,
-                        onTap: onOpenCalendar,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: BotanicaTokens.spacingBase,
-                          vertical: BotanicaTokens.spacingSm,
-                        ),
-                      ),
-                    BotanicaChip(
-                      icon: Icons.add_rounded,
-                      label: l10n.gardenQuickAddPlant,
-                      tint: scheme.secondary,
-                      onTap: onAddPlant,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: BotanicaTokens.spacingBase,
-                        vertical: BotanicaTokens.spacingSm,
-                      ),
-                    ),
-                  ],
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+              gradient: timeGradient,
+              boxShadow: [
+                BoxShadow(
+                  color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.08),
+                  blurRadius: 32,
+                  offset: const Offset(0, 12),
+                  spreadRadius: -4,
                 ),
               ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: -20,
+                    top: -20,
+                    child: Icon(
+                      _timeOfDayIcon(hour),
+                      size: 120,
+                      color: (isDark ? Colors.white : scheme.primary)
+                          .withValues(alpha: 0.06),
+                    ),
+                  ),
+                  Padding(
+                    padding: BotanicaTokens.cardPaddingAiry,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    l10n.gardenTodayCardTitle,
+                                    style: textTheme.headlineMedium?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: -0.4,
+                                    ),
+                                  ),
+                                  BotanicaGaps.vMicro,
+                                  Text(
+                                    MaterialLocalizations.of(context)
+                                        .formatFullDate(DateTime.now()),
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: scheme.onSurface
+                                          .withValues(alpha: 0.55),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            BotanicaChip(
+                              icon: weatherIcon,
+                              label: weatherLabel,
+                              tint: scheme.onSurface,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: BotanicaTokens.spacingXs,
+                                vertical: BotanicaTokens.spacingTiny,
+                              ),
+                              iconSize: BotanicaTokens.iconSizeSm,
+                            ),
+                          ],
+                        ),
+                        BotanicaGaps.vMd,
+                        Wrap(
+                          spacing: BotanicaTokens.spacingXs,
+                          runSpacing: BotanicaTokens.spacingXs,
+                          children: [
+                            if (hasTasks)
+                              BotanicaChip(
+                                icon: Icons.check_circle_rounded,
+                                label: l10n
+                                    .gardenTasksDueToday(todayDueTasks.length),
+                                tint: scheme.primary,
+                                onTap: onOpenTasks,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: BotanicaTokens.spacingBase,
+                                  vertical: BotanicaTokens.spacingSm,
+                                ),
+                              ),
+                            if (!hasTasks)
+                              BotanicaChip(
+                                icon: Icons.calendar_month_rounded,
+                                label: l10n.calendarTitle,
+                                tint: scheme.tertiary,
+                                onTap: onOpenCalendar,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: BotanicaTokens.spacingBase,
+                                  vertical: BotanicaTokens.spacingSm,
+                                ),
+                              ),
+                            BotanicaChip(
+                              icon: Icons.add_rounded,
+                              label: l10n.gardenQuickAddPlant,
+                              tint: scheme.secondary,
+                              onTap: onAddPlant,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: BotanicaTokens.spacingBase,
+                                vertical: BotanicaTokens.spacingSm,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -714,6 +760,73 @@ class _TodayCard extends StatelessWidget {
       ],
     );
   }
+}
+
+LinearGradient _timeOfDayGradient(int hour, ColorScheme scheme, bool isDark) {
+  if (hour >= 5 && hour < 12) {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: isDark
+          ? [
+              scheme.primaryContainer.withValues(alpha: 0.3),
+              scheme.surface.withValues(alpha: 0.8),
+            ]
+          : [
+              const Color(0xFFF0F9F4),
+              const Color(0xFFFBFAF6),
+            ],
+    );
+  } else if (hour >= 12 && hour < 17) {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: isDark
+          ? [
+              scheme.tertiaryContainer.withValues(alpha: 0.25),
+              scheme.surface.withValues(alpha: 0.8),
+            ]
+          : [
+              const Color(0xFFFFF8E8),
+              const Color(0xFFFBFAF6),
+            ],
+    );
+  } else if (hour >= 17 && hour < 21) {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: isDark
+          ? [
+              const Color(0xFF2D1B4E).withValues(alpha: 0.4),
+              scheme.surface.withValues(alpha: 0.8),
+            ]
+          : [
+              const Color(0xFFF5EEF8),
+              const Color(0xFFFBFAF6),
+            ],
+    );
+  } else {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: isDark
+          ? [
+              const Color(0xFF1A1A2E).withValues(alpha: 0.5),
+              scheme.surface.withValues(alpha: 0.8),
+            ]
+          : [
+              const Color(0xFFEEF2F7),
+              const Color(0xFFFBFAF6),
+            ],
+    );
+  }
+}
+
+IconData _timeOfDayIcon(int hour) {
+  if (hour >= 5 && hour < 12) return Icons.wb_sunny_rounded;
+  if (hour >= 12 && hour < 17) return Icons.light_mode_rounded;
+  if (hour >= 17 && hour < 21) return Icons.wb_twilight_rounded;
+  return Icons.nightlight_rounded;
 }
 
 class _PlantCard extends ConsumerStatefulWidget {
@@ -777,6 +890,7 @@ class _PlantCardState extends ConsumerState<_PlantCard> {
 
       if (!mounted) return;
       BotanicaHaptics.completion();
+      BotanicaCelebration.show(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
@@ -1361,22 +1475,11 @@ class _PlantAvatar extends StatelessWidget {
           Positioned(
             right: 3,
             bottom: 3,
-            child: Container(
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: scheme.surface.withValues(alpha: 0.72),
-              ),
-              child: CircularProgressIndicator(
-                value: progress,
-                strokeWidth: 2.5,
-                backgroundColor:
-                    scheme.outlineVariant.withValues(alpha: 0.35),
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  scheme.primary.withValues(alpha: 0.85),
-                ),
-              ),
+            child: BotanicaWaterLevel(
+              progress: progress,
+              size: 22,
+              strokeWidth: 2.0,
+              showWave: false,
             ),
           ),
         ] else ...[
@@ -1394,27 +1497,10 @@ class _PlantAvatar extends StatelessWidget {
             ),
           ),
           Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 38,
-                  height: 38,
-                  child: CircularProgressIndicator(
-                    value: progress,
-                    strokeWidth: 4,
-                    backgroundColor:
-                        scheme.outlineVariant.withValues(alpha: 0.35),
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      scheme.primary.withValues(alpha: 0.75),
-                    ),
-                  ),
-                ),
-                Icon(
-                  icon,
-                  color: scheme.onSurface.withValues(alpha: 0.78),
-                ),
-              ],
+            child: BotanicaWaterLevel(
+              progress: progress,
+              size: (width ?? 62) * 0.62,
+              strokeWidth: 3.0,
             ),
           ),
         ],
@@ -1624,46 +1710,79 @@ class _GardenEmptyState extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: 172,
+            height: 192,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  scheme.primaryContainer.withValues(alpha: 0.55),
-                  scheme.tertiaryContainer.withValues(alpha: 0.25),
+                  scheme.primaryContainer.withValues(alpha: 0.45),
+                  scheme.tertiaryContainer.withValues(alpha: 0.2),
+                  scheme.surface.withValues(alpha: 0.1),
                 ],
               ),
               border: Border.all(
-                color: scheme.outlineVariant.withValues(alpha: 0.45),
+                color: scheme.outlineVariant.withValues(alpha: 0.35),
               ),
             ),
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Icon(
-                  Icons.local_florist_rounded,
-                  size: 96,
-                  color: scheme.primary.withValues(alpha: 0.72),
-                ),
-                Positioned(
-                  right: 46,
-                  top: 38,
-                  child: Icon(
-                    Icons.auto_awesome_rounded,
-                    size: BotanicaTokens.iconSizeLg,
-                    color: scheme.tertiary.withValues(alpha: 0.70),
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(BotanicaTokens.radiusXL),
+                    child: const BotanicaAmbientBackground(
+                      intensity: 0.12,
+                      speed: 0.5,
+                    ),
                   ),
                 ),
-                Positioned(
-                  left: 48,
-                  bottom: 36,
-                  child: Icon(
-                    Icons.eco_rounded,
-                    size: BotanicaTokens.iconSizeLg,
-                    color: scheme.secondary.withValues(alpha: 0.72),
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 72,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: scheme.primaryContainer.withValues(alpha: 0.6),
+                        border: Border.all(
+                          color: scheme.primary.withValues(alpha: 0.3),
+                          width: 2,
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.local_florist_rounded,
+                        size: 36,
+                        color: scheme.primary.withValues(alpha: 0.85),
+                      ),
+                    ),
+                    BotanicaGaps.vSm,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.eco_rounded,
+                          size: BotanicaTokens.iconSizeSm,
+                          color: scheme.secondary.withValues(alpha: 0.6),
+                        ),
+                        BotanicaGaps.hXxs,
+                        Icon(
+                          Icons.auto_awesome_rounded,
+                          size: BotanicaTokens.iconSizeSm,
+                          color: scheme.tertiary.withValues(alpha: 0.6),
+                        ),
+                        BotanicaGaps.hXxs,
+                        Icon(
+                          Icons.water_drop_rounded,
+                          size: BotanicaTokens.iconSizeSm,
+                          color: scheme.primary.withValues(alpha: 0.6),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -2273,6 +2392,7 @@ class _RoomMapCard extends StatelessWidget {
                 )?.dueAt.difference(DateTime.now()).inDays;
 
                 return _PlantAvatar(
+                  heroTag: p.id,
                   coverPath: coverPath,
                   progress: dueInDays == null
                       ? 0.0

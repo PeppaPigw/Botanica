@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'botanica_tokens.dart';
-
 /// Semantic text roles for Botanica.
 ///
 /// This prevents screens from styling by ad-hoc font sizes and helps keep the
@@ -75,4 +73,19 @@ extension BotanicaColorRoles on ColorScheme {
 
   Color get botanicaBorder => outlineVariant.withValues(alpha: 0.45);
   Color get botanicaDivider => outlineVariant.withValues(alpha: 0.35);
+
+  Color get statusHealthy => const Color(0xFF2E7D4F);
+  Color get statusNeedsWater => const Color(0xFF3B82C4);
+  Color get statusOverdue => const Color(0xFFD97706);
+  Color get statusCritical => const Color(0xFFDC2626);
+
+  Color get statusHealthyBg => const Color(0xFFE8F5E9);
+  Color get statusNeedsWaterBg => const Color(0xFFE3F2FD);
+  Color get statusOverdueBg => const Color(0xFFFFF8E1);
+  Color get statusCriticalBg => const Color(0xFFFFEBEE);
+
+  Color get accentGold => const Color(0xFFD4A853);
+  Color get accentLavender => const Color(0xFF9B8EC4);
+  Color get accentCoral => const Color(0xFFE8836B);
+  Color get accentMint => const Color(0xFF5CB8A5);
 }

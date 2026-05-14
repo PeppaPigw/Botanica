@@ -334,7 +334,6 @@ class _TasksCalendarView extends StatelessWidget {
                     onPressed: () => onShiftMonth(-1),
                     icon: const Icon(
                       Icons.chevron_left_rounded,
-                      matchTextDirection: true,
                     ),
                     tooltip: l10n.calendarPrevMonth,
                   ),
@@ -352,7 +351,6 @@ class _TasksCalendarView extends StatelessWidget {
                     onPressed: () => onShiftMonth(1),
                     icon: const Icon(
                       Icons.chevron_right_rounded,
-                      matchTextDirection: true,
                     ),
                     tooltip: l10n.calendarNextMonth,
                   ),

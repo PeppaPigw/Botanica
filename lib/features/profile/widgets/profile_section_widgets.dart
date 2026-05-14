@@ -64,7 +64,6 @@ class ProfileTile extends StatelessWidget {
       ),
       trailing: Icon(
         Icons.chevron_right_rounded,
-        matchTextDirection: true,
         color: scheme.onSurface.withValues(alpha: 0.55),
       ),
     );

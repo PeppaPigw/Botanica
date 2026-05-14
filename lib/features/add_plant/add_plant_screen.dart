@@ -847,7 +847,6 @@ class _SpeciesPickerState extends ConsumerState<_SpeciesPicker> {
                           selected
                               ? Icons.check_circle_rounded
                               : Icons.chevron_right_rounded,
-                          matchTextDirection: true,
                           color: scheme.onSurface.withValues(alpha: 0.72),
                         ),
                       ],

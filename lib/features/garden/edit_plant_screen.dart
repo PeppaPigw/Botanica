@@ -229,7 +229,7 @@ class _EditPlantScreenState extends ConsumerState<EditPlantScreen> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted) {
                 setState(() {
-                  _initFields(plant);
+                  _initFields(plant!);
                 });
               }
             });

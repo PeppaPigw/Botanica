@@ -17,6 +17,7 @@ import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/botanica_section.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/botanica_search_field.dart';
+import '../../core/widgets/botanica_shimmer.dart';
 import '../../core/widgets/screen_title.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/species.dart';
@@ -806,7 +807,6 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                                       ),
                                       Icon(
                                         Icons.chevron_right_rounded,
-                                        matchTextDirection: true,
                                         color: scheme.onSurface
                                             .withValues(alpha: 0.55),
                                       ),
@@ -1067,7 +1067,6 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                                       ),
                                       Icon(
                                         Icons.chevron_right_rounded,
-                                        matchTextDirection: true,
                                         color: scheme.onSurface
                                             .withValues(alpha: 0.55),
                                       ),
@@ -1491,7 +1490,6 @@ class _GuideCard extends StatelessWidget {
             BotanicaGaps.hSm,
             Icon(
               Icons.chevron_right_rounded,
-              matchTextDirection: true,
               color: scheme.onSurface.withValues(alpha: 0.55),
             ),
           ],
@@ -1768,7 +1766,6 @@ Future<String?> _showSingleSelectSheet({
                                   )
                                 : Icon(
                                     Icons.chevron_right_rounded,
-                                    matchTextDirection: true,
                                     color: scheme.onSurface
                                         .withValues(alpha: 0.55),
                                   ),

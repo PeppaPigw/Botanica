@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../core/utils/motion_preferences.dart';
+import '../../core/widgets/botanica_ambient_background.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../gen/l10n/app_localizations.dart';
 import 'permissions_screen.dart';
@@ -90,7 +91,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ];
 
     return BotanicaPageScaffold(
-      body: SafeArea(
+      body: Stack(
+        children: [
+          const Positioned.fill(
+            child: BotanicaAmbientBackground(
+              intensity: 0.06,
+              speed: 0.4,
+            ),
+          ),
+          SafeArea(
         child: Padding(
           padding: BotanicaTokens.pagePadding,
           child: Column(
@@ -152,6 +161,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ],
           ),
         ),
+      ),
+        ],
       ),
     );
   }
@@ -298,16 +309,31 @@ class _Dots extends StatelessWidget {
       children: List.generate(count, (i) {
         final selected = i == index;
         return AnimatedContainer(
-          duration: BotanicaTokens.motionFast,
-          curve: Curves.easeOut,
+          duration: BotanicaTokens.motionMedium,
+          curve: BotanicaTokens.curveReveal,
           margin: const EdgeInsets.symmetric(horizontal: 5),
-          width: selected ? 22 : 8,
+          width: selected ? 28 : 8,
           height: 8,
           decoration: BoxDecoration(
-            color: selected
-                ? scheme.primary.withValues(alpha: 0.75)
-                : scheme.outlineVariant.withValues(alpha: 0.55),
+            gradient: selected
+                ? LinearGradient(
+                    colors: [
+                      scheme.primary.withValues(alpha: 0.85),
+                      scheme.tertiary.withValues(alpha: 0.7),
+                    ],
+                  )
+                : null,
+            color: selected ? null : scheme.outlineVariant.withValues(alpha: 0.4),
             borderRadius: BorderRadius.circular(999),
+            boxShadow: selected
+                ? [
+                    BoxShadow(
+                      color: scheme.primary.withValues(alpha: 0.25),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
           ),
         );
       }),

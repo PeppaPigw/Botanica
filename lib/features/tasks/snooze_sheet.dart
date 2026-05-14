@@ -265,7 +265,6 @@ class _SnoozeOptionTile extends StatelessWidget {
               ),
               Icon(
                 Icons.chevron_right_rounded,
-                matchTextDirection: true,
                 color: scheme.onSurface.withValues(alpha: 0.4),
                 size: BotanicaTokens.iconSizeMd,
               ),
@@ -342,7 +341,6 @@ class _CustomSnoozeOptionTile extends StatelessWidget {
               ),
               Icon(
                 Icons.chevron_right_rounded,
-                matchTextDirection: true,
                 color: scheme.onSurface.withValues(alpha: 0.4),
                 size: BotanicaTokens.iconSizeMd,
               ),

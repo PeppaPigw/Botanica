@@ -112,7 +112,7 @@ class BotanicaTheme {
         ),
         iconTheme: IconThemeData(color: scheme.onSurface),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         color: scheme.surface.withValues(alpha: 0.92),
         shape: RoundedRectangleBorder(
@@ -314,7 +314,7 @@ class BotanicaTheme {
         ),
         iconTheme: IconThemeData(color: scheme.onSurface),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         color: scheme.surface.withValues(alpha: 0.92),
         shape: RoundedRectangleBorder(

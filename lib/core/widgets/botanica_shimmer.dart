@@ -37,9 +37,13 @@ class BotanicaShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final baseColor = scheme.surfaceContainerHighest.withValues(alpha: 0.3);
-    final highlightColor =
-        scheme.surfaceContainerHighest.withValues(alpha: 0.6);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDark
+        ? scheme.surfaceContainerHighest.withValues(alpha: 0.2)
+        : scheme.surfaceContainerHighest.withValues(alpha: 0.35);
+    final highlightColor = isDark
+        ? scheme.primaryContainer.withValues(alpha: 0.25)
+        : scheme.primaryContainer.withValues(alpha: 0.4);
 
     final base = Container(
       width: width,

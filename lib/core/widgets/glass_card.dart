@@ -12,16 +12,19 @@ class BotanicaGlassCard extends StatelessWidget {
     this.tier = GlassTier.secondary,
     this.padding = BotanicaTokens.cardPadding,
     this.borderRadius = BotanicaTokens.radiusXL,
+    this.accentColor,
   });
 
   final Widget child;
   final GlassTier tier;
   final EdgeInsets padding;
   final double borderRadius;
+  final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final glass = Theme.of(context).extension<BotanicaGlassTheme>();
     final recipe = glass?.recipeFor(tier) ??
         const BotanicaGlassRecipe(
@@ -38,14 +41,34 @@ class BotanicaGlassCard extends StatelessWidget {
     final topTint = Color.lerp(scheme.primaryContainer, scheme.surface, 0.85) ??
         scheme.surface;
 
+    final innerGlowColor = isDark
+        ? Colors.white.withValues(alpha: 0.06)
+        : Colors.white.withValues(alpha: 0.45);
+
+    final borderGradientTop = accentColor != null
+        ? accentColor!.withValues(alpha: isDark ? 0.4 : 0.3)
+        : (isDark
+            ? Colors.white.withValues(alpha: recipe.borderOpacity * 0.7)
+            : Colors.white.withValues(alpha: recipe.borderOpacity));
+
+    final borderGradientBottom = accentColor != null
+        ? accentColor!.withValues(alpha: isDark ? 0.12 : 0.08)
+        : scheme.outlineVariant.withValues(alpha: recipe.borderOpacity * 0.5);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
-            color: scheme.shadow.withValues(alpha: recipe.shadowOpacity),
-            blurRadius: recipe.shadowBlurRadius,
+            color: scheme.shadow.withValues(alpha: recipe.shadowOpacity * 0.4),
+            blurRadius: recipe.shadowBlurRadius * 1.2,
             offset: Offset(0, recipe.shadowOffsetY),
+            spreadRadius: -4,
+          ),
+          BoxShadow(
+            color: scheme.shadow.withValues(alpha: recipe.shadowOpacity * 0.6),
+            blurRadius: recipe.shadowBlurRadius * 0.5,
+            offset: Offset(0, recipe.shadowOffsetY * 0.4),
           ),
         ],
       ),
@@ -56,7 +79,7 @@ class BotanicaGlassCard extends StatelessWidget {
             sigmaX: recipe.blurSigma,
             sigmaY: recipe.blurSigma,
           ),
-          child: DecoratedBox(
+          child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -66,17 +89,32 @@ class BotanicaGlassCard extends StatelessWidget {
                   scheme.surface.withValues(alpha: recipe.backgroundOpacity),
                 ],
               ),
-              border: Border.all(
-                color: scheme.outlineVariant
-                    .withValues(alpha: recipe.borderOpacity),
-                width: 1,
-              ),
             ),
-            child: Material(
-              color: Colors.transparent,
-              child: Padding(
-                padding: padding,
-                child: child,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: const [0.0, 0.12, 1.0],
+                  colors: [
+                    innerGlowColor,
+                    innerGlowColor.withValues(alpha: 0.0),
+                    Colors.transparent,
+                  ],
+                ),
+                border: _GradientBorder(
+                  width: 1.0,
+                  topColor: borderGradientTop,
+                  bottomColor: borderGradientBottom,
+                  borderRadius: borderRadius,
+                ),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: padding,
+                  child: child,
+                ),
               ),
             ),
           ),
@@ -84,4 +122,88 @@ class BotanicaGlassCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class _GradientBorder extends BoxBorder {
+  const _GradientBorder({
+    required this.width,
+    required this.topColor,
+    required this.bottomColor,
+    required this.borderRadius,
+  });
+
+  final double width;
+  final Color topColor;
+  final Color bottomColor;
+  final double borderRadius;
+
+  @override
+  BorderSide get top => BorderSide(color: topColor, width: width);
+
+  @override
+  BorderSide get bottom => BorderSide(color: bottomColor, width: width);
+
+  @override
+  bool get isUniform => false;
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.all(width);
+
+  @override
+  ShapeBorder? lerpFrom(ShapeBorder? a, double t) => null;
+
+  @override
+  ShapeBorder? lerpTo(ShapeBorder? b, double t) => null;
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
+    return Path()
+      ..addRRect(
+        RRect.fromRectAndRadius(
+          rect.deflate(width),
+          Radius.circular(borderRadius - width),
+        ),
+      );
+  }
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    return Path()
+      ..addRRect(
+        RRect.fromRectAndRadius(rect, Radius.circular(borderRadius)),
+      );
+  }
+
+  @override
+  void paint(
+    Canvas canvas,
+    Rect rect, {
+    TextDirection? textDirection,
+    BoxShape shape = BoxShape.rectangle,
+    BorderRadius? borderRadius,
+  }) {
+    final rrect = RRect.fromRectAndRadius(
+      rect.deflate(width / 2),
+      Radius.circular(this.borderRadius - width / 2),
+    );
+
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width
+      ..shader = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [topColor, bottomColor],
+      ).createShader(rect);
+
+    canvas.drawRRect(rrect, paint);
+  }
+
+  @override
+  ShapeBorder scale(double t) => _GradientBorder(
+        width: width * t,
+        topColor: topColor,
+        bottomColor: bottomColor,
+        borderRadius: borderRadius,
+      );
 }

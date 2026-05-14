@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +9,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/screen_title.dart';
 import '../../core/haptics/botanica_haptics.dart';
+import '../../core/widgets/botanica_ambient_background.dart';
 import '../../core/widgets/botanica_sheet.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/botanica_button.dart';
@@ -40,32 +39,10 @@ class DailyScreen extends ConsumerStatefulWidget {
   ConsumerState<DailyScreen> createState() => _DailyScreenState();
 }
 
-class _DailyScreenState extends ConsumerState<DailyScreen>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: BotanicaTokens.motionSpring * 25,
-  );
-
+class _DailyScreenState extends ConsumerState<DailyScreen> {
   bool _revealed = false;
   DateTime? _lastDay;
   BeliefMode? _lastBeliefMode;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (botanicaReduceMotion(context)) {
-      if (_controller.isAnimating) _controller.stop();
-    } else {
-      if (!_controller.isAnimating) _controller.repeat();
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   void _revealDailyEntry(BeliefMode beliefMode) {
     if (_revealed) return;
@@ -157,15 +134,10 @@ class _DailyScreenState extends ConsumerState<DailyScreen>
       child: Stack(
         children: [
           if (!reduceMotion)
-            Positioned.fill(
-              child: AnimatedBuilder(
-                animation: _controller,
-                builder: (context, _) => CustomPaint(
-                  painter: _PetalPainter(
-                    t: _controller.value,
-                    color: scheme.tertiary.withValues(alpha: 0.18),
-                  ),
-                ),
+            const Positioned.fill(
+              child: BotanicaAmbientBackground(
+                intensity: 0.12,
+                speed: 0.8,
               ),
             ),
           ListView(
@@ -641,38 +613,6 @@ String _revealHint(AppLocalizations l10n, BeliefMode mode) => switch (mode) {
       BeliefMode.justFlower => l10n.dailyRevealHintTap,
       BeliefMode.unselected => l10n.dailyRevealHintTap,
     };
-
-class _PetalPainter extends CustomPainter {
-  const _PetalPainter({
-    required this.t,
-    required this.color,
-  });
-
-  final double t;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color;
-    final random = Random(42);
-
-    for (var i = 0; i < 14; i++) {
-      final baseX = random.nextDouble() * size.width;
-      final baseY = random.nextDouble() * size.height;
-      final driftX = sin((t * 2 * pi) + i) * 18;
-      final driftY = cos((t * 2 * pi) + i) * 26;
-
-      final center = Offset(baseX + driftX, baseY + driftY);
-      final r = 10.0 + (random.nextDouble() * 18);
-      canvas.drawCircle(center, r, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _PetalPainter oldDelegate) {
-    return oldDelegate.t != t || oldDelegate.color != color;
-  }
-}
 
 String _variantLabel({
   required AppLocalizations l10n,
