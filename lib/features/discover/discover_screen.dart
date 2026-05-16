@@ -31,6 +31,8 @@ import '../../domain/models/care_log.dart';
 import '../../domain/services/care_coaching.dart';
 import '../../domain/services/weekly_insight_engine.dart';
 import '../../domain/services/seasonal_report_engine.dart';
+import '../../domain/services/plant_recommendation_engine.dart';
+import '../../core/widgets/botanica_plant_recommendation_card.dart';
 import '../../gen/l10n/app_localizations.dart';
 
 class DiscoverScreen extends ConsumerStatefulWidget {
@@ -577,6 +579,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
           const _DiscoverCoachingTip(),
           const _WeeklyInsightSection(),
           const _SeasonalReportSection(),
+          const _PlantRecommendationSection(),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           speciesAsync.when(
             data: (species) {
@@ -2197,6 +2200,55 @@ class _SeasonalReportSection extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(top: BotanicaTokens.spacingSm),
       child: BotanicaSeasonalReportCard(report: report),
+    );
+  }
+}
+
+class _PlantRecommendationSection extends ConsumerWidget {
+  const _PlantRecommendationSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plants = ref.watch(plantsStreamProvider).valueOrNull ?? const <Plant>[];
+    final speciesAsync = ref.watch(speciesListProvider);
+    final active = plants.where((p) => !p.isArchived).toList();
+    if (active.length < 3) return const SizedBox.shrink();
+
+    return speciesAsync.when(
+      data: (species) {
+        final speciesLight = <String, String>{
+          for (final s in species) s.id: s.light,
+        };
+        final speciesDiff = <String, String>{
+          for (final s in species) s.id: s.difficulty,
+        };
+        final speciesWaterDays = <String, int>{
+          for (final s in species) s.id: s.careDefaults.waterBaseDays,
+        };
+        final settings = ref.watch(settingsControllerProvider);
+        final result = PlantRecommendationEngine.suggest(
+          currentPlants: plants,
+          speciesLight: speciesLight,
+          speciesDifficulty: speciesDiff,
+          speciesWaterDays: speciesWaterDays,
+          availableSpeciesIds: species.map((s) => s.id).toList(),
+          userLevel: settings.careStreakDays ~/ 30 + 1,
+        );
+        if (result.recommendations.isEmpty) return const SizedBox.shrink();
+        final localeCode = Localizations.localeOf(context).languageCode;
+        final names = <String, String>{
+          for (final s in species) s.id: s.bestCommonName(localeCode),
+        };
+        return Padding(
+          padding: const EdgeInsets.only(top: BotanicaTokens.spacingSm),
+          child: BotanicaPlantRecommendationCard(
+            result: result,
+            speciesNames: names,
+          ),
+        );
+      },
+      loading: () => const SizedBox.shrink(),
+      error: (_, __) => const SizedBox.shrink(),
     );
   }
 }

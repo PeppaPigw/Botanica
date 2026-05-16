@@ -58,6 +58,12 @@ import '../../domain/models/task_instance.dart';
 import '../../domain/services/garden_wellness_summary.dart';
 import '../../domain/services/plant_health_score.dart';
 import '../../domain/services/garden_diversity_engine.dart';
+import '../../domain/services/plant_compatibility.dart';
+import '../../core/widgets/botanica_room_compatibility_card.dart';
+import '../../domain/services/watering_efficiency_analyzer.dart';
+import '../../core/widgets/botanica_watering_efficiency_card.dart';
+import '../../domain/services/care_autopilot_engine.dart';
+import '../../core/widgets/botanica_care_autopilot_card.dart';
 import '../../domain/services/garden_momentum_engine.dart';
 import '../../domain/services/watering_batch_planner.dart';
 import '../../domain/services/care_difficulty_progression.dart';
@@ -969,6 +975,69 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                     progression: progression,
                   );
                 }).animateSection(index: 6),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 2)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final roomResults =
+                      PlantCompatibilityEngine.analyzeAllRooms(
+                    plants: plants,
+                    speciesMap: speciesById,
+                  );
+                  if (roomResults.isEmpty) return const SizedBox.shrink();
+                  final showRoom = roomResults.firstWhere(
+                    (r) => r.overallScore < 0.7,
+                    orElse: () => roomResults.first,
+                  );
+                  return BotanicaRoomCompatibilityCard(
+                    compatibility: showRoom,
+                  );
+                }).animateSection(index: 7),
+              ),
+            ),
+          if (logs.where((l) => l.type == TaskType.water).length >= 5)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final analyses = WateringEfficiencyAnalyzer.analyze(
+                    plants: plants,
+                    species: speciesById.values.toList(),
+                    logs: logs,
+                    now: DateTime.now(),
+                  );
+                  if (analyses.isEmpty) return const SizedBox.shrink();
+                  return BotanicaWateringEfficiencyCard(analyses: analyses);
+                }).animateSection(index: 8),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 2 && logs.length >= 5)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final season = SeasonalTipsEngine.currentSeason(
+                    settings.hemisphere,
+                  );
+                  final nextSeason = Season.values[
+                      (season.index + 1) % Season.values.length];
+                  final suggestions = CareAutopilotEngine.generate(
+                    plants: plants,
+                    species: speciesById.values.toList(),
+                    logs: logs,
+                    now: DateTime.now(),
+                    currentSeason: season,
+                    nextSeason: nextSeason,
+                  );
+                  if (suggestions.isEmpty) return const SizedBox.shrink();
+                  return BotanicaCareAutopilotCard(suggestions: suggestions);
+                }).animateSection(index: 9),
               ),
             ),
           SliverPadding(
