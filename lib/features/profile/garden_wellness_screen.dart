@@ -63,6 +63,9 @@ import '../../core/widgets/botanica_weekly_insight_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
 import '../../core/widgets/botanica_community_challenge_card.dart';
+import '../../core/widgets/botanica_care_persona_card.dart';
+import '../../core/widgets/botanica_garden_sharing_card.dart';
+import '../../core/widgets/botanica_care_delegation_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -124,6 +127,9 @@ import '../../domain/services/weekly_insight_engine.dart';
 import '../../domain/services/seasonal_transition_advisor.dart';
 import '../../domain/services/daily_briefing_engine.dart';
 import '../../domain/services/community_challenge_engine.dart';
+import '../../domain/services/user_care_persona_engine.dart';
+import '../../domain/services/garden_sharing_engine.dart';
+import '../../domain/services/care_delegation_engine.dart';
 import '../../domain/services/seasonal_tips.dart' as seasonal_tips;
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
@@ -685,6 +691,24 @@ class GardenWellnessScreen extends ConsumerWidget {
               _CommunityChallengeSection(
                 logs: logsAsync.requireValue,
                 plants: plantsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CarePersonaSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GardenSharingSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareDelegationSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
                 settings: settings,
               ),
               const SizedBox(height: BotanicaTokens.spacingLg),
@@ -2929,5 +2953,90 @@ class _CommunityChallengeSection extends StatelessWidget {
     );
 
     return BotanicaCommunityChallengeCard(result: result);
+  }
+}
+
+class _CarePersonaSection extends StatelessWidget {
+  const _CarePersonaSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final oldest = plants.where((p) => !p.isArchived).fold<DateTime?>(
+      null, (prev, p) => prev == null || p.createdAt.isBefore(prev) ? p.createdAt : prev,
+    );
+    final daysActive = oldest != null
+        ? DateTime.now().difference(oldest).inDays
+        : 0;
+
+    final persona = UserCarePersonaEngine.analyze(
+      plants: plants,
+      logs: logs,
+      streakDays: settings.careStreakDays,
+      totalDaysActive: daysActive,
+      now: DateTime.now(),
+    );
+
+    return BotanicaCarePersonaCard(persona: persona);
+  }
+}
+
+class _GardenSharingSection extends StatelessWidget {
+  const _GardenSharingSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final card = GardenSharingEngine.generate(
+      plants: plants,
+      streakDays: settings.careStreakDays,
+      totalCareActions: logs.length,
+      momentumScore: 0.7,
+      now: DateTime.now(),
+    );
+
+    return BotanicaGardenSharingCard(card: card);
+  }
+}
+
+class _CareDelegationSection extends StatelessWidget {
+  const _CareDelegationSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final season = seasonal_tips.SeasonalTipsEngine.currentSeason(settings.hemisphere, now: now);
+    final plan = CareDelegationEngine.generate(
+      plants: plants,
+      logs: logs,
+      speciesWaterDays: const {},
+      startDate: now,
+      endDate: now.add(const Duration(days: 7)),
+      currentSeason: season,
+    );
+
+    return BotanicaCareDelegationCard(plan: plan);
   }
 }
