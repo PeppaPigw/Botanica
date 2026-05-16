@@ -28,6 +28,10 @@ import '../../core/widgets/botanica_garden_mood_board_card.dart';
 import '../../core/widgets/botanica_whisperer_score_card.dart';
 import '../../core/widgets/botanica_growth_journal_card.dart';
 import '../../core/widgets/botanica_daily_ritual_card.dart';
+import '../../core/widgets/botanica_care_coaching_card.dart';
+import '../../core/widgets/botanica_care_consistency_card.dart';
+import '../../core/widgets/botanica_survival_predictor_card.dart';
+import '../../core/widgets/botanica_plant_lineage_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -54,6 +58,10 @@ import '../../domain/services/garden_mood_board_engine.dart';
 import '../../domain/services/plant_whisperer_score.dart';
 import '../../domain/services/growth_journal_engine.dart';
 import '../../domain/services/daily_rituals.dart';
+import '../../domain/services/care_coaching.dart';
+import '../../domain/services/care_consistency_scorer.dart';
+import '../../domain/services/plant_survival_predictor.dart';
+import '../../domain/services/plant_lineage_engine.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -433,6 +441,25 @@ class GardenWellnessScreen extends ConsumerWidget {
                 plants: plantsAsync.requireValue,
                 logs: logsAsync.requireValue,
               ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareCoachingSection(
+                settings: settings,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareConsistencySection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _SurvivalPredictorSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _PlantLineageSection(plants: plantsAsync.requireValue),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(
@@ -1795,5 +1822,103 @@ class _GrowthJournalSection extends StatelessWidget {
     if (summary == null) return const SizedBox.shrink();
 
     return BotanicaGrowthJournalCard(summary: summary);
+  }
+}
+
+class _CareCoachingSection extends StatelessWidget {
+  const _CareCoachingSection({
+    required this.settings,
+    required this.logs,
+    required this.tasks,
+  });
+
+  final UserSettings settings;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final insights = CareCoachingEngine.generateInsights(
+      allTasks: tasks,
+      allLogs: logs,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    return BotanicaCareCoachingCard(insights: insights);
+  }
+}
+
+class _CareConsistencySection extends StatelessWidget {
+  const _CareConsistencySection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final results = CareConsistencyScorer.scoreAll(
+      plants: plants,
+      tasks: tasks,
+      logs: logs,
+      now: DateTime.now(),
+    );
+    if (results.isEmpty) return const SizedBox.shrink();
+
+    final nameMap = {for (final p in plants) p.id: p.nickname};
+
+    return BotanicaCareConsistencyCard(
+      results: results,
+      plantNameResolver: (id) => nameMap[id] ?? id.substring(0, 6),
+    );
+  }
+}
+
+class _SurvivalPredictorSection extends StatelessWidget {
+  const _SurvivalPredictorSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final activePlants = plants.where((p) => !p.isArchived).toList();
+    if (activePlants.isEmpty) return const SizedBox.shrink();
+
+    final predictions = PlantSurvivalPredictor.predict(
+      plants: plants,
+      logs: logs,
+      healthScores: {for (final p in activePlants) p.id: 0.7},
+      now: DateTime.now(),
+    );
+
+    return BotanicaSurvivalPredictorCard(predictions: predictions);
+  }
+}
+
+class _PlantLineageSection extends StatelessWidget {
+  const _PlantLineageSection({required this.plants});
+
+  final List<Plant> plants;
+
+  @override
+  Widget build(BuildContext context) {
+    final legacy = PlantLineageEngine.compute(
+      plants: plants,
+      parentMap: const {},
+      propagationMethods: const {},
+      now: DateTime.now(),
+    );
+    if (legacy.lineageTree.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaPlantLineageCard(legacy: legacy);
   }
 }

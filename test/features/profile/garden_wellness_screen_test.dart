@@ -123,8 +123,8 @@ void main() {
     await tester.scrollUntilVisible(
         find.text(l10n.gardenWellnessFocusPlantsTitle), 120);
     expect(find.text(l10n.gardenWellnessFocusPlantsTitle), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('Monstera'), 120);
-    expect(find.text('Monstera'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Monstera').first, 120);
+    expect(find.text('Monstera'), findsWidgets);
   });
 
   testWidgets('renders localized wellness copy in Spanish',
