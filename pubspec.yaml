@@ -66,6 +66,7 @@ dependencies:
   crypto: ^3.0.6
   cross_file: ^0.3.4+2
   share_plus: ^10.1.4
+  in_app_review: ^2.0.10
 
 dev_dependencies:
   flutter_test:

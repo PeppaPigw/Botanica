@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:botanica/core/haptics/botanica_haptics.dart';
+import 'package:botanica/core/widgets/botanica_all_done_sheet.dart';
+import 'package:botanica/core/widgets/botanica_celebration.dart';
+import 'package:botanica/core/widgets/botanica_plant_anniversary_sheet.dart';
+import 'package:botanica/core/widgets/botanica_streak_milestone_sheet.dart';
 import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,9 +18,11 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../core/widgets/botanica_bottom_action_bar.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_button.dart';
+import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_chip.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_sheet.dart';
+import '../../core/widgets/botanica_shimmer.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../domain/models/diary_entry.dart';
@@ -25,6 +31,7 @@ import '../../domain/models/plant.dart';
 import '../../domain/models/task_instance.dart';
 import '../../domain/models/species.dart';
 import '../../domain/services/dryness_index.dart';
+import '../../domain/services/plant_anniversary.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_actions.dart';
 import '../../services/permissions/permissions_service.dart';
@@ -126,12 +133,24 @@ class _LoadingScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return BotanicaPageScaffold(
-      body: Center(
-        child: CircularProgressIndicator(
-          valueColor:
-              AlwaysStoppedAnimation(scheme.primary.withValues(alpha: 0.7)),
+    return const BotanicaPageScaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: BotanicaTokens.pagePadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BotanicaShimmer.card(height: 220),
+              SizedBox(height: BotanicaTokens.spacingRelaxed),
+              BotanicaShimmer(width: 180, height: 24),
+              SizedBox(height: BotanicaTokens.spacingSm),
+              BotanicaShimmer(width: 120, height: 14),
+              SizedBox(height: BotanicaTokens.spacingXxl),
+              BotanicaShimmer.card(height: 80),
+              SizedBox(height: BotanicaTokens.spacingBase),
+              BotanicaShimmer.card(height: 80),
+            ],
+          ),
         ),
       ),
     );
@@ -248,6 +267,7 @@ class _PlantDetailScaffold extends ConsumerStatefulWidget {
 class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
   bool _watering = false;
   bool _didRunAutoAction = false;
+  bool _hasCheckedAnniversary = false;
 
   @override
   void initState() {
@@ -262,7 +282,37 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
       } else if (widget.autoAddNote) {
         _addDiaryEntry();
       }
+
+      _checkAnniversary();
     });
+  }
+
+  Future<void> _checkAnniversary() async {
+    if (_hasCheckedAnniversary) return;
+    _hasCheckedAnniversary = true;
+
+    final now = DateTime.now();
+    final milestone = PlantAnniversary.checkMilestone(
+      plantCreatedAt: widget.plant.createdAt,
+      lastShown: widget.plant.meta.lastAnniversaryShown,
+      now: now,
+    );
+
+    if (milestone == null) return;
+    if (!mounted) return;
+
+    // Update the plant meta to record that we showed this anniversary.
+    final plantsRepo = ref.read(plantsRepositoryProvider);
+    final updatedMeta = widget.plant.meta.copyWith(lastAnniversaryShown: now);
+    await plantsRepo.upsert(widget.plant.copyWith(meta: updatedMeta));
+
+    if (!mounted) return;
+
+    await BotanicaPlantAnniversarySheet.show(
+      context,
+      plantName: widget.plant.nickname,
+      milestoneDays: milestone,
+    );
   }
 
   Future<void> _waterNow() async {
@@ -303,7 +353,36 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
 
       if (!mounted) return;
       final l10n = AppLocalizations.of(context);
-      BotanicaHaptics.completion();
+
+      final updatedSettings = ref.read(settingsControllerProvider);
+      final milestone = CareActions.newMilestoneReached(
+        updatedSettings.careStreakDays,
+        updatedSettings.lastMilestoneCelebrated,
+      );
+
+      if (milestone != null) {
+        await ref.read(settingsControllerProvider.notifier).update(
+              updatedSettings.copyWith(lastMilestoneCelebrated: milestone),
+            );
+        if (!mounted) return;
+        await BotanicaStreakMilestoneSheet.show(context, milestone: milestone);
+      } else {
+        final allTasks =
+            ref.read(tasksStreamProvider).valueOrNull ?? const <TaskInstance>[];
+        final todayEnd = DateTime(now.year, now.month, now.day + 1);
+        final remainingToday = allTasks.where(
+            (t) => !t.isDismissed && t.dueAt.isBefore(todayEnd)).toList();
+
+        if (remainingToday.isEmpty) {
+          if (!mounted) return;
+          await BotanicaAllDoneSheet.show(context);
+        } else {
+          BotanicaHaptics.completion();
+          BotanicaCelebration.show(context);
+        }
+      }
+
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
@@ -318,12 +397,22 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
           ),
         ),
       );
+    } catch (_) {
+      if (!mounted) return;
+      BotanicaHaptics.subtleError();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(AppLocalizations.of(context).commonErrorTryAgain),
+        ),
+      );
     } finally {
       if (mounted) setState(() => _watering = false);
     }
   }
 
   Future<void> _addPhoto() async {
+    BotanicaHaptics.selectionTick();
     final l10n = AppLocalizations.of(context);
 
     final photosRepo = ref.read(photosRepositoryProvider);
@@ -499,6 +588,7 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
   }
 
   Future<void> _addDiaryEntry() async {
+    BotanicaHaptics.selectionTick();
     final l10n = AppLocalizations.of(context);
     final text = await _promptForDiaryText();
     if (text == null) return;
@@ -791,11 +881,19 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
                         ),
                       ),
                     ),
-                    Opacity(
-                      opacity: hasUserPhotoCover ? 0.85 : 0.70,
-                      child: Hero(
-                        tag: widget.plant.id,
-                        child: _CoverImage(path: heroCoverPath),
+                    Semantics(
+                      image: true,
+                      label: widget.plant.nickname,
+                      excludeSemantics: true,
+                      child: Opacity(
+                        opacity: hasUserPhotoCover ? 0.85 : 0.70,
+                        child: Hero(
+                          tag: widget.plant.id,
+                          child: _CoverImage(
+                            path: heroCoverPath,
+                            semanticLabel: widget.plant.nickname,
+                          ),
+                        ),
                       ),
                     ),
                     DecoratedBox(
@@ -836,8 +934,12 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
                                   icon: Icons.water_drop_rounded,
                                   label: dueInDays == null
                                       ? l10n.gardenNoScheduleYet
-                                      : l10n.plantDetailNextWateringInDays(
-                                          dueInDays.clamp(0, 999)),
+                                      : dueInDays <= 0
+                                          ? l10n.plantDetailNextWateringToday
+                                          : dueInDays == 1
+                                              ? l10n.plantDetailNextWateringTomorrow
+                                              : l10n.plantDetailNextWateringInDays(
+                                                  dueInDays.clamp(0, 999)),
                                 ),
                                 PlantDetailPill(
                                   icon: Icons.opacity_rounded,
@@ -850,25 +952,93 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
                                     widget.plant.environmentMode,
                                   ),
                                 ),
+                                PlantDetailPill(
+                                  icon: Icons.calendar_today_rounded,
+                                  label: l10n.plantDetailCaringForDays(
+                                    DateTime.now()
+                                        .difference(widget.plant.createdAt)
+                                        .inDays
+                                        .clamp(0, 9999),
+                                  ),
+                                ),
                               ],
                             ),
                             BotanicaGaps.vSm,
-                            Text(
-                              _drynessLabel(l10n, dryness),
-                              style: textTheme.bodySmall?.copyWith(
-                                color: scheme.onSurface.withValues(alpha: 0.72),
-                              ),
-                            ),
-                            BotanicaGaps.vXxs,
-                            LinearProgressIndicator(
-                              value: dryness,
-                              minHeight: 8,
-                              borderRadius: BorderRadius.circular(999),
-                              backgroundColor:
-                                  scheme.outlineVariant.withValues(alpha: 0.35),
-                              valueColor: AlwaysStoppedAnimation(
-                                Color.lerp(
-                                    scheme.tertiary, scheme.primary, dryness)!,
+                            Semantics(
+                              label: '${_drynessLabel(l10n, dryness)}, ${(dryness * 100).round()}%',
+                              excludeSemantics: true,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.water_drop_rounded,
+                                        size: 14,
+                                        color: Color.lerp(
+                                          scheme.tertiary,
+                                          scheme.primary,
+                                          dryness,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        _drynessLabel(l10n, dryness),
+                                        style: textTheme.bodySmall?.copyWith(
+                                          color: scheme.onSurface
+                                              .withValues(alpha: 0.72),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  BotanicaGaps.vXxs,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(999),
+                                    child: SizedBox(
+                                      height: 8,
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: scheme.outlineVariant
+                                                  .withValues(alpha: 0.35),
+                                              borderRadius:
+                                                  BorderRadius.circular(999),
+                                            ),
+                                          ),
+                                          TweenAnimationBuilder<double>(
+                                            tween: Tween(begin: 0, end: dryness.clamp(0.0, 1.0)),
+                                            duration: botanicaReduceMotion(context)
+                                                ? Duration.zero
+                                                : const Duration(milliseconds: 700),
+                                            curve: Curves.easeOutCubic,
+                                            builder: (context, value, child) {
+                                              return FractionallySizedBox(
+                                                widthFactor: value,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        scheme.tertiary,
+                                                        Color.lerp(
+                                                          scheme.tertiary,
+                                                          scheme.primary,
+                                                          dryness,
+                                                        )!,
+                                                      ],
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(999),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             BotanicaGaps.vSm,
@@ -938,15 +1108,35 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
           child: Row(
             children: [
               Expanded(
-                child: FilledButton.icon(
-                  onPressed: _watering ? null : _waterNow,
-                  icon: const Icon(Icons.water_drop_rounded),
-                  label: Text(l10n.plantDetailWaterNow),
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        BotanicaTokens.radiusPill,
+                child: Semantics(
+                  button: true,
+                  label: dueInDays != null && dueInDays <= 0
+                      ? '${l10n.plantDetailWaterNow}, ${l10n.commonOverdue}'
+                      : l10n.plantDetailWaterNow,
+                  child: FilledButton.icon(
+                    onPressed: _watering ? null : _waterNow,
+                    icon: _watering
+                        ? SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation(
+                                scheme.onPrimary.withValues(alpha: 0.7),
+                              ),
+                            ),
+                          )
+                        : const Icon(Icons.water_drop_rounded),
+                    label: Text(l10n.plantDetailWaterNow),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: dueInDays != null && dueInDays <= 0
+                          ? scheme.error
+                          : null,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          BotanicaTokens.radiusPill,
+                        ),
                       ),
                     ),
                   ),
@@ -973,9 +1163,10 @@ class _PlantDetailScaffoldState extends ConsumerState<_PlantDetailScaffold> {
 }
 
 class _CoverImage extends StatelessWidget {
-  const _CoverImage({required this.path});
+  const _CoverImage({required this.path, this.semanticLabel});
 
   final String? path;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -985,13 +1176,16 @@ class _CoverImage extends StatelessWidget {
 
     if (resolved.startsWith('assets/')) {
       return Image.asset(resolved,
-          fit: BoxFit.cover, filterQuality: FilterQuality.high);
+          fit: BoxFit.cover,
+          filterQuality: FilterQuality.high,
+          semanticLabel: semanticLabel);
     }
 
     return Image.file(
       File(resolved),
       fit: BoxFit.cover,
       filterQuality: FilterQuality.high,
+      semanticLabel: semanticLabel,
       errorBuilder: (_, __, ___) => Image.asset(
         'assets/images/placeholder_plant.jpg',
         fit: BoxFit.cover,

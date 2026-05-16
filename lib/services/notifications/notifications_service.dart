@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
@@ -8,13 +9,16 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../domain/models/enums.dart';
+import '../../domain/models/care_log.dart';
 import '../../domain/models/task_instance.dart';
 import '../../domain/models/user_settings.dart';
 import '../../domain/models/plant.dart';
 import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaNotificationsService {
-  BotanicaNotificationsService();
+  BotanicaNotificationsService({this.onNotificationTap});
+
+  final void Function(String plantId)? onNotificationTap;
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
@@ -39,13 +43,30 @@ class BotanicaNotificationsService {
     const iOS = DarwinInitializationSettings();
 
     const settings = InitializationSettings(android: android, iOS: iOS);
-    await _plugin.initialize(settings);
+    await _plugin.initialize(
+      settings,
+      onDidReceiveNotificationResponse: _handleNotificationTap,
+    );
 
     final androidImpl = _plugin.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
     await androidImpl?.createNotificationChannel(_androidChannel);
 
     _initialized = true;
+  }
+
+  void _handleNotificationTap(NotificationResponse response) {
+    final payload = response.payload;
+    if (payload == null || payload.trim().isEmpty) return;
+    try {
+      final decoded = jsonDecode(payload);
+      if (decoded is Map && decoded['type'] == 'task') {
+        final plantId = decoded['plantId'] as String?;
+        if (plantId != null && plantId.isNotEmpty) {
+          onNotificationTap?.call(plantId);
+        }
+      }
+    } catch (_) {}
   }
 
   Future<void> _configureLocalTimezone({required bool force}) async {
@@ -87,6 +108,12 @@ class BotanicaNotificationsService {
     await ensureInitialized();
     await _configureLocalTimezone(force: false);
     await _plugin.cancelAll();
+    await _updateBadgeCount(0);
+  }
+
+  Future<void> clearBadge() async {
+    await ensureInitialized();
+    await _updateBadgeCount(0);
   }
 
   Future<void> scheduleTaskReminder({
@@ -166,6 +193,10 @@ class BotanicaNotificationsService {
     final now = DateTime.now();
     final latest = now.add(horizon);
 
+    final overdue = tasks.where((t) =>
+        !t.isDismissed && !t.dueAt.isAfter(now) && plantsById.containsKey(t.plantId));
+    await _updateBadgeCount(overdue.length);
+
     final pending = tasks
         .where((t) =>
             !t.isDismissed && t.dueAt.isAfter(now) && t.dueAt.isBefore(latest))
@@ -214,12 +245,34 @@ class BotanicaNotificationsService {
     TaskType type,
     String plant,
   ) {
+    final random = Random();
+    final variant = random.nextInt(3); // 0, 1, or 2
     return switch (type) {
-      TaskType.water => l10n.notificationWaterTitle(plant),
-      TaskType.fertilize => l10n.notificationFertilizeTitle(plant),
-      TaskType.mist => l10n.notificationMistTitle(plant),
-      TaskType.rotate => l10n.notificationRotateTitle(plant),
-      TaskType.prune => l10n.notificationPruneTitle(plant),
+      TaskType.water => switch (variant) {
+        0 => l10n.notificationWaterTitle(plant),
+        1 => l10n.notificationWaterTitle2(plant),
+        _ => l10n.notificationWaterTitle3(plant),
+      },
+      TaskType.fertilize => switch (variant) {
+        0 => l10n.notificationFertilizeTitle(plant),
+        1 => l10n.notificationFertilizeTitle2(plant),
+        _ => l10n.notificationFertilizeTitle3(plant),
+      },
+      TaskType.mist => switch (variant) {
+        0 => l10n.notificationMistTitle(plant),
+        1 => l10n.notificationMistTitle2(plant),
+        _ => l10n.notificationMistTitle3(plant),
+      },
+      TaskType.rotate => switch (variant) {
+        0 => l10n.notificationRotateTitle(plant),
+        1 => l10n.notificationRotateTitle2(plant),
+        _ => l10n.notificationRotateTitle3(plant),
+      },
+      TaskType.prune => switch (variant) {
+        0 => l10n.notificationPruneTitle(plant),
+        1 => l10n.notificationPruneTitle2(plant),
+        _ => l10n.notificationPruneTitle3(plant),
+      },
       TaskType.repot => l10n.notificationsTaskTitle(plant, l10n.taskTypeRepot),
       TaskType.checkPests =>
         l10n.notificationsTaskTitle(plant, l10n.taskTypeCheckPests),
@@ -228,6 +281,99 @@ class BotanicaNotificationsService {
       TaskType.sunlightAdjustment =>
         l10n.notificationsTaskTitle(plant, l10n.taskTypeSunlightAdjustment),
     };
+  }
+
+  Future<void> _updateBadgeCount(int count) async {
+    final iOSImpl = _plugin.resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>();
+    if (iOSImpl != null) {
+      // Badge-only silent local notification to update the app icon badge.
+      // Immediately cancelled so no notification appears in Notification Center.
+      const badgeOnlyId = 2147483646;
+      await _plugin.show(
+        badgeOnlyId,
+        null,
+        null,
+        NotificationDetails(
+          iOS: DarwinNotificationDetails(
+            presentAlert: false,
+            presentSound: false,
+            presentBadge: true,
+            badgeNumber: count,
+          ),
+        ),
+      );
+      await _plugin.cancel(badgeOnlyId);
+    }
+  }
+
+  static const int _dailySummaryId = 2147483600;
+
+  Future<void> scheduleDailySummary({
+    required int todayTaskCount,
+    required UserSettings settings,
+  }) async {
+    await ensureInitialized();
+    await _configureLocalTimezone(force: false);
+
+    if (todayTaskCount <= 0) {
+      await _plugin.cancel(_dailySummaryId);
+      return;
+    }
+
+    final locale = settings.locale ?? const Locale('en');
+    final l10n = lookupAppLocalizations(locale);
+
+    final title = l10n.notificationDailySummaryTitle;
+    final body = l10n.notificationDailySummaryBody(todayTaskCount);
+
+    final hour = switch (settings.reminderTimePreference) {
+      ReminderTimePreference.morning => 8,
+      ReminderTimePreference.evening => 18,
+    };
+
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      0,
+    );
+    if (scheduled.isBefore(now)) {
+      scheduled = scheduled.add(const Duration(days: 1));
+    }
+
+    final details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        _androidChannel.id,
+        _androidChannel.name,
+        channelDescription: _androidChannel.description,
+        importance: Importance.defaultImportance,
+        priority: Priority.defaultPriority,
+        category: AndroidNotificationCategory.reminder,
+      ),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentSound: true,
+        presentBadge: false,
+      ),
+    );
+
+    await _plugin.zonedSchedule(
+      _dailySummaryId,
+      title,
+      body,
+      scheduled,
+      details,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+    );
+  }
+
+  Future<void> cancelDailySummary() async {
+    await ensureInitialized();
+    await _plugin.cancel(_dailySummaryId);
   }
 
   tz.TZDateTime _toLocalTzDateTime(DateTime dateTimeLocal) {
@@ -243,5 +389,72 @@ class BotanicaNotificationsService {
       local.millisecond,
       local.microsecond,
     );
+  }
+
+  static const int _streakProtectionId = 2147483601;
+
+  Future<void> scheduleStreakProtection({
+    required UserSettings settings,
+    required List<CareLog> todayLogs,
+  }) async {
+    await ensureInitialized();
+    await _configureLocalTimezone(force: false);
+
+    if (settings.careStreakDays < 3 || settings.isOnVacation) {
+      await _plugin.cancel(_streakProtectionId);
+      return;
+    }
+
+    if (todayLogs.isNotEmpty) {
+      await _plugin.cancel(_streakProtectionId);
+      return;
+    }
+
+    final locale = settings.locale ?? const Locale('en');
+    final l10n = lookupAppLocalizations(locale);
+
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      20,
+      0,
+    );
+    if (scheduled.isBefore(now)) {
+      await _plugin.cancel(_streakProtectionId);
+      return;
+    }
+
+    final details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        _androidChannel.id,
+        _androidChannel.name,
+        channelDescription: _androidChannel.description,
+        importance: Importance.high,
+        priority: Priority.high,
+        category: AndroidNotificationCategory.reminder,
+      ),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentSound: true,
+        presentBadge: false,
+      ),
+    );
+
+    await _plugin.zonedSchedule(
+      _streakProtectionId,
+      l10n.notificationStreakProtectionTitle(settings.careStreakDays),
+      l10n.notificationStreakProtectionBody,
+      scheduled,
+      details,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+    );
+  }
+
+  Future<void> cancelStreakProtection() async {
+    await ensureInitialized();
+    await _plugin.cancel(_streakProtectionId);
   }
 }

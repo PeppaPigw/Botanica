@@ -1,3 +1,4 @@
+import 'package:botanica/core/haptics/botanica_haptics.dart';
 import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'dart:io';
 
@@ -15,6 +16,7 @@ import '../../core/i18n/species_search.dart';
 import '../../core/widgets/botanica_bottom_action_bar.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_button.dart';
+import '../../core/widgets/botanica_celebration.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_search_field.dart';
 import '../../core/widgets/botanica_state_card.dart';
@@ -156,10 +158,13 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
   }
 
   Future<void> _save() async {
+    BotanicaHaptics.primaryPress();
     final l10n = AppLocalizations.of(context);
-    final nickname = _nicknameController.text.trim().isEmpty
-        ? l10n.addPlantTitle
-        : _nicknameController.text.trim();
+
+    try {
+      final nickname = _nicknameController.text.trim().isEmpty
+          ? l10n.addPlantTitle
+          : _nicknameController.text.trim();
 
     final plantId = _uuid.v4();
     final now = DateTime.now();
@@ -296,20 +301,52 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
     await tasksRepo.upsertMany(tasks);
 
     if (!mounted) return;
+
+    final currentPlantCount = ref.read(plantsStreamProvider).valueOrNull?.length ?? 0;
+    final isFirstPlant = currentPlantCount <= 1;
+    final isGardenMilestone = const [5, 10, 25, 50].contains(currentPlantCount);
+
+    if (isFirstPlant || isGardenMilestone) {
+      BotanicaHaptics.milestone();
+      BotanicaCelebration.show(context);
+    } else {
+      BotanicaHaptics.completion();
+    }
+
+    final String snackMessage;
+    if (isGardenMilestone) {
+      snackMessage = l10n.gardenPlantMilestone(currentPlantCount);
+    } else {
+      snackMessage = '${l10n.commonDone}: ${plant.nickname}';
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(Icons.eco_rounded,
-                size: BotanicaTokens.iconSizeSm, color: Theme.of(context).colorScheme.inversePrimary),
+            Icon(
+              isGardenMilestone ? Icons.park_rounded : Icons.eco_rounded,
+              size: BotanicaTokens.iconSizeSm,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
             BotanicaGaps.hSm,
-            Text('${l10n.commonDone}: ${plant.nickname}'),
+            Expanded(child: Text(snackMessage)),
           ],
         ),
       ),
     );
     context.pop();
+    } catch (_) {
+      if (!mounted) return;
+      BotanicaHaptics.subtleError();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(l10n.commonErrorTryAgain),
+        ),
+      );
+    }
   }
 
   @override
@@ -613,37 +650,45 @@ class _MethodCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
-      child: AnimatedContainer(
-        duration: BotanicaTokens.motionFast,
-        curve: Curves.easeOut,
-        padding: BotanicaTokens.cardPaddingDense,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
-          color: selected
-              ? tint.withValues(alpha: 0.16)
-              : scheme.surface.withValues(alpha: 0.75),
-          border: Border.all(
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: title,
+      child: InkWell(
+        onTap: () {
+          BotanicaHaptics.selectionTick();
+          onTap();
+        },
+        borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+        child: AnimatedContainer(
+          duration: BotanicaTokens.motionFast,
+          curve: Curves.easeOut,
+          padding: BotanicaTokens.cardPaddingDense,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
             color: selected
-                ? tint.withValues(alpha: 0.55)
-                : scheme.outlineVariant.withValues(alpha: 0.45),
-          ),
-        ),
-        child: Column(
-          children: [
-            Icon(icon, color: scheme.onSurface.withValues(alpha: 0.85)),
-            BotanicaGaps.vXs,
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: textTheme.labelLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-                height: 1.1,
-              ),
+                ? tint.withValues(alpha: 0.16)
+                : scheme.surface.withValues(alpha: 0.75),
+            border: Border.all(
+              color: selected
+                  ? tint.withValues(alpha: 0.55)
+                  : scheme.outlineVariant.withValues(alpha: 0.45),
             ),
-          ],
+          ),
+          child: Column(
+            children: [
+              Icon(icon, color: scheme.onSurface.withValues(alpha: 0.85)),
+              BotanicaGaps.vXs,
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  height: 1.1,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:botanica/app/providers.dart';
 import 'package:botanica/data/repositories/plant_idea_repository.dart';
+import 'package:botanica/data/repositories/scan_result_cache_repository.dart';
 import 'package:botanica/data/repositories/species_repository.dart';
 import 'package:botanica/domain/models/care_defaults.dart';
 import 'package:botanica/domain/models/species.dart';
@@ -16,6 +17,8 @@ import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 class _TestSettingsController extends SettingsController {
   _TestSettingsController(this._settings);
@@ -72,6 +75,22 @@ class _FakeSpeciesRepository extends SpeciesRepository {
       if (species.id == id) return species;
     }
     return null;
+  }
+}
+
+class _FakeScanResultCacheRepository implements ScanResultCacheRepository {
+  CachedScanResult? _last;
+  @override
+  CachedScanResult? readLast() => _last;
+  @override
+  Stream<CachedScanResult?> watchLast() => Stream.value(_last);
+  @override
+  Future<void> save({required String speciesId, required double confidence}) async {
+    _last = CachedScanResult(
+      speciesId: speciesId,
+      confidence: confidence,
+      scannedAt: DateTime.now(),
+    );
   }
 }
 
@@ -155,6 +174,23 @@ Species _species(String id, String name) {
 }
 
 void main() {
+  setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
+  });
+
+  setUp(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.physicalSize = const Size(800, 1600);
+    binding.platformDispatcher.views.first.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.resetPhysicalSize();
+    binding.platformDispatcher.views.first.resetDevicePixelRatio();
+  });
+
   testWidgets('ScanFlowScreen returns ScanResult after candidate selection',
       (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(800, 1400));
@@ -198,6 +234,11 @@ void main() {
           speciesRepositoryProvider.overrideWithValue(speciesRepo),
           settingsControllerProvider.overrideWith(
               () => _TestSettingsController(UserSettings.defaults())),
+          lastScanResultProvider.overrideWith(
+            (ref) => Stream.value(null),
+          ),
+          scanResultCacheRepositoryProvider
+              .overrideWithValue(_FakeScanResultCacheRepository()),
         ],
         child: MaterialApp(
           theme: ThemeData(useMaterial3: true),

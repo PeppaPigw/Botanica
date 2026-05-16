@@ -28,39 +28,60 @@ void main() {
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
+  setUp(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.physicalSize = const Size(800, 2400);
+    binding.platformDispatcher.views.first.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.resetPhysicalSize();
+    binding.platformDispatcher.views.first.resetDevicePixelRatio();
+  });
+
   testWidgets('search respects pet-safe filter', (tester) async {
     await tester.pumpWidget(_app());
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tap(find.byKey(const ValueKey('discover-filter-pets')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     await tester.enterText(find.byType(TextField).first, 'Pothos');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byKey(const ValueKey('discover-species-pothos')), findsNothing);
 
     await tester.enterText(find.byType(TextField).first, 'Aloe');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byKey(const ValueKey('discover-species-aloe')), findsOneWidget);
   });
 
   testWidgets('search matches tags and care warnings with filters', (tester) async {
     await tester.pumpWidget(_app());
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tap(find.byKey(const ValueKey('discover-filter-pets')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     await tester.enterText(find.byType(TextField).first, 'low-light');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byKey(const ValueKey('discover-species-fern')), findsOneWidget);
     expect(find.byKey(const ValueKey('discover-species-pothos')), findsNothing);
 
     await tester.tap(find.byKey(const ValueKey('discover-filter-pets')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     await tester.enterText(find.byType(TextField).first, 'children');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(
       find.byKey(const ValueKey('discover-species-pothos')),

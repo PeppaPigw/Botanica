@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
+import '../haptics/botanica_haptics.dart';
 import '../utils/motion_preferences.dart';
 
 @immutable
@@ -14,12 +15,14 @@ class BotanicaNavDestination {
     required this.selectedIcon,
     required this.label,
     this.tooltip,
+    this.badgeCount = 0,
   });
 
   final IconData icon;
   final IconData selectedIcon;
   final String label;
   final String? tooltip;
+  final int badgeCount;
 }
 
 class BotanicaNavPill extends StatelessWidget {
@@ -51,7 +54,9 @@ class BotanicaNavPill extends StatelessWidget {
           shadowOffsetY: 14,
         );
 
-    return ClipRRect(
+    return SizedBox(
+      height: BotanicaTokens.navPillHeight,
+      child: ClipRRect(
       borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
       child: BackdropFilter(
         filter: ImageFilter.blur(
@@ -215,6 +220,7 @@ class BotanicaNavPill extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }
@@ -244,8 +250,9 @@ class _NavItem extends StatelessWidget {
 
     Widget icon() {
       final resolved = selected ? destination.selectedIcon : destination.icon;
+      final scheme = Theme.of(context).colorScheme;
 
-      return AnimatedScale(
+      Widget iconWidget = AnimatedScale(
         duration: reduceMotion ? Duration.zero : BotanicaTokens.motionFast,
         curve: Curves.easeOutCubic,
         scale: selected ? 1.06 : 1,
@@ -265,6 +272,59 @@ class _NavItem extends StatelessWidget {
           ),
         ),
       );
+
+      if (destination.badgeCount > 0) {
+        iconWidget = Stack(
+          clipBehavior: Clip.none,
+          children: [
+            iconWidget,
+            Positioned(
+              top: -4,
+              right: -6,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.0, end: 1.0),
+                duration: reduceMotion
+                    ? Duration.zero
+                    : BotanicaTokens.motionMedium,
+                curve: Curves.elasticOut,
+                builder: (context, value, child) => Transform.scale(
+                  scale: value,
+                  child: child,
+                ),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                  constraints:
+                      const BoxConstraints(minWidth: 16, minHeight: 16),
+                  decoration: BoxDecoration(
+                    color: scheme.error,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: scheme.surface.withValues(alpha: 0.9),
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      destination.badgeCount > 9
+                          ? '9+'
+                          : destination.badgeCount.toString(),
+                      style: TextStyle(
+                        color: scheme.onError,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w800,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }
+
+      return iconWidget;
     }
 
     Widget label() {
@@ -341,7 +401,10 @@ class _NavItem extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onTap,
+            onTap: () {
+              BotanicaHaptics.selectionTick();
+              onTap();
+            },
             borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
             child: Center(
               child: AnimatedContainer(

@@ -5,6 +5,7 @@ class PlantMeta {
     this.lightLevel,
     this.lastRepotDate,
     this.lastFertilizeDate,
+    this.lastAnniversaryShown,
   });
 
   final double? potDiameterCm;
@@ -12,6 +13,7 @@ class PlantMeta {
   final String? lightLevel;
   final DateTime? lastRepotDate;
   final DateTime? lastFertilizeDate;
+  final DateTime? lastAnniversaryShown;
 
   static const Object _unset = Object();
 
@@ -21,6 +23,7 @@ class PlantMeta {
     Object? lightLevel = _unset,
     Object? lastRepotDate = _unset,
     Object? lastFertilizeDate = _unset,
+    Object? lastAnniversaryShown = _unset,
   }) {
     return PlantMeta(
       potDiameterCm: identical(potDiameterCm, _unset)
@@ -37,6 +40,9 @@ class PlantMeta {
       lastFertilizeDate: identical(lastFertilizeDate, _unset)
           ? this.lastFertilizeDate
           : lastFertilizeDate as DateTime?,
+      lastAnniversaryShown: identical(lastAnniversaryShown, _unset)
+          ? this.lastAnniversaryShown
+          : lastAnniversaryShown as DateTime?,
     );
   }
 
@@ -47,7 +53,8 @@ class PlantMeta {
       other.soilType == soilType &&
       other.lightLevel == lightLevel &&
       other.lastRepotDate == lastRepotDate &&
-      other.lastFertilizeDate == lastFertilizeDate;
+      other.lastFertilizeDate == lastFertilizeDate &&
+      other.lastAnniversaryShown == lastAnniversaryShown;
 
   @override
   int get hashCode => Object.hash(
@@ -56,6 +63,7 @@ class PlantMeta {
         lightLevel,
         lastRepotDate,
         lastFertilizeDate,
+        lastAnniversaryShown,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -64,6 +72,7 @@ class PlantMeta {
         'lightLevel': lightLevel,
         'lastRepotDate': lastRepotDate?.toIso8601String(),
         'lastFertilizeDate': lastFertilizeDate?.toIso8601String(),
+        'lastAnniversaryShown': lastAnniversaryShown?.toIso8601String(),
       };
 
   static PlantMeta fromJson(Map<String, dynamic> json) => PlantMeta(
@@ -76,5 +85,8 @@ class PlantMeta {
         lastFertilizeDate: json['lastFertilizeDate'] == null
             ? null
             : DateTime.tryParse(json['lastFertilizeDate'] as String),
+        lastAnniversaryShown: json['lastAnniversaryShown'] == null
+            ? null
+            : DateTime.tryParse(json['lastAnniversaryShown'] as String),
       );
 }

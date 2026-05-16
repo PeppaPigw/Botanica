@@ -13,6 +13,7 @@ import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/glass_card.dart';
+import '../../core/widgets/botanica_shimmer.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -38,12 +39,24 @@ class SpeciesDetailScreen extends ConsumerWidget {
     final ideaAsync = ref.watch(plantIdeaByIdProvider(speciesId));
 
     return speciesAsync.when(
-      loading: () => BotanicaPageScaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: CircularProgressIndicator(
-            valueColor:
-                AlwaysStoppedAnimation(scheme.primary.withValues(alpha: 0.7)),
+      loading: () => const BotanicaPageScaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: BotanicaTokens.pagePadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BotanicaShimmer.card(height: 200),
+                SizedBox(height: BotanicaTokens.spacingRelaxed),
+                BotanicaShimmer(width: 200, height: 24),
+                SizedBox(height: BotanicaTokens.spacingSm),
+                BotanicaShimmer(width: 140, height: 14),
+                SizedBox(height: BotanicaTokens.spacingXxl),
+                BotanicaShimmer.card(height: 80),
+                SizedBox(height: BotanicaTokens.spacingBase),
+                BotanicaShimmer.card(height: 80),
+              ],
+            ),
           ),
         ),
       ),
@@ -82,12 +95,19 @@ class SpeciesDetailScreen extends ConsumerWidget {
 
         if (species == null) {
           return ideaAsync.when(
-            loading: () => BotanicaPageScaffold(
-              appBar: AppBar(),
-              body: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(
-                    scheme.primary.withValues(alpha: 0.7),
+            loading: () => const BotanicaPageScaffold(
+              body: SafeArea(
+                child: Padding(
+                  padding: BotanicaTokens.pagePadding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BotanicaShimmer.card(height: 200),
+                      SizedBox(height: BotanicaTokens.spacingRelaxed),
+                      BotanicaShimmer(width: 200, height: 24),
+                      SizedBox(height: BotanicaTokens.spacingSm),
+                      BotanicaShimmer(width: 140, height: 14),
+                    ],
                   ),
                 ),
               ),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/widgets/botanica_celebration.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,6 +19,7 @@ import '../../../domain/models/plant.dart';
 import '../../../domain/models/task_instance.dart';
 import '../../../gen/l10n/app_localizations.dart';
 import '../../../services/care/care_actions.dart';
+import '../../../services/care/care_combo_tracker.dart';
 import '../../garden/garden_screen.dart';
 import '../../garden/edit_plant_screen.dart';
 import '../snooze_sheet.dart';
@@ -56,6 +58,7 @@ class _TaskTileState extends ConsumerState<TaskTile> {
       final l10n = AppLocalizations.of(context);
       final messenger = ScaffoldMessenger.of(context);
       final inversePrimary = Theme.of(context).colorScheme.inversePrimary;
+      final comboTracker = ref.read(careComboTrackerProvider.notifier);
 
       final now = DateTime.now();
       final tasksRepository = ref.read(tasksRepositoryProvider);
@@ -104,16 +107,54 @@ class _TaskTileState extends ConsumerState<TaskTile> {
         await settingsController.update(previousSettings);
       }
 
+      final streakSaved = previousSettings.lastCareDate != null &&
+          now.difference(previousSettings.lastCareDate!).inDays == 1 &&
+          previousSettings.careStreakDays >= 1;
+      final displayStreak = previousSettings.careStreakDays + 1;
+
+      final comboCount = comboTracker.recordCompletion();
+
       if (!messenger.mounted) return;
+
       BotanicaHaptics.completion();
+
+      // Compute care confidence insight from updated logs
+      final updatedLogs = logsRepository.forPlant(widget.plant.id);
+      final confidenceInsight = CareActions.careConfidenceInsight(
+        l10n: l10n,
+        plantLogs: updatedLogs,
+        taskType: widget.task.type,
+      );
+
+      String snackbarMessage = streakSaved
+          ? l10n.streakSavedSnackbar(widget.plant.nickname, displayStreak)
+          : '${l10n.commonDone} · ${widget.plant.nickname}';
+
+      if (confidenceInsight != null) {
+        snackbarMessage = '$snackbarMessage\n$confidenceInsight';
+      }
+
+      if (comboCount >= 2) {
+        final comboText = comboCount >= 5
+            ? l10n.careComboStreak(comboCount)
+            : l10n.careCombo(comboCount);
+        snackbarMessage = '$snackbarMessage · $comboText';
+      }
+
       messenger.showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              Icon(Icons.check_circle_rounded, size: BotanicaTokens.iconSizeSm, color: inversePrimary),
+              Icon(
+                streakSaved ? Icons.local_fire_department_rounded : Icons.check_circle_rounded,
+                size: BotanicaTokens.iconSizeSm,
+                color: streakSaved ? Colors.orange : inversePrimary,
+              ),
               BotanicaGaps.hSm,
-              Text('${l10n.commonDone} · ${widget.plant.nickname}'),
+              Expanded(
+                child: Text(snackbarMessage),
+              ),
             ],
           ),
           action: SnackBarAction(
@@ -122,11 +163,89 @@ class _TaskTileState extends ConsumerState<TaskTile> {
           ),
         ),
       );
+
+      if (!mounted) return;
+      final updatedSettings = ref.read(settingsControllerProvider);
+      final milestone = CareActions.newMilestoneReached(
+        updatedSettings.careStreakDays,
+        updatedSettings.lastMilestoneCelebrated,
+      );
+
+      if (comboCount == 5) {
+        BotanicaHaptics.milestone();
+        if (mounted) {
+          BotanicaCelebration.show(context);
+        }
+      } else if (milestone != null) {
+        await ref.read(settingsControllerProvider.notifier).update(
+              updatedSettings.copyWith(lastMilestoneCelebrated: milestone),
+            );
+        if (mounted) {
+          BotanicaCelebration.show(context);
+        }
+      } else {
+        if (mounted) {
+          BotanicaCelebration.show(context);
+        }
+      }
+    } catch (_) {
+      if (!mounted) return;
+      BotanicaHaptics.subtleError();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(AppLocalizations.of(context).commonErrorTryAgain),
+        ),
+      );
     } finally {
       if (mounted) {
         setState(() => _completing = false);
       }
     }
+  }
+
+  Future<void> _quickSnooze() async {
+    if (_completing || _skipping) return;
+
+    BotanicaHaptics.selectionTick();
+
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final inversePrimary = Theme.of(context).colorScheme.inversePrimary;
+    final settings = ref.read(settingsControllerProvider);
+    final tasksRepo = ref.read(tasksRepositoryProvider);
+    final originalTask = widget.task;
+
+    final snoozeDate = CareActions.snoozeUntilTomorrow(
+      now: DateTime.now(),
+      plant: widget.plant,
+      settings: settings,
+    );
+
+    await tasksRepo.upsert(
+      widget.task.copyWith(
+        status: TaskStatus.snoozed,
+        dueAt: snoozeDate,
+      ),
+    );
+
+    if (!messenger.mounted) return;
+    messenger.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Row(
+          children: [
+            Icon(Icons.bedtime_outlined, size: BotanicaTokens.iconSizeSm, color: inversePrimary),
+            BotanicaGaps.hSm,
+            Expanded(child: Text(l10n.tasksSnoozedUntil(snoozeDate))),
+          ],
+        ),
+        action: SnackBarAction(
+          label: l10n.commonUndo,
+          onPressed: () => unawaited(tasksRepo.upsert(originalTask)),
+        ),
+      ),
+    );
   }
 
   Future<void> _snooze() async {
@@ -226,6 +345,15 @@ class _TaskTileState extends ConsumerState<TaskTile> {
             label: l10n.commonUndo,
             onPressed: () => unawaited(undoSkip()),
           ),
+        ),
+      );
+    } catch (_) {
+      if (!mounted) return;
+      BotanicaHaptics.subtleError();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(AppLocalizations.of(context).commonErrorTryAgain),
         ),
       );
     } finally {
@@ -427,6 +555,15 @@ class _TaskTileState extends ConsumerState<TaskTile> {
                   ),
                 ),
               ] else ...[
+                if (widget.isToday) ...[
+                  const SizedBox(width: BotanicaTokens.spacingXs),
+                  IconButton(
+                    onPressed: _quickSnooze,
+                    icon: const Icon(Icons.bedtime_outlined),
+                    color: Colors.amber.shade700,
+                    tooltip: l10n.plantDetailNextWateringTomorrow,
+                  ),
+                ],
                 const SizedBox(width: BotanicaTokens.spacingXs),
                 IconButton(
                   onPressed: () => _complete(),

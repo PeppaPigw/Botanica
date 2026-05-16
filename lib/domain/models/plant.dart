@@ -15,6 +15,7 @@ class Plant {
     this.coverPhotoPath,
     this.reminderTimeOverride,
     this.isArchived = false,
+    this.careTypeOverrides = const {},
   });
 
   final String id;
@@ -28,6 +29,22 @@ class Plant {
   final PlantMeta meta;
   final LocalTime? reminderTimeOverride;
   final bool isArchived;
+  final Map<String, String> careTypeOverrides;
+
+  CareTypeOverride careOverrideFor(TaskType type) {
+    final raw = careTypeOverrides[type.id];
+    return CareTypeOverride.fromId(raw);
+  }
+
+  Plant withCareOverride(TaskType type, CareTypeOverride override) {
+    final updated = Map<String, String>.from(careTypeOverrides);
+    if (override == CareTypeOverride.useDefault) {
+      updated.remove(type.id);
+    } else {
+      updated[type.id] = override.id;
+    }
+    return copyWith(careTypeOverrides: updated);
+  }
 
   static const Object _unset = Object();
 
@@ -41,6 +58,7 @@ class Plant {
     PlantMeta? meta,
     Object? reminderTimeOverride = _unset,
     bool? isArchived,
+    Map<String, String>? careTypeOverrides,
   }) {
     return Plant(
       id: id,
@@ -56,6 +74,7 @@ class Plant {
           ? this.reminderTimeOverride
           : reminderTimeOverride as LocalTime?,
       isArchived: isArchived ?? this.isArchived,
+      careTypeOverrides: careTypeOverrides ?? this.careTypeOverrides,
     );
   }
 
@@ -72,6 +91,8 @@ class Plant {
         if (reminderTimeOverride != null)
           'reminderTimeOverride': _localTimeToJson(reminderTimeOverride!),
         'isArchived': isArchived,
+        if (careTypeOverrides.isNotEmpty)
+          'careTypeOverrides': careTypeOverrides,
       };
 
   static Plant fromJson(Map<String, dynamic> json) => Plant(
@@ -91,6 +112,9 @@ class Plant {
                 Map<String, dynamic>.from(json['meta'] as Map)),
         reminderTimeOverride: _parseLocalTime(json['reminderTimeOverride']),
         isArchived: json['isArchived'] as bool? ?? false,
+        careTypeOverrides: json['careTypeOverrides'] == null
+            ? const {}
+            : Map<String, String>.from(json['careTypeOverrides'] as Map),
       );
 
   @override
@@ -106,7 +130,18 @@ class Plant {
       other.createdAt == createdAt &&
       other.meta == meta &&
       other.reminderTimeOverride == reminderTimeOverride &&
-      other.isArchived == isArchived;
+      other.isArchived == isArchived &&
+      _careTypeOverridesEqual(other.careTypeOverrides, careTypeOverrides);
+
+  static bool _careTypeOverridesEqual(
+      Map<String, String> a, Map<String, String> b) {
+    if (identical(a, b)) return true;
+    if (a.length != b.length) return false;
+    for (final key in a.keys) {
+      if (a[key] != b[key]) return false;
+    }
+    return true;
+  }
 
   @override
   int get hashCode => Object.hash(
@@ -121,6 +156,8 @@ class Plant {
         meta,
         reminderTimeOverride,
         isArchived,
+        Object.hashAll(careTypeOverrides.entries
+            .map((e) => Object.hash(e.key, e.value))),
       );
 }
 

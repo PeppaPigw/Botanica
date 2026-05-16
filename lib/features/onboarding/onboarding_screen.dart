@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/haptics/botanica_haptics.dart';
 import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_ambient_background.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
@@ -30,6 +31,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _goNextOrStart() {
+    BotanicaHaptics.selectionTick();
     if (_pageIndex < 2) {
       _controller.nextPage(
         duration: BotanicaTokens.motionMedium,
@@ -216,6 +218,7 @@ class _OnboardingPage extends StatelessWidget {
             data.imagePath,
             fit: BoxFit.cover,
             filterQuality: FilterQuality.high,
+            excludeFromSemantics: true,
             errorBuilder: (_, __, ___) => DecoratedBox(
               decoration: BoxDecoration(gradient: data.gradient),
               child: Center(
@@ -304,39 +307,42 @@ class _Dots extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(count, (i) {
-        final selected = i == index;
-        return AnimatedContainer(
-          duration: BotanicaTokens.motionMedium,
-          curve: BotanicaTokens.curveReveal,
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          width: selected ? 28 : 8,
-          height: 8,
-          decoration: BoxDecoration(
-            gradient: selected
-                ? LinearGradient(
-                    colors: [
-                      scheme.primary.withValues(alpha: 0.85),
-                      scheme.tertiary.withValues(alpha: 0.7),
-                    ],
-                  )
-                : null,
-            color: selected ? null : scheme.outlineVariant.withValues(alpha: 0.4),
-            borderRadius: BorderRadius.circular(999),
-            boxShadow: selected
-                ? [
-                    BoxShadow(
-                      color: scheme.primary.withValues(alpha: 0.25),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                : null,
-          ),
-        );
-      }),
+    return Semantics(
+      label: 'Page ${index + 1} of $count',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(count, (i) {
+          final selected = i == index;
+          return AnimatedContainer(
+            duration: BotanicaTokens.motionMedium,
+            curve: BotanicaTokens.curveReveal,
+            margin: const EdgeInsets.symmetric(horizontal: 5),
+            width: selected ? 28 : 8,
+            height: 8,
+            decoration: BoxDecoration(
+              gradient: selected
+                  ? LinearGradient(
+                      colors: [
+                        scheme.primary.withValues(alpha: 0.85),
+                        scheme.tertiary.withValues(alpha: 0.7),
+                      ],
+                    )
+                  : null,
+              color: selected ? null : scheme.outlineVariant.withValues(alpha: 0.4),
+              borderRadius: BorderRadius.circular(999),
+              boxShadow: selected
+                  ? [
+                      BoxShadow(
+                        color: scheme.primary.withValues(alpha: 0.25),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ]
+                  : null,
+            ),
+          );
+        }),
+      ),
     );
   }
 }

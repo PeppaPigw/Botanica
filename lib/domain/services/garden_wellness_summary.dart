@@ -3,6 +3,8 @@ import '../models/plant.dart';
 import '../models/task_instance.dart';
 import 'plant_health_score.dart';
 
+enum CareMomentum { increasing, stable, decreasing }
+
 class GardenWellnessSummary {
   const GardenWellnessSummary({
     required this.plantCount,
@@ -12,6 +14,9 @@ class GardenWellnessSummary {
     required this.recentlyCaredPlants,
     required this.atRiskPlants,
     required this.focusPlants,
+    required this.punctualityPercent,
+    required this.weeklyActivePercent,
+    required this.careMomentum,
   });
 
   final int plantCount;
@@ -21,6 +26,9 @@ class GardenWellnessSummary {
   final int recentlyCaredPlants;
   final int atRiskPlants;
   final List<GardenFocusPlant> focusPlants;
+  final int punctualityPercent;
+  final int weeklyActivePercent;
+  final CareMomentum careMomentum;
 
   bool get isEmpty => plantCount == 0;
 
@@ -39,6 +47,9 @@ class GardenWellnessSummary {
         recentlyCaredPlants: 0,
         atRiskPlants: 0,
         focusPlants: <GardenFocusPlant>[],
+        punctualityPercent: 100,
+        weeklyActivePercent: 0,
+        careMomentum: CareMomentum.stable,
       );
     }
 
@@ -73,6 +84,56 @@ class GardenWellnessSummary {
                 focusPlants.length)
             .round();
 
+    final completedTasks =
+        tasks.where((t) => t.isDone).toList(growable: false);
+    final punctuality = completedTasks.isEmpty
+        ? 100
+        : ((completedTasks
+                    .where((t) =>
+                        t.completedAt != null &&
+                        !t.completedAt!.isAfter(
+                          t.dueAt.add(const Duration(days: 1)),
+                        ))
+                    .length /
+                completedTasks.length) *
+            100)
+            .round();
+
+    // Weekly active: % of last 8 weeks with at least one care log
+    const weekCount = 8;
+    final weekStart = DateTime(now.year, now.month, now.day)
+        .subtract(const Duration(days: weekCount * 7));
+    final recentLogs = logs.where((l) => l.timestamp.isAfter(weekStart));
+    final activeWeeks = <int>{};
+    for (final log in recentLogs) {
+      final weekIndex = log.timestamp.difference(weekStart).inDays ~/ 7;
+      activeWeeks.add(weekIndex);
+    }
+    final weeklyActive =
+        ((activeWeeks.length / weekCount) * 100).round().clamp(0, 100);
+
+    // Care momentum: compare this week's logs to last week's
+    final thisWeekStart = DateTime(now.year, now.month, now.day)
+        .subtract(Duration(days: now.weekday - 1));
+    final lastWeekStart = thisWeekStart.subtract(const Duration(days: 7));
+    final thisWeekLogs =
+        logs.where((l) => l.timestamp.isAfter(thisWeekStart)).length;
+    final lastWeekLogs = logs
+        .where((l) =>
+            l.timestamp.isAfter(lastWeekStart) &&
+            !l.timestamp.isAfter(thisWeekStart))
+        .length;
+    final CareMomentum momentum;
+    if (lastWeekLogs == 0 && thisWeekLogs == 0) {
+      momentum = CareMomentum.stable;
+    } else if (thisWeekLogs > lastWeekLogs) {
+      momentum = CareMomentum.increasing;
+    } else if (thisWeekLogs < lastWeekLogs && lastWeekLogs - thisWeekLogs >= 2) {
+      momentum = CareMomentum.decreasing;
+    } else {
+      momentum = CareMomentum.stable;
+    }
+
     return GardenWellnessSummary(
       plantCount: plants.length,
       overallScore: overallScore,
@@ -82,6 +143,9 @@ class GardenWellnessSummary {
           focusPlants.where((plant) => plant.hasRecentLog).length,
       atRiskPlants: focusPlants.where((plant) => plant.score < 80).length,
       focusPlants: focusPlants,
+      punctualityPercent: punctuality,
+      weeklyActivePercent: weeklyActive,
+      careMomentum: momentum,
     );
   }
 

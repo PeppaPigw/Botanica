@@ -35,6 +35,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 class _TestSettingsController extends SettingsController {
   _TestSettingsController(this._settings);
@@ -240,6 +242,8 @@ class _FakeDailyFavoritesRepository implements DailyFavoritesRepository {
 
 void main() {
   setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
@@ -256,14 +260,14 @@ void main() {
       createdAt: now,
       meta: const PlantMeta(),
     );
-    final species = Species(
+    const species = Species(
       id: 'aloe_vera',
       scientificName: 'Aloe vera',
-      commonNamesByLocale: const {'en': ['Aloe Vera']},
+      commonNamesByLocale: {'en': ['Aloe Vera']},
       difficulty: 'easy',
       petSafe: true,
       light: 'bright',
-      careDefaults: const SpeciesCareDefaults(
+      careDefaults: SpeciesCareDefaults(
         waterBaseDays: 14,
         fertilizeBaseDays: 30,
         mistBaseDays: 0,

@@ -81,6 +81,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get commonTryAgain => '重试';
 
   @override
+  String get commonErrorTryAgain => '出了点问题，请重试。';
+
+  @override
   String get commonComingSoon => '即将推出';
 
   @override
@@ -219,6 +222,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get calendarSectionHistory => '养护记录';
 
   @override
+  String get calendarWeekAheadTitle => '未来一周';
+
+  @override
+  String calendarWeekAheadCount(int count) {
+    return '$count 项任务';
+  }
+
+  @override
   String get calendarNoEvents => '这一天暂无记录。';
 
   @override
@@ -319,6 +330,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gardenTodayCardTitle => '今日';
 
   @override
+  String get gardenGreetingMorning => '早上好';
+
+  @override
+  String get gardenGreetingAfternoon => '下午好';
+
+  @override
+  String get gardenGreetingEvening => '晚上好';
+
+  @override
   String get gardenLoadError => '加载植物失败。';
 
   @override
@@ -333,8 +353,47 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get gardenAllCaughtUp => '全部完成！你的植物很开心。';
+
+  @override
+  String allDoneQuietRunway(int days) {
+    return '未来$days天没有待办';
+  }
+
+  @override
+  String allDoneTomorrowPreview(int count, String plants) {
+    return '明天 · $plants有$count项任务';
+  }
+
+  @override
+  String get gardenVacationBanner => '假期模式 — 提醒已暂停';
+
+  @override
+  String get gardenWeeklySummaryTitle => '本周';
+
+  @override
+  String gardenWeeklyCareActions(int count) {
+    return '$count 次护理';
+  }
+
+  @override
+  String gardenWeeklyWatered(int count) {
+    return '浇水 $count 次';
+  }
+
+  @override
+  String gardenWeeklyFertilized(int count) {
+    return '施肥 $count 次';
+  }
+
+  @override
   String gardenCareStreakChip(int days) {
     return '连续护理$days天';
+  }
+
+  @override
+  String gardenStreakAtRisk(int days) {
+    return '你的$days天连续记录今天就要断了——快去照顾一棵植物吧！';
   }
 
   @override
@@ -371,10 +430,58 @@ class AppLocalizationsZh extends AppLocalizations {
   String get weatherUnknown => '天气';
 
   @override
+  String get weatherTipRainy => '外面下雨了——今天跳过户外植物浇水';
+
+  @override
+  String get weatherTipStormy => '暴风雨天气——将敏感植物移至室内';
+
+  @override
+  String get weatherTipExtremeHeat => '极端高温——检查土壤湿度并喷雾叶片';
+
+  @override
+  String get weatherTipHotSunny => '炎热晴天——清晨或傍晚浇水';
+
+  @override
+  String get weatherTipNearFreezing => '接近冰点——保护怕冻植物';
+
+  @override
+  String get weatherTipSnow => '预计有雪——将户外花盆移至遮蔽处';
+
+  @override
+  String get weatherTipCool => '凉爽天气——减少浇水频率';
+
+  @override
+  String get weatherTipLowHumidity => '空气干燥——给热带植物喷雾或将它们聚在一起';
+
+  @override
+  String get weatherTipHighHumidity => '湿度高——暂停喷雾，注意真菌问题';
+
+  @override
+  String get seasonalTipSpring => '春天来了——是施肥和换盆的好时机';
+
+  @override
+  String get seasonalTipSummer => '夏季炎热，大多数植物需要更频繁浇水';
+
+  @override
+  String get seasonalTipAutumn => '秋季——植物生长放缓，减少施肥';
+
+  @override
+  String get seasonalTipWinter => '冬季——大多数植物需要更少的水和肥料';
+
+  @override
   String get gardenQuickWatered => '已浇水';
 
   @override
   String get gardenQuickSnooze => '稍后提醒';
+
+  @override
+  String get gardenQuickLogCare => '记录养护';
+
+  @override
+  String get gardenQuickLogDone => '已记录！';
+
+  @override
+  String get gardenViewDetails => '查看详情';
 
   @override
   String get tasksSnoozeOneHour => '1小时';
@@ -419,6 +526,20 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String profilePlantsInGarden(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '花园中有 $count 株植物',
+      one: '花园中有 1 株植物',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoverInYourGarden => '已在花园中';
 
   @override
   String get gardenRoomsWaterAll => '全部浇水';
@@ -562,6 +683,11 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String plantDetailNextWateringInDays(int days) {
     return '距离下次浇水还有 $days 天';
+  }
+
+  @override
+  String plantDetailCaringForDays(int days) {
+    return '已照顾 $days 天';
   }
 
   @override
@@ -915,6 +1041,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get discoverTitle => '发现';
 
   @override
+  String get discoverPlantOfTheDay => '今日植物';
+
+  @override
   String get discoverSearchHint => '搜索植物、指南与技巧';
 
   @override
@@ -967,6 +1096,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get discoverGuidePestBody => '每周 1 次的小流程，及早发现问题。';
+
+  @override
+  String get discoverAddFavorite => '添加到收藏';
+
+  @override
+  String get discoverRemoveFavorite => '从收藏中移除';
 
   @override
   String get speciesDetailHistory => '历史';
@@ -1291,6 +1426,18 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get exportDataTitle => '导出养护数据';
+
+  @override
+  String get exportDataSubtitle => '将植物和养护记录保存为 JSON 文件。';
+
+  @override
+  String get exportDataSuccess => '养护数据导出成功。';
+
+  @override
+  String get exportDataEmpty => '暂无数据可导出——先添加一些植物吧。';
+
+  @override
   String get profileLanguage => '语言';
 
   @override
@@ -1399,6 +1546,23 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get profileDynamicColorBody => '在支持的设备上使用系统配色。';
+
+  @override
+  String get vacationModeTitle => '假期模式';
+
+  @override
+  String get vacationModeOff => '外出时暂停所有提醒。';
+
+  @override
+  String vacationModeActiveUntil(String date) {
+    return '有效至 $date';
+  }
+
+  @override
+  String get vacationModeEnd => '结束假期模式';
+
+  @override
+  String get vacationModePickDate => '返回日期';
 
   @override
   String get profileAiInsightsTitle => 'AI 灵感';
@@ -1716,6 +1880,64 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String notificationWaterTitle2(String plant) {
+    return '$plant 有点渴了！';
+  }
+
+  @override
+  String notificationWaterTitle3(String plant) {
+    return '该给 $plant 浇水啦';
+  }
+
+  @override
+  String notificationFertilizeTitle2(String plant) {
+    return '$plant 需要补充营养';
+  }
+
+  @override
+  String notificationFertilizeTitle3(String plant) {
+    return '给 $plant 施肥的时间到了';
+  }
+
+  @override
+  String notificationMistTitle2(String plant) {
+    return '给 $plant 加点湿度？';
+  }
+
+  @override
+  String notificationMistTitle3(String plant) {
+    return '该给 $plant 喷雾了';
+  }
+
+  @override
+  String notificationRotateTitle2(String plant) {
+    return '转一转 $plant，让它均匀生长';
+  }
+
+  @override
+  String notificationRotateTitle3(String plant) {
+    return '$plant 今天需要转个方向';
+  }
+
+  @override
+  String notificationPruneTitle2(String plant) {
+    return '该给 $plant 修剪一下了';
+  }
+
+  @override
+  String notificationPruneTitle3(String plant) {
+    return '$plant 需要修整';
+  }
+
+  @override
+  String get notificationDailySummaryTitle => '早安，植物家长！';
+
+  @override
+  String notificationDailySummaryBody(int count) {
+    return '今天有 $count 项养护任务等着你。';
+  }
+
+  @override
   String get reasonHumidityLow => '湿度低 → 土壤更快变干';
 
   @override
@@ -1797,6 +2019,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get gardenWellnessStatAtRisk => '需关注';
+
+  @override
+  String get gardenWellnessStatPunctuality => '准时率';
+
+  @override
+  String get gardenWellnessStatWeeklyActive => '周活跃';
+
+  @override
+  String get gardenWellnessStatBestStreak => '最长连续';
+
+  @override
+  String get gardenWellnessMomentumIncreasing => '势头上升';
+
+  @override
+  String get gardenWellnessMomentumDecreasing => '势头下降';
 
   @override
   String get gardenWellnessRoomPulseTitle => '房间状态';
@@ -2006,6 +2243,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gardenSortNewest => '最新添加';
 
   @override
+  String get gardenSortHealth => '健康评分';
+
+  @override
+  String get gardenSortRoom => '房间';
+
+  @override
   String get gardenSortSpecies => '物种';
 
   @override
@@ -2040,4 +2283,1103 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get commonConfirm => '确认';
+
+  @override
+  String streakMilestoneTitle(int days) {
+    return '连续$days天里程碑！';
+  }
+
+  @override
+  String get streakMilestoneBody7 => '整整一周的植物护理，你的花园感谢你。';
+
+  @override
+  String get streakMilestoneBody30 => '坚持30天，你正在养成好习惯。';
+
+  @override
+  String get streakMilestoneBody90 => '90天！你的植物从未如此快乐。';
+
+  @override
+  String get streakMilestoneBody365 => '整整一年的护理，你是植物传奇。';
+
+  @override
+  String get streakMilestoneDismiss => '继续加油！';
+
+  @override
+  String timeCapsuleTitle(int days) {
+    return '$days天前的今天';
+  }
+
+  @override
+  String timeCapsuleBody(String plant, int days) {
+    return '你在$days天前为$plant拍下了这张照片。看看你们一起走了多远。';
+  }
+
+  @override
+  String get rescueResetTitle => '欢迎回来';
+
+  @override
+  String rescueResetBody(int streak, int days) {
+    return '你曾有$streak天的连续记录。已经过了$days天——不必内疚，随时可以重新开始。';
+  }
+
+  @override
+  String get rescueResetWaterNow => '现在浇一棵植物';
+
+  @override
+  String get rescueResetFreshStart => '重新开始';
+
+  @override
+  String streakSavedSnackbar(String plant, int days) {
+    return '连续记录保住了！已照顾$plant · $days天节奏不变';
+  }
+
+  @override
+  String get plantPulseTitle => '该拍照记录了';
+
+  @override
+  String plantPulseBody(String plant, int days) {
+    return '$plant已经$days天没拍照了，看看它长了多少。';
+  }
+
+  @override
+  String get plantPulseCta => '拍一张';
+
+  @override
+  String get plantJourneyTitle => '你们的旅程';
+
+  @override
+  String plantJourneyNextMilestone(String milestone) {
+    return '下一个：$milestone';
+  }
+
+  @override
+  String get plantJourneyMilestoneFirstWater => '第一次浇水';
+
+  @override
+  String get plantJourneyMilestoneFirstPhoto => '第一张照片';
+
+  @override
+  String get plantJourneyMilestone7Days => '相伴7天';
+
+  @override
+  String get plantJourneyMilestoneFirstFertilize => '第一次施肥';
+
+  @override
+  String get plantJourneyMilestone10Waters => '浇水10次';
+
+  @override
+  String get plantJourneyMilestone30Days => '相伴30天';
+
+  @override
+  String get plantJourneyMilestone25Waters => '浇水25次';
+
+  @override
+  String get plantJourneyMilestone100Days => '相伴100天';
+
+  @override
+  String get plantJourneyMilestone365Days => '相伴一年';
+
+  @override
+  String get gardenerTypeTitle => '你的园丁类型';
+
+  @override
+  String get gardenerTypeDevoted => '专注型';
+
+  @override
+  String get gardenerTypeDevotedDesc => '连续30天以上不间断照顾，植物们都爱你。';
+
+  @override
+  String get gardenerTypeConsistent => '稳定型';
+
+  @override
+  String get gardenerTypeConsistentDesc => '超过80%的任务按时完成，像时钟一样可靠。';
+
+  @override
+  String get gardenerTypeExplorer => '探索型';
+
+  @override
+  String get gardenerTypeExplorerDesc => '收藏了5种以上植物，真正的植物探索家。';
+
+  @override
+  String get gardenerTypePhotographer => '记录型';
+
+  @override
+  String get gardenerTypePhotographerDesc => '10张以上成长照片，每片叶子都有故事。';
+
+  @override
+  String get gardenerTypeNurturer => '呵护型';
+
+  @override
+  String get gardenerTypeNurturerDesc => '50次以上养护操作，花园因你的关注而繁茂。';
+
+  @override
+  String get gardenerTypeBudding => '新手园丁';
+
+  @override
+  String get gardenerTypeBuddingDesc => '每个专家都曾是新手，继续成长吧！';
+
+  @override
+  String get whispererTierSeedling => '种子';
+
+  @override
+  String get whispererTierSprout => '嫩芽';
+
+  @override
+  String get whispererTierGardener => '园丁';
+
+  @override
+  String get whispererTierBotanist => '植物学家';
+
+  @override
+  String get whispererTierWhisperer => '植物低语者';
+
+  @override
+  String whispererNextLevel(int xp) {
+    return '距下一级还需 $xp XP';
+  }
+
+  @override
+  String careCombo(int count) {
+    return '$count连击！';
+  }
+
+  @override
+  String careComboStreak(int count) {
+    return '$count连击！势不可挡！';
+  }
+
+  @override
+  String get lastCareWater => '浇水';
+
+  @override
+  String get lastCareFertilize => '施肥';
+
+  @override
+  String get lastCarePhoto => '拍照';
+
+  @override
+  String lastCareDaysAgo(int days) {
+    return '$days天前';
+  }
+
+  @override
+  String get lastCareToday => '今天';
+
+  @override
+  String get lastCareNever => '—';
+
+  @override
+  String careConfidenceOnSchedule(int days) {
+    return '正好按节奏来（平均$days天）';
+  }
+
+  @override
+  String get careConfidenceEarly => '稍微早了点——土壤可能还湿着';
+
+  @override
+  String get careConfidenceLate => '稍微晚了，不过没关系';
+
+  @override
+  String get gardenMoodThriving => '生机勃勃';
+
+  @override
+  String get gardenMoodHappy => '状态不错';
+
+  @override
+  String get gardenMoodNeedsLove => '需要关爱';
+
+  @override
+  String get gardenMoodThirsty => '渴了';
+
+  @override
+  String get plantDetailLogsSparklineTitle => '14天活动';
+
+  @override
+  String plantDetailLogsSparklineCount(int count) {
+    return '$count次操作';
+  }
+
+  @override
+  String get commonToday => '今天';
+
+  @override
+  String get calendarHeatmapTitle => '12周活动';
+
+  @override
+  String get profileStatsTotalCare => '总护理';
+
+  @override
+  String get profileStatsWatered => '浇水';
+
+  @override
+  String get profileStatsFertilized => '施肥';
+
+  @override
+  String profileStatsActions(int count) {
+    return '$count';
+  }
+
+  @override
+  String get profileCareScore => '养护评分';
+
+  @override
+  String profileCareScoreLabel(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get profileCareScoreSubtitle => '近30天按时完成率';
+
+  @override
+  String get weeklyRecapTitle => '本周回顾';
+
+  @override
+  String get weeklyRecapActiveDays => '活跃天数';
+
+  @override
+  String weeklyRecapSummary(int actions, int days) {
+    return '本周 $days 天内完成了 $actions 次养护';
+  }
+
+  @override
+  String get weeklyRecapDismiss => '干得漂亮！';
+
+  @override
+  String weeklyRecapBestDay(String day) {
+    return '最佳日：$day';
+  }
+
+  @override
+  String weeklyRecapStreak(int days) {
+    return '连续：$days 天';
+  }
+
+  @override
+  String get gardenAllTasksDoneTitle => '今天全部完成！';
+
+  @override
+  String get gardenAllTasksDoneBody => '每棵植物都很开心，享受你的一天吧。';
+
+  @override
+  String get gardenAllDoneBody2 => '你的绿色朋友们因你而茁壮成长。';
+
+  @override
+  String get gardenAllDoneBody3 => '坚持就是秘诀，你做到了。';
+
+  @override
+  String get gardenAllDoneBody4 => '又是出色的植物养护日。';
+
+  @override
+  String get gardenAllDoneBody5 => '你的植物每天都在变得更强壮。';
+
+  @override
+  String profileLongestStreak(int days) {
+    return '最佳：$days 天';
+  }
+
+  @override
+  String profileGardenAge(int days) {
+    return '花园：$days 天';
+  }
+
+  @override
+  String gardenNewPersonalBest(int days) {
+    return '新纪录！连续 $days 天';
+  }
+
+  @override
+  String gardenTomorrowPreview(int count) {
+    return '明天：$count 棵植物需要照料';
+  }
+
+  @override
+  String get gardenMotivation7DayStreak => '势头正好，继续保持。';
+
+  @override
+  String get gardenMotivation30DayStreak => '坚持一个月了，植物们正在茁壮成长。';
+
+  @override
+  String get gardenMotivationWelcomeBack => '欢迎回来，植物们想你了。';
+
+  @override
+  String get gardenMotivationBigGarden => '花园繁茂，你做得很好。';
+
+  @override
+  String get gardenMotivationMorning => '美好的一天，去看看你的绿色朋友吧。';
+
+  @override
+  String get gardenMotivationEvening => '放松一下，快速检查花园。';
+
+  @override
+  String get gardenMotivationAllDoneToday => '今天全部完成，植物们很开心。';
+
+  @override
+  String get gardenMotivationNewPlant => '你的新植物正在适应新环境。';
+
+  @override
+  String gardenStreakFreezeUsed(int days) {
+    return '使用了连续冻结！你的 $days 天连续记录安全了。';
+  }
+
+  @override
+  String gardenStreakFreezeEarned(int count) {
+    return '获得连续冻结！（可用 $count 次）';
+  }
+
+  @override
+  String profileStreakFreezes(int count) {
+    return '可用 $count 次冻结';
+  }
+
+  @override
+  String gardenPlantMilestone(int count) {
+    return '花园里有 $count 棵植物了！你的收藏越来越美。';
+  }
+
+  @override
+  String get streakShareTitle => '分享你的连续记录';
+
+  @override
+  String streakShareCardDays(int days) {
+    return '连续 $days 天';
+  }
+
+  @override
+  String get streakShareCardSubtitle => '每天用心照顾我的植物';
+
+  @override
+  String get streakShareButton => '分享';
+
+  @override
+  String get plantLastWateredToday => '今天已浇水';
+
+  @override
+  String get plantLastWateredYesterday => '昨天浇过水';
+
+  @override
+  String plantLastWateredDaysAgo(int days) {
+    return '$days 天前浇过水';
+  }
+
+  @override
+  String get plantNeverWatered => '尚未浇水';
+
+  @override
+  String plantAgeLabel(int days) {
+    return '入住花园 $days 天';
+  }
+
+  @override
+  String plantAnniversaryLabel(int years) {
+    return '$years 周年纪念！';
+  }
+
+  @override
+  String get careLogAddNote => '添加备注';
+
+  @override
+  String get careLogEditNote => '编辑备注';
+
+  @override
+  String get careLogNoteHint => '它看起来怎么样？有什么需要记住的吗？';
+
+  @override
+  String get careLogNoteSaved => '备注已保存';
+
+  @override
+  String get careStatsTitle => '养护规律';
+
+  @override
+  String get careStatsTotalWaterings => '浇水次数';
+
+  @override
+  String get careStatsAvgInterval => '平均间隔';
+
+  @override
+  String careStatsAvgDays(int days) {
+    return '$days天';
+  }
+
+  @override
+  String get careStatsTotalActions => '总操作';
+
+  @override
+  String get careStatsConsistency => '规律性';
+
+  @override
+  String get careStatsTip => '试试设置定期提醒，养成稳定的浇水习惯。';
+
+  @override
+  String get gardenForecastTitle => '未来 7 天';
+
+  @override
+  String gardenForecastTaskCount(int count) {
+    return '$count 项任务';
+  }
+
+  @override
+  String gardenForecastBusyDay(String day) {
+    return '最忙：$day';
+  }
+
+  @override
+  String get gardenForecastEmpty => '本周暂无计划任务';
+
+  @override
+  String get gardenForecastToday => '今天';
+
+  @override
+  String get gardenForecastTomorrow => '明天';
+
+  @override
+  String get wellnessHeatmapTitle => '养护活动';
+
+  @override
+  String get wellnessHeatmapSubtitle => '最近 12 周';
+
+  @override
+  String wellnessHeatmapActions(int count) {
+    return '$count 次操作';
+  }
+
+  @override
+  String gardenWeeklyTrendUp(int diff) {
+    return '比上周 +$diff';
+  }
+
+  @override
+  String gardenWeeklyTrendDown(int diff) {
+    return '比上周 $diff';
+  }
+
+  @override
+  String get gardenWeeklyTrendSame => '与上周持平';
+
+  @override
+  String gardenWeeklyMostActiveDay(String day) {
+    return '最活跃：$day';
+  }
+
+  @override
+  String get achievementsTitle => '成就';
+
+  @override
+  String achievementsUnlocked(int count, int total) {
+    return '$count/$total 已解锁';
+  }
+
+  @override
+  String get achievementFirstPlant => '第一棵芽';
+
+  @override
+  String get achievementFirstPlantDesc => '添加你的第一棵植物';
+
+  @override
+  String get achievementFivePlants => '成长中的花园';
+
+  @override
+  String get achievementFivePlantsDesc => '花园达到 5 棵植物';
+
+  @override
+  String get achievementTenPlants => '植物爱好者';
+
+  @override
+  String get achievementTenPlantsDesc => '花园达到 10 棵植物';
+
+  @override
+  String get achievementTwentyPlants => '丛林大师';
+
+  @override
+  String get achievementTwentyPlantsDesc => '培育 20 棵植物';
+
+  @override
+  String get achievementFirstCare => '第一滴水';
+
+  @override
+  String get achievementFirstCareDesc => '完成第一个养护任务';
+
+  @override
+  String get achievementFiftyCares => '尽心照料';
+
+  @override
+  String get achievementFiftyCaresDesc => '完成 50 个养护任务';
+
+  @override
+  String get achievementHundredCares => '绿手指';
+
+  @override
+  String get achievementHundredCaresDesc => '完成 100 个养护任务';
+
+  @override
+  String get achievementFiveHundredCares => '植物低语者';
+
+  @override
+  String get achievementFiveHundredCaresDesc => '完成 500 个养护任务';
+
+  @override
+  String get achievementWeekStreak => '一周勇士';
+
+  @override
+  String get achievementWeekStreakDesc => '保持 7 天连续养护';
+
+  @override
+  String get achievementMonthStreak => '月度坚持';
+
+  @override
+  String get achievementMonthStreakDesc => '保持 30 天连续养护';
+
+  @override
+  String get achievementYearStreak => '传奇园丁';
+
+  @override
+  String get achievementYearStreakDesc => '保持 365 天连续养护';
+
+  @override
+  String get achievementFirstPhoto => '快照';
+
+  @override
+  String get achievementFirstPhotoDesc => '拍摄第一张植物照片';
+
+  @override
+  String get achievementTenPhotos => '照片日记';
+
+  @override
+  String get achievementTenPhotosDesc => '拍摄 10 张植物照片';
+
+  @override
+  String get achievementFiftyPhotos => '视觉叙事者';
+
+  @override
+  String get achievementFiftyPhotosDesc => '拍摄 50 张植物照片';
+
+  @override
+  String get achievementThreeRooms => '房间探索者';
+
+  @override
+  String get achievementThreeRoomsDesc => '在 3 个不同房间放置植物';
+
+  @override
+  String get achievementFiveRooms => '全屋花园';
+
+  @override
+  String get achievementFiveRoomsDesc => '在 5 个不同房间放置植物';
+
+  @override
+  String get achievementDiverseCarer => '全能园丁';
+
+  @override
+  String get achievementDiverseCarerDesc => '执行 5 种不同的养护类型';
+
+  @override
+  String get tasksCompleteAll => '全部完成';
+
+  @override
+  String tasksCompleteAllDone(int count) {
+    return '已完成 $count 个任务';
+  }
+
+  @override
+  String get tasksStreakAtRiskTitle => '连续记录即将中断！';
+
+  @override
+  String tasksStreakAtRiskBody(int days) {
+    return '你的 $days 天连续记录今晚就要结束了。完成一个任务来保持它。';
+  }
+
+  @override
+  String get plantMilestoneOneMonth => '相伴 1 个月！';
+
+  @override
+  String get plantMilestoneThreeMonths => '相伴 3 个月！';
+
+  @override
+  String get plantMilestoneSixMonths => '半年的呵护！';
+
+  @override
+  String get plantMilestoneOneYear => '一周年纪念！';
+
+  @override
+  String get plantMilestoneTwoYears => '两年的成长！';
+
+  @override
+  String plantMilestoneSubtitle(String name, int days) {
+    return '你已经照顾 $name $days 天了';
+  }
+
+  @override
+  String get seasonalTipTitle => '季节小贴士';
+
+  @override
+  String get seasonalTipSpringRepotTitle => '换盆好时机';
+
+  @override
+  String get seasonalTipSpringRepotBody => '春天是换盆的最佳时机。植物正进入生长期，能快速从换盆压力中恢复。';
+
+  @override
+  String get seasonalTipSpringFertilizeTitle => '恢复施肥';
+
+  @override
+  String get seasonalTipSpringFertilizeBody => '随着日照变长，重新开始施肥。先用半浓度，几周内逐渐增加。';
+
+  @override
+  String get seasonalTipSpringGrowthTitle => '关注新芽';
+
+  @override
+  String get seasonalTipSpringGrowthBody =>
+      '你的植物正在苏醒。留意新叶、新芽和新根——这是拍摄成长照片的好时机。';
+
+  @override
+  String get seasonalTipSpringWaterTitle => '增加浇水';
+
+  @override
+  String get seasonalTipSpringWaterBody => '随着生长加速，植物需要更多水分。比冬天更频繁地检查土壤湿度。';
+
+  @override
+  String get seasonalTipSpringPestsTitle => '虫害巡查';
+
+  @override
+  String get seasonalTipSpringPestsBody => '温暖天气带来害虫。定期检查新芽和叶片背面，及早发现虫害迹象。';
+
+  @override
+  String get seasonalTipSummerWaterTitle => '保持水分';
+
+  @override
+  String get seasonalTipSummerWaterBody => '高温和长日照意味着蒸发加快。深浇水并更频繁检查土壤，尤其是小盆植物。';
+
+  @override
+  String get seasonalTipSummerMistTitle => '增加湿度';
+
+  @override
+  String get seasonalTipSummerMistBody => '空调会使空气干燥。给热带植物喷雾或将它们聚在一起，营造湿润的小环境。';
+
+  @override
+  String get seasonalTipSummerSunburnTitle => '注意晒伤';
+
+  @override
+  String get seasonalTipSummerSunburnBody =>
+      '正午强烈的阳光会灼伤叶片。将敏感植物从朝南窗户移开或加装薄纱窗帘。';
+
+  @override
+  String get seasonalTipSummerOutdoorTitle => '户外时光';
+
+  @override
+  String get seasonalTipSummerOutdoorBody => '许多室内植物喜欢夏天的户外假期。逐渐适应，在夜间变冷前搬回室内。';
+
+  @override
+  String get seasonalTipSummerPropagateTitle => '扦插繁殖季';
+
+  @override
+  String get seasonalTipSummerPropagateBody =>
+      '夏天的温暖和长日照使这成为扦插的理想时机。大多数插条在明亮散射光下能快速生根。';
+
+  @override
+  String get seasonalTipAutumnWaterTitle => '减少浇水';
+
+  @override
+  String get seasonalTipAutumnWaterBody =>
+      '随着日照缩短，生长放缓。让土壤在两次浇水之间更加干燥，防止过渡期根腐。';
+
+  @override
+  String get seasonalTipAutumnFertilizeTitle => '停止施肥';
+
+  @override
+  String get seasonalTipAutumnFertilizeBody =>
+      '大多数植物即将进入休眠期。停止施肥以避免盐分积累，让它们自然休息。';
+
+  @override
+  String get seasonalTipAutumnLightTitle => '追逐光线';
+
+  @override
+  String get seasonalTipAutumnLightBody => '随着太阳角度降低，将植物移近窗户。定期转动花盆，让各面均匀受光。';
+
+  @override
+  String get seasonalTipAutumnInsideTitle => '搬回室内';
+
+  @override
+  String get seasonalTipAutumnInsideBody => '如果夏天把植物搬到了户外，在夜间温度降到10°C以下之前搬回室内。';
+
+  @override
+  String get seasonalTipAutumnCleanTitle => '清洁叶片日';
+
+  @override
+  String get seasonalTipAutumnCleanBody => '灰尘会阻碍光合作用。用湿布擦拭叶片，帮助植物在冬天高效进行光合作用。';
+
+  @override
+  String get seasonalTipWinterWaterTitle => '少量浇水';
+
+  @override
+  String get seasonalTipWinterWaterBody => '大多数植物冬天需水量大减。休眠期过度浇水是头号杀手——拿不准就等等。';
+
+  @override
+  String get seasonalTipWinterHumidityTitle => '对抗干燥空气';
+
+  @override
+  String get seasonalTipWinterHumidityBody =>
+      '暖气系统会大幅降低室内湿度。使用加湿器或鹅卵石托盘让热带植物保持舒适。';
+
+  @override
+  String get seasonalTipWinterDraftsTitle => '避免冷风';
+
+  @override
+  String get seasonalTipWinterDraftsBody => '让植物远离通风的窗户和外门。即使耐寒植物也不喜欢突然的温度变化。';
+
+  @override
+  String get seasonalTipWinterLightTitle => '最大化光照';
+
+  @override
+  String get seasonalTipWinterLightBody =>
+      '短日照意味着光合作用减少。将植物移到最亮的位置，考虑为喜光植物添加补光灯。';
+
+  @override
+  String get seasonalTipWinterRestTitle => '让它们休息';
+
+  @override
+  String get seasonalTipWinterRestBody => '休眠是自然且健康的。不要担心生长缓慢——你的植物正在为春天储存能量。';
+
+  @override
+  String get healthBreakdownTitle => '健康评分';
+
+  @override
+  String get healthBreakdownSubtitle => '以下因素影响这株植物的健康评分';
+
+  @override
+  String healthBreakdownOverall(int score) {
+    return '综合评分：$score/100';
+  }
+
+  @override
+  String get healthFactorOverdue => '任务及时性';
+
+  @override
+  String get healthFactorActivity => '近期养护活动';
+
+  @override
+  String get healthFactorVariety => '养护多样性';
+
+  @override
+  String get healthFactorConsistency => '计划一致性';
+
+  @override
+  String get coachingTitle => '养护指导';
+
+  @override
+  String get coachingLateWatererTitle => '调整提醒时间';
+
+  @override
+  String get coachingLateWatererBody => '你经常晚一两天浇水。试着把提醒时间调到你通常有空的时候。';
+
+  @override
+  String get coachingStreakAtRiskTitle => '连续记录有风险！';
+
+  @override
+  String get coachingStreakAtRiskBody => '你今天还没有照顾任何植物。快速浇一次水就能保持连续记录。';
+
+  @override
+  String get coachingNeglectedPlantTitle => '有植物需要你';
+
+  @override
+  String get coachingNeglectedPlantBody => '你有一株植物超过3周没有得到照顾了。去看看它吧。';
+
+  @override
+  String get coachingImprovingTitle => '你在进步！';
+
+  @override
+  String get coachingImprovingBody => '这周你比上周更活跃了。继续保持这个势头。';
+
+  @override
+  String get coachingConsistentTitle => '一致性冠军';
+
+  @override
+  String get coachingConsistentBody => '你最近10个任务中有9个按时完成。你的植物正在茁壮成长。';
+
+  @override
+  String get coachingDiversifyTitle => '尝试新事物';
+
+  @override
+  String get coachingDiversifyBody => '你最近只在浇水。考虑喷雾、转盆或施肥，让植物更健康。';
+
+  @override
+  String get plantDetailNextWateringTomorrow => '明天';
+
+  @override
+  String get plantDetailNextWateringToday => '今天到期';
+
+  @override
+  String gardenStreakFreezeAvailable(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count个连续冻结可用',
+      one: '1个连续冻结可用',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commonDismiss => '关闭';
+
+  @override
+  String get plantDetailHealthScore => '健康评分';
+
+  @override
+  String get plantDetailExpandText => '展开文本';
+
+  @override
+  String get plantDetailCollapseText => '收起文本';
+
+  @override
+  String get gardenWateredToday => '今天已浇水';
+
+  @override
+  String get gardenWateredYesterday => '昨天已浇水';
+
+  @override
+  String gardenWateredDaysAgo(int days) {
+    return '$days天前浇水';
+  }
+
+  @override
+  String get gardenNeverWatered => '尚未浇水';
+
+  @override
+  String calendarHeatmapTooltip(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 次养护',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String calendarHeatmapTooltipDetail(
+      int waters, String fertSep, int fertilizes, String otherSep, int others) {
+    String _temp0 = intl.Intl.pluralLogic(
+      waters,
+      locale: localeName,
+      other: '$waters 次浇水',
+      zero: '',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      fertilizes,
+      locale: localeName,
+      other: '$fertilizes 次施肥',
+      zero: '',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      others,
+      locale: localeName,
+      other: '$others 次其他',
+      zero: '',
+    );
+    return '$_temp0$fertSep$_temp1$otherSep$_temp2';
+  }
+
+  @override
+  String calendarDayCareCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 条养护记录',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exportDataConfirmTitle => '导出养护数据？';
+
+  @override
+  String get exportDataConfirmBody => '将创建包含所有植物、养护记录和任务的 JSON 文件。';
+
+  @override
+  String get exportDataConfirmAction => '导出';
+
+  @override
+  String get gardenWaterAllOverdue => '浇灌所有逾期植物';
+
+  @override
+  String gardenWaterAllOverdueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '浇灌 $count 棵逾期植物',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gardenWateredAllOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '已浇灌 $count 棵逾期植物',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get plantOverviewNoCareStats => '多浇几次水后，养护规律将在此显示。';
+
+  @override
+  String get plantOverviewNoAiInsights => '在设置中启用 AI 洞察，获取个性化养护建议。';
+
+  @override
+  String get plantOverviewNoTasksYet => '暂无待办任务。养护计划创建后将在此显示。';
+
+  @override
+  String get gardenHealthTrendUp => '改善中';
+
+  @override
+  String get gardenHealthTrendDown => '下降中';
+
+  @override
+  String get gardenHealthTrendStable => '稳定';
+
+  @override
+  String plantCareStreakLabel(int days) {
+    return '连续照顾 $days 天';
+  }
+
+  @override
+  String get tasksEmptySoonMotivation => '享受这份宁静，你的植物正在茁壮成长。';
+
+  @override
+  String get manageCareTitle => '管理养护提醒';
+
+  @override
+  String manageCareSubtitle(int active, int disabled) {
+    return '$active 项启用 · $disabled 项停用';
+  }
+
+  @override
+  String get manageCareSpeciesDefault => '物种默认';
+
+  @override
+  String get manageCareEnabledByYou => '已手动启用';
+
+  @override
+  String get manageCareDisabledByYou => '已手动停用';
+
+  @override
+  String get manageCareButton => '管理';
+
+  @override
+  String manageCareDisableConfirm(String type) {
+    return '关闭$type提醒？';
+  }
+
+  @override
+  String get manageCareEnabled => '已启用';
+
+  @override
+  String get manageCareDisabled => '已停用';
+
+  @override
+  String get growthEchoCompareTitle => '今昔对比';
+
+  @override
+  String growthEchoCompareBody(String plant, int days) {
+    return '$plant有$days天的生长变化可以对比。';
+  }
+
+  @override
+  String get growthEchoCaptureTitle => '生长记录';
+
+  @override
+  String growthEchoCaptureBody(int days, String plant) {
+    return '距离$plant上次拍照已经$days天了。';
+  }
+
+  @override
+  String get commonProblemsTitle => '常见问题';
+
+  @override
+  String commonProblemsSubtitle(String plant) {
+    return '注意$plant可能出现的这些情况';
+  }
+
+  @override
+  String perfectWeekTitle(int count) {
+    return '完美一周 $count!';
+  }
+
+  @override
+  String get perfectWeekBody => '连续7天按时完成所有任务。你的植物因你而茁壮成长。';
+
+  @override
+  String perfectWeekBodyRepeat(int count) {
+    return '连续$count个完美周。你已经是植物护理大师了。';
+  }
+
+  @override
+  String get perfectWeekDismiss => '继续加油!';
+
+  @override
+  String get growthTimelineTitle => '成长时间线';
+
+  @override
+  String get growthTimelineEmpty => '拍照记录植物的成长变化';
+
+  @override
+  String notificationStreakProtectionTitle(int days) {
+    return '你的$days天连续记录即将中断!';
+  }
+
+  @override
+  String get notificationStreakProtectionBody => '在午夜前完成一项护理任务来保持连续记录。';
+
+  @override
+  String get careRhythmTitle => '护理节奏';
+
+  @override
+  String careRhythmAvgInterval(int days) {
+    return '平均每 $days 天浇水一次';
+  }
+
+  @override
+  String get careRhythmConsistent => '非常规律';
+
+  @override
+  String get careRhythmImproving => '越来越规律';
+
+  @override
+  String get careRhythmNoData => '再浇几次水就能看到你的节奏了';
+
+  @override
+  String get plantMoodThriving => '茁壮成长！🌱';
+
+  @override
+  String get plantMoodHappy => '状态很好';
+
+  @override
+  String get plantMoodOkay => '还不错';
+
+  @override
+  String get plantMoodThirsty => '有点渴了…';
+
+  @override
+  String get plantMoodNeglected => '想你了…';
+
+  @override
+  String get plantMoodNewHere => '刚入住！';
+
+  @override
+  String plantAnniversaryTitle(String plant) {
+    return '$plant 的纪念日快乐！';
+  }
+
+  @override
+  String get plantAnniversaryBody30 => '一个月了，你正在创造美好的事物。';
+
+  @override
+  String get plantAnniversaryBody90 => '三个月的悉心照料，你的用心看得见。';
+
+  @override
+  String get plantAnniversaryBody180 => '半年了！这棵植物因你而茁壮。';
+
+  @override
+  String get plantAnniversaryBody365 => '整整一年，多么美妙的旅程。';
+
+  @override
+  String get plantAnniversaryDismiss => '继续加油！';
 }

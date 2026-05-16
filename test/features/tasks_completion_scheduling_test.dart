@@ -21,6 +21,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:hive/src/hive_impl.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 class _TestSettingsController extends SettingsController {
   _TestSettingsController(this._settings);
@@ -267,6 +269,11 @@ UserSettings _currentSettings(WidgetTester tester) {
 }
 
 void main() {
+  setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
+  });
+
   testWidgets(
       'Tasks done action completes rotate task, schedules next one, logs care, and updates the list',
       (WidgetTester tester) async {
@@ -392,6 +399,7 @@ void main() {
 
     await tester.tap(undoText);
     await tester.pump();
+    await _drainCompletionAsync(tester);
     await _drainCompletionAsync(tester);
     await _settleUi(tester);
 

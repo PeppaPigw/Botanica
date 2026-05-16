@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../../domain/models/care_log.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/task_instance.dart';
 import '../../domain/models/user_settings.dart';
@@ -22,6 +23,7 @@ class TaskRemindersSyncer {
   List<TaskInstance>? _latestTasks;
   List<Plant>? _latestPlants;
   UserSettings? _latestSettings;
+  List<CareLog>? _latestLogs;
 
   void updateTasks(List<TaskInstance>? tasks) {
     _latestTasks = tasks;
@@ -38,6 +40,11 @@ class TaskRemindersSyncer {
     _scheduleDebounced();
   }
 
+  void updateLogs(List<CareLog>? logs) {
+    _latestLogs = logs;
+    _scheduleDebounced();
+  }
+
   void _scheduleDebounced() {
     _debounce?.cancel();
     _debounce = Timer(debounceDuration, () {
@@ -51,6 +58,11 @@ class TaskRemindersSyncer {
     final settings = _latestSettings;
     if (tasks == null || plants == null || settings == null) return;
 
+    if (settings.isOnVacation) {
+      await _notificationsService.cancelAll();
+      return;
+    }
+
     final plantsById = <String, Plant>{
       for (final p in plants) p.id: p,
     };
@@ -59,6 +71,27 @@ class TaskRemindersSyncer {
       tasks: tasks,
       plantsById: plantsById,
       settings: settings,
+    );
+
+    final now = DateTime.now();
+    final todayEnd = DateTime(now.year, now.month, now.day + 1);
+    final todayStart = DateTime(now.year, now.month, now.day);
+    final todayTaskCount = tasks
+        .where((t) => !t.isDismissed && t.dueAt.isBefore(todayEnd))
+        .length;
+
+    await _notificationsService.scheduleDailySummary(
+      todayTaskCount: todayTaskCount,
+      settings: settings,
+    );
+
+    final todayLogs = (_latestLogs ?? const <CareLog>[])
+        .where((l) => !l.timestamp.isBefore(todayStart))
+        .toList();
+
+    await _notificationsService.scheduleStreakProtection(
+      settings: settings,
+      todayLogs: todayLogs,
     );
   }
 

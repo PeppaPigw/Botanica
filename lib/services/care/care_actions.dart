@@ -13,6 +13,7 @@ import '../../domain/models/user_settings.dart';
 import '../../domain/models/care_schedule_snapshot.dart';
 import '../../domain/services/scheduling.dart';
 import '../../domain/services/seasonal_care_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class CareActions {
   const CareActions._();
@@ -45,6 +46,11 @@ class CareActions {
     required EnvironmentSnapshot environment,
     required UserSettings settings,
   }) async {
+    // Respect per-plant care type overrides.
+    if (plant.careOverrideFor(task.type) == CareTypeOverride.disabled) {
+      return null;
+    }
+
     final species = await speciesRepository.byId(plant.speciesId);
     final idea = await plantIdeaRepository.byId(plant.speciesId);
 
@@ -134,6 +140,7 @@ class CareActions {
     if (last == null) {
       return settings.copyWith(
         careStreakDays: 1,
+        longestStreak: settings.longestStreak < 1 ? 1 : settings.longestStreak,
         lastCareDate: today,
       );
     }
@@ -144,16 +151,144 @@ class CareActions {
     final normalizedBase =
         settings.careStreakDays < 1 ? 1 : settings.careStreakDays;
 
-    final int nextStreak = switch (diffDays) {
-      0 => normalizedBase,
-      1 => normalizedBase + 1,
-      _ => 1,
-    };
+    final int nextStreak;
+    int freezeCount = settings.streakFreezeCount;
+    DateTime? freezeUsedDate = settings.lastStreakFreezeUsed;
+
+    if (diffDays == 0) {
+      nextStreak = normalizedBase;
+    } else if (diffDays == 1) {
+      nextStreak = normalizedBase + 1;
+    } else if (diffDays == 2 && freezeCount > 0 && normalizedBase >= 2) {
+      nextStreak = normalizedBase + 1;
+      freezeCount -= 1;
+      freezeUsedDate = today;
+    } else if (settings.isOnVacation) {
+      nextStreak = normalizedBase + 1;
+    } else {
+      nextStreak = 1;
+    }
+
+    final earnedFreeze =
+        nextStreak > 0 && nextStreak % 7 == 0 && nextStreak > normalizedBase;
+    if (earnedFreeze) freezeCount += 1;
 
     return settings.copyWith(
       careStreakDays: nextStreak,
+      longestStreak:
+          nextStreak > settings.longestStreak ? nextStreak : null,
       lastCareDate: today,
+      streakFreezeCount: freezeCount,
+      lastStreakFreezeUsed: freezeUsedDate,
     );
+  }
+
+  static const List<int> streakMilestones = [7, 30, 90, 365];
+
+  static int? newMilestoneReached(int newStreak, int lastCelebrated) {
+    for (final m in streakMilestones) {
+      if (newStreak >= m && m > lastCelebrated) return m;
+    }
+    return null;
+  }
+
+  static UserSettings recordPerfectDay(UserSettings settings, DateTime now) {
+    final today = DateTime(now.year, now.month, now.day);
+    final lastPerfect = settings.lastPerfectDate;
+    final yesterday = today.subtract(const Duration(days: 1));
+
+    int newCount;
+    if (lastPerfect != null &&
+        DateTime(lastPerfect.year, lastPerfect.month, lastPerfect.day) ==
+            yesterday) {
+      newCount = settings.consecutivePerfectDays + 1;
+    } else if (lastPerfect != null &&
+        DateTime(lastPerfect.year, lastPerfect.month, lastPerfect.day) ==
+            today) {
+      return settings;
+    } else {
+      newCount = 1;
+    }
+
+    return settings.copyWith(
+      consecutivePerfectDays: newCount,
+      lastPerfectDate: today,
+    );
+  }
+
+  static bool isPerfectWeek(UserSettings settings) {
+    return settings.consecutivePerfectDays >= 7 &&
+        settings.consecutivePerfectDays % 7 == 0;
+  }
+
+  /// Returns a care confidence insight based on the user's watering rhythm.
+  /// Returns null if not enough data (< 3 water logs for this plant).
+  static String? careConfidenceInsight({
+    required AppLocalizations l10n,
+    required List<CareLog> plantLogs,
+    required TaskType taskType,
+  }) {
+    if (taskType != TaskType.water) return null;
+
+    final waterLogs = plantLogs
+        .where((l) => l.type == TaskType.water)
+        .toList()
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+
+    if (waterLogs.length < 3) return null;
+
+    // Compute average interval from last 10 waterings
+    final recent = waterLogs.length > 10
+        ? waterLogs.sublist(waterLogs.length - 10)
+        : waterLogs;
+
+    final intervals = <int>[];
+    for (int i = 1; i < recent.length; i++) {
+      intervals.add(
+        recent[i].timestamp.difference(recent[i - 1].timestamp).inDays,
+      );
+    }
+
+    if (intervals.isEmpty) return null;
+
+    final avgInterval =
+        intervals.fold<int>(0, (s, v) => s + v) / intervals.length;
+
+    // The new log was just added, so waterLogs.last IS the one we just did.
+    // The interval is between the previous-last water and now.
+    final previousWater = waterLogs[waterLogs.length - 2].timestamp;
+    final currentInterval = DateTime.now().difference(previousWater).inDays;
+
+    final diff = currentInterval - avgInterval;
+
+    if (diff.abs() <= 1) {
+      return l10n.careConfidenceOnSchedule(avgInterval.round());
+    } else if (diff < -1) {
+      return l10n.careConfidenceEarly;
+    } else {
+      return l10n.careConfidenceLate;
+    }
+  }
+
+  static bool isNewPersonalBest({
+    required int previousLongest,
+    required int currentStreak,
+  }) {
+    return currentStreak > previousLongest && previousLongest > 0;
+  }
+
+  static bool streakFreezeWasUsed({
+    required UserSettings previousSettings,
+    required UserSettings currentSettings,
+  }) {
+    return currentSettings.streakFreezeCount < previousSettings.streakFreezeCount;
+  }
+
+  static bool streakFreezeWasEarned({
+    required UserSettings previousSettings,
+    required UserSettings currentSettings,
+  }) {
+    return currentSettings.streakFreezeCount > previousSettings.streakFreezeCount;
   }
 
   static DateTime snoozeUntilTomorrow({
@@ -166,6 +301,35 @@ class CareActions {
       preference: settings.reminderTimePreference,
       override: plant.reminderTimeOverride,
     );
+  }
+
+  static DateTime snoozeForDuration({
+    required DateTime now,
+    required Plant plant,
+    required UserSettings settings,
+    required SnoozeDuration duration,
+  }) {
+    switch (duration) {
+      case SnoozeDuration.oneHour:
+        return now.add(const Duration(hours: 1));
+      case SnoozeDuration.threeHours:
+        return now.add(const Duration(hours: 3));
+      case SnoozeDuration.tomorrow:
+        return alignToPreferredReminderTime(
+          date: addLocalCalendarDays(now, 1),
+          preference: settings.reminderTimePreference,
+          override: plant.reminderTimeOverride,
+        );
+      case SnoozeDuration.tomorrowMorning:
+        final tomorrow = addLocalCalendarDays(now, 1);
+        return DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 8);
+      case SnoozeDuration.weekend:
+        var target = now;
+        while (target.weekday != DateTime.saturday) {
+          target = addLocalCalendarDays(target, 1);
+        }
+        return DateTime(target.year, target.month, target.day, 9);
+    }
   }
 
   /// Records a "water now" action:

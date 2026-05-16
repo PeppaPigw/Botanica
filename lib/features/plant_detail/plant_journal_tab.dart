@@ -7,10 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/i18n/task_labels.dart' as task_labels;
 import '../../core/widgets/botanica_sheet.dart';
 import '../../core/widgets/botanica_timeline_card.dart';
 import '../../core/widgets/glass_card.dart';
+import '../../domain/models/care_log.dart';
 import '../../domain/models/diary_entry.dart';
+import '../../domain/models/enums.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -41,6 +44,14 @@ class _DiaryEvent implements _JournalEvent {
   DateTime get timestamp => item.createdAt;
 }
 
+class _CareEvent implements _JournalEvent {
+  final CareLog item;
+  _CareEvent(this.item);
+
+  @override
+  DateTime get timestamp => item.timestamp;
+}
+
 enum _PhotoJournalAction { open, compare, share, delete }
 
 enum _DiaryJournalAction { view, edit, share, delete }
@@ -64,6 +75,7 @@ class PlantJournalTab extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final photosRepo = ref.read(photosRepositoryProvider);
     final diaryRepo = ref.read(diaryRepositoryProvider);
+    final logsRepo = ref.read(logsRepositoryProvider);
 
     return StreamBuilder(
       stream: diaryRepo.watchForPlant(plant.id),
@@ -75,206 +87,439 @@ class PlantJournalTab extends ConsumerWidget {
           builder: (context, photosSnapshot) {
             final photos = photosSnapshot.data ?? const [];
 
-            final events = <_JournalEvent>[];
-            final photoEvents = <_PhotoEvent>[];
-            for (final p in photos) {
-              final ev = _PhotoEvent(p);
-              events.add(ev);
-              photoEvents.add(ev);
-            }
-            for (final d in diaryEntries) {
-              events.add(_DiaryEvent(d));
-            }
-            events.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-            photoEvents.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+            return StreamBuilder(
+              stream: logsRepo.watchForPlant(plant.id),
+              builder: (context, logsSnapshot) {
+                final logs = logsSnapshot.data ?? const <CareLog>[];
 
-            final nextPhotoMap = <String, PhotoEntry>{};
-            for (int i = 0; i < photoEvents.length - 1; i++) {
-              nextPhotoMap[photoEvents[i].item.id] = photoEvents[i + 1].item;
-            }
+                final events = <_JournalEvent>[];
+                final photoEvents = <_PhotoEvent>[];
+                for (final p in photos) {
+                  final ev = _PhotoEvent(p);
+                  events.add(ev);
+                  photoEvents.add(ev);
+                }
+                for (final d in diaryEntries) {
+                  events.add(_DiaryEvent(d));
+                }
+                for (final log in logs) {
+                  events.add(_CareEvent(log));
+                }
+                events.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+                photoEvents.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-            return ListView(
-              padding: BotanicaTokens.pagePadding.copyWith(bottom: 120),
-              children: [
-                BotanicaGlassCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.auto_stories_rounded,
-                            color: scheme.onSurface.withValues(alpha: 0.80),
+                final nextPhotoMap = <String, PhotoEntry>{};
+                for (int i = 0; i < photoEvents.length - 1; i++) {
+                  nextPhotoMap[photoEvents[i].item.id] =
+                      photoEvents[i + 1].item;
+                }
+
+                Widget buildEventCard(_JournalEvent ev, int index) {
+                  final isFirst = index == 0;
+                  final isLast = index == events.length - 1;
+
+                  if (ev is _PhotoEvent) {
+                    final p = ev.item;
+                    final compareCandidate = nextPhotoMap[p.id];
+
+                    return BotanicaTimelineCard(
+                      key: ValueKey('journal-photo-${p.id}'),
+                      isFirst: isFirst,
+                      isLast: isLast,
+                      icon: Icons.photo_camera_rounded,
+                      title: l10n.journalPhotoMeta(p.createdAt),
+                      subtitle: (p.note ?? '').trim().isEmpty
+                          ? l10n.journalPhotoNoNote
+                          : p.note!.trim(),
+                      trailingIcon: Icons.more_horiz_rounded,
+                      trailingTooltip:
+                          MaterialLocalizations.of(context).showMenuTooltip,
+                      onTap: () => PhotoViewerScreen.open(
+                        context,
+                        entry: p,
+                        compareCandidate: compareCandidate,
+                        title: l10n.journalPhotoTitle,
+                      ),
+                      leading: ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(BotanicaTokens.radiusL),
+                        child: SizedBox(
+                          width: 56,
+                          height: 56,
+                          child: Image.file(
+                            File(p.filePath),
+                            cacheWidth: 112,
+                            cacheHeight: 112,
+                            fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
+                            errorBuilder: (_, __, ___) =>
+                                const JournalPhotoUnavailable(compact: true),
                           ),
-                          BotanicaGaps.hSm,
-                          Expanded(
-                            child: Text(
-                              l10n.plantDetailJournalIntro,
-                              style: textTheme.bodyMedium?.copyWith(
+                        ),
+                      ),
+                      onTrailingTap: () => _showPhotoActions(
+                        context,
+                        ref,
+                        plant,
+                        entry: p,
+                        compareCandidate: compareCandidate,
+                      ),
+                    );
+                  } else if (ev is _DiaryEvent) {
+                    final e = ev.item;
+
+                    return BotanicaTimelineCard(
+                      key: ValueKey('journal-diary-${e.id}'),
+                      isFirst: isFirst,
+                      isLast: isLast,
+                      icon: Icons.edit_note_rounded,
+                      title: l10n
+                          .journalPhotoMeta(e.createdAt), // re-using date format
+                      subtitle: l10n.diaryEntryTitle,
+                      body: Text(
+                        e.text,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.bodySmall?.copyWith(
+                          color: scheme.onSurface.withValues(alpha: 0.72),
+                          height: 1.35,
+                        ),
+                      ),
+                      onTap: () => _editDiaryEntry(context, ref, e),
+                      trailingIcon: Icons.more_horiz_rounded,
+                      trailingTooltip:
+                          MaterialLocalizations.of(context).showMenuTooltip,
+                      onTrailingTap: () => _showDiaryActions(
+                        context,
+                        ref,
+                        entry: e,
+                      ),
+                    );
+                  } else if (ev is _CareEvent) {
+                    final log = ev.item;
+                    final note = log.note?.trim();
+
+                    return BotanicaTimelineCard(
+                      key: ValueKey('journal-care-${log.id}'),
+                      isFirst: isFirst,
+                      isLast: isLast,
+                      icon: _iconForTask(log.type),
+                      title: _taskTypeLabel(l10n, log.type),
+                      subtitle: l10n.journalPhotoMeta(log.timestamp),
+                      body: note == null || note.isEmpty
+                          ? null
+                          : Text(
+                              note,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.bodySmall?.copyWith(
                                 color: scheme.onSurface.withValues(alpha: 0.72),
-                                height: 1.45,
+                                height: 1.35,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      BotanicaGaps.vSm,
-                      Row(
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }
+
+                final growthEcho = _growthEchoInsight(photos);
+
+                final timelineItems = <Widget>[];
+                for (int i = 0; i < events.length; i++) {
+                  final ev = events[i];
+                  if (i == 0 ||
+                      !_isSameYearMonth(
+                        ev.timestamp,
+                        events[i - 1].timestamp,
+                      )) {
+                    timelineItems.add(_MonthHeader(date: ev.timestamp));
+                  }
+                  timelineItems.add(buildEventCard(ev, i));
+                }
+
+                return ListView(
+                  padding: BotanicaTokens.pagePadding.copyWith(bottom: 120),
+                  children: [
+                    BotanicaGlassCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: FilledButton.icon(
-                              onPressed: onAddPhoto,
-                              icon: const Icon(Icons.add_a_photo_rounded),
-                              label: Text(l10n.journalAddPhotoTitle),
-                            ),
-                          ),
-                          BotanicaGaps.hSm,
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: onAddNote,
-                              icon: const Icon(Icons.edit_note_rounded),
-                              label: Text(l10n.diaryAddEntryButton),
-                              style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 14,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    BotanicaTokens.radiusXL,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.auto_stories_rounded,
+                                color:
+                                    scheme.onSurface.withValues(alpha: 0.80),
+                              ),
+                              BotanicaGaps.hSm,
+                              Expanded(
+                                child: Text(
+                                  l10n.plantDetailJournalIntro,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: scheme.onSurface
+                                        .withValues(alpha: 0.72),
+                                    height: 1.45,
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
+                          ),
+                          BotanicaGaps.vSm,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: FilledButton.icon(
+                                  onPressed: onAddPhoto,
+                                  icon: const Icon(Icons.add_a_photo_rounded),
+                                  label: Text(l10n.journalAddPhotoTitle),
+                                ),
+                              ),
+                              BotanicaGaps.hSm,
+                              Expanded(
+                                child: OutlinedButton.icon(
+                                  onPressed: onAddNote,
+                                  icon: const Icon(Icons.edit_note_rounded),
+                                  label: Text(l10n.diaryAddEntryButton),
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 14,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        BotanicaTokens.radiusXL,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                BotanicaGaps.vBase,
-                Text(
-                  l10n.diarySectionTitle,
-                  style: textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.3,
-                  ),
-                ),
-                BotanicaGaps.vSm,
-                if (events.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.timeline_rounded,
-                          size: BotanicaTokens.iconSizeLg + BotanicaTokens.spacingMicro,
-                          color: scheme.onSurface.withValues(alpha: 0.35),
-                        ),
-                        BotanicaGaps.hSm,
-                        Expanded(
-                          child: Text(
-                            l10n.diaryEmptyBody,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: scheme.onSurface.withValues(alpha: 0.60),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
-                  )
-                else
-                  ...events.indexed.map((indexedItem) {
-                    final index = indexedItem.$1;
-                    final ev = indexedItem.$2;
-                    final isFirst = index == 0;
-                    final isLast = index == events.length - 1;
-
-                    if (ev is _PhotoEvent) {
-                      final p = ev.item;
-                      final compareCandidate = nextPhotoMap[p.id];
-
-                      return BotanicaTimelineCard(
-                        key: ValueKey('journal-photo-${p.id}'),
-                        isFirst: isFirst,
-                        isLast: isLast,
-                        icon: Icons.photo_camera_rounded,
-                        title: l10n.journalPhotoMeta(p.createdAt),
-                        subtitle: (p.note ?? '').trim().isEmpty
-                            ? l10n.journalPhotoNoNote
-                            : p.note!.trim(),
-                        trailingIcon: Icons.more_horiz_rounded,
-                        trailingTooltip:
-                            MaterialLocalizations.of(context).showMenuTooltip,
-                        onTap: () => PhotoViewerScreen.open(
+                    if (growthEcho != null) ...[
+                      BotanicaGaps.vSm,
+                      _GrowthEchoCard(
+                        plant: plant,
+                        insight: growthEcho,
+                        onAddPhoto: onAddPhoto,
+                        onCompare: () => PhotoCompareScreen.open(
                           context,
-                          entry: p,
-                          compareCandidate: compareCandidate,
-                          title: l10n.journalPhotoTitle,
+                          beforePath: growthEcho.previous!.filePath,
+                          afterPath: growthEcho.latest.filePath,
+                          title: l10n.journalCompareTitle,
                         ),
-                        leading: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(BotanicaTokens.radiusL),
-                          child: SizedBox(
-                            width: 56,
-                            height: 56,
-                            child: Image.file(
-                              File(p.filePath),
-                              cacheWidth: 112,
-                              cacheHeight: 112,
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                              errorBuilder: (_, __, ___) =>
-                                  const JournalPhotoUnavailable(compact: true),
+                      ),
+                    ],
+                    BotanicaGaps.vBase,
+                    Text(
+                      l10n.diarySectionTitle,
+                      style: textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.3,
+                      ),
+                    ),
+                    BotanicaGaps.vSm,
+                    if (events.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.timeline_rounded,
+                              size: BotanicaTokens.iconSizeLg +
+                                  BotanicaTokens.spacingMicro,
+                              color: scheme.onSurface.withValues(alpha: 0.35),
                             ),
-                          ),
+                            BotanicaGaps.hSm,
+                            Expanded(
+                              child: Text(
+                                l10n.diaryEmptyBody,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color:
+                                      scheme.onSurface.withValues(alpha: 0.60),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        onTrailingTap: () => _showPhotoActions(
-                          context,
-                          ref,
-                          plant,
-                          entry: p,
-                          compareCandidate: compareCandidate,
-                        ),
-                      );
-                    } else if (ev is _DiaryEvent) {
-                      final e = ev.item;
-
-                      return BotanicaTimelineCard(
-                        key: ValueKey('journal-diary-${e.id}'),
-                        isFirst: isFirst,
-                        isLast: isLast,
-                        icon: Icons.edit_note_rounded,
-                        title: l10n.journalPhotoMeta(
-                            e.createdAt), // re-using date format
-                        subtitle: l10n.diaryEntryTitle,
-                        body: Text(
-                          e.text,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: scheme.onSurface.withValues(alpha: 0.72),
-                            height: 1.35,
-                          ),
-                        ),
-                        onTap: () => _editDiaryEntry(context, ref, e),
-                        trailingIcon: Icons.more_horiz_rounded,
-                        trailingTooltip:
-                            MaterialLocalizations.of(context).showMenuTooltip,
-                        onTrailingTap: () => _showDiaryActions(
-                          context,
-                          ref,
-                          entry: e,
-                        ),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  }),
-              ],
+                      )
+                    else
+                      ...timelineItems,
+                  ],
+                );
+              },
             );
           },
         );
       },
+    );
+  }
+}
+
+IconData _iconForTask(TaskType type) => task_labels.iconForTask(type);
+
+String _taskTypeLabel(AppLocalizations l10n, TaskType type) =>
+    task_labels.taskTypeLabel(l10n, type);
+
+bool _isSameYearMonth(DateTime a, DateTime b) =>
+    a.year == b.year && a.month == b.month;
+
+class _MonthHeader extends StatelessWidget {
+  const _MonthHeader({required this.date});
+
+  final DateTime date;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final monthLabel = MaterialLocalizations.of(context).formatMonthYear(date);
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 8),
+      child: Text(
+        monthLabel,
+        style: textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: scheme.onSurface.withValues(alpha: 0.55),
+          letterSpacing: 0.3,
+        ),
+      ),
+    );
+  }
+}
+
+enum _GrowthEchoMode { compare, capture }
+
+class _GrowthEchoInsight {
+  const _GrowthEchoInsight.compare({
+    required this.latest,
+    required this.previous,
+    required this.daysApart,
+  })  : mode = _GrowthEchoMode.compare;
+
+  const _GrowthEchoInsight.capture({
+    required this.latest,
+    required this.daysApart,
+  })  : mode = _GrowthEchoMode.capture,
+        previous = null;
+
+  final _GrowthEchoMode mode;
+  final PhotoEntry latest;
+  final PhotoEntry? previous;
+  final int daysApart;
+}
+
+_GrowthEchoInsight? _growthEchoInsight(List<PhotoEntry> photos) {
+  if (photos.isEmpty) return null;
+
+  final sorted = [...photos]
+    ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  final latest = sorted.first;
+
+  if (sorted.length >= 2) {
+    final previous = sorted[1];
+    final days = latest.createdAt.difference(previous.createdAt).inDays.abs();
+    if (days >= 10) {
+      return _GrowthEchoInsight.compare(
+        latest: latest,
+        previous: previous,
+        daysApart: days,
+      );
+    }
+  }
+
+  final daysSinceLatest = DateTime.now().difference(latest.createdAt).inDays;
+  if (daysSinceLatest >= 14) {
+    return _GrowthEchoInsight.capture(
+      latest: latest,
+      daysApart: daysSinceLatest,
+    );
+  }
+
+  return null;
+}
+
+class _GrowthEchoCard extends StatelessWidget {
+  const _GrowthEchoCard({
+    required this.plant,
+    required this.insight,
+    required this.onAddPhoto,
+    required this.onCompare,
+  });
+
+  final Plant plant;
+  final _GrowthEchoInsight insight;
+  final VoidCallback onAddPhoto;
+  final VoidCallback onCompare;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
+
+    final isCompare = insight.mode == _GrowthEchoMode.compare;
+    final title = isCompare
+        ? l10n.growthEchoCompareTitle
+        : l10n.growthEchoCaptureTitle;
+    final body = isCompare
+        ? l10n.growthEchoCompareBody(plant.nickname, insight.daysApart)
+        : l10n.growthEchoCaptureBody(insight.daysApart, plant.nickname);
+    final icon =
+        isCompare ? Icons.auto_awesome_rounded : Icons.add_a_photo_rounded;
+    final ctaLabel =
+        isCompare ? l10n.journalCompareTitle : l10n.journalAddPhotoTitle;
+    final onTap = isCompare ? onCompare : onAddPhoto;
+
+    return BotanicaGlassCard(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: scheme.primaryContainer.withValues(alpha: 0.5),
+              ),
+              child: Icon(icon, size: 20, color: scheme.primary),
+            ),
+            BotanicaGaps.hSm,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    body,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurface.withValues(alpha: 0.65),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            BotanicaGaps.hSm,
+            Text(
+              ctaLabel,
+              style: textTheme.labelMedium?.copyWith(
+                color: scheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

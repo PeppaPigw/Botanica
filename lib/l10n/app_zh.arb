@@ -23,6 +23,7 @@
   "commonLanguage": "语言",
   "commonAbout": "关于",
   "commonTryAgain": "重试",
+  "commonErrorTryAgain": "出了点问题，请重试。",
   "commonComingSoon": "即将推出",
   "commonLoading": "加载中…",
   "commonViewAll": "查看全部",
@@ -70,6 +71,14 @@
   "calendarPrevMonth": "上个月",
   "calendarNextMonth": "下个月",
   "calendarSectionHistory": "养护记录",
+  "calendarWeekAheadTitle": "未来一周",
+  "calendarWeekAheadCount": "{count} 项任务",
+  "@calendarWeekAheadCount": {
+    "description": "Total tasks in the upcoming week",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "calendarNoEvents": "这一天暂无记录。",
   "splashTagline": "宁静养护，优雅整理。",
   "onboardingTitle1": "你的花园，优雅有序",
@@ -103,6 +112,9 @@
   "permissionsPrivacyNote": "Botanica 只在需要时才请求权限，你可以在「我的」中随时修改。",
   "gardenTitle": "花园",
   "gardenTodayCardTitle": "今日",
+  "gardenGreetingMorning": "早上好",
+  "gardenGreetingAfternoon": "下午好",
+  "gardenGreetingEvening": "晚上好",
   "gardenLoadError": "加载植物失败。",
   "gardenTasksDueToday": "{count, plural, =0{暂无待办} other{{count} 个待办}}",
   "@gardenTasksDueToday": {
@@ -113,9 +125,45 @@
       }
     }
   },
+  "gardenAllCaughtUp": "全部完成！你的植物很开心。",
+  "gardenVacationBanner": "假期模式 — 提醒已暂停",
+  "gardenWeeklySummaryTitle": "本周",
+  "gardenWeeklyCareActions": "{count} 次护理",
+  "@gardenWeeklyCareActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyWatered": "浇水 {count} 次",
+  "@gardenWeeklyWatered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyFertilized": "施肥 {count} 次",
+  "@gardenWeeklyFertilized": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenCareStreakChip": "连续护理{days}天",
   "@gardenCareStreakChip": {
     "description": "Chip label showing the user's current care streak",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenStreakAtRisk": "你的{days}天连续记录今天就要断了——快去照顾一棵植物吧！",
+  "@gardenStreakAtRisk": {
+    "description": "Warning shown when the user's care streak will break if they don't act today",
     "placeholders": {
       "days": {
         "type": "int"
@@ -148,8 +196,24 @@
   "weatherSnow": "雪",
   "weatherThunder": "雷暴",
   "weatherUnknown": "天气",
+  "weatherTipRainy": "外面下雨了——今天跳过户外植物浇水",
+  "weatherTipStormy": "暴风雨天气——将敏感植物移至室内",
+  "weatherTipExtremeHeat": "极端高温——检查土壤湿度并喷雾叶片",
+  "weatherTipHotSunny": "炎热晴天——清晨或傍晚浇水",
+  "weatherTipNearFreezing": "接近冰点——保护怕冻植物",
+  "weatherTipSnow": "预计有雪——将户外花盆移至遮蔽处",
+  "weatherTipCool": "凉爽天气——减少浇水频率",
+  "weatherTipLowHumidity": "空气干燥——给热带植物喷雾或将它们聚在一起",
+  "weatherTipHighHumidity": "湿度高——暂停喷雾，注意真菌问题",
+  "seasonalTipSpring": "春天来了——是施肥和换盆的好时机",
+  "seasonalTipSummer": "夏季炎热，大多数植物需要更频繁浇水",
+  "seasonalTipAutumn": "秋季——植物生长放缓，减少施肥",
+  "seasonalTipWinter": "冬季——大多数植物需要更少的水和肥料",
   "gardenQuickWatered": "已浇水",
   "gardenQuickSnooze": "稍后提醒",
+  "gardenQuickLogCare": "记录养护",
+  "gardenQuickLogDone": "已记录！",
+  "gardenViewDetails": "查看详情",
   "tasksSnoozeOneHour": "1小时",
   "tasksSnoozeThreeHours": "3小时",
   "tasksSnoozeTomorrow": "明天",
@@ -167,6 +231,15 @@
       }
     }
   },
+  "profilePlantsInGarden": "{count, plural, =1{花园中有 1 株植物} other{花园中有 {count} 株植物}}",
+  "@profilePlantsInGarden": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discoverInYourGarden": "已在花园中",
   "gardenRoomsWaterAll": "全部浇水",
   "gardenRoomsSnoozeAll": "全部延后",
   "gardenRoomsWateredCount": "已为 {count} 株植物浇水",
@@ -190,6 +263,9 @@
   "gardenToggleCardMode": "切换卡片模式",
   "gardenToggleViewMode": "切换视图模式",
   "gardenEmptyCta": "添加第一株植物",
+  "gardenGreetingMorning": "早上好",
+  "gardenGreetingAfternoon": "下午好",
+  "gardenGreetingEvening": "晚上好",
   "gardenAddPlantFab": "添加植物",
   "addPlantTitle": "添加植物",
   "addPlantMethodScan": "扫描",
@@ -230,6 +306,15 @@
   "plantDetailMissingCta": "返回花园",
   "plantDetailNextWateringInDays": "距离下次浇水还有 {days} 天",
   "@plantDetailNextWateringInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantDetailCaringForDays": "已照顾 {days} 天",
+  "@plantDetailCaringForDays": {
+    "description": "Shows how many days the user has been caring for this plant",
     "placeholders": {
       "days": {
         "type": "int"
@@ -380,6 +465,7 @@
   },
   "tasksSkipped": "已跳过",
   "discoverTitle": "发现",
+  "discoverPlantOfTheDay": "今日植物",
   "discoverSearchHint": "搜索植物、指南与技巧",
   "discoverNoResultsTitle": "未找到匹配结果",
   "discoverNoResultsBody": "试试其他名称，或使用学名搜索。",
@@ -398,6 +484,8 @@
   "discoverGuideSoilBody": "为什么疏松透气的介质能减少烂根并促进生长。",
   "discoverGuidePestTitle": "虫害检查清单",
   "discoverGuidePestBody": "每周 1 次的小流程，及早发现问题。",
+  "discoverAddFavorite": "添加到收藏",
+  "discoverRemoveFavorite": "从收藏中移除",
   "speciesDetailHistory": "历史",
   "speciesDetailHabit": "生长习性",
   "speciesDetailCareAtAGlance": "养护速览",
@@ -565,6 +653,10 @@
       }
     }
   },
+  "exportDataTitle": "导出养护数据",
+  "exportDataSubtitle": "将植物和养护记录保存为 JSON 文件。",
+  "exportDataSuccess": "养护数据导出成功。",
+  "exportDataEmpty": "暂无数据可导出——先添加一些植物吧。",
   "profileLanguage": "语言",
   "profileUnits": "单位",
   "profileHemisphereTitle": "半球",
@@ -614,6 +706,17 @@
   "profileCredits": "致谢",
   "profileDynamicColorTitle": "动态配色",
   "profileDynamicColorBody": "在支持的设备上使用系统配色。",
+  "vacationModeTitle": "假期模式",
+  "vacationModeOff": "外出时暂停所有提醒。",
+  "vacationModeActiveUntil": "有效至 {date}",
+  "@vacationModeActiveUntil": {
+    "description": "Vacation mode active subtitle",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "vacationModeEnd": "结束假期模式",
+  "vacationModePickDate": "返回日期",
   "profileAiInsightsTitle": "AI 灵感",
   "profileAiInsightsBody": "以不打扰的方式，在页面里生成小提示，让每日花语更贴合你。",
   "profileAiKeyTitle": "AI API 密钥",
@@ -766,6 +869,95 @@
       }
     }
   },
+  "notificationWaterTitle2": "{plant} 有点渴了！",
+  "@notificationWaterTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationWaterTitle3": "该给 {plant} 浇水啦",
+  "@notificationWaterTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle2": "{plant} 需要补充营养",
+  "@notificationFertilizeTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle3": "给 {plant} 施肥的时间到了",
+  "@notificationFertilizeTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle2": "给 {plant} 加点湿度？",
+  "@notificationMistTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle3": "该给 {plant} 喷雾了",
+  "@notificationMistTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle2": "转一转 {plant}，让它均匀生长",
+  "@notificationRotateTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle3": "{plant} 今天需要转个方向",
+  "@notificationRotateTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle2": "该给 {plant} 修剪一下了",
+  "@notificationPruneTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle3": "{plant} 需要修整",
+  "@notificationPruneTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationDailySummaryTitle": "早安，植物家长！",
+  "notificationDailySummaryBody": "今天有 {count} 项养护任务等着你。",
+  "@notificationDailySummaryBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reasonHumidityLow": "湿度低 → 土壤更快变干",
   "reasonHumidityHigh": "湿度高 → 土壤保持湿润更久",
   "reasonHot": "温度高 → 蒸发更快",
@@ -792,6 +984,11 @@
   "gardenWellnessStatPlants": "植物",
   "gardenWellnessStatRecentCare": "最近护理",
   "gardenWellnessStatAtRisk": "需关注",
+  "gardenWellnessStatPunctuality": "准时率",
+  "gardenWellnessStatWeeklyActive": "周活跃",
+  "gardenWellnessStatBestStreak": "最长连续",
+  "gardenWellnessMomentumIncreasing": "势头上升",
+  "gardenWellnessMomentumDecreasing": "势头下降",
   "gardenWellnessRoomPulseTitle": "房间状态",
   "gardenWellnessRoomPulseSummary": "{plantCount} 株植物 · {overdueCount} 项逾期",
   "@gardenWellnessRoomPulseSummary": {
@@ -935,6 +1132,14 @@
   "@gardenSortNewest": {
     "description": "Sort option by newest"
   },
+  "gardenSortHealth": "健康评分",
+  "@gardenSortHealth": {
+    "description": "Sort option by plant health score (lowest first)"
+  },
+  "gardenSortRoom": "房间",
+  "@gardenSortRoom": {
+    "description": "Sort option by room"
+  },
   "gardenSortSpecies": "物种",
   "@gardenSortSpecies": {
     "description": "Sort option by species"
@@ -985,5 +1190,735 @@
         "type": "String"
       }
     }
-  }
+  },
+  "streakMilestoneTitle": "连续{days}天里程碑！",
+  "@streakMilestoneTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakMilestoneBody7": "整整一周的植物护理，你的花园感谢你。",
+  "streakMilestoneBody30": "坚持30天，你正在养成好习惯。",
+  "streakMilestoneBody90": "90天！你的植物从未如此快乐。",
+  "streakMilestoneBody365": "整整一年的护理，你是植物传奇。",
+  "streakMilestoneDismiss": "继续加油！",
+  "timeCapsuleTitle": "{days}天前的今天",
+  "@timeCapsuleTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "timeCapsuleBody": "你在{days}天前为{plant}拍下了这张照片。看看你们一起走了多远。",
+  "@timeCapsuleBody": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "rescueResetTitle": "欢迎回来",
+  "rescueResetBody": "你曾有{streak}天的连续记录。已经过了{days}天——不必内疚，随时可以重新开始。",
+  "@rescueResetBody": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "rescueResetWaterNow": "现在浇一棵植物",
+  "rescueResetFreshStart": "重新开始",
+  "streakSavedSnackbar": "连续记录保住了！已照顾{plant} · {days}天节奏不变",
+  "@streakSavedSnackbar": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "allDoneQuietRunway": "未来{days}天没有待办",
+  "@allDoneQuietRunway": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "allDoneTomorrowPreview": "明天 · {plants}有{count}项任务",
+  "@allDoneTomorrowPreview": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "plants": {
+        "type": "String"
+      }
+    }
+  },
+  "plantPulseTitle": "该拍照记录了",
+  "plantPulseBody": "{plant}已经{days}天没拍照了，看看它长了多少。",
+  "@plantPulseBody": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantPulseCta": "拍一张",
+  "plantJourneyTitle": "你们的旅程",
+  "plantJourneyNextMilestone": "下一个：{milestone}",
+  "@plantJourneyNextMilestone": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "plantJourneyMilestoneFirstWater": "第一次浇水",
+  "plantJourneyMilestoneFirstPhoto": "第一张照片",
+  "plantJourneyMilestone7Days": "相伴7天",
+  "plantJourneyMilestoneFirstFertilize": "第一次施肥",
+  "plantJourneyMilestone10Waters": "浇水10次",
+  "plantJourneyMilestone30Days": "相伴30天",
+  "plantJourneyMilestone25Waters": "浇水25次",
+  "plantJourneyMilestone100Days": "相伴100天",
+  "plantJourneyMilestone365Days": "相伴一年",
+  "gardenerTypeTitle": "你的园丁类型",
+  "gardenerTypeDevoted": "专注型",
+  "gardenerTypeDevotedDesc": "连续30天以上不间断照顾，植物们都爱你。",
+  "gardenerTypeConsistent": "稳定型",
+  "gardenerTypeConsistentDesc": "超过80%的任务按时完成，像时钟一样可靠。",
+  "gardenerTypeExplorer": "探索型",
+  "gardenerTypeExplorerDesc": "收藏了5种以上植物，真正的植物探索家。",
+  "gardenerTypePhotographer": "记录型",
+  "gardenerTypePhotographerDesc": "10张以上成长照片，每片叶子都有故事。",
+  "gardenerTypeNurturer": "呵护型",
+  "gardenerTypeNurturerDesc": "50次以上养护操作，花园因你的关注而繁茂。",
+  "gardenerTypeBudding": "新手园丁",
+  "gardenerTypeBuddingDesc": "每个专家都曾是新手，继续成长吧！",
+  "whispererTierSeedling": "种子",
+  "whispererTierSprout": "嫩芽",
+  "whispererTierGardener": "园丁",
+  "whispererTierBotanist": "植物学家",
+  "whispererTierWhisperer": "植物低语者",
+  "whispererNextLevel": "距下一级还需 {xp} XP",
+  "@whispererNextLevel": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "careCombo": "{count}连击！",
+  "@careCombo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "careComboStreak": "{count}连击！势不可挡！",
+  "@careComboStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lastCareWater": "浇水",
+  "lastCareFertilize": "施肥",
+  "lastCarePhoto": "拍照",
+  "lastCareDaysAgo": "{days}天前",
+  "@lastCareDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lastCareToday": "今天",
+  "lastCareNever": "—",
+  "careConfidenceOnSchedule": "正好按节奏来（平均{days}天）",
+  "@careConfidenceOnSchedule": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "careConfidenceEarly": "稍微早了点——土壤可能还湿着",
+  "careConfidenceLate": "稍微晚了，不过没关系",
+  "gardenMoodThriving": "生机勃勃",
+  "gardenMoodHappy": "状态不错",
+  "gardenMoodNeedsLove": "需要关爱",
+  "gardenMoodThirsty": "渴了",
+  "plantDetailLogsSparklineTitle": "14天活动",
+  "plantDetailLogsSparklineCount": "{count}次操作",
+  "@plantDetailLogsSparklineCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonToday": "今天",
+  "calendarHeatmapTitle": "12周活动",
+  "profileStatsTotalCare": "总护理",
+  "profileStatsWatered": "浇水",
+  "profileStatsFertilized": "施肥",
+  "profileStatsActions": "{count}",
+  "@profileStatsActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileCareScore": "养护评分",
+  "profileCareScoreLabel": "{percent}%",
+  "@profileCareScoreLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "profileCareScoreSubtitle": "近30天按时完成率",
+  "weeklyRecapTitle": "本周回顾",
+  "weeklyRecapActiveDays": "活跃天数",
+  "weeklyRecapSummary": "本周 {days} 天内完成了 {actions} 次养护",
+  "@weeklyRecapSummary": {
+    "placeholders": {
+      "actions": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "weeklyRecapDismiss": "干得漂亮！",
+  "weeklyRecapBestDay": "最佳日：{day}",
+  "@weeklyRecapBestDay": {
+    "placeholders": {
+      "day": { "type": "String" }
+    }
+  },
+  "weeklyRecapStreak": "连续：{days} 天",
+  "@weeklyRecapStreak": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "gardenAllTasksDoneTitle": "今天全部完成！",
+  "gardenAllTasksDoneBody": "每棵植物都很开心，享受你的一天吧。",
+  "gardenAllDoneBody2": "你的绿色朋友们因你而茁壮成长。",
+  "gardenAllDoneBody3": "坚持就是秘诀，你做到了。",
+  "gardenAllDoneBody4": "又是出色的植物养护日。",
+  "gardenAllDoneBody5": "你的植物每天都在变得更强壮。",
+  "profileLongestStreak": "最佳：{days} 天",
+  "@profileLongestStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "profileGardenAge": "花园：{days} 天",
+  "@profileGardenAge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenNewPersonalBest": "新纪录！连续 {days} 天",
+  "@gardenNewPersonalBest": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenTomorrowPreview": "明天：{count} 棵植物需要照料",
+  "@gardenTomorrowPreview": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenMotivation7DayStreak": "势头正好，继续保持。",
+  "gardenMotivation30DayStreak": "坚持一个月了，植物们正在茁壮成长。",
+  "gardenMotivationWelcomeBack": "欢迎回来，植物们想你了。",
+  "gardenMotivationBigGarden": "花园繁茂，你做得很好。",
+  "gardenMotivationMorning": "美好的一天，去看看你的绿色朋友吧。",
+  "gardenMotivationEvening": "放松一下，快速检查花园。",
+  "gardenMotivationAllDoneToday": "今天全部完成，植物们很开心。",
+  "gardenMotivationNewPlant": "你的新植物正在适应新环境。",
+  "gardenStreakFreezeUsed": "使用了连续冻结！你的 {days} 天连续记录安全了。",
+  "@gardenStreakFreezeUsed": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenStreakFreezeEarned": "获得连续冻结！（可用 {count} 次）",
+  "@gardenStreakFreezeEarned": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileStreakFreezes": "可用 {count} 次冻结",
+  "@profileStreakFreezes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenPlantMilestone": "花园里有 {count} 棵植物了！你的收藏越来越美。",
+  "@gardenPlantMilestone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "streakShareTitle": "分享你的连续记录",
+  "streakShareCardDays": "连续 {days} 天",
+  "@streakShareCardDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakShareCardSubtitle": "每天用心照顾我的植物",
+  "streakShareButton": "分享",
+  "plantLastWateredToday": "今天已浇水",
+  "plantLastWateredYesterday": "昨天浇过水",
+  "plantLastWateredDaysAgo": "{days} 天前浇过水",
+  "@plantLastWateredDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantNeverWatered": "尚未浇水",
+  "plantAgeLabel": "入住花园 {days} 天",
+  "@plantAgeLabel": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantAnniversaryLabel": "{years} 周年纪念！",
+  "@plantAnniversaryLabel": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "careLogAddNote": "添加备注",
+  "careLogEditNote": "编辑备注",
+  "careLogNoteHint": "它看起来怎么样？有什么需要记住的吗？",
+  "careLogNoteSaved": "备注已保存",
+  "careStatsTitle": "养护规律",
+  "careStatsTotalWaterings": "浇水次数",
+  "careStatsAvgInterval": "平均间隔",
+  "careStatsAvgDays": "{days}天",
+  "@careStatsAvgDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "careStatsTotalActions": "总操作",
+  "careStatsConsistency": "规律性",
+  "careStatsTip": "试试设置定期提醒，养成稳定的浇水习惯。",
+  "gardenForecastTitle": "未来 7 天",
+  "gardenForecastTaskCount": "{count} 项任务",
+  "@gardenForecastTaskCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenForecastBusyDay": "最忙：{day}",
+  "@gardenForecastBusyDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenForecastEmpty": "本周暂无计划任务",
+  "gardenForecastToday": "今天",
+  "gardenForecastTomorrow": "明天",
+  "wellnessHeatmapTitle": "养护活动",
+  "wellnessHeatmapSubtitle": "最近 12 周",
+  "wellnessHeatmapActions": "{count} 次操作",
+  "@wellnessHeatmapActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendUp": "比上周 +{diff}",
+  "@gardenWeeklyTrendUp": {
+    "placeholders": {
+      "diff": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendDown": "比上周 {diff}",
+  "@gardenWeeklyTrendDown": {
+    "placeholders": {
+      "diff": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendSame": "与上周持平",
+  "gardenWeeklyMostActiveDay": "最活跃：{day}",
+  "@gardenWeeklyMostActiveDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "achievementsTitle": "成就",
+  "achievementsUnlocked": "{count}/{total} 已解锁",
+  "@achievementsUnlocked": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "achievementFirstPlant": "第一棵芽",
+  "achievementFirstPlantDesc": "添加你的第一棵植物",
+  "achievementFivePlants": "成长中的花园",
+  "achievementFivePlantsDesc": "花园达到 5 棵植物",
+  "achievementTenPlants": "植物爱好者",
+  "achievementTenPlantsDesc": "花园达到 10 棵植物",
+  "achievementTwentyPlants": "丛林大师",
+  "achievementTwentyPlantsDesc": "培育 20 棵植物",
+  "achievementFirstCare": "第一滴水",
+  "achievementFirstCareDesc": "完成第一个养护任务",
+  "achievementFiftyCares": "尽心照料",
+  "achievementFiftyCaresDesc": "完成 50 个养护任务",
+  "achievementHundredCares": "绿手指",
+  "achievementHundredCaresDesc": "完成 100 个养护任务",
+  "achievementFiveHundredCares": "植物低语者",
+  "achievementFiveHundredCaresDesc": "完成 500 个养护任务",
+  "achievementWeekStreak": "一周勇士",
+  "achievementWeekStreakDesc": "保持 7 天连续养护",
+  "achievementMonthStreak": "月度坚持",
+  "achievementMonthStreakDesc": "保持 30 天连续养护",
+  "achievementYearStreak": "传奇园丁",
+  "achievementYearStreakDesc": "保持 365 天连续养护",
+  "achievementFirstPhoto": "快照",
+  "achievementFirstPhotoDesc": "拍摄第一张植物照片",
+  "achievementTenPhotos": "照片日记",
+  "achievementTenPhotosDesc": "拍摄 10 张植物照片",
+  "achievementFiftyPhotos": "视觉叙事者",
+  "achievementFiftyPhotosDesc": "拍摄 50 张植物照片",
+  "achievementThreeRooms": "房间探索者",
+  "achievementThreeRoomsDesc": "在 3 个不同房间放置植物",
+  "achievementFiveRooms": "全屋花园",
+  "achievementFiveRoomsDesc": "在 5 个不同房间放置植物",
+  "achievementDiverseCarer": "全能园丁",
+  "achievementDiverseCarerDesc": "执行 5 种不同的养护类型",
+  "tasksCompleteAll": "全部完成",
+  "tasksCompleteAllDone": "已完成 {count} 个任务",
+  "@tasksCompleteAllDone": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "tasksStreakAtRiskTitle": "连续记录即将中断！",
+  "tasksStreakAtRiskBody": "你的 {days} 天连续记录今晚就要结束了。完成一个任务来保持它。",
+  "@tasksStreakAtRiskBody": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "plantMilestoneOneMonth": "相伴 1 个月！",
+  "plantMilestoneThreeMonths": "相伴 3 个月！",
+  "plantMilestoneSixMonths": "半年的呵护！",
+  "plantMilestoneOneYear": "一周年纪念！",
+  "plantMilestoneTwoYears": "两年的成长！",
+  "plantMilestoneSubtitle": "你已经照顾 {name} {days} 天了",
+  "@plantMilestoneSubtitle": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "days": { "type": "int" }
+    }
+  },
+
+  "seasonalTipTitle": "季节小贴士",
+  "seasonalTipSpringRepotTitle": "换盆好时机",
+  "seasonalTipSpringRepotBody": "春天是换盆的最佳时机。植物正进入生长期，能快速从换盆压力中恢复。",
+  "seasonalTipSpringFertilizeTitle": "恢复施肥",
+  "seasonalTipSpringFertilizeBody": "随着日照变长，重新开始施肥。先用半浓度，几周内逐渐增加。",
+  "seasonalTipSpringGrowthTitle": "关注新芽",
+  "seasonalTipSpringGrowthBody": "你的植物正在苏醒。留意新叶、新芽和新根——这是拍摄成长照片的好时机。",
+  "seasonalTipSpringWaterTitle": "增加浇水",
+  "seasonalTipSpringWaterBody": "随着生长加速，植物需要更多水分。比冬天更频繁地检查土壤湿度。",
+  "seasonalTipSpringPestsTitle": "虫害巡查",
+  "seasonalTipSpringPestsBody": "温暖天气带来害虫。定期检查新芽和叶片背面，及早发现虫害迹象。",
+
+  "seasonalTipSummerWaterTitle": "保持水分",
+  "seasonalTipSummerWaterBody": "高温和长日照意味着蒸发加快。深浇水并更频繁检查土壤，尤其是小盆植物。",
+  "seasonalTipSummerMistTitle": "增加湿度",
+  "seasonalTipSummerMistBody": "空调会使空气干燥。给热带植物喷雾或将它们聚在一起，营造湿润的小环境。",
+  "seasonalTipSummerSunburnTitle": "注意晒伤",
+  "seasonalTipSummerSunburnBody": "正午强烈的阳光会灼伤叶片。将敏感植物从朝南窗户移开或加装薄纱窗帘。",
+  "seasonalTipSummerOutdoorTitle": "户外时光",
+  "seasonalTipSummerOutdoorBody": "许多室内植物喜欢夏天的户外假期。逐渐适应，在夜间变冷前搬回室内。",
+  "seasonalTipSummerPropagateTitle": "扦插繁殖季",
+  "seasonalTipSummerPropagateBody": "夏天的温暖和长日照使这成为扦插的理想时机。大多数插条在明亮散射光下能快速生根。",
+
+  "seasonalTipAutumnWaterTitle": "减少浇水",
+  "seasonalTipAutumnWaterBody": "随着日照缩短，生长放缓。让土壤在两次浇水之间更加干燥，防止过渡期根腐。",
+  "seasonalTipAutumnFertilizeTitle": "停止施肥",
+  "seasonalTipAutumnFertilizeBody": "大多数植物即将进入休眠期。停止施肥以避免盐分积累，让它们自然休息。",
+  "seasonalTipAutumnLightTitle": "追逐光线",
+  "seasonalTipAutumnLightBody": "随着太阳角度降低，将植物移近窗户。定期转动花盆，让各面均匀受光。",
+  "seasonalTipAutumnInsideTitle": "搬回室内",
+  "seasonalTipAutumnInsideBody": "如果夏天把植物搬到了户外，在夜间温度降到10°C以下之前搬回室内。",
+  "seasonalTipAutumnCleanTitle": "清洁叶片日",
+  "seasonalTipAutumnCleanBody": "灰尘会阻碍光合作用。用湿布擦拭叶片，帮助植物在冬天高效进行光合作用。",
+
+  "seasonalTipWinterWaterTitle": "少量浇水",
+  "seasonalTipWinterWaterBody": "大多数植物冬天需水量大减。休眠期过度浇水是头号杀手——拿不准就等等。",
+  "seasonalTipWinterHumidityTitle": "对抗干燥空气",
+  "seasonalTipWinterHumidityBody": "暖气系统会大幅降低室内湿度。使用加湿器或鹅卵石托盘让热带植物保持舒适。",
+  "seasonalTipWinterDraftsTitle": "避免冷风",
+  "seasonalTipWinterDraftsBody": "让植物远离通风的窗户和外门。即使耐寒植物也不喜欢突然的温度变化。",
+  "seasonalTipWinterLightTitle": "最大化光照",
+  "seasonalTipWinterLightBody": "短日照意味着光合作用减少。将植物移到最亮的位置，考虑为喜光植物添加补光灯。",
+  "seasonalTipWinterRestTitle": "让它们休息",
+  "seasonalTipWinterRestBody": "休眠是自然且健康的。不要担心生长缓慢——你的植物正在为春天储存能量。",
+  "healthBreakdownTitle": "健康评分",
+  "healthBreakdownSubtitle": "以下因素影响这株植物的健康评分",
+  "healthBreakdownOverall": "综合评分：{score}/100",
+  "@healthBreakdownOverall": {
+    "placeholders": {
+      "score": {"type": "int"}
+    }
+  },
+  "healthFactorOverdue": "任务及时性",
+  "healthFactorActivity": "近期养护活动",
+  "healthFactorVariety": "养护多样性",
+  "healthFactorConsistency": "计划一致性",
+  "coachingTitle": "养护指导",
+  "coachingLateWatererTitle": "调整提醒时间",
+  "coachingLateWatererBody": "你经常晚一两天浇水。试着把提醒时间调到你通常有空的时候。",
+  "coachingStreakAtRiskTitle": "连续记录有风险！",
+  "coachingStreakAtRiskBody": "你今天还没有照顾任何植物。快速浇一次水就能保持连续记录。",
+  "coachingNeglectedPlantTitle": "有植物需要你",
+  "coachingNeglectedPlantBody": "你有一株植物超过3周没有得到照顾了。去看看它吧。",
+  "coachingImprovingTitle": "你在进步！",
+  "coachingImprovingBody": "这周你比上周更活跃了。继续保持这个势头。",
+  "coachingConsistentTitle": "一致性冠军",
+  "coachingConsistentBody": "你最近10个任务中有9个按时完成。你的植物正在茁壮成长。",
+  "coachingDiversifyTitle": "尝试新事物",
+  "coachingDiversifyBody": "你最近只在浇水。考虑喷雾、转盆或施肥，让植物更健康。",
+  "plantDetailNextWateringTomorrow": "明天",
+  "plantDetailNextWateringToday": "今天到期",
+  "gardenStreakFreezeAvailable": "{count, plural, =1{1个连续冻结可用} other{{count}个连续冻结可用}}",
+  "@gardenStreakFreezeAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonDismiss": "关闭",
+  "plantDetailHealthScore": "健康评分",
+  "plantDetailExpandText": "展开文本",
+  "plantDetailCollapseText": "收起文本",
+  "gardenWateredToday": "今天已浇水",
+  "gardenWateredYesterday": "昨天已浇水",
+  "gardenWateredDaysAgo": "{days}天前浇水",
+  "@gardenWateredDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenNeverWatered": "尚未浇水",
+  "calendarHeatmapTooltip": "{count, plural, other{{count} 次养护}}",
+  "@calendarHeatmapTooltip": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "calendarHeatmapTooltipDetail": "{waters, plural, =0{} other{{waters} 次浇水}}{fertSep}{fertilizes, plural, =0{} other{{fertilizes} 次施肥}}{otherSep}{others, plural, =0{} other{{others} 次其他}}",
+  "@calendarHeatmapTooltipDetail": {
+    "placeholders": {
+      "waters": { "type": "int" },
+      "fertSep": { "type": "String" },
+      "fertilizes": { "type": "int" },
+      "otherSep": { "type": "String" },
+      "others": { "type": "int" }
+    }
+  },
+  "calendarDayCareCount": "{count, plural, other{{count} 条养护记录}}",
+  "@calendarDayCareCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "exportDataConfirmTitle": "导出养护数据？",
+  "exportDataConfirmBody": "将创建包含所有植物、养护记录和任务的 JSON 文件。",
+  "exportDataConfirmAction": "导出",
+  "gardenWaterAllOverdue": "浇灌所有逾期植物",
+  "gardenWaterAllOverdueCount": "{count, plural, other {浇灌 {count} 棵逾期植物}}",
+  "@gardenWaterAllOverdueCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "gardenWateredAllOverdue": "{count, plural, other {已浇灌 {count} 棵逾期植物}}",
+  "@gardenWateredAllOverdue": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "plantOverviewNoCareStats": "多浇几次水后，养护规律将在此显示。",
+  "plantOverviewNoAiInsights": "在设置中启用 AI 洞察，获取个性化养护建议。",
+  "plantOverviewNoTasksYet": "暂无待办任务。养护计划创建后将在此显示。",
+  "gardenHealthTrendUp": "改善中",
+  "gardenHealthTrendDown": "下降中",
+  "gardenHealthTrendStable": "稳定",
+  "plantCareStreakLabel": "连续照顾 {days} 天",
+  "@plantCareStreakLabel": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "tasksEmptySoonMotivation": "享受这份宁静，你的植物正在茁壮成长。",
+  "manageCareTitle": "管理养护提醒",
+  "manageCareSubtitle": "{active} 项启用 · {disabled} 项停用",
+  "@manageCareSubtitle": {
+    "placeholders": {
+      "active": { "type": "int" },
+      "disabled": { "type": "int" }
+    }
+  },
+  "manageCareSpeciesDefault": "物种默认",
+  "manageCareEnabledByYou": "已手动启用",
+  "manageCareDisabledByYou": "已手动停用",
+  "manageCareButton": "管理",
+  "manageCareDisableConfirm": "关闭{type}提醒？",
+  "@manageCareDisableConfirm": {
+    "placeholders": {
+      "type": { "type": "String" }
+    }
+  },
+  "manageCareEnabled": "已启用",
+  "manageCareDisabled": "已停用",
+  "growthEchoCompareTitle": "今昔对比",
+  "growthEchoCompareBody": "{plant}有{days}天的生长变化可以对比。",
+  "@growthEchoCompareBody": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "days": { "type": "int" }
+    }
+  },
+  "growthEchoCaptureTitle": "生长记录",
+  "growthEchoCaptureBody": "距离{plant}上次拍照已经{days}天了。",
+  "@growthEchoCaptureBody": {
+    "placeholders": {
+      "days": { "type": "int" },
+      "plant": { "type": "String" }
+    }
+  },
+  "commonProblemsTitle": "常见问题",
+  "commonProblemsSubtitle": "注意{plant}可能出现的这些情况",
+  "@commonProblemsSubtitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "perfectWeekTitle": "完美一周 {count}!",
+  "@perfectWeekTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "perfectWeekBody": "连续7天按时完成所有任务。你的植物因你而茁壮成长。",
+  "perfectWeekBodyRepeat": "连续{count}个完美周。你已经是植物护理大师了。",
+  "@perfectWeekBodyRepeat": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "perfectWeekDismiss": "继续加油!",
+  "growthTimelineTitle": "成长时间线",
+  "growthTimelineEmpty": "拍照记录植物的成长变化",
+  "notificationStreakProtectionTitle": "你的{days}天连续记录即将中断!",
+  "@notificationStreakProtectionTitle": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "notificationStreakProtectionBody": "在午夜前完成一项护理任务来保持连续记录。",
+  "careRhythmTitle": "护理节奏",
+  "careRhythmAvgInterval": "平均每 {days} 天浇水一次",
+  "@careRhythmAvgInterval": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "careRhythmConsistent": "非常规律",
+  "careRhythmImproving": "越来越规律",
+  "careRhythmNoData": "再浇几次水就能看到你的节奏了",
+  "plantMoodThriving": "茁壮成长！🌱",
+  "plantMoodHappy": "状态很好",
+  "plantMoodOkay": "还不错",
+  "plantMoodThirsty": "有点渴了…",
+  "plantMoodNeglected": "想你了…",
+  "plantMoodNewHere": "刚入住！",
+  "plantAnniversaryTitle": "{plant} 的纪念日快乐！",
+  "@plantAnniversaryTitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "plantAnniversaryBody30": "一个月了，你正在创造美好的事物。",
+  "plantAnniversaryBody90": "三个月的悉心照料，你的用心看得见。",
+  "plantAnniversaryBody180": "半年了！这棵植物因你而茁壮。",
+  "plantAnniversaryBody365": "整整一年，多么美妙的旅程。",
+  "plantAnniversaryDismiss": "继续加油！"
 }

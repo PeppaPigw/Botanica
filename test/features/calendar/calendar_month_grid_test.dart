@@ -4,8 +4,15 @@ import 'package:botanica/features/calendar/calendar_screen.dart';
 import 'package:botanica/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() {
+  setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
+  });
+
   testWidgets('month grid renders month day cells', (tester) async {
     final cases = <DateTime, int>{
       DateTime(2026, 2): 28,
@@ -64,6 +71,7 @@ void main() {
     );
 
     expect(find.byKey(const ValueKey('calendar-dot-water')), findsOneWidget);
+    await tester.pump(const Duration(seconds: 1));
   });
 }
 

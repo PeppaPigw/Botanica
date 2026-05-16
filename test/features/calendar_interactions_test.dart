@@ -153,12 +153,16 @@ void main() {
 
     final listFinder = find.byKey(const ValueKey('calendar-list'));
 
-    // Check filters - scroll to them first by ensuring visibility
+    // Check filters - scroll to them first
+    final scrollable = find.descendant(
+      of: listFinder,
+      matching: find.byType(Scrollable),
+    ).first;
     final filterAllFinder = find.byKey(const ValueKey('calendar-filter-all'));
-    await tester.dragUntilVisible(
+    await tester.scrollUntilVisible(
       filterAllFinder,
-      listFinder,
-      const Offset(0, -300),
+      300,
+      scrollable: scrollable,
     );
     await tester.pump(const Duration(milliseconds: 500));
 
@@ -168,54 +172,46 @@ void main() {
     expect(find.byKey(const ValueKey('calendar-filter-mist')), findsOneWidget);
     expect(find.byKey(const ValueKey('calendar-filter-other')), findsOneWidget);
 
-    // Scroll back up to tap the current day
-    final todayTextFinder = find.text(now.day.toString()).first;
-    await tester.dragUntilVisible(
-      todayTextFinder,
-      listFinder,
-      const Offset(0, 300),
-    );
+    // Scroll back to top to find the calendar day
+    final scrollState = tester.state<ScrollableState>(scrollable);
+    scrollState.position.jumpTo(0);
     await tester.pump(const Duration(milliseconds: 500));
 
     // Tap on the day that has the logs (today)
-    await tester.tap(todayTextFinder);
+    final todayDayStr = now.day.toString();
+    await tester.tap(find.text(todayDayStr).first);
     await tester.pump(const Duration(milliseconds: 500));
 
     // Expect the agenda sheet to be visible with the logs shown
     expect(find.byKey(const ValueKey('calendar-day-sheet')), findsOneWidget);
-    
+
     // Should see both logs' titles
     expect(find.text('Water · Aloe'), findsOneWidget);
     expect(find.text('Fertilize · Aloe'), findsOneWidget);
 
     // Close sheet
-    // We can also try dismissing by popping the navigator if tapping out is brittle
     Navigator.of(tester.element(find.byKey(const ValueKey('calendar-day-sheet')))).pop();
     await tester.pump(const Duration(seconds: 1));
 
     // Tap 'Water' filter
     final filterWaterFinder = find.byKey(const ValueKey('calendar-filter-water'));
-    await tester.dragUntilVisible(
+    await tester.scrollUntilVisible(
       filterWaterFinder,
-      listFinder,
-      const Offset(0, -300),
+      300,
+      scrollable: scrollable,
     );
     await tester.pump(const Duration(milliseconds: 500));
-    
+
     await tester.tap(filterWaterFinder);
     await tester.pump(const Duration(seconds: 1));
 
-    // Tap today again
-    await tester.dragUntilVisible(
-      todayTextFinder,
-      listFinder,
-      const Offset(0, 300),
-    );
+    // Scroll back to top and tap today again
+    scrollState.position.jumpTo(0);
     await tester.pump(const Duration(milliseconds: 500));
 
-    await tester.tap(todayTextFinder);
+    await tester.tap(find.text(todayDayStr).first);
     await tester.pump(const Duration(seconds: 1));
-    
+
     expect(find.byKey(const ValueKey('calendar-day-sheet')), findsOneWidget);
 
     // Only 'Water · Aloe' should be visible

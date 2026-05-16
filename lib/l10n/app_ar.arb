@@ -23,6 +23,7 @@
   "commonLanguage": "اللغة",
   "commonAbout": "حول",
   "commonTryAgain": "أعد المحاولة",
+  "commonErrorTryAgain": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
   "commonComingSoon": "قريبًا",
   "commonLoading": "جارٍ التحميل…",
   "commonViewAll": "عرض الكل",
@@ -70,6 +71,14 @@
   "calendarPrevMonth": "الشهر السابق",
   "calendarNextMonth": "الشهر التالي",
   "calendarSectionHistory": "سجل العناية",
+  "calendarWeekAheadTitle": "الأسبوع القادم",
+  "calendarWeekAheadCount": "{count} مهام",
+  "@calendarWeekAheadCount": {
+    "description": "Total tasks in the upcoming week",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "calendarNoEvents": "لا توجد سجلات لهذا اليوم.",
   "splashTagline": "عناية هادئة، بتنظيم جميل.",
   "onboardingTitle1": "ابث الحياة في مساحتك",
@@ -103,6 +112,9 @@
   "permissionsPrivacyNote": "Botanica يطلب الأذونات عند الحاجة فقط — يمكنك تغيير ذلك لاحقًا من الملف.",
   "gardenTitle": "الحديقة",
   "gardenTodayCardTitle": "اليوم",
+  "gardenGreetingMorning": "صباح الخير",
+  "gardenGreetingAfternoon": "مساء الخير",
+  "gardenGreetingEvening": "مساء الخير",
   "gardenLoadError": "تعذر تحميل النباتات.",
   "gardenTasksDueToday": "{count, plural, =0{لا مهام} =1{مهمة واحدة} other{{count} مهام}}",
   "@gardenTasksDueToday": {
@@ -113,9 +125,45 @@
       }
     }
   },
+  "gardenAllCaughtUp": "كل شيء على ما يرام! نباتاتك سعيدة.",
+  "gardenVacationBanner": "وضع الإجازة — التذكيرات متوقفة",
+  "gardenWeeklySummaryTitle": "هذا الأسبوع",
+  "gardenWeeklyCareActions": "{count} إجراءات رعاية",
+  "@gardenWeeklyCareActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyWatered": "{count} مرات سقي",
+  "@gardenWeeklyWatered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyFertilized": "{count} مرات تسميد",
+  "@gardenWeeklyFertilized": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenCareStreakChip": "{days} أيام متتالية",
   "@gardenCareStreakChip": {
     "description": "Chip label showing the user's current care streak",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenStreakAtRisk": "سلسلتك المتتالية لـ {days} يوم ستنتهي اليوم — اعتنِ بنبتة للحفاظ عليها!",
+  "@gardenStreakAtRisk": {
+    "description": "Warning shown when the user's care streak will break if they don't act today",
     "placeholders": {
       "days": {
         "type": "int"
@@ -148,8 +196,24 @@
   "weatherSnow": "ثلج",
   "weatherThunder": "عاصفة رعدية",
   "weatherUnknown": "الطقس",
+  "weatherTipRainy": "ممطر بالخارج — تخطَّ ري النباتات الخارجية اليوم",
+  "weatherTipStormy": "طقس عاصف — أدخل النباتات الحساسة إلى الداخل",
+  "weatherTipExtremeHeat": "حرارة شديدة — تحقق من رطوبة التربة ورش الأوراق",
+  "weatherTipHotSunny": "حار ومشمس — اسقِ في الصباح الباكر أو المساء",
+  "weatherTipNearFreezing": "قريب من التجمد — احمِ النباتات الحساسة للصقيع",
+  "weatherTipSnow": "ثلوج متوقعة — انقل الأصص الخارجية إلى مكان محمي",
+  "weatherTipCool": "يوم بارد — قلل من تكرار الري",
+  "weatherTipLowHumidity": "هواء جاف اليوم — رش النباتات الاستوائية أو اجمعها معاً",
+  "weatherTipHighHumidity": "رطوبة عالية — توقف عن الرش وراقب الفطريات",
+  "seasonalTipSpring": "الربيع هنا — حان وقت التسميد وإعادة التأصيص",
+  "seasonalTipSummer": "حرارة الصيف تعني ري أكثر تكراراً",
+  "seasonalTipAutumn": "الخريف — قلل التسميد مع تباطؤ نمو النباتات",
+  "seasonalTipWinter": "الشتاء — معظم النباتات تحتاج ماء أقل وبدون سماد",
   "gardenQuickWatered": "تم السقي",
   "gardenQuickSnooze": "تأجيل",
+  "gardenQuickLogCare": "تسجيل رعاية",
+  "gardenQuickLogDone": "تم التسجيل!",
+  "gardenViewDetails": "عرض التفاصيل",
   "tasksSnoozeOneHour": "ساعة واحدة",
   "tasksSnoozeThreeHours": "3 ساعات",
   "tasksSnoozeTomorrow": "غدًا",
@@ -167,6 +231,15 @@
       }
     }
   },
+  "profilePlantsInGarden": "{count, plural, zero{لا نباتات في حديقتك} one{نبتة واحدة في حديقتك} two{نبتتان في حديقتك} few{{count} نباتات في حديقتك} many{{count} نبتة في حديقتك} other{{count} نبتة في حديقتك}}",
+  "@profilePlantsInGarden": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discoverInYourGarden": "في حديقتك",
   "gardenRoomsWaterAll": "سقِ الكل",
   "gardenRoomsSnoozeAll": "أجّل الكل",
   "gardenRoomsWateredCount": "تم سقي {count} {count, plural, zero{نبتة} one{نبتة} two{نبتتان} few{نباتات} many{نبتة} other{نبتة}} في الغرفة",
@@ -194,6 +267,9 @@
   "gardenEmptyTitle": "ابدأ حديقتك",
   "gardenEmptyBody": "أضف أول نبات لتحصل على خطة عناية مخصصة ومهام يومية.",
   "gardenEmptyCta": "إضافة أول نبات",
+  "gardenGreetingMorning": "صباح الخير",
+  "gardenGreetingAfternoon": "مساء الخير",
+  "gardenGreetingEvening": "مساء الخير",
   "gardenAddPlantFab": "إضافة نبات",
   "addPlantTitle": "إضافة نبات",
   "addPlantMethodScan": "مسح",
@@ -234,6 +310,15 @@
   "plantDetailMissingCta": "العودة إلى الحديقة",
   "plantDetailNextWateringInDays": "السقي التالي خلال {days} أيام",
   "@plantDetailNextWateringInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantDetailCaringForDays": "العناية منذ {days} يوم",
+  "@plantDetailCaringForDays": {
+    "description": "Shows how many days the user has been caring for this plant",
     "placeholders": {
       "days": {
         "type": "int"
@@ -384,6 +469,7 @@
   },
   "tasksSkipped": "تم التخطي",
   "discoverTitle": "اكتشف",
+  "discoverPlantOfTheDay": "نبتة اليوم",
   "discoverSearchHint": "ابحث عن نباتات وأدلة ونصائح",
   "discoverNoResultsTitle": "لا توجد نتائج",
   "discoverNoResultsBody": "جرّب اسمًا آخر أو ابحث بالاسم العلمي.",
@@ -402,6 +488,8 @@
   "discoverGuideSoilBody": "لماذا الخلطات الهوائية تقلل تعفن الجذور وتساعد النمو.",
   "discoverGuidePestTitle": "قائمة الآفات",
   "discoverGuidePestBody": "روتين أسبوعي سريع لاكتشاف المشاكل مبكرًا.",
+  "discoverAddFavorite": "إضافة إلى المفضلة",
+  "discoverRemoveFavorite": "إزالة من المفضلة",
   "speciesDetailHistory": "لمحة تاريخية",
   "speciesDetailHabit": "نمط النمو",
   "speciesDetailCareAtAGlance": "العناية باختصار",
@@ -569,6 +657,10 @@
       }
     }
   },
+  "exportDataTitle": "تصدير بيانات الرعاية",
+  "exportDataSubtitle": "احفظ نباتاتك وسجل الرعاية كملف JSON.",
+  "exportDataSuccess": "تم تصدير بيانات الرعاية بنجاح.",
+  "exportDataEmpty": "لا توجد بيانات للتصدير — أضف بعض النباتات أولاً.",
   "profileLanguage": "اللغة",
   "profileUnits": "الوحدات",
   "profileHemisphereTitle": "نصف الكرة",
@@ -618,6 +710,17 @@
   "profileCredits": "الاعتمادات",
   "profileDynamicColorTitle": "لون ديناميكي",
   "profileDynamicColorBody": "استخدم ألوان الجهاز عندما تكون متاحة.",
+  "vacationModeTitle": "وضع الإجازة",
+  "vacationModeOff": "أوقف جميع التذكيرات أثناء غيابك.",
+  "vacationModeActiveUntil": "نشط حتى {date}",
+  "@vacationModeActiveUntil": {
+    "description": "Vacation mode active subtitle",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "vacationModeEnd": "إنهاء وضع الإجازة",
+  "vacationModePickDate": "تاريخ العودة",
   "profileAiInsightsTitle": "لمحات بالذكاء الاصطناعي",
   "profileAiInsightsBody": "ملاحظات هادئة داخل الصفحات لتخصيص طقس زهرة اليوم.",
   "profileAiKeyTitle": "مفتاح API للذكاء الاصطناعي",
@@ -770,6 +873,95 @@
       }
     }
   },
+  "notificationWaterTitle2": "{plant} عطشان!",
+  "@notificationWaterTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationWaterTitle3": "حان وقت سقي {plant}",
+  "@notificationWaterTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle2": "{plant} يحتاج تغذية",
+  "@notificationFertilizeTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle3": "وقت تسميد {plant}",
+  "@notificationFertilizeTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle2": "رطوبة خفيفة لـ {plant}؟",
+  "@notificationMistTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle3": "حان وقت رش {plant}",
+  "@notificationMistTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle2": "أدر {plant} لنمو متساوٍ",
+  "@notificationRotateTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle3": "{plant} يحتاج دوران اليوم",
+  "@notificationRotateTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle2": "حان وقت تهذيب {plant}",
+  "@notificationPruneTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle3": "{plant} يحتاج تقليم",
+  "@notificationPruneTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationDailySummaryTitle": "صباح الخير، محب النباتات!",
+  "notificationDailySummaryBody": "لديك {count} مهام رعاية اليوم. نباتاتك تعتمد عليك!",
+  "@notificationDailySummaryBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reasonHumidityLow": "رطوبة منخفضة → التربة تجف أسرع",
   "reasonHumidityHigh": "رطوبة عالية → التربة تبقى رطبة أطول",
   "reasonHot": "حرارة مرتفعة → تبخر أعلى",
@@ -796,6 +988,11 @@
   "gardenWellnessStatPlants": "النباتات",
   "gardenWellnessStatRecentCare": "العناية الأخيرة",
   "gardenWellnessStatAtRisk": "بحاجة إلى انتباه",
+  "gardenWellnessStatPunctuality": "في الوقت",
+  "gardenWellnessStatWeeklyActive": "نشاط أسبوعي",
+  "gardenWellnessStatBestStreak": "أفضل سلسلة",
+  "gardenWellnessMomentumIncreasing": "الزخم يرتفع",
+  "gardenWellnessMomentumDecreasing": "الزخم ينخفض",
   "gardenWellnessRoomPulseTitle": "حالة الغرف",
   "gardenWellnessRoomPulseSummary": "{plantCount} نباتات · {overdueCount} متأخرة",
   "@gardenWellnessRoomPulseSummary": {
@@ -953,6 +1150,14 @@
   "@gardenSortNewest": {
     "description": "Sort option by newest"
   },
+  "gardenSortHealth": "درجة الصحة",
+  "@gardenSortHealth": {
+    "description": "Sort option by plant health score (lowest first)"
+  },
+  "gardenSortRoom": "الغرفة",
+  "@gardenSortRoom": {
+    "description": "Sort option by room"
+  },
   "gardenFilterAll": "الكل",
   "@gardenFilterAll": {
     "description": "Filter option for all plants"
@@ -974,5 +1179,735 @@
     "description": "Hint text for garden search"
   },
   "gardenToggleCardMode": "تبديل وضع البطاقة",
-  "gardenToggleViewMode": "تبديل وضع العرض"
+  "gardenToggleViewMode": "تبديل وضع العرض",
+  "streakMilestoneTitle": "إنجاز {days} يوم!",
+  "@streakMilestoneTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakMilestoneBody7": "أسبوع كامل من العناية بالنباتات. حديقتك تشكرك.",
+  "streakMilestoneBody30": "٣٠ يوماً متواصلاً. أنت تبني عادة حقيقية.",
+  "streakMilestoneBody90": "٩٠ يوماً! نباتاتك لم تكن أسعد من هذا.",
+  "streakMilestoneBody365": "عام كامل من العناية. أنت أسطورة النباتات.",
+  "streakMilestoneDismiss": "استمر!",
+  "timeCapsuleTitle": "قبل {days} يوم من اليوم",
+  "@timeCapsuleTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "timeCapsuleBody": "التقطت هذه الصورة لـ{plant} قبل {days} يوم. انظر كم تقدمتما معاً.",
+  "@timeCapsuleBody": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "rescueResetTitle": "مرحباً بعودتك",
+  "rescueResetBody": "كان لديك سلسلة من {streak} يوم. مرت {days} أيام — لا شعور بالذنب، فقط بداية جديدة عندما تكون مستعداً.",
+  "@rescueResetBody": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "rescueResetWaterNow": "اسقِ نبتة الآن",
+  "rescueResetFreshStart": "ابدأ من جديد",
+  "streakSavedSnackbar": "تم حفظ السلسلة! تمت رعاية {plant} · إيقاع {days} يوم سليم",
+  "@streakSavedSnackbar": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "allDoneQuietRunway": "لا مهام لمدة {days} أيام",
+  "@allDoneQuietRunway": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "allDoneTomorrowPreview": "غداً · {count} مهام لـ {plants}",
+  "@allDoneTomorrowPreview": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "plants": {
+        "type": "String"
+      }
+    }
+  },
+  "plantPulseTitle": "حان وقت المتابعة",
+  "plantPulseBody": "لم يُلتقط صورة لـ {plant} منذ {days} أيام. شاهد كم نما.",
+  "@plantPulseBody": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantPulseCta": "التقط صورة",
+  "plantJourneyTitle": "رحلتكما معاً",
+  "plantJourneyNextMilestone": "التالي: {milestone}",
+  "@plantJourneyNextMilestone": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "plantJourneyMilestoneFirstWater": "أول سقي",
+  "plantJourneyMilestoneFirstPhoto": "أول صورة",
+  "plantJourneyMilestone7Days": "٧ أيام معاً",
+  "plantJourneyMilestoneFirstFertilize": "أول تسميد",
+  "plantJourneyMilestone10Waters": "١٠ مرات سقي",
+  "plantJourneyMilestone30Days": "٣٠ يوماً معاً",
+  "plantJourneyMilestone25Waters": "٢٥ مرة سقي",
+  "plantJourneyMilestone100Days": "١٠٠ يوم معاً",
+  "plantJourneyMilestone365Days": "سنة معاً",
+  "gardenerTypeTitle": "نوع البستاني",
+  "gardenerTypeDevoted": "المخلص",
+  "gardenerTypeDevotedDesc": "أكثر من ٣٠ يوماً من العناية المتواصلة. نباتاتك تعشقك.",
+  "gardenerTypeConsistent": "المنتظم",
+  "gardenerTypeConsistentDesc": "أكثر من ٨٠٪ من المهام في وقتها. موثوق كالساعة.",
+  "gardenerTypeExplorer": "المستكشف",
+  "gardenerTypeExplorerDesc": "أكثر من ٥ أنواع في مجموعتك. مستكشف نباتات حقيقي.",
+  "gardenerTypePhotographer": "المصوّر",
+  "gardenerTypePhotographerDesc": "أكثر من ١٠ صور توثّق النمو. كل ورقة تحكي قصة.",
+  "gardenerTypeNurturer": "الراعي",
+  "gardenerTypeNurturerDesc": "أكثر من ٥٠ إجراء عناية. حديقتك تزدهر باهتمامك.",
+  "gardenerTypeBudding": "بستاني ناشئ",
+  "gardenerTypeBuddingDesc": "كل خبير كان مبتدئاً يوماً ما. استمر في النمو!",
+  "whispererTierSeedling": "بذرة",
+  "whispererTierSprout": "برعم",
+  "whispererTierGardener": "بستاني",
+  "whispererTierBotanist": "عالم نبات",
+  "whispererTierWhisperer": "همّاس النباتات",
+  "whispererNextLevel": "{xp} نقطة للمستوى التالي",
+  "@whispererNextLevel": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "careCombo": "كومبو {count}x!",
+  "@careCombo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "careComboStreak": "كومبو {count}x! أنت لا تُوقف!",
+  "@careComboStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lastCareWater": "سُقي",
+  "lastCareFertilize": "تسميد",
+  "lastCarePhoto": "صورة",
+  "lastCareDaysAgo": "قبل {days} يوم",
+  "@lastCareDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lastCareToday": "اليوم",
+  "lastCareNever": "—",
+  "careConfidenceOnSchedule": "في الموعد تماماً (معدل {days} أيام)",
+  "@careConfidenceOnSchedule": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "careConfidenceEarly": "مبكر قليلاً — التربة قد تكون رطبة",
+  "careConfidenceLate": "متأخر قليلاً، لكن لا بأس",
+  "gardenMoodThriving": "مزدهرة",
+  "gardenMoodHappy": "سعيدة",
+  "gardenMoodNeedsLove": "تحتاج حباً",
+  "gardenMoodThirsty": "عطشانة",
+  "plantDetailLogsSparklineTitle": "نشاط ١٤ يوم",
+  "plantDetailLogsSparklineCount": "{count} إجراءات",
+  "@plantDetailLogsSparklineCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonToday": "اليوم",
+  "calendarHeatmapTitle": "نشاط ١٢ أسبوع",
+  "profileStatsTotalCare": "إجمالي العناية",
+  "profileStatsWatered": "سُقي",
+  "profileStatsFertilized": "تسميد",
+  "profileStatsActions": "{count}",
+  "@profileStatsActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileCareScore": "نقاط العناية",
+  "profileCareScoreLabel": "{percent}%",
+  "@profileCareScoreLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "profileCareScoreSubtitle": "معدل الالتزام خلال 30 يومًا",
+  "weeklyRecapTitle": "ملخص أسبوعك",
+  "weeklyRecapActiveDays": "أيام نشطة",
+  "weeklyRecapSummary": "{actions} إجراء عناية خلال {days} أيام نشطة هذا الأسبوع",
+  "@weeklyRecapSummary": {
+    "placeholders": {
+      "actions": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "weeklyRecapDismiss": "عمل رائع!",
+  "weeklyRecapBestDay": "أفضل يوم: {day}",
+  "@weeklyRecapBestDay": {
+    "placeholders": {
+      "day": { "type": "String" }
+    }
+  },
+  "weeklyRecapStreak": "السلسلة: {days} أيام",
+  "@weeklyRecapStreak": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "gardenAllTasksDoneTitle": "انتهيت لهذا اليوم!",
+  "gardenAllTasksDoneBody": "كل نباتاتك سعيدة. استمتع ببقية يومك.",
+  "gardenAllDoneBody2": "أصدقاؤك الخضر يزدهرون بفضلك.",
+  "gardenAllDoneBody3": "الاستمرارية هي السر، وأنت تملكها.",
+  "gardenAllDoneBody4": "يوم آخر من الرعاية الممتازة للنباتات.",
+  "gardenAllDoneBody5": "نباتاتك تزداد قوة يوماً بعد يوم.",
+  "profileLongestStreak": "الأفضل: {days} يوم",
+  "@profileLongestStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "profileGardenAge": "الحديقة: {days} يوم",
+  "@profileGardenAge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenNewPersonalBest": "رقم قياسي جديد! سلسلة {days} يوم",
+  "@gardenNewPersonalBest": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenTomorrowPreview": "غداً: {count} {count, plural, =1{نبتة تحتاج} other{نباتات تحتاج}} رعاية",
+  "@gardenTomorrowPreview": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenMotivation7DayStreak": "أنت في تقدم رائع — استمر.",
+  "gardenMotivation30DayStreak": "شهر من الاستمرارية. نباتاتك تزدهر.",
+  "gardenMotivationWelcomeBack": "أهلاً بعودتك — نباتاتك افتقدتك.",
+  "gardenMotivationBigGarden": "مجموعة مزدهرة. أنت تبلي حسناً.",
+  "gardenMotivationMorning": "يوم رائع للاطمئنان على أصدقائك الخضر.",
+  "gardenMotivationEvening": "استرخِ مع نظرة سريعة على الحديقة.",
+  "gardenMotivationAllDoneToday": "كل شيء منجز — نباتاتك سعيدة.",
+  "gardenMotivationNewPlant": "نبتتك الجديدة تتأقلم بشكل جيد.",
+  "gardenStreakFreezeUsed": "تم استخدام تجميد السلسلة! سلسلتك لـ {days} يوم في أمان.",
+  "@gardenStreakFreezeUsed": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenStreakFreezeEarned": "حصلت على تجميد سلسلة! ({count} متاح)",
+  "@gardenStreakFreezeEarned": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileStreakFreezes": "{count, plural, =1{تجميد واحد} other{{count} تجميدات}} متاحة",
+  "@profileStreakFreezes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenPlantMilestone": "{count} نبتة في حديقتك! مجموعتك تنمو بشكل جميل.",
+  "@gardenPlantMilestone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "streakShareTitle": "شارك إنجازك",
+  "streakShareCardDays": "سلسلة {days} يوم",
+  "@streakShareCardDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakShareCardSubtitle": "أعتني بنباتاتي كل يوم",
+  "streakShareButton": "مشاركة",
+  "plantLastWateredToday": "تم الري اليوم",
+  "plantLastWateredYesterday": "تم الري بالأمس",
+  "plantLastWateredDaysAgo": "تم الري منذ {days} أيام",
+  "@plantLastWateredDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantNeverWatered": "لم يتم الري بعد",
+  "plantAgeLabel": "{days} يوم في حديقتك",
+  "@plantAgeLabel": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantAnniversaryLabel": "الذكرى السنوية {years}!",
+  "@plantAnniversaryLabel": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "careLogAddNote": "إضافة ملاحظة",
+  "careLogEditNote": "تعديل الملاحظة",
+  "careLogNoteHint": "كيف بدت؟ هل هناك شيء يجب تذكره؟",
+  "careLogNoteSaved": "تم حفظ الملاحظة",
+  "careStatsTitle": "أنماط الرعاية",
+  "careStatsTotalWaterings": "مرات الري",
+  "careStatsAvgInterval": "متوسط الفاصل",
+  "careStatsAvgDays": "{days} يوم",
+  "@careStatsAvgDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "careStatsTotalActions": "إجمالي الإجراءات",
+  "careStatsConsistency": "الانتظام",
+  "careStatsTip": "حاول ضبط تذكير متكرر لبناء روتين ثابت.",
+  "gardenForecastTitle": "الأيام السبعة القادمة",
+  "gardenForecastTaskCount": "{count} مهام",
+  "@gardenForecastTaskCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenForecastBusyDay": "الأكثر انشغالاً: {day}",
+  "@gardenForecastBusyDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenForecastEmpty": "لا مهام مجدولة هذا الأسبوع",
+  "gardenForecastToday": "اليوم",
+  "gardenForecastTomorrow": "غداً",
+  "wellnessHeatmapTitle": "نشاط الرعاية",
+  "wellnessHeatmapSubtitle": "آخر ١٢ أسبوعاً",
+  "wellnessHeatmapActions": "{count} إجراءات",
+  "@wellnessHeatmapActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendUp": "+{diff} مقارنة بالأسبوع الماضي",
+  "@gardenWeeklyTrendUp": {
+    "placeholders": {
+      "diff": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendDown": "{diff} مقارنة بالأسبوع الماضي",
+  "@gardenWeeklyTrendDown": {
+    "placeholders": {
+      "diff": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendSame": "مثل الأسبوع الماضي",
+  "gardenWeeklyMostActiveDay": "الأكثر نشاطاً: {day}",
+  "@gardenWeeklyMostActiveDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "achievementsTitle": "الإنجازات",
+  "achievementsUnlocked": "{count}/{total} مفتوحة",
+  "@achievementsUnlocked": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "achievementFirstPlant": "البرعم الأول",
+  "achievementFirstPlantDesc": "أضف أول نبتة لك",
+  "achievementFivePlants": "مجموعة متنامية",
+  "achievementFivePlantsDesc": "اجمع 5 نباتات في حديقتك",
+  "achievementTenPlants": "عاشق النباتات",
+  "achievementTenPlantsDesc": "اجمع 10 نباتات في حديقتك",
+  "achievementTwentyPlants": "سيد الأدغال",
+  "achievementTwentyPlantsDesc": "ازرع 20 نبتة",
+  "achievementFirstCare": "القطرة الأولى",
+  "achievementFirstCareDesc": "أكمل أول مهمة عناية",
+  "achievementFiftyCares": "مقدم رعاية مخلص",
+  "achievementFiftyCaresDesc": "أكمل 50 مهمة عناية",
+  "achievementHundredCares": "الإبهام الأخضر",
+  "achievementHundredCaresDesc": "أكمل 100 مهمة عناية",
+  "achievementFiveHundredCares": "همّاس النباتات",
+  "achievementFiveHundredCaresDesc": "أكمل 500 مهمة عناية",
+  "achievementWeekStreak": "محارب الأسبوع",
+  "achievementWeekStreakDesc": "حافظ على سلسلة 7 أيام",
+  "achievementMonthStreak": "إخلاص شهري",
+  "achievementMonthStreakDesc": "حافظ على سلسلة 30 يوماً",
+  "achievementYearStreak": "بستاني أسطوري",
+  "achievementYearStreakDesc": "حافظ على سلسلة 365 يوماً",
+  "achievementFirstPhoto": "لقطة",
+  "achievementFirstPhotoDesc": "التقط أول صورة لنبتتك",
+  "achievementTenPhotos": "يوميات مصورة",
+  "achievementTenPhotosDesc": "التقط 10 صور للنباتات",
+  "achievementFiftyPhotos": "راوٍ بصري",
+  "achievementFiftyPhotosDesc": "التقط 50 صورة للنباتات",
+  "achievementThreeRooms": "مستكشف الغرف",
+  "achievementThreeRoomsDesc": "ضع نباتات في 3 غرف مختلفة",
+  "achievementFiveRooms": "حديقة المنزل بأكمله",
+  "achievementFiveRoomsDesc": "ضع نباتات في 5 غرف مختلفة",
+  "achievementDiverseCarer": "بستاني متعدد المواهب",
+  "achievementDiverseCarerDesc": "نفّذ 5 أنواع مختلفة من العناية",
+  "tasksCompleteAll": "إكمال الكل",
+  "tasksCompleteAllDone": "تم إكمال {count} مهام",
+  "@tasksCompleteAllDone": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "tasksStreakAtRiskTitle": "السلسلة في خطر!",
+  "tasksStreakAtRiskBody": "سلسلتك المستمرة منذ {days} يوم ستنتهي الليلة. أكمل مهمة للحفاظ عليها.",
+  "@tasksStreakAtRiskBody": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "plantMilestoneOneMonth": "شهر معاً!",
+  "plantMilestoneThreeMonths": "3 أشهر معاً!",
+  "plantMilestoneSixMonths": "نصف عام من العناية!",
+  "plantMilestoneOneYear": "الذكرى السنوية الأولى!",
+  "plantMilestoneTwoYears": "عامان من النمو!",
+  "plantMilestoneSubtitle": "لقد اعتنيت بـ {name} لمدة {days} يوماً",
+  "@plantMilestoneSubtitle": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "days": { "type": "int" }
+    }
+  },
+
+  "seasonalTipTitle": "نصيحة موسمية",
+  "seasonalTipSpringRepotTitle": "وقت إعادة التأصيص",
+  "seasonalTipSpringRepotBody": "الربيع هو أفضل وقت لإعادة التأصيص. النباتات تدخل مرحلة النمو وتتعافى بسرعة.",
+  "seasonalTipSpringFertilizeTitle": "استأنف التسميد",
+  "seasonalTipSpringFertilizeBody": "ابدأ التسميد مجدداً مع طول النهار. ابدأ بنصف التركيز وزد تدريجياً.",
+  "seasonalTipSpringGrowthTitle": "راقب النمو الجديد",
+  "seasonalTipSpringGrowthBody": "نباتاتك تستيقظ. ابحث عن أوراق وبراعم وجذور جديدة — وقت مثالي لصور التقدم.",
+  "seasonalTipSpringWaterTitle": "زد الري",
+  "seasonalTipSpringWaterBody": "مع تسارع النمو، ستشرب نباتاتك أكثر. افحص رطوبة التربة أكثر من الشتاء.",
+  "seasonalTipSpringPestsTitle": "دورية الآفات",
+  "seasonalTipSpringPestsBody": "الطقس الدافئ يجلب الآفات. افحص النمو الجديد وأسفل الأوراق بانتظام.",
+
+  "seasonalTipSummerWaterTitle": "حافظ على الترطيب",
+  "seasonalTipSummerWaterBody": "الحرارة والأيام الطويلة تعني تبخراً أسرع. اسقِ بعمق وافحص التربة أكثر.",
+  "seasonalTipSummerMistTitle": "عزز الرطوبة",
+  "seasonalTipSummerMistBody": "التكييف يجفف الهواء. رش النباتات الاستوائية أو اجمعها معاً لخلق مناخ رطب.",
+  "seasonalTipSummerSunburnTitle": "احذر حروق الشمس",
+  "seasonalTipSummerSunburnBody": "شمس الظهيرة القوية قد تحرق الأوراق. أبعد النباتات الحساسة عن النوافذ الجنوبية.",
+  "seasonalTipSummerOutdoorTitle": "وقت الهواء الطلق",
+  "seasonalTipSummerOutdoorBody": "كثير من النباتات المنزلية تحب إجازة صيفية في الخارج. أقلمها تدريجياً.",
+  "seasonalTipSummerPropagateTitle": "موسم الإكثار",
+  "seasonalTipSummerPropagateBody": "دفء الصيف والأيام الطويلة تجعل هذا الوقت مثالياً للعقل. معظمها يتجذر بسرعة.",
+
+  "seasonalTipAutumnWaterTitle": "قلل الري",
+  "seasonalTipAutumnWaterBody": "يتباطأ النمو مع قصر النهار. اترك التربة تجف أكثر بين الريات.",
+  "seasonalTipAutumnFertilizeTitle": "أوقف التسميد",
+  "seasonalTipAutumnFertilizeBody": "معظم النباتات ستدخل السكون قريباً. أوقف التسميد لتجنب تراكم الأملاح.",
+  "seasonalTipAutumnLightTitle": "اتبع الضوء",
+  "seasonalTipAutumnLightBody": "مع انخفاض زاوية الشمس، قرّب النباتات من النوافذ. أدرها بانتظام لإضاءة متساوية.",
+  "seasonalTipAutumnInsideTitle": "أدخل النباتات",
+  "seasonalTipAutumnInsideBody": "إذا أخرجت نباتاتك صيفاً، أعدها قبل أن تنخفض حرارة الليل عن 10 درجات.",
+  "seasonalTipAutumnCleanTitle": "يوم تنظيف الأوراق",
+  "seasonalTipAutumnCleanBody": "الغبار يحجب الضوء. امسح الأوراق بقطعة قماش مبللة لتحسين التمثيل الضوئي شتاءً.",
+
+  "seasonalTipWinterWaterTitle": "اسقِ باعتدال",
+  "seasonalTipWinterWaterBody": "معظم النباتات تحتاج ماءً أقل بكثير شتاءً. الإفراط في الري هو القاتل الأول أثناء السكون.",
+  "seasonalTipWinterHumidityTitle": "كافح جفاف الهواء",
+  "seasonalTipWinterHumidityBody": "أنظمة التدفئة تجفف الهواء بشكل كبير. استخدم مرطباً أو صواني حصى للنباتات الاستوائية.",
+  "seasonalTipWinterDraftsTitle": "تجنب التيارات الباردة",
+  "seasonalTipWinterDraftsBody": "أبعد النباتات عن النوافذ المسربة والأبواب الخارجية. التغيرات المفاجئة في الحرارة تضرها.",
+  "seasonalTipWinterLightTitle": "وفّر أقصى إضاءة",
+  "seasonalTipWinterLightBody": "الأيام القصيرة تعني تمثيلاً ضوئياً أقل. انقل النباتات لأكثر الأماكن إضاءة.",
+  "seasonalTipWinterRestTitle": "دعها ترتاح",
+  "seasonalTipWinterRestBody": "السكون طبيعي وصحي. لا تقلق من بطء النمو — نباتاتك تحفظ طاقتها للربيع.",
+  "healthBreakdownTitle": "نقاط الصحة",
+  "healthBreakdownSubtitle": "هذه العوامل تؤثر على تقييم صحة هذا النبات",
+  "healthBreakdownOverall": "الإجمالي: {score}/100",
+  "@healthBreakdownOverall": {
+    "placeholders": {
+      "score": {"type": "int"}
+    }
+  },
+  "healthFactorOverdue": "الالتزام بالمواعيد",
+  "healthFactorActivity": "نشاط العناية الأخير",
+  "healthFactorVariety": "تنوع العناية",
+  "healthFactorConsistency": "انتظام الجدول",
+  "coachingTitle": "إرشاد العناية",
+  "coachingLateWatererTitle": "عدّل تذكيراتك",
+  "coachingLateWatererBody": "غالباً ما تسقي متأخراً يوماً أو يومين. حاول تغيير وقت التذكير لوقت تكون فيه متفرغاً.",
+  "coachingStreakAtRiskTitle": "السلسلة في خطر!",
+  "coachingStreakAtRiskBody": "لم تعتنِ بأي نبات اليوم. ري سريع يحافظ على سلسلتك.",
+  "coachingNeglectedPlantTitle": "نبات يحتاجك",
+  "coachingNeglectedPlantBody": "أحد نباتاتك لم يتلقَ عناية منذ أكثر من 3 أسابيع. تفقده.",
+  "coachingImprovingTitle": "أنت تتحسن!",
+  "coachingImprovingBody": "كنت أكثر نشاطاً هذا الأسبوع مقارنة بالأسبوع الماضي. حافظ على الزخم.",
+  "coachingConsistentTitle": "بطل الانتظام",
+  "coachingConsistentBody": "9 من آخر 10 مهام أُنجزت في الوقت المحدد. نباتاتك تزدهر.",
+  "coachingDiversifyTitle": "جرّب شيئاً جديداً",
+  "coachingDiversifyBody": "كنت تسقي فقط مؤخراً. فكر في الرش أو التدوير أو التسميد لنباتات أكثر صحة.",
+  "plantDetailNextWateringTomorrow": "غداً",
+  "plantDetailNextWateringToday": "مستحق اليوم",
+  "gardenStreakFreezeAvailable": "{count, plural, =1{تجميد سلسلة واحد متاح} other{{count} تجميدات سلسلة متاحة}}",
+  "@gardenStreakFreezeAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonDismiss": "إغلاق",
+  "plantDetailHealthScore": "درجة الصحة",
+  "plantDetailExpandText": "توسيع النص",
+  "plantDetailCollapseText": "طي النص",
+  "gardenWateredToday": "تم الري اليوم",
+  "gardenWateredYesterday": "تم الري أمس",
+  "gardenWateredDaysAgo": "تم الري منذ {days} أيام",
+  "@gardenWateredDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenNeverWatered": "لم يتم الري بعد",
+  "calendarHeatmapTooltip": "{count, plural, =1{إجراء رعاية واحد} other{{count} إجراءات رعاية}}",
+  "@calendarHeatmapTooltip": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "calendarHeatmapTooltipDetail": "{waters, plural, =0{} =1{ري واحد} other{{waters} ريات}}{fertSep}{fertilizes, plural, =0{} =1{تسميد واحد} other{{fertilizes} تسميدات}}{otherSep}{others, plural, =0{} =1{آخر} other{{others} أخرى}}",
+  "@calendarHeatmapTooltipDetail": {
+    "placeholders": {
+      "waters": { "type": "int" },
+      "fertSep": { "type": "String" },
+      "fertilizes": { "type": "int" },
+      "otherSep": { "type": "String" },
+      "others": { "type": "int" }
+    }
+  },
+  "calendarDayCareCount": "{count, plural, =1{سجل رعاية واحد} other{{count} سجلات رعاية}}",
+  "@calendarDayCareCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "exportDataConfirmTitle": "تصدير بيانات الرعاية؟",
+  "exportDataConfirmBody": "سيتم إنشاء ملف JSON يحتوي على جميع نباتاتك وسجلات الرعاية والمهام.",
+  "exportDataConfirmAction": "تصدير",
+  "gardenWaterAllOverdue": "ري جميع المتأخرة",
+  "gardenWaterAllOverdueCount": "{count, plural, one {ري نبتة متأخرة واحدة} other {ري {count} نباتات متأخرة}}",
+  "@gardenWaterAllOverdueCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "gardenWateredAllOverdue": "{count, plural, one {تم ري نبتة متأخرة واحدة} other {تم ري {count} نباتات متأخرة}}",
+  "@gardenWateredAllOverdue": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "plantOverviewNoCareStats": "اسقِ نبتتك عدة مرات لرؤية أنماط الرعاية هنا.",
+  "plantOverviewNoAiInsights": "فعّل اقتراحات الذكاء الاصطناعي في الإعدادات للحصول على نصائح مخصصة.",
+  "plantOverviewNoTasksYet": "لا توجد مهام قادمة بعد. ستظهر جداول الرعاية عند إنشائها.",
+  "gardenHealthTrendUp": "تحسّن",
+  "gardenHealthTrendDown": "تراجع",
+  "gardenHealthTrendStable": "مستقر",
+  "plantCareStreakLabel": "سلسلة رعاية {days} يوم",
+  "@plantCareStreakLabel": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "tasksEmptySoonMotivation": "استمتع بالهدوء. نباتاتك تزدهر.",
+  "manageCareTitle": "إدارة تذكيرات الرعاية",
+  "manageCareSubtitle": "{active} مفعّل · {disabled} معطّل",
+  "@manageCareSubtitle": {
+    "placeholders": {
+      "active": { "type": "int" },
+      "disabled": { "type": "int" }
+    }
+  },
+  "manageCareSpeciesDefault": "الافتراضي للنوع",
+  "manageCareEnabledByYou": "مفعّل بواسطتك",
+  "manageCareDisabledByYou": "معطّل بواسطتك",
+  "manageCareButton": "إدارة",
+  "manageCareDisableConfirm": "إيقاف تذكيرات {type}؟",
+  "@manageCareDisableConfirm": {
+    "placeholders": {
+      "type": { "type": "String" }
+    }
+  },
+  "manageCareEnabled": "مفعّل",
+  "manageCareDisabled": "معطّل",
+  "growthEchoCompareTitle": "الآن وقبل",
+  "growthEchoCompareBody": "لدى {plant} نمو {days} يوم يمكن مقارنته.",
+  "@growthEchoCompareBody": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "days": { "type": "int" }
+    }
+  },
+  "growthEchoCaptureTitle": "تسجيل النمو",
+  "growthEchoCaptureBody": "مرّ {days} يوم منذ آخر صورة لـ{plant}.",
+  "@growthEchoCaptureBody": {
+    "placeholders": {
+      "days": { "type": "int" },
+      "plant": { "type": "String" }
+    }
+  },
+  "commonProblemsTitle": "مشاكل شائعة",
+  "commonProblemsSubtitle": "انتبه لهذه المشاكل مع {plant}",
+  "@commonProblemsSubtitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "perfectWeekTitle": "اسبوع مثالي {count}!",
+  "@perfectWeekTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "perfectWeekBody": "اكملت جميع المهام في الوقت المحدد لمدة 7 ايام متتالية. نباتاتك تزدهر بفضلك.",
+  "perfectWeekBodyRepeat": "{count} اسابيع مثالية متتالية. انت في مستوى آخر.",
+  "@perfectWeekBodyRepeat": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "perfectWeekDismiss": "الى الاسبوع القادم!",
+  "growthTimelineTitle": "خط زمني للنمو",
+  "growthTimelineEmpty": "التقط صورا لتتبع النمو بمرور الوقت",
+  "notificationStreakProtectionTitle": "سلسلتك المتواصلة لمدة {days} يوم في خطر!",
+  "@notificationStreakProtectionTitle": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "notificationStreakProtectionBody": "اكمل مهمة رعاية قبل منتصف الليل للحفاظ عليها.",
+  "careRhythmTitle": "إيقاع العناية",
+  "careRhythmAvgInterval": "متوسط {days} يوم بين الريّ",
+  "@careRhythmAvgInterval": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "careRhythmConsistent": "منتظم جداً",
+  "careRhythmImproving": "يتحسن باستمرار",
+  "careRhythmNoData": "اسقِ بضع مرات أخرى لرؤية إيقاعك",
+  "plantMoodThriving": "مزدهر! 🌱",
+  "plantMoodHappy": "بحالة ممتازة",
+  "plantMoodOkay": "بخير",
+  "plantMoodThirsty": "عطشان…",
+  "plantMoodNeglected": "أفتقدك…",
+  "plantMoodNewHere": "وصلت للتو!",
+  "plantAnniversaryTitle": "ذكرى سعيدة يا {plant}!",
+  "@plantAnniversaryTitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "plantAnniversaryBody30": "شهر معاً. أنت تبني شيئاً جميلاً.",
+  "plantAnniversaryBody90": "ثلاثة أشهر من العناية. تفانيك واضح.",
+  "plantAnniversaryBody180": "نصف عام! هذا النبات يزدهر بفضلك.",
+  "plantAnniversaryBody365": "عام كامل معاً. يا لها من رحلة مذهلة.",
+  "plantAnniversaryDismiss": "إلى المزيد!"
 }

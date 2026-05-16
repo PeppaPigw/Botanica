@@ -8,11 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import '../../app/providers.dart';
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/haptics/botanica_haptics.dart';
 import '../../core/widgets/botanica_bottom_action_bar.dart';
 import '../../core/widgets/botanica_gaps.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/glass_card.dart';
+import '../../core/widgets/botanica_shimmer.dart';
 import '../../core/widgets/screen_title.dart';
 import '../../domain/models/enums.dart';
 import '../../domain/models/local_time.dart';
@@ -87,36 +89,47 @@ class _EditPlantScreenState extends ConsumerState<EditPlantScreen> {
       reminderTimeOverride: _reminderTimeOverride,
     );
 
-    final plantsRepo = ref.read(plantsRepositoryProvider);
-    await CareActions.reschedulePendingTasksIfNeeded(
-      oldPlant: plant,
-      newPlant: updatedPlant,
-      tasksRepository: ref.read(tasksRepositoryProvider),
-      speciesRepository: ref.read(speciesRepositoryProvider),
-      plantIdeaRepository: ref.read(plantIdeaRepositoryProvider),
-      seasonalEngine: ref.read(seasonalCareEngineProvider),
-      environment: ref.read(environmentSnapshotProvider),
-      settings: ref.read(settingsControllerProvider),
-    );
+    try {
+      final plantsRepo = ref.read(plantsRepositoryProvider);
+      await CareActions.reschedulePendingTasksIfNeeded(
+        oldPlant: plant,
+        newPlant: updatedPlant,
+        tasksRepository: ref.read(tasksRepositoryProvider),
+        speciesRepository: ref.read(speciesRepositoryProvider),
+        plantIdeaRepository: ref.read(plantIdeaRepositoryProvider),
+        seasonalEngine: ref.read(seasonalCareEngineProvider),
+        environment: ref.read(environmentSnapshotProvider),
+        settings: ref.read(settingsControllerProvider),
+      );
 
-    await plantsRepo.upsert(updatedPlant);
+      await plantsRepo.upsert(updatedPlant);
 
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            Icon(Icons.check_circle_rounded,
-                size: BotanicaTokens.iconSizeSm,
-                color: Theme.of(context).colorScheme.inversePrimary),
-            BotanicaGaps.hSm,
-            Text('${l10n.commonDone}: ${updatedPlant.nickname}'),
-          ],
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Row(
+            children: [
+              Icon(Icons.check_circle_rounded,
+                  size: BotanicaTokens.iconSizeSm,
+                  color: Theme.of(context).colorScheme.inversePrimary),
+              BotanicaGaps.hSm,
+              Text('${l10n.commonDone}: ${updatedPlant.nickname}'),
+            ],
+          ),
         ),
-      ),
-    );
-    context.pop();
+      );
+      context.pop();
+    } catch (_) {
+      if (!mounted) return;
+      BotanicaHaptics.subtleError();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(l10n.commonErrorTryAgain),
+        ),
+      );
+    }
   }
 
   Future<void> _archive() async {
@@ -203,7 +216,21 @@ class _EditPlantScreenState extends ConsumerState<EditPlantScreen> {
         ),
       ),
       body: plantsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Padding(
+          padding: BotanicaTokens.pagePadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BotanicaShimmer(width: 180, height: 24),
+              SizedBox(height: BotanicaTokens.spacingRelaxed),
+              BotanicaShimmer.card(height: 120),
+              SizedBox(height: BotanicaTokens.spacingBase),
+              BotanicaShimmer.card(height: 60),
+              SizedBox(height: BotanicaTokens.spacingBase),
+              BotanicaShimmer.card(height: 60),
+            ],
+          ),
+        ),
         error: (_, __) => BotanicaStateCard(
           icon: Icons.error_rounded,
           title: l10n.stateLoadFailedTitle,

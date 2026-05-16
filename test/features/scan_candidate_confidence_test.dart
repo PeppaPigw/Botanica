@@ -6,6 +6,8 @@ import 'package:botanica/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 const _species = Species(
   id: 'monstera_deliciosa',
@@ -50,6 +52,8 @@ Future<void> _pumpCandidate(
 
 void main() {
   setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
@@ -63,10 +67,11 @@ void main() {
     expect(find.text(l10n.scanConfidenceStrongLabel), findsOneWidget);
     expect(find.text(l10n.scanConfidenceStrongBody), findsOneWidget);
 
-    final progress = tester.widget<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
+    // Verify the confidence bar width via FractionallySizedBox.
+    final bar = tester.widget<FractionallySizedBox>(
+      find.byType(FractionallySizedBox),
     );
-    expect(progress.value, 0.90);
+    expect(bar.widthFactor, 0.90);
   });
 
   testWidgets('0.80 shows moderate-confidence UI',

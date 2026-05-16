@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../providers.dart';
 import '../theme/botanica_tokens.dart';
+import '../../core/haptics/botanica_haptics.dart';
 import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_fab_location.dart';
 import '../../core/widgets/botanica_nav_pill.dart';
 import '../../core/widgets/botanica_scaffold.dart';
+import '../../domain/models/enums.dart';
 import '../../features/calendar/calendar_screen.dart';
 import '../../features/daily/daily_screen.dart';
 import '../../features/discover/discover_screen.dart';
@@ -13,7 +18,17 @@ import '../../features/garden/garden_screen.dart';
 import '../../features/profile/profile_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
 
-class AppShell extends StatelessWidget {
+/// Intent to add a new plant (Cmd+N on iPad/desktop).
+class AddPlantIntent extends Intent {
+  const AddPlantIntent();
+}
+
+/// Intent to water the first due plant (Cmd+W on iPad/desktop).
+class WaterFirstDueIntent extends Intent {
+  const WaterFirstDueIntent();
+}
+
+class AppShell extends ConsumerWidget {
   const AppShell({
     super.key,
     required this.child,
@@ -37,7 +52,7 @@ class AppShell extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final currentIndex = _indexFromLocation();
     final reduceMotion = botanicaReduceMotion(context);
@@ -64,7 +79,50 @@ class AppShell extends StatelessWidget {
 
     final keyboardOpen = viewInsets.bottom > 0;
 
-    return BotanicaScaffold(
+    final tasks = ref.watch(tasksStreamProvider).valueOrNull ?? const [];
+    final now = DateTime.now();
+    final todayEnd = DateTime(now.year, now.month, now.day + 1);
+    final overdueCount = tasks
+        .where((t) => !t.isDismissed && t.dueAt.isBefore(todayEnd))
+        .length;
+
+    return Shortcuts(
+      shortcuts: const <ShortcutActivator, Intent>{
+        SingleActivator(LogicalKeyboardKey.keyN, meta: true):
+            AddPlantIntent(),
+        SingleActivator(LogicalKeyboardKey.keyW, meta: true):
+            WaterFirstDueIntent(),
+      },
+      child: Actions(
+        actions: <Type, Action<Intent>>{
+          AddPlantIntent: CallbackAction<AddPlantIntent>(
+            onInvoke: (_) {
+              BotanicaHaptics.primaryPress();
+              context.push('${GardenScreen.location}/add');
+              return null;
+            },
+          ),
+          WaterFirstDueIntent: CallbackAction<WaterFirstDueIntent>(
+            onInvoke: (_) {
+              final tasksList = tasks;
+              if (tasksList.isEmpty) return null;
+              // Navigate to garden — the first overdue water task's plant.
+              final waterTask = tasksList
+                  .where((t) =>
+                      !t.isDismissed && t.type == TaskType.water)
+                  .toList(growable: false);
+              if (waterTask.isEmpty) return null;
+              waterTask.sort((a, b) => a.dueAt.compareTo(b.dueAt));
+              final plantId = waterTask.first.plantId;
+              BotanicaHaptics.primaryPress();
+              context.push('/garden/plant/$plantId?tab=care');
+              return null;
+            },
+          ),
+        },
+        child: Focus(
+          autofocus: true,
+          child: BotanicaScaffold(
       backgroundIntensity: bgIntensity,
       body: AnimatedSwitcher(
         duration: reduceMotion ? Duration.zero : BotanicaTokens.motionMedium,
@@ -119,13 +177,19 @@ class AppShell extends StatelessWidget {
                     ),
                     child: BotanicaNavPill(
                       currentIndex: currentIndex,
-                      onSelect: (index) => context.go(_tabs[index]),
+                      onSelect: (index) {
+                        if (index != currentIndex) {
+                          BotanicaHaptics.selectionTick();
+                        }
+                        context.go(_tabs[index]);
+                      },
                       destinations: [
                         BotanicaNavDestination(
                           icon: Icons.spa_outlined,
                           selectedIcon: Icons.spa_rounded,
                           label: l10n.navGarden,
                           tooltip: l10n.navGarden,
+                          badgeCount: overdueCount,
                         ),
                         BotanicaNavDestination(
                           icon: Icons.calendar_month_outlined,
@@ -156,6 +220,9 @@ class AppShell extends StatelessWidget {
                   ),
                 ),
               ),
+      ),
+          ),
+        ),
       ),
     );
   }

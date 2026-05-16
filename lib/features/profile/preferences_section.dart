@@ -1,5 +1,6 @@
 import 'package:botanica/core/widgets/botanica_gaps.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
@@ -55,6 +56,7 @@ class PreferencesSection extends ConsumerWidget {
           child: SwitchListTile(
             value: settings.enableDynamicColor,
             onChanged: (value) async {
+              HapticFeedback.selectionClick();
               final current = ref.read(settingsControllerProvider);
               await ref
                   .read(settingsControllerProvider.notifier)
@@ -81,7 +83,22 @@ class PreferencesSection extends ConsumerWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
             ),
-            activeColor: scheme.primary,
+            activeThumbColor: scheme.primary,
+          ),
+        ),
+        const SizedBox(height: BotanicaTokens.spacingBase),
+        BotanicaGlassCard(
+          padding: EdgeInsets.zero,
+          child: ProfileTile(
+            icon: Icons.beach_access_rounded,
+            title: l10n.vacationModeTitle,
+            subtitle: settings.isOnVacation
+                ? l10n.vacationModeActiveUntil(
+                    MaterialLocalizations.of(context)
+                        .formatShortDate(settings.vacationEndDate!),
+                  )
+                : l10n.vacationModeOff,
+            onTap: () => _showVacationSheet(context, ref),
           ),
         ),
       ],
@@ -246,4 +263,70 @@ Future<void> _showUnitsSheet(BuildContext context, WidgetRef ref) async {
       );
     },
   );
+}
+
+Future<void> _showVacationSheet(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final settings = ref.read(settingsControllerProvider);
+
+  if (settings.isOnVacation) {
+    final cancel = await showBotanicaModalSheet<bool>(
+      context: context,
+      useSafeArea: false,
+      builder: (context) {
+        return BotanicaSheetBody(
+          top: 10,
+          bottom: 18,
+          includeKeyboardInset: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n.vacationModeTitle,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              BotanicaGaps.vSm,
+              Text(
+                l10n.vacationModeActiveUntil(
+                  MaterialLocalizations.of(context)
+                      .formatShortDate(settings.vacationEndDate!),
+                ),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              BotanicaGaps.vMd,
+              FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(l10n.vacationModeEnd),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    if (cancel == true) {
+      await ref
+          .read(settingsControllerProvider.notifier)
+          .setVacationEnd(null);
+    }
+    return;
+  }
+
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final picked = await showDatePicker(
+    context: context,
+    initialDate: today.add(const Duration(days: 7)),
+    firstDate: today.add(const Duration(days: 1)),
+    lastDate: today.add(const Duration(days: 90)),
+    helpText: l10n.vacationModePickDate,
+  );
+
+  if (picked != null) {
+    await ref
+        .read(settingsControllerProvider.notifier)
+        .setVacationEnd(picked);
+  }
 }

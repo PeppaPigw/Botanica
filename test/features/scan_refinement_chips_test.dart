@@ -14,6 +14,8 @@ import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 class _TestSettingsController extends SettingsController {
   _TestSettingsController(this._settings);
@@ -115,6 +117,23 @@ Future<void> _waitForFinder(WidgetTester tester, Finder finder,
 }
 
 void main() {
+  setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
+  });
+
+  setUp(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.physicalSize = const Size(800, 2400);
+    binding.platformDispatcher.views.first.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.resetPhysicalSize();
+    binding.platformDispatcher.views.first.resetDevicePixelRatio();
+  });
+
   Future<XFile?> fakeCapture(BuildContext context,
       {required String title}) async {
     final dir = Directory.systemTemp.createTempSync('botanica_scan_refine_');
@@ -129,10 +148,10 @@ void main() {
   Future<void> pumpFlow(
     WidgetTester tester,
     List<Species> species,
-    Future<List<PlantIdCandidate>> Function(XFile, List<Species>) resolver,
-    {bool waitForResults = true},
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(800, 1400));
+    ScanCandidateResolver resolver, {
+    bool waitForResults = true,
+  }) async {
+    await tester.binding.setSurfaceSize(const Size(800, 2400));
     addTearDown(() async {
       await tester.binding.setSurfaceSize(null);
     });
@@ -146,6 +165,9 @@ void main() {
               .overrideWithValue(_FakeSpeciesRepository(species)),
           settingsControllerProvider.overrideWith(
               () => _TestSettingsController(UserSettings.defaults())),
+          lastScanResultProvider.overrideWith(
+            (ref) => Stream.value(null),
+          ),
         ],
         child: MaterialApp(
           theme: ThemeData(useMaterial3: true),

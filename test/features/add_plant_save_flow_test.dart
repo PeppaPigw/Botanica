@@ -18,6 +18,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:hive/hive.dart';
 
 class _TestSettingsController extends SettingsController {
@@ -254,7 +256,8 @@ Future<void> _pumpApp(
 
   await tester.pump();
   router.push('/add');
-  await tester.pumpAndSettle();
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
 }
 
 Future<void> _settleAsync(WidgetTester tester) async {
@@ -268,6 +271,8 @@ Future<void> _settleAsync(WidgetTester tester) async {
 
 void main() {
   setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
@@ -280,12 +285,14 @@ void main() {
       await _pumpApp(tester, fixture: fixture);
 
       await tester.tap(find.text('From library'));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
 
       await tester.tap(
         find.byKey(const ValueKey('add-plant-species-monstera_deliciosa')),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
 
       final nicknameField = find.byWidgetPredicate(
         (widget) =>

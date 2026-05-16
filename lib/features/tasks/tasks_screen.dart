@@ -1,19 +1,29 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../core/widgets/botanica_animated_section.dart';
+import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../core/widgets/botanica_chip.dart';
 import '../../core/widgets/botanica_gaps.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
+import '../../core/widgets/botanica_all_done_sheet.dart';
+import '../../core/widgets/botanica_streak_milestone_sheet.dart';
+import '../../core/widgets/botanica_perfect_week_sheet.dart';
 import '../../core/widgets/glass_card.dart';
+import '../../core/haptics/botanica_haptics.dart';
 
 import '../../domain/models/plant.dart';
 import '../../domain/models/task_instance.dart';
 import '../../domain/services/care_plan_engine.dart';
+import '../../services/care/care_actions.dart';
 
 import '../../gen/l10n/app_localizations.dart';
 import '../calendar/calendar_screen.dart';
@@ -39,6 +49,12 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
     final now = DateTime.now();
     _focusedMonth = DateTime(now.year, now.month, 1);
     _selectedDay = DateTime(now.year, now.month, now.day);
+  }
+
+  Future<void> _refreshTasks() async {
+    ref.invalidate(tasksStreamProvider);
+    // Allow the stream to re-emit before completing the refresh indicator.
+    await Future<void>.delayed(const Duration(milliseconds: 300));
   }
 
   void _shiftMonth(int delta) {
@@ -73,6 +89,13 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
     final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
     final plants = plantsAsync.valueOrNull ?? const <Plant>[];
 
+    final now = DateTime.now();
+    final todayEnd = DateTime(now.year, now.month, now.day + 1);
+    final todayTasks = tasks.where((t) => t.dueAt.isBefore(todayEnd)).toList();
+    final todayPending = todayTasks.where((t) => !t.isDismissed && !t.isDone).length;
+    final todayDone = todayTasks.where((t) => t.isDone).length;
+    final todayTotal = todayPending + todayDone;
+
     final seasonalTips =
         CarePlanEngine.seasonalTipKeys(settings.hemisphere, DateTime.now());
     final showSeasonalTips = seasonalTips.isNotEmpty &&
@@ -82,6 +105,14 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
       appBar: AppBar(
         title: Text(l10n.tasksTitle),
         actions: [
+          if (todayTotal > 0)
+            Padding(
+              padding: const EdgeInsets.only(right: BotanicaTokens.spacingXs),
+              child: _DailyProgressRing(
+                done: todayDone,
+                total: todayTotal,
+              ),
+            ),
           IconButton(
             onPressed: () =>
                 setState(() => _showCalendarView = !_showCalendarView),
@@ -186,18 +217,21 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                                       plants: plants,
                                       emptyLabel: l10n.gardenTasksDueToday(0),
                                       isToday: true,
+                                      onRefresh: _refreshTasks,
                                     ),
                                     _TasksList(
                                       tasks: _filterSoon(tasks),
                                       plants: plants,
                                       emptyLabel: l10n.tasksEmptySoon,
                                       isToday: false,
+                                      onRefresh: _refreshTasks,
                                     ),
                                     _TasksList(
                                       tasks: _filterWatch(tasks),
                                       plants: plants,
                                       emptyLabel: l10n.tasksEmptyWatch,
                                       isToday: false,
+                                      onRefresh: _refreshTasks,
                                     ),
                                   ],
                                 ),
@@ -253,7 +287,14 @@ class _TasksTabChips extends StatelessWidget {
                 horizontal: BotanicaTokens.spacingSm,
                 vertical: BotanicaTokens.spacingXs,
               ),
-              onTap: () => controller.animateTo(tabIndex),
+              onTap: () {
+                controller.animateTo(tabIndex);
+                SemanticsService.sendAnnouncement(
+                  View.of(context),
+                  label,
+                  TextDirection.ltr,
+                );
+              },
             ),
           );
         }
@@ -440,57 +481,266 @@ String _seasonalTipLabel(AppLocalizations l10n, String tipKey) {
   };
 }
 
-class _TasksList extends ConsumerWidget {
+class _TasksList extends ConsumerStatefulWidget {
   const _TasksList({
     required this.tasks,
     required this.plants,
     required this.emptyLabel,
     required this.isToday,
+    this.onRefresh,
   });
 
   final List<TaskInstance> tasks;
   final List<Plant> plants;
   final String emptyLabel;
   final bool isToday;
+  final Future<void> Function()? onRefresh;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+  ConsumerState<_TasksList> createState() => _TasksListState();
+}
 
-    if (tasks.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: BotanicaTokens.pagePadding,
-          child: BotanicaStateCard(
-            icon: Icons.inbox_rounded,
-            title: l10n.tasksTitle,
-            body: emptyLabel,
-            illustrationAsset:
-                'assets/illustrations/empty_tasks_watering_can.jpg',
-            tier: GlassTier.subtle,
+class _TasksListState extends ConsumerState<_TasksList> {
+  bool _completing = false;
+
+  Future<void> _completeAll() async {
+    if (_completing) return;
+    setState(() => _completing = true);
+    BotanicaHaptics.primaryPress();
+
+    try {
+      final l10n = AppLocalizations.of(context);
+      final messenger = ScaffoldMessenger.of(context);
+      final inversePrimary = Theme.of(context).colorScheme.inversePrimary;
+      final now = DateTime.now();
+      final tasksRepo = ref.read(tasksRepositoryProvider);
+      final logsRepo = ref.read(logsRepositoryProvider);
+      final speciesRepo = ref.read(speciesRepositoryProvider);
+      final ideaRepo = ref.read(plantIdeaRepositoryProvider);
+      final engine = ref.read(seasonalCareEngineProvider);
+      final env = ref.read(environmentSnapshotProvider);
+      final settingsController = ref.read(settingsControllerProvider.notifier);
+
+      int completed = 0;
+      for (final task in widget.tasks) {
+        if (task.isDismissed) continue;
+        final plant = widget.plants.where((p) => p.id == task.plantId).firstOrNull;
+        if (plant == null) continue;
+
+        final settings = ref.read(settingsControllerProvider);
+        await CareActions.completeTask(
+          task: task,
+          plant: plant,
+          now: now,
+          tasksRepository: tasksRepo,
+          logsRepository: logsRepo,
+          speciesRepository: speciesRepo,
+          plantIdeaRepository: ideaRepo,
+          seasonalEngine: engine,
+          environment: env,
+          settings: settings,
+          updateSettings: settingsController.update,
+        );
+        completed++;
+      }
+
+      if (!messenger.mounted) return;
+      BotanicaHaptics.success();
+      messenger.showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Row(
+            children: [
+              Icon(Icons.done_all_rounded, size: BotanicaTokens.iconSizeSm, color: inversePrimary),
+              BotanicaGaps.hSm,
+              Text(l10n.tasksCompleteAllDone(completed)),
+            ],
           ),
         ),
       );
+
+      if (!mounted) return;
+      final updatedSettings = ref.read(settingsControllerProvider);
+      final milestone = CareActions.newMilestoneReached(
+        updatedSettings.careStreakDays,
+        updatedSettings.lastMilestoneCelebrated,
+      );
+
+      if (milestone != null) {
+        await ref.read(settingsControllerProvider.notifier).update(
+              updatedSettings.copyWith(lastMilestoneCelebrated: milestone),
+            );
+        if (!mounted) return;
+        await BotanicaStreakMilestoneSheet.show(context, milestone: milestone);
+      } else if (mounted) {
+        await BotanicaAllDoneSheet.show(context);
+      }
+
+      if (!mounted) return;
+      final settingsAfterSheet = ref.read(settingsControllerProvider);
+      final perfectUpdated =
+          CareActions.recordPerfectDay(settingsAfterSheet, now);
+      if (perfectUpdated != settingsAfterSheet) {
+        await ref
+            .read(settingsControllerProvider.notifier)
+            .update(perfectUpdated);
+        if (!mounted) return;
+        if (CareActions.isPerfectWeek(perfectUpdated)) {
+          final weeks = perfectUpdated.consecutivePerfectDays ~/ 7;
+          await BotanicaPerfectWeekSheet.show(context, weeks: weeks);
+        }
+      }
+    } catch (_) {
+      if (!mounted) return;
+      BotanicaHaptics.subtleError();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(AppLocalizations.of(context).commonErrorTryAgain),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _completing = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final settings = ref.watch(settingsControllerProvider);
+
+    // Determine if streak is at risk (active streak, no care today, evening).
+    final now = DateTime.now();
+    final streakAtRisk = widget.isToday &&
+        settings.careStreakDays >= 3 &&
+        settings.lastCareDate != null &&
+        now
+                .difference(DateTime(
+                  settings.lastCareDate!.year,
+                  settings.lastCareDate!.month,
+                  settings.lastCareDate!.day,
+                ))
+                .inDays ==
+            1 &&
+        now.hour >= 16;
+
+    if (widget.tasks.isEmpty) {
+      final emptyContent = Center(
+        child: Padding(
+          padding: BotanicaTokens.pagePadding,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (streakAtRisk) ...[
+                _StreakAtRiskBanner(
+                  streakDays: settings.careStreakDays,
+                ),
+                BotanicaGaps.vBase,
+              ],
+              BotanicaStateCard(
+                icon: Icons.inbox_rounded,
+                title: l10n.tasksTitle,
+                body: widget.emptyLabel,
+                illustrationAsset:
+                    'assets/illustrations/empty_tasks_watering_can.jpg',
+                tier: GlassTier.subtle,
+                primaryAction: BotanicaButton(
+                  variant: BotanicaButtonVariant.outlined,
+                  icon: Icons.calendar_month_rounded,
+                  label: l10n.calendarTitle,
+                  onPressed: () =>
+                      GoRouter.of(context).go(CalendarScreen.location),
+                ),
+              ),
+              if (!widget.isToday) ...[
+                BotanicaGaps.vSm,
+                Text(
+                  l10n.tasksEmptySoonMotivation,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55),
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ],
+          ),
+        ),
+      );
+
+      if (widget.onRefresh != null) {
+        return RefreshIndicator(
+          onRefresh: widget.onRefresh!,
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: emptyContent,
+              ),
+            ),
+          ),
+        );
+      }
+      return emptyContent;
     }
 
-    return ListView.separated(
+    final pendingCount = widget.tasks.where((t) => !t.isDismissed).length;
+    final headerCount = (widget.isToday && pendingCount > 1 ? 1 : 0) +
+        (streakAtRisk ? 1 : 0);
+
+    final listView = ListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: BotanicaTokens.pagePaddingWithBottomNav(context),
-      itemCount: tasks.length,
+      itemCount: widget.tasks.length + headerCount,
       separatorBuilder: (_, __) =>
           const SizedBox(height: BotanicaTokens.spacingSm),
       itemBuilder: (context, index) {
-        final task = tasks[index];
-        final plant = plants.where((p) => p.id == task.plantId).firstOrNull;
+        // Streak-at-risk banner is always first when present.
+        if (streakAtRisk && index == 0) {
+          return _StreakAtRiskBanner(
+            streakDays: settings.careStreakDays,
+          ).animateSection(index: 0);
+        }
+
+        final adjustedIndex = streakAtRisk ? index - 1 : index;
+
+        if (widget.isToday && pendingCount > 1 && adjustedIndex == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingXxs),
+            child: BotanicaButton(
+              expand: true,
+              variant: BotanicaButtonVariant.outlined,
+              icon: Icons.done_all_rounded,
+              label: l10n.tasksCompleteAll,
+              onPressed: _completing ? null : _completeAll,
+            ),
+          );
+        }
+
+        final taskIndex = widget.isToday && pendingCount > 1
+            ? adjustedIndex - 1
+            : adjustedIndex;
+        final task = widget.tasks[taskIndex];
+        final plant = widget.plants.where((p) => p.id == task.plantId).firstOrNull;
         if (plant == null) return const SizedBox.shrink();
 
         return TaskTile(
           task: task,
           plant: plant,
-          index: index,
-          isToday: isToday,
-        ).animateSection(index: index);
+          index: taskIndex,
+          isToday: widget.isToday,
+        ).animateSection(index: taskIndex);
       },
     );
+
+    if (widget.onRefresh != null) {
+      return RefreshIndicator(
+        onRefresh: widget.onRefresh!,
+        child: listView,
+      );
+    }
+    return listView;
   }
 }
 
@@ -547,6 +797,127 @@ String _taskDateKey(DateTime date) {
   return '$y-$m-$d';
 }
 
+class _StreakAtRiskBanner extends StatelessWidget {
+  const _StreakAtRiskBanner({required this.streakDays});
+
+  final int streakDays;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      label: l10n.tasksStreakAtRiskTitle,
+      child: BotanicaGlassCard(
+        tier: GlassTier.primary,
+        padding: BotanicaTokens.cardPaddingDense,
+        child: Row(
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    scheme.error.withValues(alpha: 0.25),
+                    scheme.errorContainer.withValues(alpha: 0.40),
+                  ],
+                ),
+                border: Border.all(
+                  color: scheme.error.withValues(alpha: 0.45),
+                ),
+              ),
+              child: Icon(
+                Icons.local_fire_department_rounded,
+                color: scheme.error,
+                size: BotanicaTokens.iconSizeMd,
+              ),
+            ),
+            BotanicaGaps.hSm,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.tasksStreakAtRiskTitle,
+                    style: textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: scheme.error,
+                      letterSpacing: -0.2,
+                    ),
+                  ),
+                  const SizedBox(height: BotanicaTokens.spacingMicro),
+                  Text(
+                    l10n.tasksStreakAtRiskBody(streakDays),
+                    style: textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurface.withValues(alpha: 0.72),
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 extension<T> on Iterable<T> {
   T? get firstOrNull => isEmpty ? null : first;
+}
+
+class _DailyProgressRing extends StatelessWidget {
+  const _DailyProgressRing({required this.done, required this.total});
+
+  final int done;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final progress = total > 0 ? done / total : 0.0;
+    final allDone = done == total;
+
+    return Semantics(
+      label: '$done of $total tasks done today',
+      child: SizedBox(
+        width: 36,
+        height: 36,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: progress),
+              duration: BotanicaTokens.motionMedium,
+              curve: Curves.easeOut,
+              builder: (context, value, _) => CircularProgressIndicator(
+                value: value,
+                strokeWidth: 3,
+                backgroundColor: scheme.outlineVariant.withValues(alpha: 0.3),
+                valueColor: AlwaysStoppedAnimation(
+                  allDone ? scheme.primary : scheme.tertiary,
+                ),
+              ),
+            ),
+            Text(
+              '$done',
+              style: textTheme.labelSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                fontSize: 10,
+                color: allDone ? scheme.primary : scheme.onSurface,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

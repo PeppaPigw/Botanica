@@ -361,25 +361,30 @@ class _ScanFlowScreenState extends ConsumerState<ScanFlowScreen> {
               ),
             ] else ...[
               if (imagePath != null)
-                BotanicaGlassCard(
-                  padding: EdgeInsets.zero,
-                  child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(BotanicaTokens.radiusXL),
-                    child: AspectRatio(
-                      aspectRatio: 4 / 3,
-                      child: Image.file(
-                        File(imagePath),
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.high,
-                        errorBuilder: (_, __, ___) => DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: scheme.surface.withValues(alpha: 0.55),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.photo_rounded,
-                              color: scheme.onSurface.withValues(alpha: 0.55),
+                Semantics(
+                  image: true,
+                  label: l10n.scanCaptureTitle,
+                  excludeSemantics: true,
+                  child: BotanicaGlassCard(
+                    padding: EdgeInsets.zero,
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(BotanicaTokens.radiusXL),
+                      child: AspectRatio(
+                        aspectRatio: 4 / 3,
+                        child: Image.file(
+                          File(imagePath),
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.high,
+                          errorBuilder: (_, __, ___) => DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: scheme.surface.withValues(alpha: 0.55),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.photo_rounded,
+                                color: scheme.onSurface.withValues(alpha: 0.55),
+                              ),
                             ),
                           ),
                         ),
@@ -828,20 +833,61 @@ class ScanCandidateCard extends StatelessWidget {
             color: selected
                 ? scheme.primary.withValues(alpha: 0.55)
                 : scheme.outlineVariant.withValues(alpha: 0.40),
+            width: selected ? 1.5 : 1.0,
           ),
+          boxShadow: selected
+              ? [
+                  BoxShadow(
+                    color: scheme.primary.withValues(alpha: 0.12),
+                    blurRadius: 16,
+                    spreadRadius: 1,
+                  ),
+                ]
+              : const [],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Expanded(
-                  child: Text(
-                    name,
-                    style: textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.2,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(BotanicaTokens.radiusL),
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: Image.asset(
+                      (species.imagePath ?? '').trim().isEmpty
+                          ? 'assets/images/placeholder_plant.jpg'
+                          : species.imagePath!,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.medium,
+                      errorBuilder: (_, __, ___) => Image.asset(
+                        'assets/images/placeholder_plant.jpg',
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                  ),
+                ),
+                BotanicaGaps.hSm,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      BotanicaGaps.vMicro,
+                      Text(
+                        species.scientificName,
+                        style: textTheme.bodySmall?.copyWith(
+                          color: scheme.onSurface.withValues(alpha: 0.65),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 BotanicaGaps.hSm,
@@ -854,20 +900,30 @@ class ScanCandidateCard extends StatelessWidget {
                 ),
               ],
             ),
-            BotanicaGaps.vMicro,
-            Text(
-              species.scientificName,
-              style: textTheme.bodySmall?.copyWith(
-                color: scheme.onSurface.withValues(alpha: 0.65),
-              ),
-            ),
             BotanicaGaps.vXs,
-            Text(
-              bandLabel,
-              style: textTheme.labelLarge?.copyWith(
-                color: bandColor.withValues(alpha: 0.90),
-                fontWeight: FontWeight.w800,
-              ),
+            Row(
+              children: [
+                Icon(
+                  switch (band) {
+                    ScanConfidenceBand.high =>
+                      Icons.verified_rounded,
+                    ScanConfidenceBand.medium =>
+                      Icons.help_outline_rounded,
+                    ScanConfidenceBand.low =>
+                      Icons.question_mark_rounded,
+                  },
+                  size: 16,
+                  color: bandColor.withValues(alpha: 0.85),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  bandLabel,
+                  style: textTheme.labelLarge?.copyWith(
+                    color: bandColor.withValues(alpha: 0.90),
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
             ),
             BotanicaGaps.vMicro,
             Text(
@@ -880,11 +936,29 @@ class ScanCandidateCard extends StatelessWidget {
             BotanicaGaps.vSm,
             ClipRRect(
               borderRadius: BorderRadius.circular(999),
-              child: LinearProgressIndicator(
-                value: confidence.clamp(0.05, 1.0),
-                minHeight: 8,
-                backgroundColor: scheme.outlineVariant.withValues(alpha: 0.35),
-                valueColor: AlwaysStoppedAnimation(bandColor),
+              child: SizedBox(
+                height: 8,
+                child: Stack(
+                  children: [
+                    Container(
+                      color: scheme.outlineVariant.withValues(alpha: 0.25),
+                    ),
+                    FractionallySizedBox(
+                      widthFactor: confidence.clamp(0.05, 1.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              bandColor.withValues(alpha: 0.7),
+                              bandColor,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             BotanicaGaps.vSm,
@@ -907,6 +981,12 @@ class ScanCandidateCard extends StatelessWidget {
                 _TagChip(
                   icon: Icons.auto_awesome_rounded,
                   label: difficultyLabel(l10n, species.difficulty),
+                ),
+                _TagChip(
+                  icon: Icons.water_drop_rounded,
+                  label: l10n.speciesDetailWaterEvery(
+                    species.careDefaults.waterBaseDays,
+                  ),
                 ),
               ],
             ),

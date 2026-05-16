@@ -36,6 +36,23 @@ class CareLog {
         linkedPhotoId: json['linkedPhotoId'] as String?,
       );
 
+  static const Object _unset = Object();
+
+  CareLog copyWith({
+    Object? note = _unset,
+    Object? linkedPhotoId = _unset,
+  }) =>
+      CareLog(
+        id: id,
+        plantId: plantId,
+        type: type,
+        timestamp: timestamp,
+        note: note == _unset ? this.note : note as String?,
+        linkedPhotoId: linkedPhotoId == _unset
+            ? this.linkedPhotoId
+            : linkedPhotoId as String?,
+      );
+
   @override
   bool operator ==(Object other) =>
       other is CareLog &&

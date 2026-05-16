@@ -33,6 +33,18 @@ void main() {
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
+  setUp(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.physicalSize = const Size(800, 2400);
+    binding.platformDispatcher.views.first.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.resetPhysicalSize();
+    binding.platformDispatcher.views.first.resetDevicePixelRatio();
+  });
+
   testWidgets('renders garden wellness overview and priorities',
       (WidgetTester tester) async {
     final plants = <Plant>[
@@ -77,7 +89,8 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     final l10n = AppLocalizations.of(
       tester.element(find.byType(GardenWellnessScreen)),
@@ -90,7 +103,7 @@ void main() {
     await tester.scrollUntilVisible(
         find.text(l10n.gardenWellnessRoomPulseTitle), 120);
     expect(find.text(l10n.gardenWellnessRoomPulseTitle), findsOneWidget);
-    expect(find.text('Bathroom'), findsOneWidget);
+    expect(find.text('Bathroom'), findsWidgets);
     await tester.scrollUntilVisible(
         find.text(l10n.gardenWellnessPrioritiesTitle), 120);
     expect(find.text(l10n.gardenWellnessPrioritiesTitle), findsOneWidget);
@@ -158,7 +171,8 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     final l10n = AppLocalizations.of(
       tester.element(find.byType(GardenWellnessScreen)),
@@ -207,7 +221,8 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     final l10n = AppLocalizations.of(
       tester.element(find.byType(GardenWellnessScreen)),

@@ -246,6 +246,12 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get commonTryAgain;
 
+  /// No description provided for @commonErrorTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get commonErrorTryAgain;
+
   /// No description provided for @commonComingSoon.
   ///
   /// In en, this message translates to:
@@ -522,6 +528,18 @@ abstract class AppLocalizations {
   /// **'Care history'**
   String get calendarSectionHistory;
 
+  /// No description provided for @calendarWeekAheadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Week ahead'**
+  String get calendarWeekAheadTitle;
+
+  /// Total tasks in the upcoming week
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks'**
+  String calendarWeekAheadCount(int count);
+
   /// No description provided for @calendarNoEvents.
   ///
   /// In en, this message translates to:
@@ -720,6 +738,24 @@ abstract class AppLocalizations {
   /// **'Today'**
   String get gardenTodayCardTitle;
 
+  /// No description provided for @gardenGreetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get gardenGreetingMorning;
+
+  /// No description provided for @gardenGreetingAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get gardenGreetingAfternoon;
+
+  /// No description provided for @gardenGreetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get gardenGreetingEvening;
+
   /// No description provided for @gardenLoadError.
   ///
   /// In en, this message translates to:
@@ -732,11 +768,65 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{No tasks due} =1{1 task due} other{{count} tasks due}}'**
   String gardenTasksDueToday(int count);
 
+  /// No description provided for @gardenAllCaughtUp.
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up! Your plants are happy.'**
+  String get gardenAllCaughtUp;
+
+  /// No description provided for @allDoneQuietRunway.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due for {days} days'**
+  String allDoneQuietRunway(int days);
+
+  /// No description provided for @allDoneTomorrowPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow · {count} tasks for {plants}'**
+  String allDoneTomorrowPreview(int count, String plants);
+
+  /// No description provided for @gardenVacationBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Vacation mode — reminders paused'**
+  String get gardenVacationBanner;
+
+  /// No description provided for @gardenWeeklySummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get gardenWeeklySummaryTitle;
+
+  /// No description provided for @gardenWeeklyCareActions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} care actions'**
+  String gardenWeeklyCareActions(int count);
+
+  /// No description provided for @gardenWeeklyWatered.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} watered'**
+  String gardenWeeklyWatered(int count);
+
+  /// No description provided for @gardenWeeklyFertilized.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} fertilized'**
+  String gardenWeeklyFertilized(int count);
+
   /// Chip label showing the user's current care streak
   ///
   /// In en, this message translates to:
   /// **'{days}-day streak'**
   String gardenCareStreakChip(int days);
+
+  /// Warning shown when the user's care streak will break if they don't act today
+  ///
+  /// In en, this message translates to:
+  /// **'Your {days}-day streak ends today — care for a plant to keep it!'**
+  String gardenStreakAtRisk(int days);
 
   /// No description provided for @gardenWeatherChip.
   ///
@@ -799,6 +889,84 @@ abstract class AppLocalizations {
   /// **'Weather'**
   String get weatherUnknown;
 
+  /// No description provided for @weatherTipRainy.
+  ///
+  /// In en, this message translates to:
+  /// **'Rainy outside — skip watering outdoor plants today'**
+  String get weatherTipRainy;
+
+  /// No description provided for @weatherTipStormy.
+  ///
+  /// In en, this message translates to:
+  /// **'Stormy weather — bring sensitive plants indoors'**
+  String get weatherTipStormy;
+
+  /// No description provided for @weatherTipExtremeHeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Extreme heat — check soil moisture and mist leaves'**
+  String get weatherTipExtremeHeat;
+
+  /// No description provided for @weatherTipHotSunny.
+  ///
+  /// In en, this message translates to:
+  /// **'Hot and sunny — water early morning or evening'**
+  String get weatherTipHotSunny;
+
+  /// No description provided for @weatherTipNearFreezing.
+  ///
+  /// In en, this message translates to:
+  /// **'Near freezing — protect frost-sensitive plants'**
+  String get weatherTipNearFreezing;
+
+  /// No description provided for @weatherTipSnow.
+  ///
+  /// In en, this message translates to:
+  /// **'Snow expected — move outdoor pots to shelter'**
+  String get weatherTipSnow;
+
+  /// No description provided for @weatherTipCool.
+  ///
+  /// In en, this message translates to:
+  /// **'Cool day — reduce watering frequency'**
+  String get weatherTipCool;
+
+  /// No description provided for @weatherTipLowHumidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry air today — mist tropical plants or group them together'**
+  String get weatherTipLowHumidity;
+
+  /// No description provided for @weatherTipHighHumidity.
+  ///
+  /// In en, this message translates to:
+  /// **'High humidity — hold off on misting and watch for fungal issues'**
+  String get weatherTipHighHumidity;
+
+  /// No description provided for @seasonalTipSpring.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring is here — time to fertilize and repot if needed'**
+  String get seasonalTipSpring;
+
+  /// No description provided for @seasonalTipSummer.
+  ///
+  /// In en, this message translates to:
+  /// **'Summer heat means more frequent watering for most plants'**
+  String get seasonalTipSummer;
+
+  /// No description provided for @seasonalTipAutumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Autumn — reduce fertilizing as plants slow their growth'**
+  String get seasonalTipAutumn;
+
+  /// No description provided for @seasonalTipWinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Winter — most plants need less water and no fertilizer'**
+  String get seasonalTipWinter;
+
   /// No description provided for @gardenQuickWatered.
   ///
   /// In en, this message translates to:
@@ -810,6 +978,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Snooze'**
   String get gardenQuickSnooze;
+
+  /// No description provided for @gardenQuickLogCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Log care'**
+  String get gardenQuickLogCare;
+
+  /// No description provided for @gardenQuickLogDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged!'**
+  String get gardenQuickLogDone;
+
+  /// No description provided for @gardenViewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View details'**
+  String get gardenViewDetails;
 
   /// No description provided for @tasksSnoozeOneHour.
   ///
@@ -882,6 +1068,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 plant} other{{count} plants}}'**
   String gardenRoomPlantCount(int count);
+
+  /// No description provided for @profilePlantsInGarden.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 plant in your garden} other{{count} plants in your garden}}'**
+  String profilePlantsInGarden(int count);
+
+  /// No description provided for @discoverInYourGarden.
+  ///
+  /// In en, this message translates to:
+  /// **'in your garden'**
+  String get discoverInYourGarden;
 
   /// No description provided for @gardenRoomsWaterAll.
   ///
@@ -1158,6 +1356,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next watering in {days} days'**
   String plantDetailNextWateringInDays(int days);
+
+  /// Shows how many days the user has been caring for this plant
+  ///
+  /// In en, this message translates to:
+  /// **'Caring for {days} days'**
+  String plantDetailCaringForDays(int days);
 
   /// No description provided for @plantDetailEnvironmentImpactTitle.
   ///
@@ -1831,6 +2035,12 @@ abstract class AppLocalizations {
   /// **'Discover'**
   String get discoverTitle;
 
+  /// No description provided for @discoverPlantOfTheDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant of the Day'**
+  String get discoverPlantOfTheDay;
+
   /// No description provided for @discoverSearchHint.
   ///
   /// In en, this message translates to:
@@ -1938,6 +2148,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A quick weekly routine to catch issues early.'**
   String get discoverGuidePestBody;
+
+  /// No description provided for @discoverAddFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get discoverAddFavorite;
+
+  /// No description provided for @discoverRemoveFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get discoverRemoveFavorite;
 
   /// No description provided for @speciesDetailHistory.
   ///
@@ -2545,6 +2767,30 @@ abstract class AppLocalizations {
   /// **'{count} entries'**
   String storageEntryCount(int count);
 
+  /// No description provided for @exportDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export care data'**
+  String get exportDataTitle;
+
+  /// No description provided for @exportDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your plants and care history as a JSON file.'**
+  String get exportDataSubtitle;
+
+  /// No description provided for @exportDataSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Care data exported successfully.'**
+  String get exportDataSuccess;
+
+  /// No description provided for @exportDataEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No data to export yet — add some plants first.'**
+  String get exportDataEmpty;
+
   /// No description provided for @profileLanguage.
   ///
   /// In en, this message translates to:
@@ -2754,6 +3000,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use device palette when available.'**
   String get profileDynamicColorBody;
+
+  /// No description provided for @vacationModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vacation mode'**
+  String get vacationModeTitle;
+
+  /// No description provided for @vacationModeOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause all reminders while you\'re away.'**
+  String get vacationModeOff;
+
+  /// Vacation mode active subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Active until {date}'**
+  String vacationModeActiveUntil(String date);
+
+  /// No description provided for @vacationModeEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End vacation mode'**
+  String get vacationModeEnd;
+
+  /// No description provided for @vacationModePickDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Return date'**
+  String get vacationModePickDate;
 
   /// No description provided for @profileAiInsightsTitle.
   ///
@@ -3355,6 +3631,78 @@ abstract class AppLocalizations {
   /// **'{plant} is ready for pruning'**
   String notificationPruneTitle(String plant);
 
+  /// No description provided for @notificationWaterTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} is getting thirsty!'**
+  String notificationWaterTitle2(String plant);
+
+  /// No description provided for @notificationWaterTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {plant} needs a drink'**
+  String notificationWaterTitle3(String plant);
+
+  /// No description provided for @notificationFertilizeTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} could use some nutrients'**
+  String notificationFertilizeTitle2(String plant);
+
+  /// No description provided for @notificationFertilizeTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Feeding time for {plant}'**
+  String notificationFertilizeTitle3(String plant);
+
+  /// No description provided for @notificationMistTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'A little humidity boost for {plant}?'**
+  String notificationMistTitle2(String plant);
+
+  /// No description provided for @notificationMistTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to mist {plant}'**
+  String notificationMistTitle3(String plant);
+
+  /// No description provided for @notificationRotateTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotate {plant} for even growth'**
+  String notificationRotateTitle2(String plant);
+
+  /// No description provided for @notificationRotateTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} needs a turn today'**
+  String notificationRotateTitle3(String plant);
+
+  /// No description provided for @notificationPruneTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to tidy up {plant}'**
+  String notificationPruneTitle2(String plant);
+
+  /// No description provided for @notificationPruneTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} could use a trim'**
+  String notificationPruneTitle3(String plant);
+
+  /// No description provided for @notificationDailySummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning, plant parent!'**
+  String get notificationDailySummaryTitle;
+
+  /// No description provided for @notificationDailySummaryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} care tasks today. Your plants are counting on you!'**
+  String notificationDailySummaryBody(int count);
+
   /// No description provided for @reasonHumidityLow.
   ///
   /// In en, this message translates to:
@@ -3504,6 +3852,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'At risk'**
   String get gardenWellnessStatAtRisk;
+
+  /// No description provided for @gardenWellnessStatPunctuality.
+  ///
+  /// In en, this message translates to:
+  /// **'On time'**
+  String get gardenWellnessStatPunctuality;
+
+  /// No description provided for @gardenWellnessStatWeeklyActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly active'**
+  String get gardenWellnessStatWeeklyActive;
+
+  /// No description provided for @gardenWellnessStatBestStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Best streak'**
+  String get gardenWellnessStatBestStreak;
+
+  /// No description provided for @gardenWellnessMomentumIncreasing.
+  ///
+  /// In en, this message translates to:
+  /// **'Momentum rising'**
+  String get gardenWellnessMomentumIncreasing;
+
+  /// No description provided for @gardenWellnessMomentumDecreasing.
+  ///
+  /// In en, this message translates to:
+  /// **'Momentum dipping'**
+  String get gardenWellnessMomentumDecreasing;
 
   /// No description provided for @gardenWellnessRoomPulseTitle.
   ///
@@ -3787,6 +4165,18 @@ abstract class AppLocalizations {
   /// **'Newest added'**
   String get gardenSortNewest;
 
+  /// Sort option by plant health score (lowest first)
+  ///
+  /// In en, this message translates to:
+  /// **'Health score'**
+  String get gardenSortHealth;
+
+  /// Sort option by room
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get gardenSortRoom;
+
   /// Sort option by species
   ///
   /// In en, this message translates to:
@@ -3846,6 +4236,1861 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get commonConfirm;
+
+  /// No description provided for @streakMilestoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}-Day Milestone!'**
+  String streakMilestoneTitle(int days);
+
+  /// No description provided for @streakMilestoneBody7.
+  ///
+  /// In en, this message translates to:
+  /// **'A full week of plant care. Your garden thanks you.'**
+  String get streakMilestoneBody7;
+
+  /// No description provided for @streakMilestoneBody30.
+  ///
+  /// In en, this message translates to:
+  /// **'30 days strong. You\'re building a real habit.'**
+  String get streakMilestoneBody30;
+
+  /// No description provided for @streakMilestoneBody90.
+  ///
+  /// In en, this message translates to:
+  /// **'90 days! Your plants have never been happier.'**
+  String get streakMilestoneBody90;
+
+  /// No description provided for @streakMilestoneBody365.
+  ///
+  /// In en, this message translates to:
+  /// **'A full year of care. You\'re a plant legend.'**
+  String get streakMilestoneBody365;
+
+  /// No description provided for @streakMilestoneDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep going!'**
+  String get streakMilestoneDismiss;
+
+  /// No description provided for @timeCapsuleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days ago today'**
+  String timeCapsuleTitle(int days);
+
+  /// No description provided for @timeCapsuleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You took this photo of {plant} {days} days ago. Look how far you’ve come together.'**
+  String timeCapsuleBody(String plant, int days);
+
+  /// No description provided for @rescueResetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get rescueResetTitle;
+
+  /// No description provided for @rescueResetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You had a {streak}-day streak going. It\'s been {days} days — no guilt, just a fresh start whenever you\'re ready.'**
+  String rescueResetBody(int streak, int days);
+
+  /// No description provided for @rescueResetWaterNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Water a plant now'**
+  String get rescueResetWaterNow;
+
+  /// No description provided for @rescueResetFreshStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start fresh'**
+  String get rescueResetFreshStart;
+
+  /// No description provided for @streakSavedSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak saved! {plant} cared for · {days}-day rhythm intact'**
+  String streakSavedSnackbar(String plant, int days);
+
+  /// No description provided for @plantPulseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for a check-in'**
+  String get plantPulseTitle;
+
+  /// No description provided for @plantPulseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} hasn\'t had a photo in {days} days. See how it\'s grown.'**
+  String plantPulseBody(String plant, int days);
+
+  /// No description provided for @plantPulseCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get plantPulseCta;
+
+  /// No description provided for @plantJourneyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your journey together'**
+  String get plantJourneyTitle;
+
+  /// No description provided for @plantJourneyNextMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {milestone}'**
+  String plantJourneyNextMilestone(String milestone);
+
+  /// No description provided for @plantJourneyMilestoneFirstWater.
+  ///
+  /// In en, this message translates to:
+  /// **'First watering'**
+  String get plantJourneyMilestoneFirstWater;
+
+  /// No description provided for @plantJourneyMilestoneFirstPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'First photo'**
+  String get plantJourneyMilestoneFirstPhoto;
+
+  /// No description provided for @plantJourneyMilestone7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'7 days together'**
+  String get plantJourneyMilestone7Days;
+
+  /// No description provided for @plantJourneyMilestoneFirstFertilize.
+  ///
+  /// In en, this message translates to:
+  /// **'First fertilize'**
+  String get plantJourneyMilestoneFirstFertilize;
+
+  /// No description provided for @plantJourneyMilestone10Waters.
+  ///
+  /// In en, this message translates to:
+  /// **'10 waterings'**
+  String get plantJourneyMilestone10Waters;
+
+  /// No description provided for @plantJourneyMilestone30Days.
+  ///
+  /// In en, this message translates to:
+  /// **'30 days together'**
+  String get plantJourneyMilestone30Days;
+
+  /// No description provided for @plantJourneyMilestone25Waters.
+  ///
+  /// In en, this message translates to:
+  /// **'25 waterings'**
+  String get plantJourneyMilestone25Waters;
+
+  /// No description provided for @plantJourneyMilestone100Days.
+  ///
+  /// In en, this message translates to:
+  /// **'100 days together'**
+  String get plantJourneyMilestone100Days;
+
+  /// No description provided for @plantJourneyMilestone365Days.
+  ///
+  /// In en, this message translates to:
+  /// **'1 year together'**
+  String get plantJourneyMilestone365Days;
+
+  /// No description provided for @gardenerTypeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your gardener type'**
+  String get gardenerTypeTitle;
+
+  /// No description provided for @gardenerTypeDevoted.
+  ///
+  /// In en, this message translates to:
+  /// **'The Devoted'**
+  String get gardenerTypeDevoted;
+
+  /// No description provided for @gardenerTypeDevotedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'30+ days of unbroken care. Your plants adore you.'**
+  String get gardenerTypeDevotedDesc;
+
+  /// No description provided for @gardenerTypeConsistent.
+  ///
+  /// In en, this message translates to:
+  /// **'The Consistent'**
+  String get gardenerTypeConsistent;
+
+  /// No description provided for @gardenerTypeConsistentDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Over 80% of tasks done on time. Reliable as clockwork.'**
+  String get gardenerTypeConsistentDesc;
+
+  /// No description provided for @gardenerTypeExplorer.
+  ///
+  /// In en, this message translates to:
+  /// **'The Explorer'**
+  String get gardenerTypeExplorer;
+
+  /// No description provided for @gardenerTypeExplorerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'5+ species in your collection. A true plant explorer.'**
+  String get gardenerTypeExplorerDesc;
+
+  /// No description provided for @gardenerTypePhotographer.
+  ///
+  /// In en, this message translates to:
+  /// **'The Photographer'**
+  String get gardenerTypePhotographer;
+
+  /// No description provided for @gardenerTypePhotographerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'10+ photos documenting growth. Every leaf tells a story.'**
+  String get gardenerTypePhotographerDesc;
+
+  /// No description provided for @gardenerTypeNurturer.
+  ///
+  /// In en, this message translates to:
+  /// **'The Nurturer'**
+  String get gardenerTypeNurturer;
+
+  /// No description provided for @gardenerTypeNurturerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'50+ care actions. Your garden thrives on your attention.'**
+  String get gardenerTypeNurturerDesc;
+
+  /// No description provided for @gardenerTypeBudding.
+  ///
+  /// In en, this message translates to:
+  /// **'The Budding Gardener'**
+  String get gardenerTypeBudding;
+
+  /// No description provided for @gardenerTypeBuddingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Every expert was once a beginner. Keep growing!'**
+  String get gardenerTypeBuddingDesc;
+
+  /// No description provided for @whispererTierSeedling.
+  ///
+  /// In en, this message translates to:
+  /// **'Seedling'**
+  String get whispererTierSeedling;
+
+  /// No description provided for @whispererTierSprout.
+  ///
+  /// In en, this message translates to:
+  /// **'Sprout'**
+  String get whispererTierSprout;
+
+  /// No description provided for @whispererTierGardener.
+  ///
+  /// In en, this message translates to:
+  /// **'Gardener'**
+  String get whispererTierGardener;
+
+  /// No description provided for @whispererTierBotanist.
+  ///
+  /// In en, this message translates to:
+  /// **'Botanist'**
+  String get whispererTierBotanist;
+
+  /// No description provided for @whispererTierWhisperer.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Whisperer'**
+  String get whispererTierWhisperer;
+
+  /// No description provided for @whispererNextLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} XP to next level'**
+  String whispererNextLevel(int xp);
+
+  /// No description provided for @careCombo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}x combo!'**
+  String careCombo(int count);
+
+  /// No description provided for @careComboStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}x combo! You\'re on fire!'**
+  String careComboStreak(int count);
+
+  /// No description provided for @lastCareWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered'**
+  String get lastCareWater;
+
+  /// No description provided for @lastCareFertilize.
+  ///
+  /// In en, this message translates to:
+  /// **'Fertilized'**
+  String get lastCareFertilize;
+
+  /// No description provided for @lastCarePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get lastCarePhoto;
+
+  /// No description provided for @lastCareDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String lastCareDaysAgo(int days);
+
+  /// No description provided for @lastCareToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get lastCareToday;
+
+  /// No description provided for @lastCareNever.
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get lastCareNever;
+
+  /// No description provided for @careConfidenceOnSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Right on schedule (avg {days} days)'**
+  String careConfidenceOnSchedule(int days);
+
+  /// No description provided for @careConfidenceEarly.
+  ///
+  /// In en, this message translates to:
+  /// **'A bit early — soil might still be moist'**
+  String get careConfidenceEarly;
+
+  /// No description provided for @careConfidenceLate.
+  ///
+  /// In en, this message translates to:
+  /// **'A bit late, but no worries'**
+  String get careConfidenceLate;
+
+  /// No description provided for @gardenMoodThriving.
+  ///
+  /// In en, this message translates to:
+  /// **'Thriving'**
+  String get gardenMoodThriving;
+
+  /// No description provided for @gardenMoodHappy.
+  ///
+  /// In en, this message translates to:
+  /// **'Happy'**
+  String get gardenMoodHappy;
+
+  /// No description provided for @gardenMoodNeedsLove.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs love'**
+  String get gardenMoodNeedsLove;
+
+  /// No description provided for @gardenMoodThirsty.
+  ///
+  /// In en, this message translates to:
+  /// **'Thirsty'**
+  String get gardenMoodThirsty;
+
+  /// No description provided for @plantDetailLogsSparklineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'14-Day Activity'**
+  String get plantDetailLogsSparklineTitle;
+
+  /// No description provided for @plantDetailLogsSparklineCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} actions'**
+  String plantDetailLogsSparklineCount(int count);
+
+  /// No description provided for @commonToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get commonToday;
+
+  /// No description provided for @calendarHeatmapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'12-Week Activity'**
+  String get calendarHeatmapTitle;
+
+  /// No description provided for @profileStatsTotalCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Care'**
+  String get profileStatsTotalCare;
+
+  /// No description provided for @profileStatsWatered.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered'**
+  String get profileStatsWatered;
+
+  /// No description provided for @profileStatsFertilized.
+  ///
+  /// In en, this message translates to:
+  /// **'Fertilized'**
+  String get profileStatsFertilized;
+
+  /// No description provided for @profileStatsActions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}'**
+  String profileStatsActions(int count);
+
+  /// No description provided for @profileCareScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Score'**
+  String get profileCareScore;
+
+  /// No description provided for @profileCareScoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}%'**
+  String profileCareScoreLabel(int percent);
+
+  /// No description provided for @profileCareScoreSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days on-time rate'**
+  String get profileCareScoreSubtitle;
+
+  /// No description provided for @weeklyRecapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Week in Review'**
+  String get weeklyRecapTitle;
+
+  /// No description provided for @weeklyRecapActiveDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Days'**
+  String get weeklyRecapActiveDays;
+
+  /// No description provided for @weeklyRecapSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{actions} care actions across {days} active days this week'**
+  String weeklyRecapSummary(int actions, int days);
+
+  /// No description provided for @weeklyRecapDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Nice work!'**
+  String get weeklyRecapDismiss;
+
+  /// No description provided for @weeklyRecapBestDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Best day: {day}'**
+  String weeklyRecapBestDay(String day);
+
+  /// No description provided for @weeklyRecapStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak: {days} days'**
+  String weeklyRecapStreak(int days);
+
+  /// No description provided for @gardenAllTasksDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All done for today!'**
+  String get gardenAllTasksDoneTitle;
+
+  /// No description provided for @gardenAllTasksDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every plant is happy. Enjoy the rest of your day.'**
+  String get gardenAllTasksDoneBody;
+
+  /// No description provided for @gardenAllDoneBody2.
+  ///
+  /// In en, this message translates to:
+  /// **'Your green friends are thriving thanks to you.'**
+  String get gardenAllDoneBody2;
+
+  /// No description provided for @gardenAllDoneBody3.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency is the secret. You\'ve got it.'**
+  String get gardenAllDoneBody3;
+
+  /// No description provided for @gardenAllDoneBody4.
+  ///
+  /// In en, this message translates to:
+  /// **'Another day of great plant parenting.'**
+  String get gardenAllDoneBody4;
+
+  /// No description provided for @gardenAllDoneBody5.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plants are growing stronger every day.'**
+  String get gardenAllDoneBody5;
+
+  /// No description provided for @profileLongestStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Best: {days} days'**
+  String profileLongestStreak(int days);
+
+  /// No description provided for @profileGardenAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden: {days} days old'**
+  String profileGardenAge(int days);
+
+  /// No description provided for @gardenNewPersonalBest.
+  ///
+  /// In en, this message translates to:
+  /// **'New personal best! {days}-day streak'**
+  String gardenNewPersonalBest(int days);
+
+  /// No description provided for @gardenTomorrowPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow: {count} {count, plural, =1{plant needs} other{plants need}} care'**
+  String gardenTomorrowPreview(int count);
+
+  /// No description provided for @gardenMotivation7DayStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re on a roll — keep the momentum going.'**
+  String get gardenMotivation7DayStreak;
+
+  /// No description provided for @gardenMotivation30DayStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'A month of consistency. Your plants are thriving.'**
+  String get gardenMotivation30DayStreak;
+
+  /// No description provided for @gardenMotivationWelcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back — your plants missed you.'**
+  String get gardenMotivationWelcomeBack;
+
+  /// No description provided for @gardenMotivationBigGarden.
+  ///
+  /// In en, this message translates to:
+  /// **'A flourishing collection. You\'ve got this.'**
+  String get gardenMotivationBigGarden;
+
+  /// No description provided for @gardenMotivationMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'A great day to check on your green friends.'**
+  String get gardenMotivationMorning;
+
+  /// No description provided for @gardenMotivationEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind down with a quick garden check.'**
+  String get gardenMotivationEvening;
+
+  /// No description provided for @gardenMotivationAllDoneToday.
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up — your plants are happy.'**
+  String get gardenMotivationAllDoneToday;
+
+  /// No description provided for @gardenMotivationNewPlant.
+  ///
+  /// In en, this message translates to:
+  /// **'Your newest plant is settling in nicely.'**
+  String get gardenMotivationNewPlant;
+
+  /// No description provided for @gardenStreakFreezeUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak freeze used! Your {days}-day streak is safe.'**
+  String gardenStreakFreezeUsed(int days);
+
+  /// No description provided for @gardenStreakFreezeEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'You earned a streak freeze! ({count} available)'**
+  String gardenStreakFreezeEarned(int count);
+
+  /// No description provided for @profileStreakFreezes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 freeze} other{{count} freezes}} available'**
+  String profileStreakFreezes(int count);
+
+  /// No description provided for @gardenPlantMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} plants in your garden! Your collection is growing beautifully.'**
+  String gardenPlantMilestone(int count);
+
+  /// No description provided for @streakShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Your Streak'**
+  String get streakShareTitle;
+
+  /// No description provided for @streakShareCardDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}-Day Streak'**
+  String streakShareCardDays(int days);
+
+  /// No description provided for @streakShareCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Caring for my plants every day'**
+  String get streakShareCardSubtitle;
+
+  /// No description provided for @streakShareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get streakShareButton;
+
+  /// No description provided for @plantLastWateredToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered today'**
+  String get plantLastWateredToday;
+
+  /// No description provided for @plantLastWateredYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered yesterday'**
+  String get plantLastWateredYesterday;
+
+  /// No description provided for @plantLastWateredDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered {days} days ago'**
+  String plantLastWateredDaysAgo(int days);
+
+  /// No description provided for @plantNeverWatered.
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet watered'**
+  String get plantNeverWatered;
+
+  /// No description provided for @plantAgeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days in your garden'**
+  String plantAgeLabel(int days);
+
+  /// No description provided for @plantAnniversaryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{years}-year anniversary!'**
+  String plantAnniversaryLabel(int years);
+
+  /// No description provided for @careLogAddNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add note'**
+  String get careLogAddNote;
+
+  /// No description provided for @careLogEditNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit note'**
+  String get careLogEditNote;
+
+  /// No description provided for @careLogNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How did it look? Anything to remember?'**
+  String get careLogNoteHint;
+
+  /// No description provided for @careLogNoteSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Note saved'**
+  String get careLogNoteSaved;
+
+  /// No description provided for @careStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care patterns'**
+  String get careStatsTitle;
+
+  /// No description provided for @careStatsTotalWaterings.
+  ///
+  /// In en, this message translates to:
+  /// **'Waterings'**
+  String get careStatsTotalWaterings;
+
+  /// No description provided for @careStatsAvgInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg interval'**
+  String get careStatsAvgInterval;
+
+  /// No description provided for @careStatsAvgDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d'**
+  String careStatsAvgDays(int days);
+
+  /// No description provided for @careStatsTotalActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Total actions'**
+  String get careStatsTotalActions;
+
+  /// No description provided for @careStatsConsistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get careStatsConsistency;
+
+  /// No description provided for @careStatsTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Try setting a recurring reminder to build a steady routine.'**
+  String get careStatsTip;
+
+  /// No description provided for @gardenForecastTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Next 7 Days'**
+  String get gardenForecastTitle;
+
+  /// No description provided for @gardenForecastTaskCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks'**
+  String gardenForecastTaskCount(int count);
+
+  /// No description provided for @gardenForecastBusyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Busiest: {day}'**
+  String gardenForecastBusyDay(String day);
+
+  /// No description provided for @gardenForecastEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks scheduled this week'**
+  String get gardenForecastEmpty;
+
+  /// No description provided for @gardenForecastToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get gardenForecastToday;
+
+  /// No description provided for @gardenForecastTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get gardenForecastTomorrow;
+
+  /// No description provided for @wellnessHeatmapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Activity'**
+  String get wellnessHeatmapTitle;
+
+  /// No description provided for @wellnessHeatmapSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 12 weeks'**
+  String get wellnessHeatmapSubtitle;
+
+  /// No description provided for @wellnessHeatmapActions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} actions'**
+  String wellnessHeatmapActions(int count);
+
+  /// No description provided for @gardenWeeklyTrendUp.
+  ///
+  /// In en, this message translates to:
+  /// **'+{diff} vs last week'**
+  String gardenWeeklyTrendUp(int diff);
+
+  /// No description provided for @gardenWeeklyTrendDown.
+  ///
+  /// In en, this message translates to:
+  /// **'{diff} vs last week'**
+  String gardenWeeklyTrendDown(int diff);
+
+  /// No description provided for @gardenWeeklyTrendSame.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as last week'**
+  String get gardenWeeklyTrendSame;
+
+  /// No description provided for @gardenWeeklyMostActiveDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Most active: {day}'**
+  String gardenWeeklyMostActiveDay(String day);
+
+  /// No description provided for @achievementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get achievementsTitle;
+
+  /// No description provided for @achievementsUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/{total} unlocked'**
+  String achievementsUnlocked(int count, int total);
+
+  /// No description provided for @achievementFirstPlant.
+  ///
+  /// In en, this message translates to:
+  /// **'First Sprout'**
+  String get achievementFirstPlant;
+
+  /// No description provided for @achievementFirstPlantDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first plant'**
+  String get achievementFirstPlantDesc;
+
+  /// No description provided for @achievementFivePlants.
+  ///
+  /// In en, this message translates to:
+  /// **'Growing Collection'**
+  String get achievementFivePlants;
+
+  /// No description provided for @achievementFivePlantsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Grow your garden to 5 plants'**
+  String get achievementFivePlantsDesc;
+
+  /// No description provided for @achievementTenPlants.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Enthusiast'**
+  String get achievementTenPlants;
+
+  /// No description provided for @achievementTenPlantsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach 10 plants in your garden'**
+  String get achievementTenPlantsDesc;
+
+  /// No description provided for @achievementTwentyPlants.
+  ///
+  /// In en, this message translates to:
+  /// **'Jungle Master'**
+  String get achievementTwentyPlants;
+
+  /// No description provided for @achievementTwentyPlantsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Cultivate 20 plants'**
+  String get achievementTwentyPlantsDesc;
+
+  /// No description provided for @achievementFirstCare.
+  ///
+  /// In en, this message translates to:
+  /// **'First Drop'**
+  String get achievementFirstCare;
+
+  /// No description provided for @achievementFirstCareDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your first care task'**
+  String get achievementFirstCareDesc;
+
+  /// No description provided for @achievementFiftyCares.
+  ///
+  /// In en, this message translates to:
+  /// **'Dedicated Carer'**
+  String get achievementFiftyCares;
+
+  /// No description provided for @achievementFiftyCaresDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete 50 care tasks'**
+  String get achievementFiftyCaresDesc;
+
+  /// No description provided for @achievementHundredCares.
+  ///
+  /// In en, this message translates to:
+  /// **'Green Thumb'**
+  String get achievementHundredCares;
+
+  /// No description provided for @achievementHundredCaresDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete 100 care tasks'**
+  String get achievementHundredCaresDesc;
+
+  /// No description provided for @achievementFiveHundredCares.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Whisperer'**
+  String get achievementFiveHundredCares;
+
+  /// No description provided for @achievementFiveHundredCaresDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete 500 care tasks'**
+  String get achievementFiveHundredCaresDesc;
+
+  /// No description provided for @achievementWeekStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Week Warrior'**
+  String get achievementWeekStreak;
+
+  /// No description provided for @achievementWeekStreakDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain a 7-day care streak'**
+  String get achievementWeekStreakDesc;
+
+  /// No description provided for @achievementMonthStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Devotion'**
+  String get achievementMonthStreak;
+
+  /// No description provided for @achievementMonthStreakDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain a 30-day care streak'**
+  String get achievementMonthStreakDesc;
+
+  /// No description provided for @achievementYearStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Legendary Gardener'**
+  String get achievementYearStreak;
+
+  /// No description provided for @achievementYearStreakDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain a 365-day care streak'**
+  String get achievementYearStreakDesc;
+
+  /// No description provided for @achievementFirstPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Snapshot'**
+  String get achievementFirstPhoto;
+
+  /// No description provided for @achievementFirstPhotoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Take your first plant photo'**
+  String get achievementFirstPhotoDesc;
+
+  /// No description provided for @achievementTenPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo Journal'**
+  String get achievementTenPhotos;
+
+  /// No description provided for @achievementTenPhotosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture 10 plant photos'**
+  String get achievementTenPhotosDesc;
+
+  /// No description provided for @achievementFiftyPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual Storyteller'**
+  String get achievementFiftyPhotos;
+
+  /// No description provided for @achievementFiftyPhotosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture 50 plant photos'**
+  String get achievementFiftyPhotosDesc;
+
+  /// No description provided for @achievementThreeRooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Room Explorer'**
+  String get achievementThreeRooms;
+
+  /// No description provided for @achievementThreeRoomsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Place plants in 3 different rooms'**
+  String get achievementThreeRoomsDesc;
+
+  /// No description provided for @achievementFiveRooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole Home Garden'**
+  String get achievementFiveRooms;
+
+  /// No description provided for @achievementFiveRoomsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Place plants in 5 different rooms'**
+  String get achievementFiveRoomsDesc;
+
+  /// No description provided for @achievementDiverseCarer.
+  ///
+  /// In en, this message translates to:
+  /// **'Renaissance Gardener'**
+  String get achievementDiverseCarer;
+
+  /// No description provided for @achievementDiverseCarerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Perform 5 different care types'**
+  String get achievementDiverseCarerDesc;
+
+  /// No description provided for @tasksCompleteAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete all'**
+  String get tasksCompleteAll;
+
+  /// No description provided for @tasksCompleteAllDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks completed'**
+  String tasksCompleteAllDone(int count);
+
+  /// No description provided for @tasksStreakAtRiskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak at risk!'**
+  String get tasksStreakAtRiskTitle;
+
+  /// No description provided for @tasksStreakAtRiskBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {days}-day streak ends tonight. Complete a task to keep it alive.'**
+  String tasksStreakAtRiskBody(int days);
+
+  /// No description provided for @plantMilestoneOneMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'1 month together!'**
+  String get plantMilestoneOneMonth;
+
+  /// No description provided for @plantMilestoneThreeMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'3 months together!'**
+  String get plantMilestoneThreeMonths;
+
+  /// No description provided for @plantMilestoneSixMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Half a year of care!'**
+  String get plantMilestoneSixMonths;
+
+  /// No description provided for @plantMilestoneOneYear.
+  ///
+  /// In en, this message translates to:
+  /// **'1 year anniversary!'**
+  String get plantMilestoneOneYear;
+
+  /// No description provided for @plantMilestoneTwoYears.
+  ///
+  /// In en, this message translates to:
+  /// **'2 years of growth!'**
+  String get plantMilestoneTwoYears;
+
+  /// No description provided for @plantMilestoneSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve been caring for {name} for {days} days'**
+  String plantMilestoneSubtitle(String name, int days);
+
+  /// No description provided for @seasonalTipTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasonal Tip'**
+  String get seasonalTipTitle;
+
+  /// No description provided for @seasonalTipSpringRepotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to repot'**
+  String get seasonalTipSpringRepotTitle;
+
+  /// No description provided for @seasonalTipSpringRepotBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring is the best time to repot. Plants are entering their growth phase and will recover quickly from the stress.'**
+  String get seasonalTipSpringRepotBody;
+
+  /// No description provided for @seasonalTipSpringFertilizeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume feeding'**
+  String get seasonalTipSpringFertilizeTitle;
+
+  /// No description provided for @seasonalTipSpringFertilizeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Start fertilizing again as days get longer. Begin with half-strength and increase gradually over a few weeks.'**
+  String get seasonalTipSpringFertilizeBody;
+
+  /// No description provided for @seasonalTipSpringGrowthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch for new growth'**
+  String get seasonalTipSpringGrowthTitle;
+
+  /// No description provided for @seasonalTipSpringGrowthBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plants are waking up. Look for new leaves, shoots, and roots — a great time to take progress photos.'**
+  String get seasonalTipSpringGrowthBody;
+
+  /// No description provided for @seasonalTipSpringWaterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase watering'**
+  String get seasonalTipSpringWaterTitle;
+
+  /// No description provided for @seasonalTipSpringWaterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'As growth picks up, your plants will drink more. Check soil moisture more frequently than in winter.'**
+  String get seasonalTipSpringWaterBody;
+
+  /// No description provided for @seasonalTipSpringPestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pest patrol'**
+  String get seasonalTipSpringPestsTitle;
+
+  /// No description provided for @seasonalTipSpringPestsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Warmer weather brings pests. Inspect new growth and leaf undersides regularly for early signs of infestation.'**
+  String get seasonalTipSpringPestsBody;
+
+  /// No description provided for @seasonalTipSummerWaterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay hydrated'**
+  String get seasonalTipSummerWaterTitle;
+
+  /// No description provided for @seasonalTipSummerWaterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Heat and longer days mean faster evaporation. Water deeply and check soil more often, especially for smaller pots.'**
+  String get seasonalTipSummerWaterBody;
+
+  /// No description provided for @seasonalTipSummerMistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Boost humidity'**
+  String get seasonalTipSummerMistTitle;
+
+  /// No description provided for @seasonalTipSummerMistBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Air conditioning dries the air. Mist tropical plants or group them together to create a humid microclimate.'**
+  String get seasonalTipSummerMistBody;
+
+  /// No description provided for @seasonalTipSummerSunburnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch for sunburn'**
+  String get seasonalTipSummerSunburnTitle;
+
+  /// No description provided for @seasonalTipSummerSunburnBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Intense midday sun can scorch leaves. Move sensitive plants back from south-facing windows or add sheer curtains.'**
+  String get seasonalTipSummerSunburnBody;
+
+  /// No description provided for @seasonalTipSummerOutdoorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Outdoor time'**
+  String get seasonalTipSummerOutdoorTitle;
+
+  /// No description provided for @seasonalTipSummerOutdoorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Many houseplants love a summer vacation outdoors. Acclimate gradually and bring them in before nights get cold.'**
+  String get seasonalTipSummerOutdoorBody;
+
+  /// No description provided for @seasonalTipSummerPropagateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Propagation season'**
+  String get seasonalTipSummerPropagateTitle;
+
+  /// No description provided for @seasonalTipSummerPropagateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Summer warmth and long days make this the ideal time to take cuttings. Most will root quickly in bright indirect light.'**
+  String get seasonalTipSummerPropagateBody;
+
+  /// No description provided for @seasonalTipAutumnWaterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ease off watering'**
+  String get seasonalTipAutumnWaterTitle;
+
+  /// No description provided for @seasonalTipAutumnWaterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth slows as days shorten. Let soil dry out more between waterings to prevent root rot during the transition.'**
+  String get seasonalTipAutumnWaterBody;
+
+  /// No description provided for @seasonalTipAutumnFertilizeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop fertilizing'**
+  String get seasonalTipAutumnFertilizeTitle;
+
+  /// No description provided for @seasonalTipAutumnFertilizeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Most plants enter dormancy soon. Stop feeding to avoid salt buildup and let them rest naturally.'**
+  String get seasonalTipAutumnFertilizeBody;
+
+  /// No description provided for @seasonalTipAutumnLightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chase the light'**
+  String get seasonalTipAutumnLightTitle;
+
+  /// No description provided for @seasonalTipAutumnLightBody.
+  ///
+  /// In en, this message translates to:
+  /// **'As the sun angle drops, move plants closer to windows. Rotate them regularly so all sides get even light.'**
+  String get seasonalTipAutumnLightBody;
+
+  /// No description provided for @seasonalTipAutumnInsideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring plants inside'**
+  String get seasonalTipAutumnInsideTitle;
+
+  /// No description provided for @seasonalTipAutumnInsideBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If you moved plants outdoors for summer, bring them back before nighttime temperatures drop below 10°C (50°F).'**
+  String get seasonalTipAutumnInsideBody;
+
+  /// No description provided for @seasonalTipAutumnCleanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaf cleaning day'**
+  String get seasonalTipAutumnCleanTitle;
+
+  /// No description provided for @seasonalTipAutumnCleanBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Dust blocks light absorption. Wipe leaves with a damp cloth to help your plants photosynthesize efficiently through winter.'**
+  String get seasonalTipAutumnCleanBody;
+
+  /// No description provided for @seasonalTipWinterWaterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Water sparingly'**
+  String get seasonalTipWinterWaterTitle;
+
+  /// No description provided for @seasonalTipWinterWaterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Most plants need much less water in winter. Overwatering is the top killer during dormancy — when in doubt, wait.'**
+  String get seasonalTipWinterWaterBody;
+
+  /// No description provided for @seasonalTipWinterHumidityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Combat dry air'**
+  String get seasonalTipWinterHumidityTitle;
+
+  /// No description provided for @seasonalTipWinterHumidityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Heating systems dry indoor air dramatically. Use a humidifier or pebble trays to keep tropical plants happy.'**
+  String get seasonalTipWinterHumidityBody;
+
+  /// No description provided for @seasonalTipWinterDraftsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Avoid cold drafts'**
+  String get seasonalTipWinterDraftsTitle;
+
+  /// No description provided for @seasonalTipWinterDraftsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep plants away from drafty windows and exterior doors. Even cold-hardy plants dislike sudden temperature swings.'**
+  String get seasonalTipWinterDraftsBody;
+
+  /// No description provided for @seasonalTipWinterLightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximize light'**
+  String get seasonalTipWinterLightTitle;
+
+  /// No description provided for @seasonalTipWinterLightBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Short days mean less photosynthesis. Move plants to your brightest spots and consider a grow light for light-lovers.'**
+  String get seasonalTipWinterLightBody;
+
+  /// No description provided for @seasonalTipWinterRestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let them rest'**
+  String get seasonalTipWinterRestTitle;
+
+  /// No description provided for @seasonalTipWinterRestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Dormancy is natural and healthy. Don\'t worry about slow growth — your plants are conserving energy for spring.'**
+  String get seasonalTipWinterRestBody;
+
+  /// No description provided for @healthBreakdownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Score'**
+  String get healthBreakdownTitle;
+
+  /// No description provided for @healthBreakdownSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Here\'s what contributes to this plant\'s health rating'**
+  String get healthBreakdownSubtitle;
+
+  /// No description provided for @healthBreakdownOverall.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall: {score}/100'**
+  String healthBreakdownOverall(int score);
+
+  /// No description provided for @healthFactorOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Task timeliness'**
+  String get healthFactorOverdue;
+
+  /// No description provided for @healthFactorActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent care activity'**
+  String get healthFactorActivity;
+
+  /// No description provided for @healthFactorVariety.
+  ///
+  /// In en, this message translates to:
+  /// **'Care variety'**
+  String get healthFactorVariety;
+
+  /// No description provided for @healthFactorConsistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule consistency'**
+  String get healthFactorConsistency;
+
+  /// No description provided for @coachingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Coaching'**
+  String get coachingTitle;
+
+  /// No description provided for @coachingLateWatererTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust your reminders'**
+  String get coachingLateWatererTitle;
+
+  /// No description provided for @coachingLateWatererBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You often water a day or two late. Try shifting your reminder time to when you\'re usually free.'**
+  String get coachingLateWatererBody;
+
+  /// No description provided for @coachingStreakAtRiskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak at risk!'**
+  String get coachingStreakAtRiskTitle;
+
+  /// No description provided for @coachingStreakAtRiskBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t cared for any plants today. A quick water keeps your streak alive.'**
+  String get coachingStreakAtRiskBody;
+
+  /// No description provided for @coachingNeglectedPlantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A plant needs you'**
+  String get coachingNeglectedPlantTitle;
+
+  /// No description provided for @coachingNeglectedPlantBody.
+  ///
+  /// In en, this message translates to:
+  /// **'One of your plants hasn\'t received care in over 3 weeks. Check in on it.'**
+  String get coachingNeglectedPlantBody;
+
+  /// No description provided for @coachingImprovingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re improving!'**
+  String get coachingImprovingTitle;
+
+  /// No description provided for @coachingImprovingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve been more active this week than last. Keep the momentum going.'**
+  String get coachingImprovingBody;
+
+  /// No description provided for @coachingConsistentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency champion'**
+  String get coachingConsistentTitle;
+
+  /// No description provided for @coachingConsistentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'9 out of your last 10 tasks were completed on time. Your plants are thriving.'**
+  String get coachingConsistentBody;
+
+  /// No description provided for @coachingDiversifyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Try something new'**
+  String get coachingDiversifyTitle;
+
+  /// No description provided for @coachingDiversifyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve only been watering lately. Consider misting, rotating, or fertilizing for healthier plants.'**
+  String get coachingDiversifyBody;
+
+  /// No description provided for @plantDetailNextWateringTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get plantDetailNextWateringTomorrow;
+
+  /// No description provided for @plantDetailNextWateringToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get plantDetailNextWateringToday;
+
+  /// No description provided for @gardenStreakFreezeAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 streak freeze available} other{{count} streak freezes available}}'**
+  String gardenStreakFreezeAvailable(int count);
+
+  /// No description provided for @commonDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get commonDismiss;
+
+  /// No description provided for @plantDetailHealthScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Health score'**
+  String get plantDetailHealthScore;
+
+  /// No description provided for @plantDetailExpandText.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand text'**
+  String get plantDetailExpandText;
+
+  /// No description provided for @plantDetailCollapseText.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse text'**
+  String get plantDetailCollapseText;
+
+  /// No description provided for @gardenWateredToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered today'**
+  String get gardenWateredToday;
+
+  /// No description provided for @gardenWateredYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered yesterday'**
+  String get gardenWateredYesterday;
+
+  /// No description provided for @gardenWateredDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Watered {days} days ago'**
+  String gardenWateredDaysAgo(int days);
+
+  /// No description provided for @gardenNeverWatered.
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet watered'**
+  String get gardenNeverWatered;
+
+  /// No description provided for @calendarHeatmapTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 care action} other{{count} care actions}}'**
+  String calendarHeatmapTooltip(int count);
+
+  /// No description provided for @calendarHeatmapTooltipDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{waters, plural, =0{} =1{1 water} other{{waters} waters}}{fertSep}{fertilizes, plural, =0{} =1{1 fertilize} other{{fertilizes} fertilizes}}{otherSep}{others, plural, =0{} =1{1 other} other{{others} other}}'**
+  String calendarHeatmapTooltipDetail(
+      int waters, String fertSep, int fertilizes, String otherSep, int others);
+
+  /// No description provided for @calendarDayCareCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 care log} other{{count} care logs}}'**
+  String calendarDayCareCount(int count);
+
+  /// No description provided for @exportDataConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export care data?'**
+  String get exportDataConfirmTitle;
+
+  /// No description provided for @exportDataConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will create a JSON file with all your plants, care logs, and tasks.'**
+  String get exportDataConfirmBody;
+
+  /// No description provided for @exportDataConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get exportDataConfirmAction;
+
+  /// No description provided for @gardenWaterAllOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Water all overdue'**
+  String get gardenWaterAllOverdue;
+
+  /// No description provided for @gardenWaterAllOverdueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Water 1 overdue plant} other {Water {count} overdue plants}}'**
+  String gardenWaterAllOverdueCount(int count);
+
+  /// No description provided for @gardenWateredAllOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Watered 1 overdue plant} other {Watered {count} overdue plants}}'**
+  String gardenWateredAllOverdue(int count);
+
+  /// No description provided for @plantOverviewNoCareStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Water your plant a few times to see care patterns here.'**
+  String get plantOverviewNoCareStats;
+
+  /// No description provided for @plantOverviewNoAiInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable AI insights in settings to get personalized care tips.'**
+  String get plantOverviewNoAiInsights;
+
+  /// No description provided for @plantOverviewNoTasksYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming tasks yet. Care schedules will appear as they are created.'**
+  String get plantOverviewNoTasksYet;
+
+  /// No description provided for @gardenHealthTrendUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Improving'**
+  String get gardenHealthTrendUp;
+
+  /// No description provided for @gardenHealthTrendDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Declining'**
+  String get gardenHealthTrendDown;
+
+  /// No description provided for @gardenHealthTrendStable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get gardenHealthTrendStable;
+
+  /// No description provided for @plantCareStreakLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}-day care streak'**
+  String plantCareStreakLabel(int days);
+
+  /// No description provided for @tasksEmptySoonMotivation.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy the calm. Your plants are thriving.'**
+  String get tasksEmptySoonMotivation;
+
+  /// No description provided for @manageCareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage care reminders'**
+  String get manageCareTitle;
+
+  /// No description provided for @manageCareSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{active} active · {disabled} disabled'**
+  String manageCareSubtitle(int active, int disabled);
+
+  /// No description provided for @manageCareSpeciesDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Species default'**
+  String get manageCareSpeciesDefault;
+
+  /// No description provided for @manageCareEnabledByYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled by you'**
+  String get manageCareEnabledByYou;
+
+  /// No description provided for @manageCareDisabledByYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled by you'**
+  String get manageCareDisabledByYou;
+
+  /// No description provided for @manageCareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get manageCareButton;
+
+  /// No description provided for @manageCareDisableConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off {type} reminders?'**
+  String manageCareDisableConfirm(String type);
+
+  /// No description provided for @manageCareEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get manageCareEnabled;
+
+  /// No description provided for @manageCareDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get manageCareDisabled;
+
+  /// No description provided for @growthEchoCompareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Then & now'**
+  String get growthEchoCompareTitle;
+
+  /// No description provided for @growthEchoCompareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} has {days} days of growth to compare.'**
+  String growthEchoCompareBody(String plant, int days);
+
+  /// No description provided for @growthEchoCaptureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth check-in'**
+  String get growthEchoCaptureTitle;
+
+  /// No description provided for @growthEchoCaptureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s been {days} days since {plant}\'s last photo.'**
+  String growthEchoCaptureBody(int days, String plant);
+
+  /// No description provided for @commonProblemsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Common issues'**
+  String get commonProblemsTitle;
+
+  /// No description provided for @commonProblemsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch for these with your {plant}'**
+  String commonProblemsSubtitle(String plant);
+
+  /// No description provided for @perfectWeekTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfect Week {count}!'**
+  String perfectWeekTitle(int count);
+
+  /// No description provided for @perfectWeekBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every task completed on time for 7 straight days. Your plants are thriving because of you.'**
+  String get perfectWeekBody;
+
+  /// No description provided for @perfectWeekBodyRepeat.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} perfect weeks in a row. You\'re in a league of your own.'**
+  String perfectWeekBodyRepeat(int count);
+
+  /// No description provided for @perfectWeekDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'On to the next!'**
+  String get perfectWeekDismiss;
+
+  /// No description provided for @growthTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth Timeline'**
+  String get growthTimelineTitle;
+
+  /// No description provided for @growthTimelineEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photos to track growth over time'**
+  String get growthTimelineEmpty;
+
+  /// No description provided for @notificationStreakProtectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {days}-day streak is at risk!'**
+  String notificationStreakProtectionTitle(int days);
+
+  /// No description provided for @notificationStreakProtectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete a care task before midnight to keep it going.'**
+  String get notificationStreakProtectionBody;
+
+  /// No description provided for @careRhythmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care rhythm'**
+  String get careRhythmTitle;
+
+  /// No description provided for @careRhythmAvgInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg {days}d between waterings'**
+  String careRhythmAvgInterval(int days);
+
+  /// No description provided for @careRhythmConsistent.
+  ///
+  /// In en, this message translates to:
+  /// **'Very consistent'**
+  String get careRhythmConsistent;
+
+  /// No description provided for @careRhythmImproving.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting more consistent'**
+  String get careRhythmImproving;
+
+  /// No description provided for @careRhythmNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'Water a few more times to see your rhythm'**
+  String get careRhythmNoData;
+
+  /// No description provided for @plantMoodThriving.
+  ///
+  /// In en, this message translates to:
+  /// **'Thriving! 🌱'**
+  String get plantMoodThriving;
+
+  /// No description provided for @plantMoodHappy.
+  ///
+  /// In en, this message translates to:
+  /// **'Feeling great'**
+  String get plantMoodHappy;
+
+  /// No description provided for @plantMoodOkay.
+  ///
+  /// In en, this message translates to:
+  /// **'Doing okay'**
+  String get plantMoodOkay;
+
+  /// No description provided for @plantMoodThirsty.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting thirsty…'**
+  String get plantMoodThirsty;
+
+  /// No description provided for @plantMoodNeglected.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing you…'**
+  String get plantMoodNeglected;
+
+  /// No description provided for @plantMoodNewHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Just planted!'**
+  String get plantMoodNewHere;
+
+  /// No description provided for @plantAnniversaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Happy anniversary, {plant}!'**
+  String plantAnniversaryTitle(String plant);
+
+  /// No description provided for @plantAnniversaryBody30.
+  ///
+  /// In en, this message translates to:
+  /// **'One month together. You\'re building something beautiful.'**
+  String get plantAnniversaryBody30;
+
+  /// No description provided for @plantAnniversaryBody90.
+  ///
+  /// In en, this message translates to:
+  /// **'Three months of care. Your dedication shows.'**
+  String get plantAnniversaryBody90;
+
+  /// No description provided for @plantAnniversaryBody180.
+  ///
+  /// In en, this message translates to:
+  /// **'Half a year! This plant is thriving because of you.'**
+  String get plantAnniversaryBody180;
+
+  /// No description provided for @plantAnniversaryBody365.
+  ///
+  /// In en, this message translates to:
+  /// **'A full year together. What an incredible journey.'**
+  String get plantAnniversaryBody365;
+
+  /// No description provided for @plantAnniversaryDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Here\'s to more!'**
+  String get plantAnniversaryDismiss;
 }
 
 class _AppLocalizationsDelegate

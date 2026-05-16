@@ -44,6 +44,66 @@ void main() {
 
     expect(target, DateTime(2026, 5, 13, 8, 45));
   });
+
+  group('snoozeForDuration', () {
+    late DateTime now;
+    late Plant plant;
+    late UserSettings settings;
+
+    setUp(() {
+      now = DateTime(2026, 5, 14, 10, 30);
+      plant = _plant();
+      settings = UserSettings.defaults().copyWith(
+        reminderTimePreference: ReminderTimePreference.morning,
+      );
+    });
+
+    test('oneHour adds 1 hour', () {
+      final target = CareActions.snoozeForDuration(
+        now: now,
+        plant: plant,
+        settings: settings,
+        duration: SnoozeDuration.oneHour,
+      );
+      expect(target, DateTime(2026, 5, 14, 11, 30));
+    });
+
+    test('threeHours adds 3 hours', () {
+      final target = CareActions.snoozeForDuration(
+        now: now,
+        plant: plant,
+        settings: settings,
+        duration: SnoozeDuration.threeHours,
+      );
+      expect(target, DateTime(2026, 5, 14, 13, 30));
+    });
+
+    test('tomorrowMorning returns 8am next day', () {
+      final target = CareActions.snoozeForDuration(
+        now: now,
+        plant: plant,
+        settings: settings,
+        duration: SnoozeDuration.tomorrowMorning,
+      );
+      expect(target, DateTime(2026, 5, 15, 8));
+    });
+
+    test('weekend returns Saturday 9am', () {
+      final previousLocation = tz.local;
+      tz.setLocalLocation(tz.getLocation('UTC'));
+      addTearDown(() => tz.setLocalLocation(previousLocation));
+
+      // May 14, 2026 is a Thursday
+      final target = CareActions.snoozeForDuration(
+        now: now,
+        plant: plant,
+        settings: settings,
+        duration: SnoozeDuration.weekend,
+      );
+      expect(target.weekday, DateTime.saturday);
+      expect(target, DateTime(2026, 5, 16, 9));
+    });
+  });
 }
 
 Plant _plant({LocalTime? reminderTimeOverride}) {

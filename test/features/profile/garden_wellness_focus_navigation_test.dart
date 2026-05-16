@@ -34,6 +34,18 @@ void main() {
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
+  setUp(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.physicalSize = const Size(800, 2400);
+    binding.platformDispatcher.views.first.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.resetPhysicalSize();
+    binding.platformDispatcher.views.first.resetDevicePixelRatio();
+  });
+
   testWidgets('tapping a focus plant opens plant detail',
       (WidgetTester tester) async {
     final plants = <Plant>[
@@ -93,7 +105,8 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     final focusFinder = find.byKey(const ValueKey('focus-plant-p2'));
     await tester.scrollUntilVisible(
@@ -102,7 +115,8 @@ void main() {
       scrollable: find.byType(Scrollable).first,
     );
     await tester.tap(focusFinder);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('Plant p2'), findsOneWidget);
   });

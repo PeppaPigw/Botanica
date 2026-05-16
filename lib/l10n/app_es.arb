@@ -23,6 +23,7 @@
   "commonLanguage": "Idioma",
   "commonAbout": "Acerca de",
   "commonTryAgain": "Reintentar",
+  "commonErrorTryAgain": "Algo salió mal. Inténtalo de nuevo.",
   "commonComingSoon": "Próximamente",
   "commonLoading": "Cargando…",
   "commonViewAll": "Ver todo",
@@ -70,6 +71,14 @@
   "calendarPrevMonth": "Mes anterior",
   "calendarNextMonth": "Mes siguiente",
   "calendarSectionHistory": "Historial de cuidados",
+  "calendarWeekAheadTitle": "Próxima semana",
+  "calendarWeekAheadCount": "{count} tareas",
+  "@calendarWeekAheadCount": {
+    "description": "Total tasks in the upcoming week",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "calendarNoEvents": "No hay registros para este día.",
   "splashTagline": "Cuidado sereno, bellamente organizado.",
   "onboardingTitle1": "Dale vida a tu espacio",
@@ -103,6 +112,9 @@
   "permissionsPrivacyNote": "Botanica solo lo pide cuando lo necesitas — puedes cambiarlo más tarde en Perfil.",
   "gardenTitle": "Jardín",
   "gardenTodayCardTitle": "Hoy",
+  "gardenGreetingMorning": "Buenos días",
+  "gardenGreetingAfternoon": "Buenas tardes",
+  "gardenGreetingEvening": "Buenas noches",
   "gardenLoadError": "No se pudieron cargar las plantas.",
   "gardenTasksDueToday": "{count, plural, =0{Sin tareas} =1{1 tarea} other{{count} tareas}}",
   "@gardenTasksDueToday": {
@@ -113,9 +125,45 @@
       }
     }
   },
+  "gardenAllCaughtUp": "¡Todo al día! Tus plantas están felices.",
+  "gardenVacationBanner": "Modo vacaciones — recordatorios pausados",
+  "gardenWeeklySummaryTitle": "Esta semana",
+  "gardenWeeklyCareActions": "{count} acciones de cuidado",
+  "@gardenWeeklyCareActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyWatered": "{count} regados",
+  "@gardenWeeklyWatered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyFertilized": "{count} fertilizados",
+  "@gardenWeeklyFertilized": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gardenCareStreakChip": "Racha de {days} días",
   "@gardenCareStreakChip": {
     "description": "Chip label showing the user's current care streak",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenStreakAtRisk": "Tu racha de {days} días termina hoy — ¡cuida una planta para mantenerla!",
+  "@gardenStreakAtRisk": {
+    "description": "Warning shown when the user's care streak will break if they don't act today",
     "placeholders": {
       "days": {
         "type": "int"
@@ -148,8 +196,24 @@
   "weatherSnow": "Nieve",
   "weatherThunder": "Tormenta",
   "weatherUnknown": "Tiempo",
+  "weatherTipRainy": "Lluvia afuera — no riegues las plantas de exterior hoy",
+  "weatherTipStormy": "Tormenta — lleva las plantas sensibles al interior",
+  "weatherTipExtremeHeat": "Calor extremo — revisa la humedad del suelo y rocía las hojas",
+  "weatherTipHotSunny": "Caluroso y soleado — riega temprano por la mañana o al atardecer",
+  "weatherTipNearFreezing": "Cerca de congelarse — protege las plantas sensibles a las heladas",
+  "weatherTipSnow": "Se espera nieve — mueve las macetas exteriores a un refugio",
+  "weatherTipCool": "Día fresco — reduce la frecuencia de riego",
+  "weatherTipLowHumidity": "Aire seco hoy — rocía las plantas tropicales o agrúpalas",
+  "weatherTipHighHumidity": "Humedad alta — no rocíes y vigila los hongos",
+  "seasonalTipSpring": "La primavera está aquí — hora de fertilizar y trasplantar si es necesario",
+  "seasonalTipSummer": "El calor del verano significa regar con más frecuencia",
+  "seasonalTipAutumn": "Otoño — reduce la fertilización mientras las plantas ralentizan su crecimiento",
+  "seasonalTipWinter": "Invierno — la mayoría de plantas necesitan menos agua y nada de fertilizante",
   "gardenQuickWatered": "Regado",
   "gardenQuickSnooze": "Posponer",
+  "gardenQuickLogCare": "Registrar cuidado",
+  "gardenQuickLogDone": "¡Registrado!",
+  "gardenViewDetails": "Ver detalles",
   "tasksSnoozeOneHour": "1 hora",
   "tasksSnoozeThreeHours": "3 horas",
   "tasksSnoozeTomorrow": "Mañana",
@@ -167,6 +231,15 @@
       }
     }
   },
+  "profilePlantsInGarden": "{count, plural, =1{1 planta en tu jardín} other{{count} plantas en tu jardín}}",
+  "@profilePlantsInGarden": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discoverInYourGarden": "en tu jardín",
   "gardenRoomsWaterAll": "Regar todo",
   "gardenRoomsSnoozeAll": "Posponer todo",
   "gardenRoomsWateredCount": "Regadas {count} {count, plural, =1{planta} other{plantas}} en la habitación",
@@ -196,6 +269,9 @@
   "gardenToggleCardMode": "Alternar modo de tarjeta",
   "gardenToggleViewMode": "Alternar modo de vista",
   "gardenEmptyCta": "Añadir primera planta",
+  "gardenGreetingMorning": "Buenos días",
+  "gardenGreetingAfternoon": "Buenas tardes",
+  "gardenGreetingEvening": "Buenas noches",
   "gardenAddPlantFab": "Añadir planta",
   "addPlantTitle": "Añadir planta",
   "addPlantMethodScan": "Escanear",
@@ -236,6 +312,15 @@
   "plantDetailMissingCta": "Volver al jardín",
   "plantDetailNextWateringInDays": "Próximo riego en {days} días",
   "@plantDetailNextWateringInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantDetailCaringForDays": "Cuidando por {days} días",
+  "@plantDetailCaringForDays": {
+    "description": "Shows how many days the user has been caring for this plant",
     "placeholders": {
       "days": {
         "type": "int"
@@ -386,6 +471,7 @@
   },
   "tasksSkipped": "Saltado",
   "discoverTitle": "Descubrir",
+  "discoverPlantOfTheDay": "Planta del día",
   "discoverSearchHint": "Busca plantas, guías y consejos",
   "discoverNoResultsTitle": "Sin resultados",
   "discoverNoResultsBody": "Prueba con otro nombre o busca por el nombre científico.",
@@ -404,6 +490,8 @@
   "discoverGuideSoilBody": "Por qué las mezclas aireadas reducen la pudrición de raíces.",
   "discoverGuidePestTitle": "Lista de plagas",
   "discoverGuidePestBody": "Una rutina semanal rápida para detectar problemas temprano.",
+  "discoverAddFavorite": "Añadir a favoritos",
+  "discoverRemoveFavorite": "Quitar de favoritos",
   "speciesDetailHistory": "Historia",
   "speciesDetailHabit": "Hábito de crecimiento",
   "speciesDetailCareAtAGlance": "Cuidados de un vistazo",
@@ -571,6 +659,10 @@
       }
     }
   },
+  "exportDataTitle": "Exportar datos de cuidado",
+  "exportDataSubtitle": "Guarda tus plantas e historial de cuidado como archivo JSON.",
+  "exportDataSuccess": "Datos de cuidado exportados correctamente.",
+  "exportDataEmpty": "No hay datos para exportar — añade algunas plantas primero.",
   "profileLanguage": "Idioma",
   "profileUnits": "Unidades",
   "profileHemisphereTitle": "Hemisferio",
@@ -620,6 +712,17 @@
   "profileCredits": "Créditos",
   "profileDynamicColorTitle": "Color dinámico",
   "profileDynamicColorBody": "Usa la paleta del dispositivo cuando esté disponible.",
+  "vacationModeTitle": "Modo vacaciones",
+  "vacationModeOff": "Pausa todos los recordatorios mientras estás fuera.",
+  "vacationModeActiveUntil": "Activo hasta {date}",
+  "@vacationModeActiveUntil": {
+    "description": "Vacation mode active subtitle",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "vacationModeEnd": "Finalizar modo vacaciones",
+  "vacationModePickDate": "Fecha de regreso",
   "profileAiInsightsTitle": "Ideas con IA",
   "profileAiInsightsBody": "Notas sutiles en pantalla que personalizan tu ritual de la Flor del Día.",
   "profileAiKeyTitle": "Clave API de IA",
@@ -772,6 +875,95 @@
       }
     }
   },
+  "notificationWaterTitle2": "¡{plant} tiene sed!",
+  "@notificationWaterTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationWaterTitle3": "Tu {plant} necesita agua",
+  "@notificationWaterTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle2": "{plant} necesita nutrientes",
+  "@notificationFertilizeTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationFertilizeTitle3": "Hora de alimentar a {plant}",
+  "@notificationFertilizeTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle2": "¿Un poco de humedad para {plant}?",
+  "@notificationMistTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationMistTitle3": "Hora de rociar a {plant}",
+  "@notificationMistTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle2": "Rota {plant} para un crecimiento uniforme",
+  "@notificationRotateTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationRotateTitle3": "{plant} necesita un giro hoy",
+  "@notificationRotateTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle2": "Hora de arreglar {plant}",
+  "@notificationPruneTitle2": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPruneTitle3": "{plant} necesita una poda",
+  "@notificationPruneTitle3": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationDailySummaryTitle": "¡Buenos días, amante de las plantas!",
+  "notificationDailySummaryBody": "Tienes {count} tareas de cuidado hoy. ¡Tus plantas cuentan contigo!",
+  "@notificationDailySummaryBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reasonHumidityLow": "Humedad baja → el sustrato se seca más rápido",
   "reasonHumidityHigh": "Humedad alta → el sustrato permanece húmedo más tiempo",
   "reasonHot": "Temperatura alta → más evaporación",
@@ -798,6 +990,11 @@
   "gardenWellnessStatPlants": "Plantas",
   "gardenWellnessStatRecentCare": "Cuidado reciente",
   "gardenWellnessStatAtRisk": "En riesgo",
+  "gardenWellnessStatPunctuality": "A tiempo",
+  "gardenWellnessStatWeeklyActive": "Semanas activas",
+  "gardenWellnessStatBestStreak": "Mejor racha",
+  "gardenWellnessMomentumIncreasing": "Impulso en alza",
+  "gardenWellnessMomentumDecreasing": "Impulso bajando",
   "gardenWellnessRoomPulseTitle": "Pulso por habitación",
   "gardenWellnessRoomPulseSummary": "{plantCount} plantas · {overdueCount} vencidas",
   "@gardenWellnessRoomPulseSummary": {
@@ -924,6 +1121,14 @@
   "@gardenSortNewest": {
     "description": "Sort option by newest"
   },
+  "gardenSortHealth": "Puntuación de salud",
+  "@gardenSortHealth": {
+    "description": "Sort option by plant health score (lowest first)"
+  },
+  "gardenSortRoom": "Habitación",
+  "@gardenSortRoom": {
+    "description": "Sort option by room"
+  },
   "gardenFilterAll": "Todas",
   "@gardenFilterAll": {
     "description": "Filter option for all plants"
@@ -974,5 +1179,735 @@
   },
   "restorePlantBody": "Esto devolverá la planta a su jardín y reanudará su cuidado.",
   "restorePlantConfirm": "Restaurar",
-  "gardenStatusArchived": "Archivada"
+  "gardenStatusArchived": "Archivada",
+  "streakMilestoneTitle": "¡Hito de {days} días!",
+  "@streakMilestoneTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakMilestoneBody7": "Una semana completa de cuidado. Tu jardín te lo agradece.",
+  "streakMilestoneBody30": "30 días seguidos. Estás creando un hábito real.",
+  "streakMilestoneBody90": "¡90 días! Tus plantas nunca han estado más felices.",
+  "streakMilestoneBody365": "Un año completo de cuidado. Eres una leyenda.",
+  "streakMilestoneDismiss": "¡Sigue así!",
+  "timeCapsuleTitle": "Hace {days} días",
+  "@timeCapsuleTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "timeCapsuleBody": "Tomaste esta foto de {plant} hace {days} días. Mira cuánto han crecido juntos.",
+  "@timeCapsuleBody": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "rescueResetTitle": "Bienvenido de vuelta",
+  "rescueResetBody": "Tenías una racha de {streak} días. Han pasado {days} días — sin culpa, solo un nuevo comienzo cuando estés listo.",
+  "@rescueResetBody": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "rescueResetWaterNow": "Regar una planta ahora",
+  "rescueResetFreshStart": "Empezar de nuevo",
+  "streakSavedSnackbar": "¡Racha salvada! {plant} cuidada · ritmo de {days} días intacto",
+  "@streakSavedSnackbar": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "allDoneQuietRunway": "Nada pendiente en {days} días",
+  "@allDoneQuietRunway": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "allDoneTomorrowPreview": "Mañana · {count} tareas para {plants}",
+  "@allDoneTomorrowPreview": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "plants": {
+        "type": "String"
+      }
+    }
+  },
+  "plantPulseTitle": "Hora de un chequeo",
+  "plantPulseBody": "{plant} no tiene foto desde hace {days} días. Mira cuánto ha crecido.",
+  "@plantPulseBody": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantPulseCta": "Tomar una foto",
+  "plantJourneyTitle": "Vuestro camino juntos",
+  "plantJourneyNextMilestone": "Siguiente: {milestone}",
+  "@plantJourneyNextMilestone": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "plantJourneyMilestoneFirstWater": "Primer riego",
+  "plantJourneyMilestoneFirstPhoto": "Primera foto",
+  "plantJourneyMilestone7Days": "7 días juntos",
+  "plantJourneyMilestoneFirstFertilize": "Primera fertilización",
+  "plantJourneyMilestone10Waters": "10 riegos",
+  "plantJourneyMilestone30Days": "30 días juntos",
+  "plantJourneyMilestone25Waters": "25 riegos",
+  "plantJourneyMilestone100Days": "100 días juntos",
+  "plantJourneyMilestone365Days": "1 año juntos",
+  "gardenerTypeTitle": "Tu tipo de jardinero",
+  "gardenerTypeDevoted": "El Devoto",
+  "gardenerTypeDevotedDesc": "30+ días de cuidado ininterrumpido. Tus plantas te adoran.",
+  "gardenerTypeConsistent": "El Constante",
+  "gardenerTypeConsistentDesc": "Más del 80% de tareas a tiempo. Fiable como un reloj.",
+  "gardenerTypeExplorer": "El Explorador",
+  "gardenerTypeExplorerDesc": "5+ especies en tu colección. Un verdadero explorador botánico.",
+  "gardenerTypePhotographer": "El Fotógrafo",
+  "gardenerTypePhotographerDesc": "10+ fotos documentando el crecimiento. Cada hoja cuenta una historia.",
+  "gardenerTypeNurturer": "El Cuidador",
+  "gardenerTypeNurturerDesc": "50+ acciones de cuidado. Tu jardín prospera con tu atención.",
+  "gardenerTypeBudding": "Jardinero en Ciernes",
+  "gardenerTypeBuddingDesc": "Todo experto fue principiante. ¡Sigue creciendo!",
+  "whispererTierSeedling": "Semilla",
+  "whispererTierSprout": "Brote",
+  "whispererTierGardener": "Jardinero",
+  "whispererTierBotanist": "Botánico",
+  "whispererTierWhisperer": "Susurrador de Plantas",
+  "whispererNextLevel": "{xp} XP para el siguiente nivel",
+  "@whispererNextLevel": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "careCombo": "¡{count}x combo!",
+  "@careCombo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "careComboStreak": "¡{count}x combo! ¡Estás imparable!",
+  "@careComboStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lastCareWater": "Regado",
+  "lastCareFertilize": "Fertilizado",
+  "lastCarePhoto": "Foto",
+  "lastCareDaysAgo": "hace {days}d",
+  "@lastCareDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lastCareToday": "Hoy",
+  "lastCareNever": "—",
+  "careConfidenceOnSchedule": "Justo a tiempo (promedio {days} días)",
+  "@careConfidenceOnSchedule": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "careConfidenceEarly": "Un poco pronto — el suelo podría estar húmedo",
+  "careConfidenceLate": "Un poco tarde, pero no pasa nada",
+  "gardenMoodThriving": "Floreciendo",
+  "gardenMoodHappy": "Feliz",
+  "gardenMoodNeedsLove": "Necesita amor",
+  "gardenMoodThirsty": "Sediento",
+  "plantDetailLogsSparklineTitle": "Actividad 14 días",
+  "plantDetailLogsSparklineCount": "{count} acciones",
+  "@plantDetailLogsSparklineCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonToday": "Hoy",
+  "calendarHeatmapTitle": "Actividad 12 semanas",
+  "profileStatsTotalCare": "Cuidado total",
+  "profileStatsWatered": "Regado",
+  "profileStatsFertilized": "Fertilizado",
+  "profileStatsActions": "{count}",
+  "@profileStatsActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileCareScore": "Puntuación de cuidado",
+  "profileCareScoreLabel": "{percent}%",
+  "@profileCareScoreLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "profileCareScoreSubtitle": "Tasa de puntualidad en 30 días",
+  "weeklyRecapTitle": "Tu semana en resumen",
+  "weeklyRecapActiveDays": "Días activos",
+  "weeklyRecapSummary": "{actions} acciones de cuidado en {days} días activos esta semana",
+  "@weeklyRecapSummary": {
+    "placeholders": {
+      "actions": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "weeklyRecapDismiss": "¡Buen trabajo!",
+  "weeklyRecapBestDay": "Mejor día: {day}",
+  "@weeklyRecapBestDay": {
+    "placeholders": {
+      "day": { "type": "String" }
+    }
+  },
+  "weeklyRecapStreak": "Racha: {days} días",
+  "@weeklyRecapStreak": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "gardenAllTasksDoneTitle": "¡Todo listo por hoy!",
+  "gardenAllTasksDoneBody": "Todas tus plantas están felices. Disfruta el resto del día.",
+  "gardenAllDoneBody2": "Tus amigos verdes prosperan gracias a ti.",
+  "gardenAllDoneBody3": "La constancia es el secreto. Lo tienes.",
+  "gardenAllDoneBody4": "Otro día de excelente cuidado vegetal.",
+  "gardenAllDoneBody5": "Tus plantas se fortalecen cada día más.",
+  "profileLongestStreak": "Mejor: {days} días",
+  "@profileLongestStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "profileGardenAge": "Jardín: {days} días",
+  "@profileGardenAge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenNewPersonalBest": "¡Nuevo récord! Racha de {days} días",
+  "@gardenNewPersonalBest": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenTomorrowPreview": "Mañana: {count} {count, plural, =1{planta necesita} other{plantas necesitan}} cuidado",
+  "@gardenTomorrowPreview": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenMotivation7DayStreak": "Vas muy bien — sigue con el impulso.",
+  "gardenMotivation30DayStreak": "Un mes de constancia. Tus plantas prosperan.",
+  "gardenMotivationWelcomeBack": "Bienvenido de vuelta — tus plantas te extrañaron.",
+  "gardenMotivationBigGarden": "Una colección floreciente. Lo tienes controlado.",
+  "gardenMotivationMorning": "Un gran día para revisar a tus amigos verdes.",
+  "gardenMotivationEvening": "Relájate con un vistazo rápido al jardín.",
+  "gardenMotivationAllDoneToday": "Todo al día — tus plantas están felices.",
+  "gardenMotivationNewPlant": "Tu planta más nueva se está adaptando bien.",
+  "gardenStreakFreezeUsed": "¡Congelación de racha usada! Tu racha de {days} días está a salvo.",
+  "@gardenStreakFreezeUsed": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenStreakFreezeEarned": "¡Ganaste una congelación de racha! ({count} disponibles)",
+  "@gardenStreakFreezeEarned": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileStreakFreezes": "{count, plural, =1{1 congelación} other{{count} congelaciones}} disponibles",
+  "@profileStreakFreezes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenPlantMilestone": "¡{count} plantas en tu jardín! Tu colección crece hermosamente.",
+  "@gardenPlantMilestone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "streakShareTitle": "Comparte tu racha",
+  "streakShareCardDays": "Racha de {days} días",
+  "@streakShareCardDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakShareCardSubtitle": "Cuidando mis plantas cada día",
+  "streakShareButton": "Compartir",
+  "plantLastWateredToday": "Regada hoy",
+  "plantLastWateredYesterday": "Regada ayer",
+  "plantLastWateredDaysAgo": "Regada hace {days} días",
+  "@plantLastWateredDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantNeverWatered": "Aún no regada",
+  "plantAgeLabel": "{days} días en tu jardín",
+  "@plantAgeLabel": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plantAnniversaryLabel": "¡{years} año de aniversario!",
+  "@plantAnniversaryLabel": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "careLogAddNote": "Añadir nota",
+  "careLogEditNote": "Editar nota",
+  "careLogNoteHint": "¿Cómo se veía? ¿Algo que recordar?",
+  "careLogNoteSaved": "Nota guardada",
+  "careStatsTitle": "Patrones de cuidado",
+  "careStatsTotalWaterings": "Riegos",
+  "careStatsAvgInterval": "Intervalo prom.",
+  "careStatsAvgDays": "{days}d",
+  "@careStatsAvgDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "careStatsTotalActions": "Total acciones",
+  "careStatsConsistency": "Consistencia",
+  "careStatsTip": "Intenta configurar un recordatorio recurrente para crear una rutina estable.",
+  "gardenForecastTitle": "Próximos 7 días",
+  "gardenForecastTaskCount": "{count} tareas",
+  "@gardenForecastTaskCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenForecastBusyDay": "Más ocupado: {day}",
+  "@gardenForecastBusyDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenForecastEmpty": "Sin tareas programadas esta semana",
+  "gardenForecastToday": "Hoy",
+  "gardenForecastTomorrow": "Mañana",
+  "wellnessHeatmapTitle": "Actividad de cuidado",
+  "wellnessHeatmapSubtitle": "Últimas 12 semanas",
+  "wellnessHeatmapActions": "{count} acciones",
+  "@wellnessHeatmapActions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendUp": "+{diff} vs semana pasada",
+  "@gardenWeeklyTrendUp": {
+    "placeholders": {
+      "diff": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendDown": "{diff} vs semana pasada",
+  "@gardenWeeklyTrendDown": {
+    "placeholders": {
+      "diff": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenWeeklyTrendSame": "Igual que la semana pasada",
+  "gardenWeeklyMostActiveDay": "Más activo: {day}",
+  "@gardenWeeklyMostActiveDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "achievementsTitle": "Logros",
+  "achievementsUnlocked": "{count}/{total} desbloqueados",
+  "@achievementsUnlocked": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "achievementFirstPlant": "Primer brote",
+  "achievementFirstPlantDesc": "Añade tu primera planta",
+  "achievementFivePlants": "Colección creciente",
+  "achievementFivePlantsDesc": "Llega a 5 plantas en tu jardín",
+  "achievementTenPlants": "Entusiasta de plantas",
+  "achievementTenPlantsDesc": "Llega a 10 plantas en tu jardín",
+  "achievementTwentyPlants": "Maestro de la jungla",
+  "achievementTwentyPlantsDesc": "Cultiva 20 plantas",
+  "achievementFirstCare": "Primera gota",
+  "achievementFirstCareDesc": "Completa tu primera tarea de cuidado",
+  "achievementFiftyCares": "Cuidador dedicado",
+  "achievementFiftyCaresDesc": "Completa 50 tareas de cuidado",
+  "achievementHundredCares": "Pulgar verde",
+  "achievementHundredCaresDesc": "Completa 100 tareas de cuidado",
+  "achievementFiveHundredCares": "Susurrador de plantas",
+  "achievementFiveHundredCaresDesc": "Completa 500 tareas de cuidado",
+  "achievementWeekStreak": "Guerrero semanal",
+  "achievementWeekStreakDesc": "Mantén una racha de 7 días",
+  "achievementMonthStreak": "Devoción mensual",
+  "achievementMonthStreakDesc": "Mantén una racha de 30 días",
+  "achievementYearStreak": "Jardinero legendario",
+  "achievementYearStreakDesc": "Mantén una racha de 365 días",
+  "achievementFirstPhoto": "Instantánea",
+  "achievementFirstPhotoDesc": "Toma tu primera foto de planta",
+  "achievementTenPhotos": "Diario fotográfico",
+  "achievementTenPhotosDesc": "Captura 10 fotos de plantas",
+  "achievementFiftyPhotos": "Narrador visual",
+  "achievementFiftyPhotosDesc": "Captura 50 fotos de plantas",
+  "achievementThreeRooms": "Explorador de habitaciones",
+  "achievementThreeRoomsDesc": "Coloca plantas en 3 habitaciones",
+  "achievementFiveRooms": "Jardín en toda la casa",
+  "achievementFiveRoomsDesc": "Coloca plantas en 5 habitaciones",
+  "achievementDiverseCarer": "Jardinero renacentista",
+  "achievementDiverseCarerDesc": "Realiza 5 tipos de cuidado diferentes",
+  "tasksCompleteAll": "Completar todo",
+  "tasksCompleteAllDone": "{count} tareas completadas",
+  "@tasksCompleteAllDone": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "tasksStreakAtRiskTitle": "Racha en riesgo!",
+  "tasksStreakAtRiskBody": "Tu racha de {days} dias termina esta noche. Completa una tarea para mantenerla.",
+  "@tasksStreakAtRiskBody": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "plantMilestoneOneMonth": "¡1 mes juntos!",
+  "plantMilestoneThreeMonths": "¡3 meses juntos!",
+  "plantMilestoneSixMonths": "¡Medio año de cuidado!",
+  "plantMilestoneOneYear": "¡Aniversario de 1 año!",
+  "plantMilestoneTwoYears": "¡2 años de crecimiento!",
+  "plantMilestoneSubtitle": "Has cuidado de {name} durante {days} días",
+  "@plantMilestoneSubtitle": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "days": { "type": "int" }
+    }
+  },
+
+  "seasonalTipTitle": "Consejo estacional",
+  "seasonalTipSpringRepotTitle": "Hora de trasplantar",
+  "seasonalTipSpringRepotBody": "La primavera es el mejor momento para trasplantar. Las plantas entran en fase de crecimiento y se recuperan rápido del estrés.",
+  "seasonalTipSpringFertilizeTitle": "Retoma el abono",
+  "seasonalTipSpringFertilizeBody": "Empieza a fertilizar de nuevo con los días más largos. Comienza con media dosis y aumenta gradualmente.",
+  "seasonalTipSpringGrowthTitle": "Observa el nuevo crecimiento",
+  "seasonalTipSpringGrowthBody": "Tus plantas están despertando. Busca hojas nuevas, brotes y raíces — buen momento para fotos de progreso.",
+  "seasonalTipSpringWaterTitle": "Aumenta el riego",
+  "seasonalTipSpringWaterBody": "Con el crecimiento activo, tus plantas beberán más. Revisa la humedad del suelo con más frecuencia que en invierno.",
+  "seasonalTipSpringPestsTitle": "Patrulla de plagas",
+  "seasonalTipSpringPestsBody": "El clima cálido trae plagas. Inspecciona regularmente los brotes nuevos y el envés de las hojas.",
+
+  "seasonalTipSummerWaterTitle": "Mantén la hidratación",
+  "seasonalTipSummerWaterBody": "El calor y los días largos aceleran la evaporación. Riega profundamente y revisa el suelo más seguido.",
+  "seasonalTipSummerMistTitle": "Aumenta la humedad",
+  "seasonalTipSummerMistBody": "El aire acondicionado reseca el aire. Pulveriza las plantas tropicales o agrúpalas para crear un microclima húmedo.",
+  "seasonalTipSummerSunburnTitle": "Cuidado con las quemaduras",
+  "seasonalTipSummerSunburnBody": "El sol intenso del mediodía puede quemar las hojas. Aleja las plantas sensibles de ventanas orientadas al sur.",
+  "seasonalTipSummerOutdoorTitle": "Tiempo al aire libre",
+  "seasonalTipSummerOutdoorBody": "Muchas plantas de interior disfrutan unas vacaciones de verano al exterior. Aclimatálas gradualmente.",
+  "seasonalTipSummerPropagateTitle": "Temporada de esquejes",
+  "seasonalTipSummerPropagateBody": "El calor del verano y los días largos hacen ideal este momento para esquejes. La mayoría enraíza rápidamente.",
+
+  "seasonalTipAutumnWaterTitle": "Reduce el riego",
+  "seasonalTipAutumnWaterBody": "El crecimiento se ralentiza con los días más cortos. Deja secar más el sustrato entre riegos.",
+  "seasonalTipAutumnFertilizeTitle": "Deja de abonar",
+  "seasonalTipAutumnFertilizeBody": "La mayoría de plantas entrarán en reposo pronto. Deja de fertilizar para evitar acumulación de sales.",
+  "seasonalTipAutumnLightTitle": "Persigue la luz",
+  "seasonalTipAutumnLightBody": "Con el sol más bajo, acerca las plantas a las ventanas. Rótalas regularmente para una iluminación uniforme.",
+  "seasonalTipAutumnInsideTitle": "Trae las plantas adentro",
+  "seasonalTipAutumnInsideBody": "Si sacaste plantas en verano, mételas antes de que las noches bajen de 10°C.",
+  "seasonalTipAutumnCleanTitle": "Día de limpieza",
+  "seasonalTipAutumnCleanBody": "El polvo bloquea la luz. Limpia las hojas con un paño húmedo para una fotosíntesis eficiente en invierno.",
+
+  "seasonalTipWinterWaterTitle": "Riega con moderación",
+  "seasonalTipWinterWaterBody": "La mayoría de plantas necesitan mucha menos agua en invierno. El exceso de riego es el mayor peligro en reposo.",
+  "seasonalTipWinterHumidityTitle": "Combate el aire seco",
+  "seasonalTipWinterHumidityBody": "La calefacción reseca el aire dramáticamente. Usa un humidificador o bandejas con guijarros para las tropicales.",
+  "seasonalTipWinterDraftsTitle": "Evita corrientes frías",
+  "seasonalTipWinterDraftsBody": "Mantén las plantas lejos de ventanas con corrientes y puertas exteriores. Los cambios bruscos de temperatura las dañan.",
+  "seasonalTipWinterLightTitle": "Maximiza la luz",
+  "seasonalTipWinterLightBody": "Los días cortos reducen la fotosíntesis. Mueve las plantas a los puntos más luminosos o considera luces de cultivo.",
+  "seasonalTipWinterRestTitle": "Déjalas descansar",
+  "seasonalTipWinterRestBody": "El reposo es natural y saludable. No te preocupes por el crecimiento lento — están guardando energía para primavera.",
+  "healthBreakdownTitle": "Puntuación de salud",
+  "healthBreakdownSubtitle": "Estos factores contribuyen a la salud de esta planta",
+  "healthBreakdownOverall": "Total: {score}/100",
+  "@healthBreakdownOverall": {
+    "placeholders": {
+      "score": {"type": "int"}
+    }
+  },
+  "healthFactorOverdue": "Puntualidad de tareas",
+  "healthFactorActivity": "Actividad de cuidado reciente",
+  "healthFactorVariety": "Variedad de cuidados",
+  "healthFactorConsistency": "Consistencia del horario",
+  "coachingTitle": "Coaching de cuidado",
+  "coachingLateWatererTitle": "Ajusta tus recordatorios",
+  "coachingLateWatererBody": "Sueles regar uno o dos días tarde. Intenta cambiar la hora del recordatorio a cuando estés libre.",
+  "coachingStreakAtRiskTitle": "¡Racha en riesgo!",
+  "coachingStreakAtRiskBody": "No has cuidado ninguna planta hoy. Un riego rápido mantiene tu racha.",
+  "coachingNeglectedPlantTitle": "Una planta te necesita",
+  "coachingNeglectedPlantBody": "Una de tus plantas no ha recibido cuidados en más de 3 semanas. Échale un vistazo.",
+  "coachingImprovingTitle": "¡Estás mejorando!",
+  "coachingImprovingBody": "Has sido más activo esta semana que la anterior. Mantén el impulso.",
+  "coachingConsistentTitle": "Campeón de consistencia",
+  "coachingConsistentBody": "9 de tus últimas 10 tareas se completaron a tiempo. Tus plantas prosperan.",
+  "coachingDiversifyTitle": "Prueba algo nuevo",
+  "coachingDiversifyBody": "Solo has estado regando últimamente. Considera nebulizar, rotar o fertilizar para plantas más sanas.",
+  "plantDetailNextWateringTomorrow": "Mañana",
+  "plantDetailNextWateringToday": "Hoy vence",
+  "gardenStreakFreezeAvailable": "{count, plural, =1{1 congelación de racha disponible} other{{count} congelaciones de racha disponibles}}",
+  "@gardenStreakFreezeAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonDismiss": "Cerrar",
+  "plantDetailHealthScore": "Puntuación de salud",
+  "plantDetailExpandText": "Expandir texto",
+  "plantDetailCollapseText": "Contraer texto",
+  "gardenWateredToday": "Regada hoy",
+  "gardenWateredYesterday": "Regada ayer",
+  "gardenWateredDaysAgo": "Regada hace {days} días",
+  "@gardenWateredDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gardenNeverWatered": "Aún no regada",
+  "calendarHeatmapTooltip": "{count, plural, =1{1 acción de cuidado} other{{count} acciones de cuidado}}",
+  "@calendarHeatmapTooltip": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "calendarHeatmapTooltipDetail": "{waters, plural, =0{} =1{1 riego} other{{waters} riegos}}{fertSep}{fertilizes, plural, =0{} =1{1 fertilización} other{{fertilizes} fertilizaciones}}{otherSep}{others, plural, =0{} =1{1 otro} other{{others} otros}}",
+  "@calendarHeatmapTooltipDetail": {
+    "placeholders": {
+      "waters": { "type": "int" },
+      "fertSep": { "type": "String" },
+      "fertilizes": { "type": "int" },
+      "otherSep": { "type": "String" },
+      "others": { "type": "int" }
+    }
+  },
+  "calendarDayCareCount": "{count, plural, =1{1 registro de cuidado} other{{count} registros de cuidado}}",
+  "@calendarDayCareCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "exportDataConfirmTitle": "¿Exportar datos de cuidado?",
+  "exportDataConfirmBody": "Se creará un archivo JSON con todas tus plantas, registros de cuidado y tareas.",
+  "exportDataConfirmAction": "Exportar",
+  "gardenWaterAllOverdue": "Regar todas las atrasadas",
+  "gardenWaterAllOverdueCount": "{count, plural, one {Regar 1 planta atrasada} other {Regar {count} plantas atrasadas}}",
+  "@gardenWaterAllOverdueCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "gardenWateredAllOverdue": "{count, plural, one {Se regó 1 planta atrasada} other {Se regaron {count} plantas atrasadas}}",
+  "@gardenWateredAllOverdue": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "plantOverviewNoCareStats": "Riega tu planta varias veces para ver patrones de cuidado aquí.",
+  "plantOverviewNoAiInsights": "Activa las sugerencias de IA en ajustes para obtener consejos personalizados.",
+  "plantOverviewNoTasksYet": "Aún no hay tareas pendientes. Los horarios de cuidado aparecerán al crearse.",
+  "gardenHealthTrendUp": "Mejorando",
+  "gardenHealthTrendDown": "Bajando",
+  "gardenHealthTrendStable": "Estable",
+  "plantCareStreakLabel": "Racha de {days} días",
+  "@plantCareStreakLabel": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "tasksEmptySoonMotivation": "Disfruta la calma. Tus plantas están prosperando.",
+  "manageCareTitle": "Gestionar recordatorios",
+  "manageCareSubtitle": "{active} activos · {disabled} desactivados",
+  "@manageCareSubtitle": {
+    "placeholders": {
+      "active": { "type": "int" },
+      "disabled": { "type": "int" }
+    }
+  },
+  "manageCareSpeciesDefault": "Predeterminado de especie",
+  "manageCareEnabledByYou": "Activado por ti",
+  "manageCareDisabledByYou": "Desactivado por ti",
+  "manageCareButton": "Gestionar",
+  "manageCareDisableConfirm": "¿Desactivar recordatorios de {type}?",
+  "@manageCareDisableConfirm": {
+    "placeholders": {
+      "type": { "type": "String" }
+    }
+  },
+  "manageCareEnabled": "Activado",
+  "manageCareDisabled": "Desactivado",
+  "growthEchoCompareTitle": "Antes y ahora",
+  "growthEchoCompareBody": "{plant} tiene {days} días de crecimiento para comparar.",
+  "@growthEchoCompareBody": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "days": { "type": "int" }
+    }
+  },
+  "growthEchoCaptureTitle": "Registro de crecimiento",
+  "growthEchoCaptureBody": "Han pasado {days} días desde la última foto de {plant}.",
+  "@growthEchoCaptureBody": {
+    "placeholders": {
+      "days": { "type": "int" },
+      "plant": { "type": "String" }
+    }
+  },
+  "commonProblemsTitle": "Problemas comunes",
+  "commonProblemsSubtitle": "Vigila estos problemas con tu {plant}",
+  "@commonProblemsSubtitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "perfectWeekTitle": "Semana perfecta {count}!",
+  "@perfectWeekTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "perfectWeekBody": "Todas las tareas completadas a tiempo durante 7 dias seguidos. Tus plantas prosperan gracias a ti.",
+  "perfectWeekBodyRepeat": "{count} semanas perfectas seguidas. Estas en otra liga.",
+  "@perfectWeekBodyRepeat": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "perfectWeekDismiss": "A por la siguiente!",
+  "growthTimelineTitle": "Linea de crecimiento",
+  "growthTimelineEmpty": "Toma fotos para seguir el crecimiento",
+  "notificationStreakProtectionTitle": "Tu racha de {days} dias esta en riesgo!",
+  "@notificationStreakProtectionTitle": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "notificationStreakProtectionBody": "Completa una tarea de cuidado antes de medianoche para mantenerla.",
+  "careRhythmTitle": "Ritmo de cuidado",
+  "careRhythmAvgInterval": "Promedio {days}d entre riegos",
+  "@careRhythmAvgInterval": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "careRhythmConsistent": "Muy consistente",
+  "careRhythmImproving": "Cada vez más consistente",
+  "careRhythmNoData": "Riega unas veces más para ver tu ritmo",
+  "plantMoodThriving": "¡Floreciendo! 🌱",
+  "plantMoodHappy": "Muy bien",
+  "plantMoodOkay": "Bien",
+  "plantMoodThirsty": "Tengo sed…",
+  "plantMoodNeglected": "Te extraño…",
+  "plantMoodNewHere": "¡Recién plantada!",
+  "plantAnniversaryTitle": "¡Feliz aniversario, {plant}!",
+  "@plantAnniversaryTitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "plantAnniversaryBody30": "Un mes juntos. Estás construyendo algo hermoso.",
+  "plantAnniversaryBody90": "Tres meses de cuidado. Tu dedicación se nota.",
+  "plantAnniversaryBody180": "¡Medio año! Esta planta prospera gracias a ti.",
+  "plantAnniversaryBody365": "Un año juntos. Qué viaje increíble.",
+  "plantAnniversaryDismiss": "¡Por muchos más!"
 }

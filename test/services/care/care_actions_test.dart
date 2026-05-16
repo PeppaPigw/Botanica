@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:botanica/data/repositories/logs_repository.dart';
 import 'package:botanica/data/repositories/plant_idea_repository.dart';
@@ -39,6 +41,10 @@ class _TestSpeciesRepository extends SpeciesRepository {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
+  });
 
   late Directory tempDir;
   late TasksRepository tasksRepo;
@@ -647,6 +653,40 @@ void main() {
       expect(nextTask.status, TaskStatus.pending);
       expect(nextTask.dueAt.isAfter(now.add(const Duration(days: 13))), isTrue);
       expect(logsRepo.forPlant(testPlant.id), isEmpty);
+    });
+  });
+
+  group('CareActions.newMilestoneReached', () {
+    test('returns 7 when streak crosses 7 and not yet celebrated', () {
+      expect(CareActions.newMilestoneReached(7, 0), 7);
+      expect(CareActions.newMilestoneReached(8, 0), 7);
+    });
+
+    test('returns 30 when streak crosses 30 and 7 already celebrated', () {
+      expect(CareActions.newMilestoneReached(30, 7), 30);
+      expect(CareActions.newMilestoneReached(45, 7), 30);
+    });
+
+    test('returns 90 when streak crosses 90', () {
+      expect(CareActions.newMilestoneReached(90, 30), 90);
+    });
+
+    test('returns 365 when streak crosses 365', () {
+      expect(CareActions.newMilestoneReached(365, 90), 365);
+    });
+
+    test('returns null when no new milestone crossed', () {
+      expect(CareActions.newMilestoneReached(5, 0), isNull);
+      expect(CareActions.newMilestoneReached(7, 7), isNull);
+      expect(CareActions.newMilestoneReached(29, 7), isNull);
+    });
+
+    test('returns null when all milestones already celebrated', () {
+      expect(CareActions.newMilestoneReached(400, 365), isNull);
+    });
+
+    test('returns lowest uncelebrated milestone first', () {
+      expect(CareActions.newMilestoneReached(100, 0), 7);
     });
   });
 }

@@ -103,6 +103,18 @@ void main() {
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
+  setUp(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.physicalSize = const Size(800, 2400);
+    binding.platformDispatcher.views.first.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    binding.platformDispatcher.views.first.resetPhysicalSize();
+    binding.platformDispatcher.views.first.resetDevicePixelRatio();
+  });
+
   testWidgets('Discover shows curated top 6 when query is empty',
       (WidgetTester tester) async {
     final list = List.generate(10, (i) => _species('s$i', 'Plant $i'));
@@ -127,7 +139,8 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     for (var i = 0; i < 6; i++) {
       expect(
@@ -163,11 +176,13 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     // Enable a filter chip without entering a query.
     await tester.tap(find.byKey(const ValueKey('discover-filter-pets')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     // Filter is active, so results should not be truncated to 6.
     expect(find.byKey(const ValueKey('discover-species-s9')), findsOneWidget);
@@ -197,28 +212,33 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     // Curated mode: only top 6 visible.
     expect(find.byKey(const ValueKey('discover-species-s9')), findsNothing);
 
     // Apply a sheet-backed filter (difficulty) to activate full list mode.
     await tester.tap(find.byKey(const ValueKey('discover-filter-difficulty')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tap(
       find.byKey(const ValueKey('discover-filter-difficulty-easy')),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byKey(const ValueKey('discover-species-s9')), findsOneWidget);
 
     // Re-open the sheet, then dismiss it by tapping outside.
     await tester.tap(find.byKey(const ValueKey('discover-filter-difficulty')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tapAt(const Offset(10, 10));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     // Dismissal should not clear the active filter selection.
     expect(find.byKey(const ValueKey('discover-species-s9')), findsOneWidget);
@@ -248,10 +268,12 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.enterText(find.byType(TextField), 'Plant');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byKey(const ValueKey('discover-species-s0')), findsOneWidget);
     expect(find.byKey(const ValueKey('discover-species-s6')), findsOneWidget);
@@ -282,10 +304,12 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.enterText(find.byType(TextField), 'zzzz');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     final curatedNoResultsCard =
         find.byKey(const ValueKey('discover-no-results-curated'));
@@ -296,8 +320,9 @@ void main() {
 
     // The library section may be lazily built below the fold (ListView), so
     // scroll down to ensure it is built before asserting it exists.
-    await tester.drag(find.byType(ListView), const Offset(0, -900));
-    await tester.pumpAndSettle();
+    await tester.drag(find.byType(ListView).first, const Offset(0, -900));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(libraryNoResultsCard, findsOneWidget);
   });
@@ -356,10 +381,12 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.enterText(find.byType(TextField), 'Pothos');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     // UI renders Chinese bestCommonName (settings locale is zh),
     // but search should still match the English common name.

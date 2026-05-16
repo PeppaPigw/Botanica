@@ -20,6 +20,7 @@ import '../../features/species/species_detail_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../providers.dart';
 import 'app_shell.dart';
+import 'botanica_page_transitions.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -94,8 +95,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 path: AddPlantScreen.subLocation,
                 pageBuilder: (context, state) {
                   final speciesId = state.uri.queryParameters['speciesId'];
-                  return MaterialPage(
-                    fullscreenDialog: true,
+                  return BotanicaSlideUpPage(
                     child: AddPlantScreen(initialSpeciesId: speciesId),
                   );
                 },
@@ -105,8 +105,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 path: EditPlantScreen.subLocation,
                 pageBuilder: (context, state) {
                   final id = state.pathParameters['id']!;
-                  return MaterialPage(
-                    fullscreenDialog: true,
+                  return BotanicaSlideUpPage(
                     child: EditPlantScreen(plantId: id),
                   );
                 },
@@ -114,15 +113,15 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
                 path: TasksScreen.subLocation,
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: TasksScreen(),
+                pageBuilder: (context, state) => BotanicaFadeThroughPage(
+                  child: const TasksScreen(),
                 ),
               ),
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
                 path: CalendarScreen.subLocation,
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: CalendarScreen(),
+                pageBuilder: (context, state) => BotanicaFadeThroughPage(
+                  child: const CalendarScreen(),
                 ),
               ),
               GoRoute(
@@ -144,7 +143,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                   final autoAddPhoto = normalizedAction == 'add_photo';
                   final autoAddNote = normalizedAction == 'add_note';
 
-                  return MaterialPage(
+                  return BotanicaFadeThroughPage(
                     child: PlantDetailScreen(
                       plantId: id,
                       initialTabIndex: initialTabIndex,
@@ -173,7 +172,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 path: SpeciesDetailScreen.subLocation,
                 pageBuilder: (context, state) {
                   final id = state.pathParameters['id']!;
-                  return MaterialPage(
+                  return BotanicaFadeThroughPage(
                     child: SpeciesDetailScreen(speciesId: id),
                   );
                 },
@@ -195,22 +194,22 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
                 path: GardenWellnessScreen.subLocation,
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: GardenWellnessScreen(),
+                pageBuilder: (context, state) => BotanicaFadeThroughPage(
+                  child: const GardenWellnessScreen(),
                 ),
               ),
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
                 path: StorageHealthScreen.subLocation,
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: StorageHealthScreen(),
+                pageBuilder: (context, state) => BotanicaFadeThroughPage(
+                  child: const StorageHealthScreen(),
                 ),
               ),
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
                 path: CreditsScreen.subLocation,
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: CreditsScreen(),
+                pageBuilder: (context, state) => BotanicaFadeThroughPage(
+                  child: const CreditsScreen(),
                 ),
               ),
             ],

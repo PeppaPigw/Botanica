@@ -183,7 +183,9 @@ void main() {
       enableAiInsights: true,
       aiPreferredEndpointIndex: 1,
       careStreakDays: 4,
+      longestStreak: 12,
       lastCareDate: DateTime(2026, 2, 20),
+      lastMilestoneCelebrated: 7,
       birthDate: DateTime(1996, 5, 16),
       westernZodiacSignId: 'leo',
     );
@@ -200,6 +202,7 @@ void main() {
     expect(restored.enableAiInsights, settings.enableAiInsights);
     expect(
         restored.aiPreferredEndpointIndex, settings.aiPreferredEndpointIndex);
+    expect(restored.longestStreak, settings.longestStreak);
     expect(restored.birthDate, settings.birthDate);
     expect(restored.westernZodiacSignId, settings.westernZodiacSignId);
   });

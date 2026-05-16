@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
@@ -26,6 +27,7 @@ class AiSettingsSection extends ConsumerWidget {
           child: SwitchListTile(
             value: settings.enableAiInsights,
             onChanged: (value) async {
+              HapticFeedback.selectionClick();
               final current = ref.read(settingsControllerProvider);
               await ref
                   .read(settingsControllerProvider.notifier)
@@ -52,7 +54,7 @@ class AiSettingsSection extends ConsumerWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
             ),
-            activeColor: scheme.primary,
+            activeThumbColor: scheme.primary,
           ),
         ),
       ],

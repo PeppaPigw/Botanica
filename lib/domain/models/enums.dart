@@ -195,6 +195,14 @@ enum Hemisphere {
       };
 }
 
+enum SnoozeDuration {
+  oneHour,
+  threeHours,
+  tomorrow,
+  tomorrowMorning,
+  weekend,
+}
+
 enum Season {
   winter,
   spring,
@@ -213,6 +221,21 @@ enum Season {
         'summer' => Season.summer,
         'autumn' => Season.autumn,
         _ => Season.winter,
+      };
+}
+
+enum CareTypeOverride {
+  useDefault('useDefault'),
+  enabled('enabled'),
+  disabled('disabled');
+
+  const CareTypeOverride(this.id);
+  final String id;
+
+  static CareTypeOverride fromId(String? id) => switch (id) {
+        'enabled' => CareTypeOverride.enabled,
+        'disabled' => CareTypeOverride.disabled,
+        _ => CareTypeOverride.useDefault,
       };
 }
 

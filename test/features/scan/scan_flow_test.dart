@@ -88,6 +88,12 @@ class _FakeSpeciesRepository extends SpeciesRepository {
 void main() {
   testWidgets('scan flow moves from initial to scanning to result',
       (tester) async {
+    // Use a tall viewport so the 4:3 image doesn't push content offscreen.
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     final completer = Completer<List<PlantIdCandidate>>();
     final species = <Species>[_species('pilea', 'Pilea')];
 
@@ -112,9 +118,17 @@ void main() {
     await _waitFor(tester, find.text(l10n.scanChooseCandidate));
 
     expect(find.text('Pilea'), findsOneWidget);
+
+    // Let entrance animations finish to avoid pending timer assertions.
+    await tester.pump(const Duration(seconds: 1));
   });
 
   testWidgets('scan flow moves to timeout state', (tester) async {
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await _pumpFlow(
       tester,
       species: <Species>[_species('pilea', 'Pilea')],
@@ -131,6 +145,11 @@ void main() {
   });
 
   testWidgets('scan flow moves to error state', (tester) async {
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await _pumpFlow(
       tester,
       species: <Species>[_species('pilea', 'Pilea')],

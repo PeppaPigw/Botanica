@@ -74,10 +74,12 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
-    await tester.tap(find.byIcon(Icons.calendar_month_rounded));
-    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.calendar_month_rounded).first);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('Calendar'), findsOneWidget);
   });
@@ -148,10 +150,12 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tap(find.text('Aloe · Water'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('Plant p1'), findsOneWidget);
   });

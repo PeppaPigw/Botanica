@@ -9,11 +9,32 @@ import 'theme/botanica_tokens.dart';
 import 'theme/botanica_theme.dart';
 import 'providers.dart';
 
-class BotanicaApp extends ConsumerWidget {
+class BotanicaApp extends ConsumerStatefulWidget {
   const BotanicaApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BotanicaApp> createState() => _BotanicaAppState();
+}
+
+class _BotanicaAppState extends ConsumerState<BotanicaApp> {
+  late final AppLifecycleListener _lifecycleListener;
+
+  @override
+  void initState() {
+    super.initState();
+    _lifecycleListener = AppLifecycleListener(
+      onResume: () => ref.read(notificationsServiceProvider).clearBadge(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycleListener.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final locale = ref.watch(
       settingsControllerProvider.select((s) => s.locale),
     );
@@ -21,6 +42,9 @@ class BotanicaApp extends ConsumerWidget {
       settingsControllerProvider.select((s) => s.enableDynamicColor),
     );
     final router = ref.watch(goRouterProvider);
+    notificationPlantIdCallback = (plantId) {
+      router.push('/garden/plant/$plantId');
+    };
     ref.watch(taskRemindersSyncProvider);
     final environment = ref.watch(environmentControllerProvider);
     final weatherKind = weatherKindForWmoCode(environment.weatherCode);

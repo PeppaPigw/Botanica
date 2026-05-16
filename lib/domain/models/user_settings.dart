@@ -14,11 +14,21 @@ class UserSettings {
     required this.enableAiInsights,
     required this.aiPreferredEndpointIndex,
     required this.careStreakDays,
+    required this.longestStreak,
     required this.lastCareDate,
+    required this.lastMilestoneCelebrated,
+    this.consecutivePerfectDays = 0,
+    this.lastPerfectDate,
+    this.streakFreezeCount = 0,
+    this.lastStreakFreezeUsed,
+    this.lastReviewPromptDate,
+    this.lastWeeklyRecapShown,
     this.dailySeed,
     this.birthDate,
     this.westernZodiacSignId,
     this.dismissedSeasonTipKey,
+    this.dismissedCoachingDate,
+    this.vacationEndDate,
   });
 
   factory UserSettings.defaults() => const UserSettings(
@@ -32,7 +42,9 @@ class UserSettings {
         enableAiInsights: false,
         aiPreferredEndpointIndex: 0,
         careStreakDays: 0,
+        longestStreak: 0,
         lastCareDate: null,
+        lastMilestoneCelebrated: 0,
         dailySeed: null,
         birthDate: null,
         westernZodiacSignId: null,
@@ -48,13 +60,35 @@ class UserSettings {
   final bool enableAiInsights;
   final int aiPreferredEndpointIndex;
   final int careStreakDays;
+  final int longestStreak;
   final DateTime? lastCareDate;
+  final int lastMilestoneCelebrated;
+  final int streakFreezeCount;
+  final int consecutivePerfectDays;
+  final DateTime? lastPerfectDate;
+  final DateTime? lastStreakFreezeUsed;
+  final DateTime? lastReviewPromptDate;
+  final DateTime? lastWeeklyRecapShown;
   final String? dailySeed;
   final DateTime? birthDate;
   final String? westernZodiacSignId;
   final String? dismissedSeasonTipKey;
+  final DateTime? dismissedCoachingDate;
+  final DateTime? vacationEndDate;
 
   Locale? get locale => localeCode == null ? null : Locale(localeCode!);
+
+  bool get isOnVacation {
+    if (vacationEndDate == null) return false;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final end = DateTime(
+      vacationEndDate!.year,
+      vacationEndDate!.month,
+      vacationEndDate!.day,
+    );
+    return !today.isAfter(end);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -70,11 +104,21 @@ class UserSettings {
             other.enableAiInsights == enableAiInsights &&
             other.aiPreferredEndpointIndex == aiPreferredEndpointIndex &&
             other.careStreakDays == careStreakDays &&
+            other.longestStreak == longestStreak &&
             other.lastCareDate == lastCareDate &&
+            other.lastMilestoneCelebrated == lastMilestoneCelebrated &&
+            other.streakFreezeCount == streakFreezeCount &&
+            other.consecutivePerfectDays == consecutivePerfectDays &&
+            other.lastPerfectDate == lastPerfectDate &&
+            other.lastStreakFreezeUsed == lastStreakFreezeUsed &&
+            other.lastReviewPromptDate == lastReviewPromptDate &&
+            other.lastWeeklyRecapShown == lastWeeklyRecapShown &&
             other.dailySeed == dailySeed &&
             other.birthDate == birthDate &&
             other.westernZodiacSignId == westernZodiacSignId &&
-            other.dismissedSeasonTipKey == dismissedSeasonTipKey);
+            other.dismissedSeasonTipKey == dismissedSeasonTipKey &&
+            other.dismissedCoachingDate == dismissedCoachingDate &&
+            other.vacationEndDate == vacationEndDate);
   }
 
   @override
@@ -89,11 +133,16 @@ class UserSettings {
         enableAiInsights,
         aiPreferredEndpointIndex,
         careStreakDays,
+        longestStreak,
         lastCareDate,
+        lastMilestoneCelebrated,
+        streakFreezeCount,
+        consecutivePerfectDays,
+        lastPerfectDate,
+        lastStreakFreezeUsed,
+        lastReviewPromptDate,
         dailySeed,
-        birthDate,
-        westernZodiacSignId,
-        dismissedSeasonTipKey,
+        Object.hash(birthDate, westernZodiacSignId, dismissedSeasonTipKey, dismissedCoachingDate, lastWeeklyRecapShown, vacationEndDate),
       );
 
   static const Object _unset = Object();
@@ -109,11 +158,21 @@ class UserSettings {
     bool? enableAiInsights,
     int? aiPreferredEndpointIndex,
     int? careStreakDays,
+    int? longestStreak,
     Object? lastCareDate = _unset,
+    int? lastMilestoneCelebrated,
+    int? streakFreezeCount,
+    int? consecutivePerfectDays,
+    Object? lastPerfectDate = _unset,
+    Object? lastStreakFreezeUsed = _unset,
+    Object? lastReviewPromptDate = _unset,
+    Object? lastWeeklyRecapShown = _unset,
     Object? dailySeed = _unset,
     Object? birthDate = _unset,
     Object? westernZodiacSignId = _unset,
     Object? dismissedSeasonTipKey = _unset,
+    Object? dismissedCoachingDate = _unset,
+    Object? vacationEndDate = _unset,
   }) {
     return UserSettings(
       hasCompletedOnboarding:
@@ -131,9 +190,27 @@ class UserSettings {
       aiPreferredEndpointIndex:
           aiPreferredEndpointIndex ?? this.aiPreferredEndpointIndex,
       careStreakDays: careStreakDays ?? this.careStreakDays,
+      longestStreak: longestStreak ?? this.longestStreak,
       lastCareDate: identical(lastCareDate, _unset)
           ? this.lastCareDate
           : lastCareDate as DateTime?,
+      lastMilestoneCelebrated:
+          lastMilestoneCelebrated ?? this.lastMilestoneCelebrated,
+      streakFreezeCount: streakFreezeCount ?? this.streakFreezeCount,
+      consecutivePerfectDays:
+          consecutivePerfectDays ?? this.consecutivePerfectDays,
+      lastPerfectDate: identical(lastPerfectDate, _unset)
+          ? this.lastPerfectDate
+          : lastPerfectDate as DateTime?,
+      lastStreakFreezeUsed: identical(lastStreakFreezeUsed, _unset)
+          ? this.lastStreakFreezeUsed
+          : lastStreakFreezeUsed as DateTime?,
+      lastReviewPromptDate: identical(lastReviewPromptDate, _unset)
+          ? this.lastReviewPromptDate
+          : lastReviewPromptDate as DateTime?,
+      lastWeeklyRecapShown: identical(lastWeeklyRecapShown, _unset)
+          ? this.lastWeeklyRecapShown
+          : lastWeeklyRecapShown as DateTime?,
       dailySeed:
           identical(dailySeed, _unset) ? this.dailySeed : dailySeed as String?,
       birthDate: identical(birthDate, _unset)
@@ -145,6 +222,12 @@ class UserSettings {
       dismissedSeasonTipKey: identical(dismissedSeasonTipKey, _unset)
           ? this.dismissedSeasonTipKey
           : dismissedSeasonTipKey as String?,
+      dismissedCoachingDate: identical(dismissedCoachingDate, _unset)
+          ? this.dismissedCoachingDate
+          : dismissedCoachingDate as DateTime?,
+      vacationEndDate: identical(vacationEndDate, _unset)
+          ? this.vacationEndDate
+          : vacationEndDate as DateTime?,
     );
   }
 
@@ -159,12 +242,32 @@ class UserSettings {
         'enableAiInsights': enableAiInsights,
         'aiPreferredEndpointIndex': aiPreferredEndpointIndex,
         'careStreakDays': careStreakDays,
+        'longestStreak': longestStreak,
         'lastCareDate':
             lastCareDate == null ? null : _formatDateOnly(lastCareDate!),
+        'lastMilestoneCelebrated': lastMilestoneCelebrated,
+        'streakFreezeCount': streakFreezeCount,
+        'consecutivePerfectDays': consecutivePerfectDays,
+        'lastPerfectDate':
+            lastPerfectDate == null ? null : _formatDateOnly(lastPerfectDate!),
+        'lastStreakFreezeUsed': lastStreakFreezeUsed == null
+            ? null
+            : _formatDateOnly(lastStreakFreezeUsed!),
+        'lastReviewPromptDate': lastReviewPromptDate == null
+            ? null
+            : _formatDateOnly(lastReviewPromptDate!),
+        'lastWeeklyRecapShown': lastWeeklyRecapShown == null
+            ? null
+            : _formatDateOnly(lastWeeklyRecapShown!),
         'dailySeed': dailySeed,
         'birthDate': birthDate == null ? null : _formatDateOnly(birthDate!),
         'westernZodiacSignId': westernZodiacSignId,
         'dismissedSeasonTipKey': dismissedSeasonTipKey,
+        'dismissedCoachingDate': dismissedCoachingDate == null
+            ? null
+            : _formatDateOnly(dismissedCoachingDate!),
+        'vacationEndDate':
+            vacationEndDate == null ? null : _formatDateOnly(vacationEndDate!),
       };
 
   static UserSettings fromJson(Map<String, dynamic> json) {
@@ -184,11 +287,23 @@ class UserSettings {
       aiPreferredEndpointIndex:
           (json['aiPreferredEndpointIndex'] as num?)?.toInt() ?? 0,
       careStreakDays: (json['careStreakDays'] as num?)?.toInt() ?? 0,
+      longestStreak: (json['longestStreak'] as num?)?.toInt() ?? 0,
       lastCareDate: _parseDateOnly(json['lastCareDate']),
+      lastMilestoneCelebrated:
+          (json['lastMilestoneCelebrated'] as num?)?.toInt() ?? 0,
+      streakFreezeCount: (json['streakFreezeCount'] as num?)?.toInt() ?? 0,
+      consecutivePerfectDays:
+          (json['consecutivePerfectDays'] as num?)?.toInt() ?? 0,
+      lastPerfectDate: _parseDateOnly(json['lastPerfectDate']),
+      lastStreakFreezeUsed: _parseDateOnly(json['lastStreakFreezeUsed']),
+      lastReviewPromptDate: _parseDateOnly(json['lastReviewPromptDate']),
+      lastWeeklyRecapShown: _parseDateOnly(json['lastWeeklyRecapShown']),
       dailySeed: json['dailySeed'] as String?,
       birthDate: _parseDateOnly(json['birthDate']),
       westernZodiacSignId: json['westernZodiacSignId'] as String?,
       dismissedSeasonTipKey: json['dismissedSeasonTipKey'] as String?,
+      dismissedCoachingDate: _parseDateOnly(json['dismissedCoachingDate']),
+      vacationEndDate: _parseDateOnly(json['vacationEndDate']),
     );
   }
 }

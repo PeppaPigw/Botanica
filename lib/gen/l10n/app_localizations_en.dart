@@ -82,6 +82,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonTryAgain => 'Try again';
 
   @override
+  String get commonErrorTryAgain => 'Something went wrong. Please try again.';
+
+  @override
   String get commonComingSoon => 'Coming soon';
 
   @override
@@ -220,6 +223,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarSectionHistory => 'Care history';
 
   @override
+  String get calendarWeekAheadTitle => 'Week ahead';
+
+  @override
+  String calendarWeekAheadCount(int count) {
+    return '$count tasks';
+  }
+
+  @override
   String get calendarNoEvents => 'No care logs for this day.';
 
   @override
@@ -326,6 +337,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gardenTodayCardTitle => 'Today';
 
   @override
+  String get gardenGreetingMorning => 'Good morning';
+
+  @override
+  String get gardenGreetingAfternoon => 'Good afternoon';
+
+  @override
+  String get gardenGreetingEvening => 'Good evening';
+
+  @override
   String get gardenLoadError => 'Failed to load plants.';
 
   @override
@@ -341,8 +361,47 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get gardenAllCaughtUp => 'All caught up! Your plants are happy.';
+
+  @override
+  String allDoneQuietRunway(int days) {
+    return 'Nothing due for $days days';
+  }
+
+  @override
+  String allDoneTomorrowPreview(int count, String plants) {
+    return 'Tomorrow · $count tasks for $plants';
+  }
+
+  @override
+  String get gardenVacationBanner => 'Vacation mode — reminders paused';
+
+  @override
+  String get gardenWeeklySummaryTitle => 'This Week';
+
+  @override
+  String gardenWeeklyCareActions(int count) {
+    return '$count care actions';
+  }
+
+  @override
+  String gardenWeeklyWatered(int count) {
+    return '$count watered';
+  }
+
+  @override
+  String gardenWeeklyFertilized(int count) {
+    return '$count fertilized';
+  }
+
+  @override
   String gardenCareStreakChip(int days) {
     return '$days-day streak';
+  }
+
+  @override
+  String gardenStreakAtRisk(int days) {
+    return 'Your $days-day streak ends today — care for a plant to keep it!';
   }
 
   @override
@@ -379,10 +438,69 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherUnknown => 'Weather';
 
   @override
+  String get weatherTipRainy =>
+      'Rainy outside — skip watering outdoor plants today';
+
+  @override
+  String get weatherTipStormy =>
+      'Stormy weather — bring sensitive plants indoors';
+
+  @override
+  String get weatherTipExtremeHeat =>
+      'Extreme heat — check soil moisture and mist leaves';
+
+  @override
+  String get weatherTipHotSunny =>
+      'Hot and sunny — water early morning or evening';
+
+  @override
+  String get weatherTipNearFreezing =>
+      'Near freezing — protect frost-sensitive plants';
+
+  @override
+  String get weatherTipSnow => 'Snow expected — move outdoor pots to shelter';
+
+  @override
+  String get weatherTipCool => 'Cool day — reduce watering frequency';
+
+  @override
+  String get weatherTipLowHumidity =>
+      'Dry air today — mist tropical plants or group them together';
+
+  @override
+  String get weatherTipHighHumidity =>
+      'High humidity — hold off on misting and watch for fungal issues';
+
+  @override
+  String get seasonalTipSpring =>
+      'Spring is here — time to fertilize and repot if needed';
+
+  @override
+  String get seasonalTipSummer =>
+      'Summer heat means more frequent watering for most plants';
+
+  @override
+  String get seasonalTipAutumn =>
+      'Autumn — reduce fertilizing as plants slow their growth';
+
+  @override
+  String get seasonalTipWinter =>
+      'Winter — most plants need less water and no fertilizer';
+
+  @override
   String get gardenQuickWatered => 'Watered';
 
   @override
   String get gardenQuickSnooze => 'Snooze';
+
+  @override
+  String get gardenQuickLogCare => 'Log care';
+
+  @override
+  String get gardenQuickLogDone => 'Logged!';
+
+  @override
+  String get gardenViewDetails => 'View details';
 
   @override
   String get tasksSnoozeOneHour => '1 hour';
@@ -427,6 +545,20 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String profilePlantsInGarden(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plants in your garden',
+      one: '1 plant in your garden',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoverInYourGarden => 'in your garden';
 
   @override
   String get gardenRoomsWaterAll => 'Water all';
@@ -586,6 +718,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String plantDetailNextWateringInDays(int days) {
     return 'Next watering in $days days';
+  }
+
+  @override
+  String plantDetailCaringForDays(int days) {
+    return 'Caring for $days days';
   }
 
   @override
@@ -970,6 +1107,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoverTitle => 'Discover';
 
   @override
+  String get discoverPlantOfTheDay => 'Plant of the Day';
+
+  @override
   String get discoverSearchHint => 'Search plants, guides, and tips';
 
   @override
@@ -1026,6 +1166,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get discoverGuidePestBody =>
       'A quick weekly routine to catch issues early.';
+
+  @override
+  String get discoverAddFavorite => 'Add to favorites';
+
+  @override
+  String get discoverRemoveFavorite => 'Remove from favorites';
 
   @override
   String get speciesDetailHistory => 'History';
@@ -1361,6 +1507,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get exportDataTitle => 'Export care data';
+
+  @override
+  String get exportDataSubtitle =>
+      'Save your plants and care history as a JSON file.';
+
+  @override
+  String get exportDataSuccess => 'Care data exported successfully.';
+
+  @override
+  String get exportDataEmpty =>
+      'No data to export yet — add some plants first.';
+
+  @override
   String get profileLanguage => 'Language';
 
   @override
@@ -1473,6 +1633,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileDynamicColorBody => 'Use device palette when available.';
+
+  @override
+  String get vacationModeTitle => 'Vacation mode';
+
+  @override
+  String get vacationModeOff => 'Pause all reminders while you\'re away.';
+
+  @override
+  String vacationModeActiveUntil(String date) {
+    return 'Active until $date';
+  }
+
+  @override
+  String get vacationModeEnd => 'End vacation mode';
+
+  @override
+  String get vacationModePickDate => 'Return date';
 
   @override
   String get profileAiInsightsTitle => 'AI insights';
@@ -1793,6 +1970,64 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String notificationWaterTitle2(String plant) {
+    return '$plant is getting thirsty!';
+  }
+
+  @override
+  String notificationWaterTitle3(String plant) {
+    return 'Your $plant needs a drink';
+  }
+
+  @override
+  String notificationFertilizeTitle2(String plant) {
+    return '$plant could use some nutrients';
+  }
+
+  @override
+  String notificationFertilizeTitle3(String plant) {
+    return 'Feeding time for $plant';
+  }
+
+  @override
+  String notificationMistTitle2(String plant) {
+    return 'A little humidity boost for $plant?';
+  }
+
+  @override
+  String notificationMistTitle3(String plant) {
+    return 'Time to mist $plant';
+  }
+
+  @override
+  String notificationRotateTitle2(String plant) {
+    return 'Rotate $plant for even growth';
+  }
+
+  @override
+  String notificationRotateTitle3(String plant) {
+    return '$plant needs a turn today';
+  }
+
+  @override
+  String notificationPruneTitle2(String plant) {
+    return 'Time to tidy up $plant';
+  }
+
+  @override
+  String notificationPruneTitle3(String plant) {
+    return '$plant could use a trim';
+  }
+
+  @override
+  String get notificationDailySummaryTitle => 'Good morning, plant parent!';
+
+  @override
+  String notificationDailySummaryBody(int count) {
+    return 'You have $count care tasks today. Your plants are counting on you!';
+  }
+
+  @override
   String get reasonHumidityLow => 'Low humidity → soil dries faster';
 
   @override
@@ -1875,6 +2110,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gardenWellnessStatAtRisk => 'At risk';
+
+  @override
+  String get gardenWellnessStatPunctuality => 'On time';
+
+  @override
+  String get gardenWellnessStatWeeklyActive => 'Weekly active';
+
+  @override
+  String get gardenWellnessStatBestStreak => 'Best streak';
+
+  @override
+  String get gardenWellnessMomentumIncreasing => 'Momentum rising';
+
+  @override
+  String get gardenWellnessMomentumDecreasing => 'Momentum dipping';
 
   @override
   String get gardenWellnessRoomPulseTitle => 'Room pulse';
@@ -2091,6 +2341,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gardenSortNewest => 'Newest added';
 
   @override
+  String get gardenSortHealth => 'Health score';
+
+  @override
+  String get gardenSortRoom => 'Room';
+
+  @override
   String get gardenSortSpecies => 'Species';
 
   @override
@@ -2125,4 +2381,1174 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonConfirm => 'Confirm';
+
+  @override
+  String streakMilestoneTitle(int days) {
+    return '$days-Day Milestone!';
+  }
+
+  @override
+  String get streakMilestoneBody7 =>
+      'A full week of plant care. Your garden thanks you.';
+
+  @override
+  String get streakMilestoneBody30 =>
+      '30 days strong. You\'re building a real habit.';
+
+  @override
+  String get streakMilestoneBody90 =>
+      '90 days! Your plants have never been happier.';
+
+  @override
+  String get streakMilestoneBody365 =>
+      'A full year of care. You\'re a plant legend.';
+
+  @override
+  String get streakMilestoneDismiss => 'Keep going!';
+
+  @override
+  String timeCapsuleTitle(int days) {
+    return '$days days ago today';
+  }
+
+  @override
+  String timeCapsuleBody(String plant, int days) {
+    return 'You took this photo of $plant $days days ago. Look how far you’ve come together.';
+  }
+
+  @override
+  String get rescueResetTitle => 'Welcome back';
+
+  @override
+  String rescueResetBody(int streak, int days) {
+    return 'You had a $streak-day streak going. It\'s been $days days — no guilt, just a fresh start whenever you\'re ready.';
+  }
+
+  @override
+  String get rescueResetWaterNow => 'Water a plant now';
+
+  @override
+  String get rescueResetFreshStart => 'Start fresh';
+
+  @override
+  String streakSavedSnackbar(String plant, int days) {
+    return 'Streak saved! $plant cared for · $days-day rhythm intact';
+  }
+
+  @override
+  String get plantPulseTitle => 'Ready for a check-in';
+
+  @override
+  String plantPulseBody(String plant, int days) {
+    return '$plant hasn\'t had a photo in $days days. See how it\'s grown.';
+  }
+
+  @override
+  String get plantPulseCta => 'Take a photo';
+
+  @override
+  String get plantJourneyTitle => 'Your journey together';
+
+  @override
+  String plantJourneyNextMilestone(String milestone) {
+    return 'Next: $milestone';
+  }
+
+  @override
+  String get plantJourneyMilestoneFirstWater => 'First watering';
+
+  @override
+  String get plantJourneyMilestoneFirstPhoto => 'First photo';
+
+  @override
+  String get plantJourneyMilestone7Days => '7 days together';
+
+  @override
+  String get plantJourneyMilestoneFirstFertilize => 'First fertilize';
+
+  @override
+  String get plantJourneyMilestone10Waters => '10 waterings';
+
+  @override
+  String get plantJourneyMilestone30Days => '30 days together';
+
+  @override
+  String get plantJourneyMilestone25Waters => '25 waterings';
+
+  @override
+  String get plantJourneyMilestone100Days => '100 days together';
+
+  @override
+  String get plantJourneyMilestone365Days => '1 year together';
+
+  @override
+  String get gardenerTypeTitle => 'Your gardener type';
+
+  @override
+  String get gardenerTypeDevoted => 'The Devoted';
+
+  @override
+  String get gardenerTypeDevotedDesc =>
+      '30+ days of unbroken care. Your plants adore you.';
+
+  @override
+  String get gardenerTypeConsistent => 'The Consistent';
+
+  @override
+  String get gardenerTypeConsistentDesc =>
+      'Over 80% of tasks done on time. Reliable as clockwork.';
+
+  @override
+  String get gardenerTypeExplorer => 'The Explorer';
+
+  @override
+  String get gardenerTypeExplorerDesc =>
+      '5+ species in your collection. A true plant explorer.';
+
+  @override
+  String get gardenerTypePhotographer => 'The Photographer';
+
+  @override
+  String get gardenerTypePhotographerDesc =>
+      '10+ photos documenting growth. Every leaf tells a story.';
+
+  @override
+  String get gardenerTypeNurturer => 'The Nurturer';
+
+  @override
+  String get gardenerTypeNurturerDesc =>
+      '50+ care actions. Your garden thrives on your attention.';
+
+  @override
+  String get gardenerTypeBudding => 'The Budding Gardener';
+
+  @override
+  String get gardenerTypeBuddingDesc =>
+      'Every expert was once a beginner. Keep growing!';
+
+  @override
+  String get whispererTierSeedling => 'Seedling';
+
+  @override
+  String get whispererTierSprout => 'Sprout';
+
+  @override
+  String get whispererTierGardener => 'Gardener';
+
+  @override
+  String get whispererTierBotanist => 'Botanist';
+
+  @override
+  String get whispererTierWhisperer => 'Plant Whisperer';
+
+  @override
+  String whispererNextLevel(int xp) {
+    return '$xp XP to next level';
+  }
+
+  @override
+  String careCombo(int count) {
+    return '${count}x combo!';
+  }
+
+  @override
+  String careComboStreak(int count) {
+    return '${count}x combo! You\'re on fire!';
+  }
+
+  @override
+  String get lastCareWater => 'Watered';
+
+  @override
+  String get lastCareFertilize => 'Fertilized';
+
+  @override
+  String get lastCarePhoto => 'Photo';
+
+  @override
+  String lastCareDaysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get lastCareToday => 'Today';
+
+  @override
+  String get lastCareNever => '—';
+
+  @override
+  String careConfidenceOnSchedule(int days) {
+    return 'Right on schedule (avg $days days)';
+  }
+
+  @override
+  String get careConfidenceEarly => 'A bit early — soil might still be moist';
+
+  @override
+  String get careConfidenceLate => 'A bit late, but no worries';
+
+  @override
+  String get gardenMoodThriving => 'Thriving';
+
+  @override
+  String get gardenMoodHappy => 'Happy';
+
+  @override
+  String get gardenMoodNeedsLove => 'Needs love';
+
+  @override
+  String get gardenMoodThirsty => 'Thirsty';
+
+  @override
+  String get plantDetailLogsSparklineTitle => '14-Day Activity';
+
+  @override
+  String plantDetailLogsSparklineCount(int count) {
+    return '$count actions';
+  }
+
+  @override
+  String get commonToday => 'Today';
+
+  @override
+  String get calendarHeatmapTitle => '12-Week Activity';
+
+  @override
+  String get profileStatsTotalCare => 'Total Care';
+
+  @override
+  String get profileStatsWatered => 'Watered';
+
+  @override
+  String get profileStatsFertilized => 'Fertilized';
+
+  @override
+  String profileStatsActions(int count) {
+    return '$count';
+  }
+
+  @override
+  String get profileCareScore => 'Care Score';
+
+  @override
+  String profileCareScoreLabel(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get profileCareScoreSubtitle => 'Last 30 days on-time rate';
+
+  @override
+  String get weeklyRecapTitle => 'Your Week in Review';
+
+  @override
+  String get weeklyRecapActiveDays => 'Active Days';
+
+  @override
+  String weeklyRecapSummary(int actions, int days) {
+    return '$actions care actions across $days active days this week';
+  }
+
+  @override
+  String get weeklyRecapDismiss => 'Nice work!';
+
+  @override
+  String weeklyRecapBestDay(String day) {
+    return 'Best day: $day';
+  }
+
+  @override
+  String weeklyRecapStreak(int days) {
+    return 'Streak: $days days';
+  }
+
+  @override
+  String get gardenAllTasksDoneTitle => 'All done for today!';
+
+  @override
+  String get gardenAllTasksDoneBody =>
+      'Every plant is happy. Enjoy the rest of your day.';
+
+  @override
+  String get gardenAllDoneBody2 =>
+      'Your green friends are thriving thanks to you.';
+
+  @override
+  String get gardenAllDoneBody3 => 'Consistency is the secret. You\'ve got it.';
+
+  @override
+  String get gardenAllDoneBody4 => 'Another day of great plant parenting.';
+
+  @override
+  String get gardenAllDoneBody5 =>
+      'Your plants are growing stronger every day.';
+
+  @override
+  String profileLongestStreak(int days) {
+    return 'Best: $days days';
+  }
+
+  @override
+  String profileGardenAge(int days) {
+    return 'Garden: $days days old';
+  }
+
+  @override
+  String gardenNewPersonalBest(int days) {
+    return 'New personal best! $days-day streak';
+  }
+
+  @override
+  String gardenTomorrowPreview(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'plants need',
+      one: 'plant needs',
+    );
+    return 'Tomorrow: $count $_temp0 care';
+  }
+
+  @override
+  String get gardenMotivation7DayStreak =>
+      'You\'re on a roll — keep the momentum going.';
+
+  @override
+  String get gardenMotivation30DayStreak =>
+      'A month of consistency. Your plants are thriving.';
+
+  @override
+  String get gardenMotivationWelcomeBack =>
+      'Welcome back — your plants missed you.';
+
+  @override
+  String get gardenMotivationBigGarden =>
+      'A flourishing collection. You\'ve got this.';
+
+  @override
+  String get gardenMotivationMorning =>
+      'A great day to check on your green friends.';
+
+  @override
+  String get gardenMotivationEvening => 'Wind down with a quick garden check.';
+
+  @override
+  String get gardenMotivationAllDoneToday =>
+      'All caught up — your plants are happy.';
+
+  @override
+  String get gardenMotivationNewPlant =>
+      'Your newest plant is settling in nicely.';
+
+  @override
+  String gardenStreakFreezeUsed(int days) {
+    return 'Streak freeze used! Your $days-day streak is safe.';
+  }
+
+  @override
+  String gardenStreakFreezeEarned(int count) {
+    return 'You earned a streak freeze! ($count available)';
+  }
+
+  @override
+  String profileStreakFreezes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count freezes',
+      one: '1 freeze',
+    );
+    return '$_temp0 available';
+  }
+
+  @override
+  String gardenPlantMilestone(int count) {
+    return '$count plants in your garden! Your collection is growing beautifully.';
+  }
+
+  @override
+  String get streakShareTitle => 'Share Your Streak';
+
+  @override
+  String streakShareCardDays(int days) {
+    return '$days-Day Streak';
+  }
+
+  @override
+  String get streakShareCardSubtitle => 'Caring for my plants every day';
+
+  @override
+  String get streakShareButton => 'Share';
+
+  @override
+  String get plantLastWateredToday => 'Watered today';
+
+  @override
+  String get plantLastWateredYesterday => 'Watered yesterday';
+
+  @override
+  String plantLastWateredDaysAgo(int days) {
+    return 'Watered $days days ago';
+  }
+
+  @override
+  String get plantNeverWatered => 'Not yet watered';
+
+  @override
+  String plantAgeLabel(int days) {
+    return '$days days in your garden';
+  }
+
+  @override
+  String plantAnniversaryLabel(int years) {
+    return '$years-year anniversary!';
+  }
+
+  @override
+  String get careLogAddNote => 'Add note';
+
+  @override
+  String get careLogEditNote => 'Edit note';
+
+  @override
+  String get careLogNoteHint => 'How did it look? Anything to remember?';
+
+  @override
+  String get careLogNoteSaved => 'Note saved';
+
+  @override
+  String get careStatsTitle => 'Care patterns';
+
+  @override
+  String get careStatsTotalWaterings => 'Waterings';
+
+  @override
+  String get careStatsAvgInterval => 'Avg interval';
+
+  @override
+  String careStatsAvgDays(int days) {
+    return '${days}d';
+  }
+
+  @override
+  String get careStatsTotalActions => 'Total actions';
+
+  @override
+  String get careStatsConsistency => 'Consistency';
+
+  @override
+  String get careStatsTip =>
+      'Try setting a recurring reminder to build a steady routine.';
+
+  @override
+  String get gardenForecastTitle => 'Next 7 Days';
+
+  @override
+  String gardenForecastTaskCount(int count) {
+    return '$count tasks';
+  }
+
+  @override
+  String gardenForecastBusyDay(String day) {
+    return 'Busiest: $day';
+  }
+
+  @override
+  String get gardenForecastEmpty => 'No tasks scheduled this week';
+
+  @override
+  String get gardenForecastToday => 'Today';
+
+  @override
+  String get gardenForecastTomorrow => 'Tomorrow';
+
+  @override
+  String get wellnessHeatmapTitle => 'Care Activity';
+
+  @override
+  String get wellnessHeatmapSubtitle => 'Last 12 weeks';
+
+  @override
+  String wellnessHeatmapActions(int count) {
+    return '$count actions';
+  }
+
+  @override
+  String gardenWeeklyTrendUp(int diff) {
+    return '+$diff vs last week';
+  }
+
+  @override
+  String gardenWeeklyTrendDown(int diff) {
+    return '$diff vs last week';
+  }
+
+  @override
+  String get gardenWeeklyTrendSame => 'Same as last week';
+
+  @override
+  String gardenWeeklyMostActiveDay(String day) {
+    return 'Most active: $day';
+  }
+
+  @override
+  String get achievementsTitle => 'Achievements';
+
+  @override
+  String achievementsUnlocked(int count, int total) {
+    return '$count/$total unlocked';
+  }
+
+  @override
+  String get achievementFirstPlant => 'First Sprout';
+
+  @override
+  String get achievementFirstPlantDesc => 'Add your first plant';
+
+  @override
+  String get achievementFivePlants => 'Growing Collection';
+
+  @override
+  String get achievementFivePlantsDesc => 'Grow your garden to 5 plants';
+
+  @override
+  String get achievementTenPlants => 'Plant Enthusiast';
+
+  @override
+  String get achievementTenPlantsDesc => 'Reach 10 plants in your garden';
+
+  @override
+  String get achievementTwentyPlants => 'Jungle Master';
+
+  @override
+  String get achievementTwentyPlantsDesc => 'Cultivate 20 plants';
+
+  @override
+  String get achievementFirstCare => 'First Drop';
+
+  @override
+  String get achievementFirstCareDesc => 'Complete your first care task';
+
+  @override
+  String get achievementFiftyCares => 'Dedicated Carer';
+
+  @override
+  String get achievementFiftyCaresDesc => 'Complete 50 care tasks';
+
+  @override
+  String get achievementHundredCares => 'Green Thumb';
+
+  @override
+  String get achievementHundredCaresDesc => 'Complete 100 care tasks';
+
+  @override
+  String get achievementFiveHundredCares => 'Plant Whisperer';
+
+  @override
+  String get achievementFiveHundredCaresDesc => 'Complete 500 care tasks';
+
+  @override
+  String get achievementWeekStreak => 'Week Warrior';
+
+  @override
+  String get achievementWeekStreakDesc => 'Maintain a 7-day care streak';
+
+  @override
+  String get achievementMonthStreak => 'Monthly Devotion';
+
+  @override
+  String get achievementMonthStreakDesc => 'Maintain a 30-day care streak';
+
+  @override
+  String get achievementYearStreak => 'Legendary Gardener';
+
+  @override
+  String get achievementYearStreakDesc => 'Maintain a 365-day care streak';
+
+  @override
+  String get achievementFirstPhoto => 'Snapshot';
+
+  @override
+  String get achievementFirstPhotoDesc => 'Take your first plant photo';
+
+  @override
+  String get achievementTenPhotos => 'Photo Journal';
+
+  @override
+  String get achievementTenPhotosDesc => 'Capture 10 plant photos';
+
+  @override
+  String get achievementFiftyPhotos => 'Visual Storyteller';
+
+  @override
+  String get achievementFiftyPhotosDesc => 'Capture 50 plant photos';
+
+  @override
+  String get achievementThreeRooms => 'Room Explorer';
+
+  @override
+  String get achievementThreeRoomsDesc => 'Place plants in 3 different rooms';
+
+  @override
+  String get achievementFiveRooms => 'Whole Home Garden';
+
+  @override
+  String get achievementFiveRoomsDesc => 'Place plants in 5 different rooms';
+
+  @override
+  String get achievementDiverseCarer => 'Renaissance Gardener';
+
+  @override
+  String get achievementDiverseCarerDesc => 'Perform 5 different care types';
+
+  @override
+  String get tasksCompleteAll => 'Complete all';
+
+  @override
+  String tasksCompleteAllDone(int count) {
+    return '$count tasks completed';
+  }
+
+  @override
+  String get tasksStreakAtRiskTitle => 'Streak at risk!';
+
+  @override
+  String tasksStreakAtRiskBody(int days) {
+    return 'Your $days-day streak ends tonight. Complete a task to keep it alive.';
+  }
+
+  @override
+  String get plantMilestoneOneMonth => '1 month together!';
+
+  @override
+  String get plantMilestoneThreeMonths => '3 months together!';
+
+  @override
+  String get plantMilestoneSixMonths => 'Half a year of care!';
+
+  @override
+  String get plantMilestoneOneYear => '1 year anniversary!';
+
+  @override
+  String get plantMilestoneTwoYears => '2 years of growth!';
+
+  @override
+  String plantMilestoneSubtitle(String name, int days) {
+    return 'You\'ve been caring for $name for $days days';
+  }
+
+  @override
+  String get seasonalTipTitle => 'Seasonal Tip';
+
+  @override
+  String get seasonalTipSpringRepotTitle => 'Time to repot';
+
+  @override
+  String get seasonalTipSpringRepotBody =>
+      'Spring is the best time to repot. Plants are entering their growth phase and will recover quickly from the stress.';
+
+  @override
+  String get seasonalTipSpringFertilizeTitle => 'Resume feeding';
+
+  @override
+  String get seasonalTipSpringFertilizeBody =>
+      'Start fertilizing again as days get longer. Begin with half-strength and increase gradually over a few weeks.';
+
+  @override
+  String get seasonalTipSpringGrowthTitle => 'Watch for new growth';
+
+  @override
+  String get seasonalTipSpringGrowthBody =>
+      'Your plants are waking up. Look for new leaves, shoots, and roots — a great time to take progress photos.';
+
+  @override
+  String get seasonalTipSpringWaterTitle => 'Increase watering';
+
+  @override
+  String get seasonalTipSpringWaterBody =>
+      'As growth picks up, your plants will drink more. Check soil moisture more frequently than in winter.';
+
+  @override
+  String get seasonalTipSpringPestsTitle => 'Pest patrol';
+
+  @override
+  String get seasonalTipSpringPestsBody =>
+      'Warmer weather brings pests. Inspect new growth and leaf undersides regularly for early signs of infestation.';
+
+  @override
+  String get seasonalTipSummerWaterTitle => 'Stay hydrated';
+
+  @override
+  String get seasonalTipSummerWaterBody =>
+      'Heat and longer days mean faster evaporation. Water deeply and check soil more often, especially for smaller pots.';
+
+  @override
+  String get seasonalTipSummerMistTitle => 'Boost humidity';
+
+  @override
+  String get seasonalTipSummerMistBody =>
+      'Air conditioning dries the air. Mist tropical plants or group them together to create a humid microclimate.';
+
+  @override
+  String get seasonalTipSummerSunburnTitle => 'Watch for sunburn';
+
+  @override
+  String get seasonalTipSummerSunburnBody =>
+      'Intense midday sun can scorch leaves. Move sensitive plants back from south-facing windows or add sheer curtains.';
+
+  @override
+  String get seasonalTipSummerOutdoorTitle => 'Outdoor time';
+
+  @override
+  String get seasonalTipSummerOutdoorBody =>
+      'Many houseplants love a summer vacation outdoors. Acclimate gradually and bring them in before nights get cold.';
+
+  @override
+  String get seasonalTipSummerPropagateTitle => 'Propagation season';
+
+  @override
+  String get seasonalTipSummerPropagateBody =>
+      'Summer warmth and long days make this the ideal time to take cuttings. Most will root quickly in bright indirect light.';
+
+  @override
+  String get seasonalTipAutumnWaterTitle => 'Ease off watering';
+
+  @override
+  String get seasonalTipAutumnWaterBody =>
+      'Growth slows as days shorten. Let soil dry out more between waterings to prevent root rot during the transition.';
+
+  @override
+  String get seasonalTipAutumnFertilizeTitle => 'Stop fertilizing';
+
+  @override
+  String get seasonalTipAutumnFertilizeBody =>
+      'Most plants enter dormancy soon. Stop feeding to avoid salt buildup and let them rest naturally.';
+
+  @override
+  String get seasonalTipAutumnLightTitle => 'Chase the light';
+
+  @override
+  String get seasonalTipAutumnLightBody =>
+      'As the sun angle drops, move plants closer to windows. Rotate them regularly so all sides get even light.';
+
+  @override
+  String get seasonalTipAutumnInsideTitle => 'Bring plants inside';
+
+  @override
+  String get seasonalTipAutumnInsideBody =>
+      'If you moved plants outdoors for summer, bring them back before nighttime temperatures drop below 10°C (50°F).';
+
+  @override
+  String get seasonalTipAutumnCleanTitle => 'Leaf cleaning day';
+
+  @override
+  String get seasonalTipAutumnCleanBody =>
+      'Dust blocks light absorption. Wipe leaves with a damp cloth to help your plants photosynthesize efficiently through winter.';
+
+  @override
+  String get seasonalTipWinterWaterTitle => 'Water sparingly';
+
+  @override
+  String get seasonalTipWinterWaterBody =>
+      'Most plants need much less water in winter. Overwatering is the top killer during dormancy — when in doubt, wait.';
+
+  @override
+  String get seasonalTipWinterHumidityTitle => 'Combat dry air';
+
+  @override
+  String get seasonalTipWinterHumidityBody =>
+      'Heating systems dry indoor air dramatically. Use a humidifier or pebble trays to keep tropical plants happy.';
+
+  @override
+  String get seasonalTipWinterDraftsTitle => 'Avoid cold drafts';
+
+  @override
+  String get seasonalTipWinterDraftsBody =>
+      'Keep plants away from drafty windows and exterior doors. Even cold-hardy plants dislike sudden temperature swings.';
+
+  @override
+  String get seasonalTipWinterLightTitle => 'Maximize light';
+
+  @override
+  String get seasonalTipWinterLightBody =>
+      'Short days mean less photosynthesis. Move plants to your brightest spots and consider a grow light for light-lovers.';
+
+  @override
+  String get seasonalTipWinterRestTitle => 'Let them rest';
+
+  @override
+  String get seasonalTipWinterRestBody =>
+      'Dormancy is natural and healthy. Don\'t worry about slow growth — your plants are conserving energy for spring.';
+
+  @override
+  String get healthBreakdownTitle => 'Health Score';
+
+  @override
+  String get healthBreakdownSubtitle =>
+      'Here\'s what contributes to this plant\'s health rating';
+
+  @override
+  String healthBreakdownOverall(int score) {
+    return 'Overall: $score/100';
+  }
+
+  @override
+  String get healthFactorOverdue => 'Task timeliness';
+
+  @override
+  String get healthFactorActivity => 'Recent care activity';
+
+  @override
+  String get healthFactorVariety => 'Care variety';
+
+  @override
+  String get healthFactorConsistency => 'Schedule consistency';
+
+  @override
+  String get coachingTitle => 'Care Coaching';
+
+  @override
+  String get coachingLateWatererTitle => 'Adjust your reminders';
+
+  @override
+  String get coachingLateWatererBody =>
+      'You often water a day or two late. Try shifting your reminder time to when you\'re usually free.';
+
+  @override
+  String get coachingStreakAtRiskTitle => 'Streak at risk!';
+
+  @override
+  String get coachingStreakAtRiskBody =>
+      'You haven\'t cared for any plants today. A quick water keeps your streak alive.';
+
+  @override
+  String get coachingNeglectedPlantTitle => 'A plant needs you';
+
+  @override
+  String get coachingNeglectedPlantBody =>
+      'One of your plants hasn\'t received care in over 3 weeks. Check in on it.';
+
+  @override
+  String get coachingImprovingTitle => 'You\'re improving!';
+
+  @override
+  String get coachingImprovingBody =>
+      'You\'ve been more active this week than last. Keep the momentum going.';
+
+  @override
+  String get coachingConsistentTitle => 'Consistency champion';
+
+  @override
+  String get coachingConsistentBody =>
+      '9 out of your last 10 tasks were completed on time. Your plants are thriving.';
+
+  @override
+  String get coachingDiversifyTitle => 'Try something new';
+
+  @override
+  String get coachingDiversifyBody =>
+      'You\'ve only been watering lately. Consider misting, rotating, or fertilizing for healthier plants.';
+
+  @override
+  String get plantDetailNextWateringTomorrow => 'Tomorrow';
+
+  @override
+  String get plantDetailNextWateringToday => 'Due today';
+
+  @override
+  String gardenStreakFreezeAvailable(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count streak freezes available',
+      one: '1 streak freeze available',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commonDismiss => 'Dismiss';
+
+  @override
+  String get plantDetailHealthScore => 'Health score';
+
+  @override
+  String get plantDetailExpandText => 'Expand text';
+
+  @override
+  String get plantDetailCollapseText => 'Collapse text';
+
+  @override
+  String get gardenWateredToday => 'Watered today';
+
+  @override
+  String get gardenWateredYesterday => 'Watered yesterday';
+
+  @override
+  String gardenWateredDaysAgo(int days) {
+    return 'Watered $days days ago';
+  }
+
+  @override
+  String get gardenNeverWatered => 'Not yet watered';
+
+  @override
+  String calendarHeatmapTooltip(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count care actions',
+      one: '1 care action',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String calendarHeatmapTooltipDetail(
+      int waters, String fertSep, int fertilizes, String otherSep, int others) {
+    String _temp0 = intl.Intl.pluralLogic(
+      waters,
+      locale: localeName,
+      other: '$waters waters',
+      one: '1 water',
+      zero: '',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      fertilizes,
+      locale: localeName,
+      other: '$fertilizes fertilizes',
+      one: '1 fertilize',
+      zero: '',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      others,
+      locale: localeName,
+      other: '$others other',
+      one: '1 other',
+      zero: '',
+    );
+    return '$_temp0$fertSep$_temp1$otherSep$_temp2';
+  }
+
+  @override
+  String calendarDayCareCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count care logs',
+      one: '1 care log',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exportDataConfirmTitle => 'Export care data?';
+
+  @override
+  String get exportDataConfirmBody =>
+      'This will create a JSON file with all your plants, care logs, and tasks.';
+
+  @override
+  String get exportDataConfirmAction => 'Export';
+
+  @override
+  String get gardenWaterAllOverdue => 'Water all overdue';
+
+  @override
+  String gardenWaterAllOverdueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Water $count overdue plants',
+      one: 'Water 1 overdue plant',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gardenWateredAllOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Watered $count overdue plants',
+      one: 'Watered 1 overdue plant',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get plantOverviewNoCareStats =>
+      'Water your plant a few times to see care patterns here.';
+
+  @override
+  String get plantOverviewNoAiInsights =>
+      'Enable AI insights in settings to get personalized care tips.';
+
+  @override
+  String get plantOverviewNoTasksYet =>
+      'No upcoming tasks yet. Care schedules will appear as they are created.';
+
+  @override
+  String get gardenHealthTrendUp => 'Improving';
+
+  @override
+  String get gardenHealthTrendDown => 'Declining';
+
+  @override
+  String get gardenHealthTrendStable => 'Stable';
+
+  @override
+  String plantCareStreakLabel(int days) {
+    return '$days-day care streak';
+  }
+
+  @override
+  String get tasksEmptySoonMotivation =>
+      'Enjoy the calm. Your plants are thriving.';
+
+  @override
+  String get manageCareTitle => 'Manage care reminders';
+
+  @override
+  String manageCareSubtitle(int active, int disabled) {
+    return '$active active · $disabled disabled';
+  }
+
+  @override
+  String get manageCareSpeciesDefault => 'Species default';
+
+  @override
+  String get manageCareEnabledByYou => 'Enabled by you';
+
+  @override
+  String get manageCareDisabledByYou => 'Disabled by you';
+
+  @override
+  String get manageCareButton => 'Manage';
+
+  @override
+  String manageCareDisableConfirm(String type) {
+    return 'Turn off $type reminders?';
+  }
+
+  @override
+  String get manageCareEnabled => 'Enabled';
+
+  @override
+  String get manageCareDisabled => 'Disabled';
+
+  @override
+  String get growthEchoCompareTitle => 'Then & now';
+
+  @override
+  String growthEchoCompareBody(String plant, int days) {
+    return '$plant has $days days of growth to compare.';
+  }
+
+  @override
+  String get growthEchoCaptureTitle => 'Growth check-in';
+
+  @override
+  String growthEchoCaptureBody(int days, String plant) {
+    return 'It\'s been $days days since $plant\'s last photo.';
+  }
+
+  @override
+  String get commonProblemsTitle => 'Common issues';
+
+  @override
+  String commonProblemsSubtitle(String plant) {
+    return 'Watch for these with your $plant';
+  }
+
+  @override
+  String perfectWeekTitle(int count) {
+    return 'Perfect Week $count!';
+  }
+
+  @override
+  String get perfectWeekBody =>
+      'Every task completed on time for 7 straight days. Your plants are thriving because of you.';
+
+  @override
+  String perfectWeekBodyRepeat(int count) {
+    return '$count perfect weeks in a row. You\'re in a league of your own.';
+  }
+
+  @override
+  String get perfectWeekDismiss => 'On to the next!';
+
+  @override
+  String get growthTimelineTitle => 'Growth Timeline';
+
+  @override
+  String get growthTimelineEmpty => 'Take photos to track growth over time';
+
+  @override
+  String notificationStreakProtectionTitle(int days) {
+    return 'Your $days-day streak is at risk!';
+  }
+
+  @override
+  String get notificationStreakProtectionBody =>
+      'Complete a care task before midnight to keep it going.';
+
+  @override
+  String get careRhythmTitle => 'Care rhythm';
+
+  @override
+  String careRhythmAvgInterval(int days) {
+    return 'Avg ${days}d between waterings';
+  }
+
+  @override
+  String get careRhythmConsistent => 'Very consistent';
+
+  @override
+  String get careRhythmImproving => 'Getting more consistent';
+
+  @override
+  String get careRhythmNoData => 'Water a few more times to see your rhythm';
+
+  @override
+  String get plantMoodThriving => 'Thriving! 🌱';
+
+  @override
+  String get plantMoodHappy => 'Feeling great';
+
+  @override
+  String get plantMoodOkay => 'Doing okay';
+
+  @override
+  String get plantMoodThirsty => 'Getting thirsty…';
+
+  @override
+  String get plantMoodNeglected => 'Missing you…';
+
+  @override
+  String get plantMoodNewHere => 'Just planted!';
+
+  @override
+  String plantAnniversaryTitle(String plant) {
+    return 'Happy anniversary, $plant!';
+  }
+
+  @override
+  String get plantAnniversaryBody30 =>
+      'One month together. You\'re building something beautiful.';
+
+  @override
+  String get plantAnniversaryBody90 =>
+      'Three months of care. Your dedication shows.';
+
+  @override
+  String get plantAnniversaryBody180 =>
+      'Half a year! This plant is thriving because of you.';
+
+  @override
+  String get plantAnniversaryBody365 =>
+      'A full year together. What an incredible journey.';
+
+  @override
+  String get plantAnniversaryDismiss => 'Here\'s to more!';
 }

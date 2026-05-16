@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
+
 import 'package:botanica/data/repositories/logs_repository.dart';
 import 'package:botanica/data/repositories/plant_idea_repository.dart';
 import 'package:botanica/data/repositories/species_repository.dart';
@@ -37,6 +40,10 @@ class _TestSpeciesRepository extends SpeciesRepository {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() {
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('UTC'));
+  });
 
   late Directory tempDir;
   late TasksRepository tasksRepo;

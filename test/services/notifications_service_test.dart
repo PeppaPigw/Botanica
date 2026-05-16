@@ -45,7 +45,11 @@ void main() {
         TaskType.water,
         'Aloe',
       ),
-      'Time to water Aloe',
+      anyOf(
+        'Time to water Aloe',
+        'Aloe is getting thirsty!',
+        'Your Aloe needs a drink',
+      ),
     );
     expect(
       BotanicaNotificationsService.notificationTitleForTaskType(
@@ -53,7 +57,11 @@ void main() {
         TaskType.fertilize,
         'Aloe',
       ),
-      'Fertilize Aloe today',
+      anyOf(
+        'Fertilize Aloe today',
+        'Aloe could use some nutrients',
+        'Feeding time for Aloe',
+      ),
     );
     expect(
       BotanicaNotificationsService.notificationTitleForTaskType(
@@ -61,7 +69,11 @@ void main() {
         TaskType.mist,
         'Aloe',
       ),
-      'Aloe would love some misting',
+      anyOf(
+        'Aloe would love some misting',
+        'A little humidity boost for Aloe?',
+        'Time to mist Aloe',
+      ),
     );
     expect(
       BotanicaNotificationsService.notificationTitleForTaskType(
@@ -69,7 +81,11 @@ void main() {
         TaskType.rotate,
         'Aloe',
       ),
-      'Give Aloe a quarter turn',
+      anyOf(
+        'Give Aloe a quarter turn',
+        'Rotate Aloe for even growth',
+        'Aloe needs a turn today',
+      ),
     );
     expect(
       BotanicaNotificationsService.notificationTitleForTaskType(
@@ -77,7 +93,11 @@ void main() {
         TaskType.prune,
         'Aloe',
       ),
-      'Aloe is ready for pruning',
+      anyOf(
+        'Aloe is ready for pruning',
+        'Time to tidy up Aloe',
+        'Aloe could use a trim',
+      ),
     );
   });
 }

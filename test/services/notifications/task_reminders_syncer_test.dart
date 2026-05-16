@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:botanica/app/providers.dart';
+import 'package:botanica/domain/models/care_log.dart';
 import 'package:botanica/domain/models/plant.dart';
 import 'package:botanica/domain/models/enums.dart';
 import 'package:botanica/domain/models/plant_meta.dart';
@@ -37,6 +38,7 @@ class _ResyncRequest {
 class _StubNotificationsService extends BotanicaNotificationsService {
   int resyncCallCount = 0;
   final requests = <_ResyncRequest>[];
+  int dailySummaryCallCount = 0;
 
   @override
   Future<void> resyncTaskReminders({
@@ -53,6 +55,20 @@ class _StubNotificationsService extends BotanicaNotificationsService {
       settings: settings,
     ));
   }
+
+  @override
+  Future<void> scheduleDailySummary({
+    required int todayTaskCount,
+    required UserSettings settings,
+  }) async {
+    dailySummaryCallCount++;
+  }
+
+  @override
+  Future<void> scheduleStreakProtection({
+    required UserSettings settings,
+    required List<CareLog> todayLogs,
+  }) async {}
 }
 
 Plant _plant(String id) => Plant(
@@ -194,6 +210,7 @@ void main() {
           ),
           tasksStreamProvider.overrideWith((ref) => tasksController.stream),
           plantsStreamProvider.overrideWith((ref) => plantsController.stream),
+          careLogsStreamProvider.overrideWith((ref) => Stream.value(const <CareLog>[])),
         ],
       );
       addTearDown(() async {

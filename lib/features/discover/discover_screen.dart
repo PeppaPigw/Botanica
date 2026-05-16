@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
+import '../../core/haptics/botanica_haptics.dart';
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../core/i18n/plant_idea_search.dart';
@@ -41,7 +42,6 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
   String? _difficultyFilter;
   String? _lightFilter;
   String? _tagFilter;
-  final List<String> _recentlyViewedSpeciesIds = <String>[];
 
   bool get _hasActiveFilters =>
       _petSafeOnly ||
@@ -56,6 +56,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
   }
 
   Future<void> _pickDifficulty() async {
+    BotanicaHaptics.selectionTick();
     final l10n = AppLocalizations.of(context);
     final species = ref.read(speciesListProvider).valueOrNull ??
         const <Species>[];
@@ -99,6 +100,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
   }
 
   Future<void> _pickLight() async {
+    BotanicaHaptics.selectionTick();
     final l10n = AppLocalizations.of(context);
     final species = ref.read(speciesListProvider).valueOrNull ??
         const <Species>[];
@@ -194,25 +196,18 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
   }
 
   Future<void> _openSpeciesDetail(String speciesId) async {
+    BotanicaHaptics.selectionTick();
     await context.push('${DiscoverScreen.location}/species/$speciesId');
     if (!mounted) return;
     _markRecentlyViewed(speciesId);
   }
 
   void _markRecentlyViewed(String speciesId) {
-    setState(() {
-      _recentlyViewedSpeciesIds.remove(speciesId);
-      _recentlyViewedSpeciesIds.insert(0, speciesId);
-      if (_recentlyViewedSpeciesIds.length > 10) {
-        _recentlyViewedSpeciesIds.removeRange(
-          10,
-          _recentlyViewedSpeciesIds.length,
-        );
-      }
-    });
+    ref.read(recentlyViewedRepositoryProvider).markViewed(speciesId);
   }
 
   Future<void> _toggleFavorite(String speciesId) async {
+    BotanicaHaptics.selectionTick();
     await ref.read(speciesFavoritesRepositoryProvider).toggle(speciesId);
   }
 
@@ -338,7 +333,9 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
   List<_CompactPlantCardData> _recentlyViewedItems({
     required List<Species> species,
     required List<PlantIdea> ideas,
+    required List<String> recentIds,
     required String localeCode,
+    Set<String> ownedSpeciesIds = const <String>{},
   }) {
     final speciesById = {
       for (final s in species) s.id: s,
@@ -347,16 +344,24 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
       for (final idea in ideas) idea.plantId: idea,
     };
     final items = <_CompactPlantCardData>[];
-    for (final id in _recentlyViewedSpeciesIds) {
+    for (final id in recentIds) {
       final speciesMatch = speciesById[id];
       if (speciesMatch != null) {
-        items.add(_CompactPlantCardData.species(speciesMatch, localeCode));
+        items.add(_CompactPlantCardData.species(
+          speciesMatch,
+          localeCode,
+          inGarden: ownedSpeciesIds.contains(id),
+        ));
         continue;
       }
 
       final ideaMatch = ideasById[id];
       if (ideaMatch != null) {
-        items.add(_CompactPlantCardData.idea(ideaMatch, localeCode));
+        items.add(_CompactPlantCardData.idea(
+          ideaMatch,
+          localeCode,
+          inGarden: ownedSpeciesIds.contains(id),
+        ));
       }
     }
     return items;
@@ -367,6 +372,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
     required List<PlantIdea> ideas,
     required List<String> ids,
     required String localeCode,
+    Set<String> ownedSpeciesIds = const <String>{},
   }) {
     final speciesById = {
       for (final s in species) s.id: s,
@@ -378,13 +384,21 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
     for (final id in ids) {
       final speciesMatch = speciesById[id];
       if (speciesMatch != null) {
-        items.add(_CompactPlantCardData.species(speciesMatch, localeCode));
+        items.add(_CompactPlantCardData.species(
+          speciesMatch,
+          localeCode,
+          inGarden: ownedSpeciesIds.contains(id),
+        ));
         continue;
       }
 
       final ideaMatch = ideasById[id];
       if (ideaMatch != null) {
-        items.add(_CompactPlantCardData.idea(ideaMatch, localeCode));
+        items.add(_CompactPlantCardData.idea(
+          ideaMatch,
+          localeCode,
+          inGarden: ownedSpeciesIds.contains(id),
+        ));
       }
     }
     return items;
@@ -404,6 +418,8 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
     final favoriteIds =
         ref.watch(speciesFavoriteIdsProvider).valueOrNull ?? const <String>[];
     final favoriteIdSet = favoriteIds.toSet();
+    final recentlyViewedIds =
+        ref.watch(recentlyViewedIdsProvider).valueOrNull ?? const <String>[];
     final showSearchSuggestions =
         _searchFocused && _searchController.text.trim().isEmpty;
 
@@ -414,6 +430,23 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
         children: [
           BotanicaScreenTitle(l10n.navDiscover)
               .animateSection(index: 0),
+          BotanicaGaps.vSm,
+          speciesAsync.when(
+            data: (species) {
+              if (species.isEmpty) return const SizedBox.shrink();
+              final dayOfYear = DateTime.now()
+                  .difference(DateTime(DateTime.now().year))
+                  .inDays;
+              final featured = species[dayOfYear % species.length];
+              return _PlantOfTheDayCard(
+                species: featured,
+                localeCode: localeCode,
+                onTap: () => context.push('/discover/species/${featured.id}'),
+              );
+            },
+            loading: () => const SizedBox.shrink(),
+            error: (_, __) => const SizedBox.shrink(),
+          ).animateSection(index: 1),
           BotanicaGaps.vSm,
           Focus(
             onFocusChange: (focused) {
@@ -496,7 +529,10 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                 label: l10n.discoverFilterPetSafe,
                 tint: scheme.tertiary,
                 selected: _petSafeOnly,
-                onTap: () => setState(() => _petSafeOnly = !_petSafeOnly),
+                onTap: () {
+                  BotanicaHaptics.selectionTick();
+                  setState(() => _petSafeOnly = !_petSafeOnly);
+                },
               ),
               BotanicaChip(
                 key: const ValueKey('discover-filter-light'),
@@ -535,22 +571,33 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
             data: (species) {
               final plants = plantsAsync.valueOrNull ?? const <Plant>[];
               final ideas = ideasAsync.valueOrNull ?? const <PlantIdea>[];
+              final ownedSpeciesIds = <String>{
+                for (final p in plants)
+                  if (!p.isArchived) p.speciesId,
+              };
               final recommended = _recommendedSpecies(
                 species: species,
                 plants: plants,
               )
-                  .map((s) => _CompactPlantCardData.species(s, localeCode))
+                  .map((s) => _CompactPlantCardData.species(
+                        s,
+                        localeCode,
+                        inGarden: ownedSpeciesIds.contains(s.id),
+                      ))
                   .toList(growable: false);
               final recent = _recentlyViewedItems(
                 species: species,
                 ideas: ideas,
+                recentIds: recentlyViewedIds,
                 localeCode: localeCode,
+                ownedSpeciesIds: ownedSpeciesIds,
               );
               final favorites = _favoriteItems(
                 species: species,
                 ideas: ideas,
                 ids: favoriteIds,
                 localeCode: localeCode,
+                ownedSpeciesIds: ownedSpeciesIds,
               );
 
               return Column(
@@ -802,8 +849,8 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                                             : scheme.onSurface
                                                 .withValues(alpha: 0.62),
                                         tooltip: favoriteIdSet.contains(s.id)
-                                            ? 'Remove favorite'
-                                            : 'Add favorite',
+                                            ? l10n.discoverRemoveFavorite
+                                            : l10n.discoverAddFavorite,
                                       ),
                                       Icon(
                                         Icons.chevron_right_rounded,
@@ -1062,8 +1109,8 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                                                 .withValues(alpha: 0.62),
                                         tooltip: favoriteIdSet
                                                 .contains(idea.plantId)
-                                            ? 'Remove favorite'
-                                            : 'Add favorite',
+                                            ? l10n.discoverRemoveFavorite
+                                            : l10n.discoverAddFavorite,
                                       ),
                                       Icon(
                                         Icons.chevron_right_rounded,
@@ -1192,23 +1239,34 @@ class _CompactPlantCardData {
     required this.name,
     required this.difficulty,
     required this.imagePath,
+    this.inGarden = false,
   });
 
-  factory _CompactPlantCardData.species(Species species, String localeCode) {
+  factory _CompactPlantCardData.species(
+    Species species,
+    String localeCode, {
+    bool inGarden = false,
+  }) {
     return _CompactPlantCardData(
       id: species.id,
       name: species.bestCommonName(localeCode),
       difficulty: species.difficulty,
       imagePath: _plantImagePath(species),
+      inGarden: inGarden,
     );
   }
 
-  factory _CompactPlantCardData.idea(PlantIdea idea, String localeCode) {
+  factory _CompactPlantCardData.idea(
+    PlantIdea idea,
+    String localeCode, {
+    bool inGarden = false,
+  }) {
     return _CompactPlantCardData(
       id: idea.plantId,
       name: idea.bestCommonName(localeCode),
       difficulty: idea.difficulty?.trim() ?? '',
       imagePath: _plantIdeaImagePath(idea),
+      inGarden: inGarden,
     );
   }
 
@@ -1216,6 +1274,7 @@ class _CompactPlantCardData {
   final String name;
   final String difficulty;
   final String imagePath;
+  final bool inGarden;
 }
 
 class _HorizontalPlantCardsSection extends StatelessWidget {
@@ -1282,11 +1341,16 @@ class _CompactPlantCard extends StatelessWidget {
     final imagePath = item.imagePath;
     final isPlaceholder = _isPlaceholderImagePath(imagePath);
 
-    return SizedBox(
-      width: 140,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
-        onTap: onTap,
+    return Semantics(
+      button: true,
+      label: item.inGarden
+          ? '${item.name}, ${l10n.discoverInYourGarden}'
+          : item.name,
+      child: SizedBox(
+        width: 140,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+          onTap: onTap,
         child: BotanicaGlassCard(
           padding: BotanicaTokens.cardPaddingDense,
           child: Column(
@@ -1340,6 +1404,27 @@ class _CompactPlantCard extends StatelessWidget {
                           ),
                         ),
                       ],
+                      if (item.inGarden)
+                        Positioned(
+                          top: 4,
+                          right: 4,
+                          child: Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: scheme.primaryContainer,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: scheme.primary.withValues(alpha: 0.5),
+                                width: 1,
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.check_rounded,
+                              size: 10,
+                              color: scheme.primary,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -1368,6 +1453,7 @@ class _CompactPlantCard extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }
@@ -1433,6 +1519,7 @@ class _GuideCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
       onTap: () {
+        BotanicaHaptics.selectionTick();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
@@ -1783,4 +1870,222 @@ Future<String?> _showSingleSelectSheet({
       );
     },
   );
+}
+
+class _PlantOfTheDayCard extends StatelessWidget {
+  const _PlantOfTheDayCard({
+    required this.species,
+    required this.localeCode,
+    required this.onTap,
+  });
+
+  final Species species;
+  final String localeCode;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
+
+    final name = species.bestCommonName(localeCode);
+    final imagePath = (species.imagePath ?? '').trim().isEmpty
+        ? 'assets/images/placeholder_plant.jpg'
+        : species.imagePath!;
+
+    return InkWell(
+      onTap: () {
+        BotanicaHaptics.selectionTick();
+        onTap();
+      },
+      borderRadius: BorderRadius.circular(BotanicaTokens.radiusXL),
+      child: BotanicaGlassCard(
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(BotanicaTokens.radiusXL),
+              ),
+              child: SizedBox(
+                height: 120,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
+                      errorBuilder: (_, __, ___) => DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              scheme.primaryContainer.withValues(alpha: 0.5),
+                              scheme.tertiaryContainer.withValues(alpha: 0.3),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.local_florist_rounded,
+                            size: 40,
+                            color: scheme.primary.withValues(alpha: 0.6),
+                          ),
+                        ),
+                      ),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            scheme.surface.withValues(alpha: 0.6),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      left: 10,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: scheme.primaryContainer.withValues(alpha: 0.85),
+                          borderRadius: BorderRadius.circular(
+                            BotanicaTokens.radiusPill,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.auto_awesome_rounded,
+                              size: 14,
+                              color: scheme.primary,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              l10n.discoverPlantOfTheDay,
+                              style: textTheme.labelSmall?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: scheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: BotanicaTokens.cardPaddingDense,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        if (species.scientificName.isNotEmpty)
+                          Text(
+                            species.scientificName,
+                            style: textTheme.bodySmall?.copyWith(
+                              color: scheme.onSurface.withValues(alpha: 0.6),
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        const SizedBox(height: BotanicaTokens.spacingXxs),
+                        Wrap(
+                          spacing: BotanicaTokens.spacingXxs,
+                          runSpacing: BotanicaTokens.spacingXxs,
+                          children: [
+                            _MiniPill(
+                              icon: Icons.wb_sunny_rounded,
+                              label: lightLabel(l10n, species.light),
+                              scheme: scheme,
+                            ),
+                            _MiniPill(
+                              icon: Icons.school_rounded,
+                              label: difficultyLabel(l10n, species.difficulty),
+                              scheme: scheme,
+                            ),
+                            if (!species.petSafe)
+                              _MiniPill(
+                                icon: Icons.pets_rounded,
+                                label: l10n.discoverTagToxic,
+                                scheme: scheme,
+                                tint: scheme.error,
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: scheme.onSurface.withValues(alpha: 0.4),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MiniPill extends StatelessWidget {
+  const _MiniPill({
+    required this.icon,
+    required this.label,
+    required this.scheme,
+    this.tint,
+  });
+
+  final IconData icon;
+  final String label;
+  final ColorScheme scheme;
+  final Color? tint;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = tint ?? scheme.onSurface.withValues(alpha: 0.7);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(BotanicaTokens.radiusS),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 11, color: color),
+          const SizedBox(width: 3),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 10,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
 }

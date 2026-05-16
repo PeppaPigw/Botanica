@@ -75,7 +75,8 @@ Future<void> _pumpGarden(
       ),
     ),
   );
-  await tester.pumpAndSettle();
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
 }
 
 Future<void> _showPlant(WidgetTester tester, String name) async {
@@ -124,19 +125,22 @@ void main() {
     expect(find.text('Fern'), findsOneWidget);
 
     await tester.tap(find.text('Living room').first);
-    await tester.pumpAndSettle();
+    await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Aloe'), findsOneWidget);
     expect(find.text('Fern'), findsOneWidget);
     expect(find.text('Pothos'), findsNothing);
 
     await tester.tap(find.text('Bedroom').first);
-    await tester.pumpAndSettle();
+    await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Pothos'), findsOneWidget);
     expect(find.text('Aloe'), findsNothing);
     expect(find.text('Fern'), findsNothing);
 
     await tester.tap(find.text(l10n.gardenRoomsAll).first);
-    await tester.pumpAndSettle();
+    await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
     await _showPlant(tester, 'Aloe');
     await _showPlant(tester, 'Pothos');
     await _showPlant(tester, 'Fern');

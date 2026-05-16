@@ -12,6 +12,7 @@ import '../data/repositories/logs_repository.dart';
 import '../data/repositories/photos_repository.dart';
 import '../data/repositories/plants_repository.dart';
 import '../data/repositories/plant_idea_repository.dart';
+import '../data/repositories/recently_viewed_repository.dart';
 import '../data/repositories/scan_result_cache_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/species_favorites_repository.dart';
@@ -42,6 +43,7 @@ import '../services/permissions/permissions_service.dart';
 import '../services/notifications/notifications_service.dart';
 import '../services/notifications/task_reminders_syncer.dart';
 import '../services/care/seasonal_task_rescheduler.dart';
+import '../domain/services/plant_whisperer_score.dart';
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository.local();
@@ -67,7 +69,7 @@ class SettingsController extends Notifier<UserSettings> {
       final lastDay = DateTime(last.year, last.month, last.day);
 
       final daysSince = today.difference(lastDay).inDays;
-      if (daysSince > 1 && stored.careStreakDays != 0) {
+      if (daysSince > 1 && stored.careStreakDays != 0 && !stored.isOnVacation) {
         normalized = normalized.copyWith(careStreakDays: 0);
       }
 
@@ -114,6 +116,10 @@ class SettingsController extends Notifier<UserSettings> {
 
   Future<void> setAiInsightsEnabled(bool enabled) async {
     await update(state.copyWith(enableAiInsights: enabled));
+  }
+
+  Future<void> setVacationEnd(DateTime? endDate) async {
+    await update(state.copyWith(vacationEndDate: endDate));
   }
 }
 
@@ -189,6 +195,15 @@ final speciesFavoritesRepositoryProvider =
 
 final speciesFavoriteIdsProvider = StreamProvider<List<String>>((ref) {
   return ref.read(speciesFavoritesRepositoryProvider).watchIds();
+});
+
+final recentlyViewedRepositoryProvider =
+    Provider<RecentlyViewedRepository>((ref) {
+  return RecentlyViewedRepository.local();
+});
+
+final recentlyViewedIdsProvider = StreamProvider<List<String>>((ref) {
+  return ref.read(recentlyViewedRepositoryProvider).watchIds();
 });
 
 final scanResultCacheRepositoryProvider =
@@ -343,15 +358,23 @@ class EnvironmentController extends Notifier<EnvironmentSnapshot> {
 
 final notificationsServiceProvider =
     Provider<BotanicaNotificationsService>((ref) {
-  return BotanicaNotificationsService();
+  return BotanicaNotificationsService(
+    onNotificationTap: (plantId) {
+      notificationPlantIdCallback?.call(plantId);
+    },
+  );
 });
+
+/// Set by the app after the router is available.
+void Function(String plantId)? notificationPlantIdCallback;
 
 /// Keeps scheduled local notifications in sync with the current task list.
 ///
 /// Watch this provider once at app startup to activate it.
 final taskRemindersSyncProvider = Provider<TaskRemindersSyncer>((ref) {
+  final notificationsService = ref.read(notificationsServiceProvider);
   final syncer = TaskRemindersSyncer(
-    notificationsService: ref.read(notificationsServiceProvider),
+    notificationsService: notificationsService,
   );
 
   ref.listen(
@@ -367,6 +390,11 @@ final taskRemindersSyncProvider = Provider<TaskRemindersSyncer>((ref) {
   ref.listen(
     settingsControllerProvider,
     (_, next) => syncer.updateSettings(next),
+    fireImmediately: true,
+  );
+  ref.listen(
+    careLogsStreamProvider,
+    (_, next) => syncer.updateLogs(next.valueOrNull),
     fireImmediately: true,
   );
 
@@ -482,6 +510,92 @@ final plantHealthScoreProvider =
   );
 
   return AsyncValue.data(score);
+});
+
+final plantHealthBreakdownProvider =
+    Provider.family<AsyncValue<HealthBreakdown>, String>((ref, plantId) {
+  final tasksAsync = ref.watch(tasksStreamProvider);
+  final logsAsync = ref.watch(careLogsForPlantProvider(plantId));
+
+  if (tasksAsync.isLoading || logsAsync.isLoading) {
+    return const AsyncValue.loading();
+  }
+  if (tasksAsync.hasError) {
+    return AsyncValue.error(
+      tasksAsync.error!,
+      tasksAsync.stackTrace ?? StackTrace.current,
+    );
+  }
+  if (logsAsync.hasError) {
+    return AsyncValue.error(
+      logsAsync.error!,
+      logsAsync.stackTrace ?? StackTrace.current,
+    );
+  }
+
+  final tasks = tasksAsync.requireValue
+      .where((t) => t.plantId == plantId)
+      .toList(growable: false);
+  final logs = logsAsync.requireValue;
+
+  final breakdown = PlantHealthScore.breakdown(
+    allTasks: tasks,
+    recentLogs: logs,
+    now: DateTime.now(),
+  );
+
+  return AsyncValue.data(breakdown);
+});
+
+final gardenHealthScoreProvider = Provider<int>((ref) {
+  final plantsAsync = ref.watch(plantsStreamProvider);
+  final tasksAsync = ref.watch(tasksStreamProvider);
+  final logsAsync = ref.watch(careLogsStreamProvider);
+
+  final plants = plantsAsync.valueOrNull;
+  final tasks = tasksAsync.valueOrNull;
+  final logs = logsAsync.valueOrNull;
+
+  if (plants == null || plants.isEmpty || tasks == null || logs == null) {
+    return 100;
+  }
+
+  final activePlants = plants.where((p) => !p.isArchived).toList();
+  if (activePlants.isEmpty) return 100;
+
+  final now = DateTime.now();
+  int total = 0;
+  for (final plant in activePlants) {
+    final plantTasks =
+        tasks.where((t) => t.plantId == plant.id).toList(growable: false);
+    final plantLogs =
+        logs.where((l) => l.plantId == plant.id).toList(growable: false);
+    total += PlantHealthScore.compute(
+      allTasks: plantTasks,
+      recentLogs: plantLogs,
+      now: now,
+    );
+  }
+  return (total / activePlants.length).round();
+});
+
+final plantWhispererScoreProvider = Provider<WhispererScore>((ref) {
+  final settings = ref.watch(settingsControllerProvider);
+  final plantsAsync = ref.watch(plantsStreamProvider);
+  final tasksAsync = ref.watch(tasksStreamProvider);
+  final logsAsync = ref.watch(careLogsStreamProvider);
+
+  final plants = plantsAsync.valueOrNull ?? const [];
+  final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
+  final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+  return PlantWhispererScore.compute(
+    settings: settings,
+    allLogs: logs,
+    allTasks: tasks,
+    plantCount: plants.length,
+    now: DateTime.now(),
+  );
 });
 
 final environmentSnapshotProvider = Provider<EnvironmentSnapshot>((ref) {

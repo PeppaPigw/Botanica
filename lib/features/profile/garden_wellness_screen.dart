@@ -4,10 +4,18 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme/botanica_tokens.dart';
+import '../../core/widgets/botanica_animated_counter.dart';
 import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_state_card.dart';
+import '../../core/widgets/botanica_streak_badge.dart';
 import '../../core/widgets/glass_card.dart';
+import '../../domain/models/care_log.dart';
+import '../../domain/models/photo_entry.dart';
+import '../../domain/models/plant.dart';
+import '../../domain/models/task_instance.dart';
+import '../../domain/models/user_settings.dart';
+import '../../domain/services/achievements.dart';
 import '../../domain/services/garden_wellness_priorities.dart';
 import '../../domain/services/garden_wellness_room_pulse.dart';
 import '../../domain/services/garden_wellness_summary.dart';
@@ -161,8 +169,8 @@ class GardenWellnessScreen extends ConsumerWidget {
                               ),
                               const SizedBox(
                                   height: BotanicaTokens.spacingTiny),
-                              Text(
-                                '${summary.overallScore}',
+                              BotanicaAnimatedCounter(
+                                value: summary.overallScore,
                                 style: textTheme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.w800,
                                   letterSpacing: -1.2,
@@ -175,6 +183,44 @@ class GardenWellnessScreen extends ConsumerWidget {
                                       scheme.onSurface.withValues(alpha: 0.72),
                                 ),
                               ),
+                              if (summary.careMomentum != CareMomentum.stable)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 2),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        summary.careMomentum ==
+                                                CareMomentum.increasing
+                                            ? Icons.trending_up_rounded
+                                            : Icons.trending_down_rounded,
+                                        size: 14,
+                                        color: summary.careMomentum ==
+                                                CareMomentum.increasing
+                                            ? scheme.primary
+                                            : scheme.error
+                                                .withValues(alpha: 0.7),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        summary.careMomentum ==
+                                                CareMomentum.increasing
+                                            ? l10n
+                                                .gardenWellnessMomentumIncreasing
+                                            : l10n
+                                                .gardenWellnessMomentumDecreasing,
+                                        style: textTheme.labelSmall?.copyWith(
+                                          color: summary.careMomentum ==
+                                                  CareMomentum.increasing
+                                              ? scheme.primary
+                                              : scheme.error
+                                                  .withValues(alpha: 0.7),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -207,7 +253,7 @@ class GardenWellnessScreen extends ConsumerWidget {
                   Expanded(
                     child: _StatCard(
                       label: l10n.gardenWellnessStatPlants,
-                      value: '${summary.plantCount}',
+                      numericValue: summary.plantCount,
                       icon: Icons.local_florist_rounded,
                     ),
                   ),
@@ -215,7 +261,7 @@ class GardenWellnessScreen extends ConsumerWidget {
                   Expanded(
                     child: _StatCard(
                       label: l10n.gardenWellnessStatRecentCare,
-                      value: '${summary.recentlyCaredPlants}',
+                      numericValue: summary.recentlyCaredPlants,
                       icon: Icons.history_rounded,
                     ),
                   ),
@@ -223,11 +269,56 @@ class GardenWellnessScreen extends ConsumerWidget {
                   Expanded(
                     child: _StatCard(
                       label: l10n.gardenWellnessStatAtRisk,
-                      value: '${summary.atRiskPlants}',
+                      numericValue: summary.atRiskPlants,
                       icon: Icons.warning_amber_rounded,
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: BotanicaTokens.spacingSm),
+              Row(
+                children: [
+                  Expanded(
+                    child: _StatCard(
+                      label: l10n.gardenWellnessStatPunctuality,
+                      numericValue: summary.punctualityPercent,
+                      icon: Icons.timer_rounded,
+                      suffix: '%',
+                    ),
+                  ),
+                  const SizedBox(width: BotanicaTokens.spacingSm),
+                  Expanded(
+                    child: _StatCard(
+                      label: l10n.gardenWellnessStatWeeklyActive,
+                      numericValue: summary.weeklyActivePercent,
+                      icon: Icons.calendar_view_week_rounded,
+                      suffix: '%',
+                    ),
+                  ),
+                  const SizedBox(width: BotanicaTokens.spacingSm),
+                  Expanded(
+                    child: _StatCard(
+                      label: l10n.gardenWellnessStatBestStreak,
+                      numericValue: settings.longestStreak,
+                      icon: Icons.emoji_events_rounded,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              BotanicaGlassCard(
+                child: BotanicaStreakProgress(
+                  currentStreak: settings.careStreakDays,
+                ),
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareActivityHeatmap(logs: logsAsync.requireValue),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _AchievementsSection(
+                plants: plantsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
               ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
@@ -493,13 +584,15 @@ class _PriorityCard extends StatelessWidget {
 class _StatCard extends StatelessWidget {
   const _StatCard({
     required this.label,
-    required this.value,
+    required this.numericValue,
     required this.icon,
+    this.suffix = '',
   });
 
   final String label;
-  final String value;
+  final int numericValue;
   final IconData icon;
+  final String suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -513,8 +606,9 @@ class _StatCard extends StatelessWidget {
         children: [
           Icon(icon, color: scheme.onSurface.withValues(alpha: 0.80)),
           const SizedBox(height: BotanicaTokens.spacingXs),
-          Text(
-            value,
+          BotanicaAnimatedCounter(
+            value: numericValue,
+            suffix: suffix,
             style: textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.w800,
             ),
@@ -714,4 +808,356 @@ String _focusReason(AppLocalizations l10n, GardenFocusPlant focus) {
     return l10n.gardenWellnessFocusReasonNoLog;
   }
   return l10n.gardenWellnessFocusReasonSteady;
+}
+
+class _CareActivityHeatmap extends StatelessWidget {
+  const _CareActivityHeatmap({required this.logs});
+
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    const weeks = 12;
+    const daysTotal = weeks * 7;
+
+    final startDay = today.subtract(const Duration(days: daysTotal - 1));
+
+    final dayCounts = <int, int>{};
+    for (final log in logs) {
+      final logDay = DateTime(
+        log.timestamp.year,
+        log.timestamp.month,
+        log.timestamp.day,
+      );
+      final diff = logDay.difference(startDay).inDays;
+      if (diff >= 0 && diff < daysTotal) {
+        dayCounts[diff] = (dayCounts[diff] ?? 0) + 1;
+      }
+    }
+
+    final totalActions = dayCounts.values.fold<int>(0, (s, c) => s + c);
+    final maxCount = dayCounts.values.fold<int>(1, (m, c) => c > m ? c : m);
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.grid_view_rounded,
+                size: 16,
+                color: scheme.primary.withValues(alpha: 0.8),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                l10n.wellnessHeatmapTitle,
+                style: textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                l10n.wellnessHeatmapActions(totalActions),
+                style: textTheme.labelSmall?.copyWith(
+                  color: scheme.onSurface.withValues(alpha: 0.55),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 2),
+          Text(
+            l10n.wellnessHeatmapSubtitle,
+            style: textTheme.bodySmall?.copyWith(
+              color: scheme.onSurface.withValues(alpha: 0.45),
+            ),
+          ),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          Semantics(
+            label: '${l10n.wellnessHeatmapTitle}, ${l10n.wellnessHeatmapSubtitle}, ${l10n.wellnessHeatmapActions(totalActions)}',
+            child: SizedBox(
+              height: 7 * 11.0 + 6 * 2,
+              child: CustomPaint(
+                size: const Size(double.infinity, 7 * 11.0 + 6 * 2),
+                painter: _HeatmapPainter(
+                  dayCounts: dayCounts,
+                  maxCount: maxCount,
+                  weeks: weeks,
+                  startWeekday: startDay.weekday,
+                  color: scheme.primary,
+                  emptyColor: scheme.outlineVariant.withValues(alpha: 0.2),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeatmapPainter extends CustomPainter {
+  _HeatmapPainter({
+    required this.dayCounts,
+    required this.maxCount,
+    required this.weeks,
+    required this.startWeekday,
+    required this.color,
+    required this.emptyColor,
+  });
+
+  final Map<int, int> dayCounts;
+  final int maxCount;
+  final int weeks;
+  final int startWeekday;
+  final Color color;
+  final Color emptyColor;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const gap = 2.0;
+    final cellSize = (size.width - (weeks - 1) * gap) / weeks;
+    final cellHeight = (size.height - 6 * gap) / 7;
+    final radius = Radius.circular(cellSize * 0.25);
+
+    for (int week = 0; week < weeks; week++) {
+      for (int day = 0; day < 7; day++) {
+        final dayIndex = week * 7 + day;
+        final count = dayCounts[dayIndex] ?? 0;
+        final fraction = count / maxCount;
+
+        final x = week * (cellSize + gap);
+        final y = day * (cellHeight + gap);
+
+        final rect = RRect.fromRectAndRadius(
+          Rect.fromLTWH(x, y, cellSize, cellHeight),
+          radius,
+        );
+
+        final paint = Paint()
+          ..color = count > 0
+              ? color.withValues(alpha: 0.2 + 0.8 * fraction)
+              : emptyColor;
+
+        canvas.drawRRect(rect, paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_HeatmapPainter oldDelegate) =>
+      dayCounts != oldDelegate.dayCounts || color != oldDelegate.color;
+}
+
+class _AchievementsSection extends ConsumerWidget {
+  const _AchievementsSection({
+    required this.plants,
+    required this.tasks,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final photosAsync = ref.watch(photoEntriesStreamProvider);
+    final photos = photosAsync.valueOrNull ?? const <PhotoEntry>[];
+
+    final achievements = AchievementsEngine.compute(
+      plants: plants,
+      tasks: tasks,
+      logs: logs,
+      photos: photos,
+      settings: settings,
+    );
+
+    final unlocked = achievements.where((a) => a.unlocked).toList();
+    final locked = achievements.where((a) => !a.unlocked).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                l10n.achievementsTitle,
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.3,
+                ),
+              ),
+            ),
+            Text(
+              l10n.achievementsUnlocked(unlocked.length, achievements.length),
+              style: textTheme.labelMedium?.copyWith(
+                color: scheme.onSurface.withValues(alpha: 0.60),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: BotanicaTokens.spacingSm),
+        Wrap(
+          spacing: BotanicaTokens.spacingXxs,
+          runSpacing: BotanicaTokens.spacingXxs,
+          children: [
+            for (final a in unlocked)
+              _AchievementBadge(achievement: a, unlocked: true),
+            for (final a in locked)
+              _AchievementBadge(achievement: a, unlocked: false),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _AchievementBadge extends StatelessWidget {
+  const _AchievementBadge({
+    required this.achievement,
+    required this.unlocked,
+  });
+
+  final Achievement achievement;
+  final bool unlocked;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+
+    final title = _achievementTitle(l10n, achievement.id);
+    final desc = _achievementDesc(l10n, achievement.id);
+
+    final tierColor = switch (achievement.tier) {
+      AchievementTier.bronze => const Color(0xFFCD7F32),
+      AchievementTier.silver => const Color(0xFFC0C0C0),
+      AchievementTier.gold => const Color(0xFFFFD700),
+    };
+
+    final tierIcon = switch (achievement.tier) {
+      AchievementTier.bronze => Icons.emoji_events_outlined,
+      AchievementTier.silver => Icons.emoji_events_rounded,
+      AchievementTier.gold => Icons.emoji_events_rounded,
+    };
+
+    return Tooltip(
+      message: '$title\n$desc',
+      child: Semantics(
+        label: '$title — $desc — ${unlocked ? "unlocked" : "${(achievement.progressFraction * 100).round()}%"}',
+        child: AnimatedOpacity(
+          duration: BotanicaTokens.motionMedium,
+          opacity: unlocked ? 1.0 : 0.38,
+          child: Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: unlocked
+                  ? tierColor.withValues(alpha: 0.18)
+                  : scheme.surfaceContainerHighest.withValues(alpha: 0.40),
+              borderRadius: BorderRadius.circular(BotanicaTokens.radiusM),
+              border: Border.all(
+                color: unlocked
+                    ? tierColor.withValues(alpha: 0.50)
+                    : scheme.outlineVariant.withValues(alpha: 0.30),
+                width: 1.5,
+              ),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(
+                  tierIcon,
+                  size: 28,
+                  color: unlocked
+                      ? tierColor
+                      : scheme.onSurface.withValues(alpha: 0.30),
+                ),
+                if (!unlocked)
+                  Positioned(
+                    bottom: 4,
+                    child: SizedBox(
+                      width: 36,
+                      height: 3,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2),
+                        child: LinearProgressIndicator(
+                          value: achievement.progressFraction,
+                          backgroundColor:
+                              scheme.outlineVariant.withValues(alpha: 0.30),
+                          valueColor: AlwaysStoppedAnimation(
+                            tierColor.withValues(alpha: 0.60),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+String _achievementTitle(AppLocalizations l10n, String id) {
+  return switch (id) {
+    'firstPlant' => l10n.achievementFirstPlant,
+    'fivePlants' => l10n.achievementFivePlants,
+    'tenPlants' => l10n.achievementTenPlants,
+    'twentyPlants' => l10n.achievementTwentyPlants,
+    'firstCare' => l10n.achievementFirstCare,
+    'fiftyCares' => l10n.achievementFiftyCares,
+    'hundredCares' => l10n.achievementHundredCares,
+    'fiveHundredCares' => l10n.achievementFiveHundredCares,
+    'weekStreak' => l10n.achievementWeekStreak,
+    'monthStreak' => l10n.achievementMonthStreak,
+    'yearStreak' => l10n.achievementYearStreak,
+    'firstPhoto' => l10n.achievementFirstPhoto,
+    'tenPhotos' => l10n.achievementTenPhotos,
+    'fiftyPhotos' => l10n.achievementFiftyPhotos,
+    'threeRooms' => l10n.achievementThreeRooms,
+    'fiveRooms' => l10n.achievementFiveRooms,
+    'diverseCarer' => l10n.achievementDiverseCarer,
+    _ => id,
+  };
+}
+
+String _achievementDesc(AppLocalizations l10n, String id) {
+  return switch (id) {
+    'firstPlant' => l10n.achievementFirstPlantDesc,
+    'fivePlants' => l10n.achievementFivePlantsDesc,
+    'tenPlants' => l10n.achievementTenPlantsDesc,
+    'twentyPlants' => l10n.achievementTwentyPlantsDesc,
+    'firstCare' => l10n.achievementFirstCareDesc,
+    'fiftyCares' => l10n.achievementFiftyCaresDesc,
+    'hundredCares' => l10n.achievementHundredCaresDesc,
+    'fiveHundredCares' => l10n.achievementFiveHundredCaresDesc,
+    'weekStreak' => l10n.achievementWeekStreakDesc,
+    'monthStreak' => l10n.achievementMonthStreakDesc,
+    'yearStreak' => l10n.achievementYearStreakDesc,
+    'firstPhoto' => l10n.achievementFirstPhotoDesc,
+    'tenPhotos' => l10n.achievementTenPhotosDesc,
+    'fiftyPhotos' => l10n.achievementFiftyPhotosDesc,
+    'threeRooms' => l10n.achievementThreeRoomsDesc,
+    'fiveRooms' => l10n.achievementFiveRoomsDesc,
+    'diverseCarer' => l10n.achievementDiverseCarerDesc,
+    _ => '',
+  };
 }
