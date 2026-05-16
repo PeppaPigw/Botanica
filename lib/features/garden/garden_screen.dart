@@ -21,6 +21,8 @@ import '../../core/widgets/botanica_all_done_sheet.dart';
 import '../../core/widgets/botanica_celebration.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
+import '../../core/widgets/botanica_daily_challenge_card.dart';
+import '../../core/widgets/botanica_garden_harmony_card.dart';
 import '../../core/widgets/botanica_perfect_week_sheet.dart';
 import '../../core/widgets/botanica_rescue_reset_sheet.dart';
 import '../../core/widgets/botanica_streak_milestone_sheet.dart';
@@ -55,6 +57,8 @@ import '../../domain/services/plant_milestone.dart';
 import '../../domain/services/seasonal_tips.dart';
 import '../../domain/services/daily_briefing_engine.dart';
 import '../../domain/services/seasonal_transition_advisor.dart';
+import '../../domain/services/daily_challenge_engine.dart';
+import '../../domain/services/garden_harmony_engine.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_actions.dart';
 import '../../services/review/review_prompt_service.dart';
@@ -701,6 +705,31 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   plants: plants,
                   logs: logs,
                 ).animateSection(index: 3),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).isNotEmpty)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: _DailyChallengeSection(
+                  plants: plants,
+                  logs: logs,
+                  settings: settings,
+                ).animateSection(index: 4),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 2)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: _GardenHarmonySection(
+                  plants: plants,
+                  tasks: tasks,
+                  logs: logs,
+                  settings: settings,
+                ).animateSection(index: 4),
               ),
             ),
           if (logs.isNotEmpty)
@@ -5834,5 +5863,65 @@ class _SeasonalAlertSection extends StatelessWidget {
     if (month >= 6 && month <= 8) return Season.summer;
     if (month >= 9 && month <= 11) return Season.autumn;
     return Season.winter;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Daily Challenge Section
+// ---------------------------------------------------------------------------
+
+class _DailyChallengeSection extends StatelessWidget {
+  const _DailyChallengeSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final challenge = DailyChallengeEngine.generate(
+      plants: plants,
+      recentLogs: logs.where((l) => now.difference(l.timestamp).inDays <= 7).toList(),
+      now: now,
+      streakDays: settings.careStreakDays,
+    );
+
+    return BotanicaDailyChallengeCard(challenge: challenge);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Garden Harmony Section
+// ---------------------------------------------------------------------------
+
+class _GardenHarmonySection extends StatelessWidget {
+  const _GardenHarmonySection({
+    required this.plants,
+    required this.tasks,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final result = GardenHarmonyEngine.compute(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    return BotanicaGardenHarmonyCard(result: result);
   }
 }
