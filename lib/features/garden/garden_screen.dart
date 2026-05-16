@@ -64,6 +64,10 @@ import '../../domain/services/watering_efficiency_analyzer.dart';
 import '../../core/widgets/botanica_watering_efficiency_card.dart';
 import '../../domain/services/care_autopilot_engine.dart';
 import '../../core/widgets/botanica_care_autopilot_card.dart';
+import '../../domain/services/room_optimizer.dart';
+import '../../core/widgets/botanica_room_optimizer_card.dart';
+import '../../domain/services/daily_fact_engine.dart';
+import '../../core/widgets/botanica_daily_fact_card.dart';
 import '../../domain/services/garden_momentum_engine.dart';
 import '../../domain/services/watering_batch_planner.dart';
 import '../../domain/services/care_difficulty_progression.dart';
@@ -1038,6 +1042,37 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   if (suggestions.isEmpty) return const SizedBox.shrink();
                   return BotanicaCareAutopilotCard(suggestions: suggestions);
                 }).animateSection(index: 9),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 3)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final placements = RoomOptimizer.optimize(
+                    plants: plants,
+                    speciesMap: speciesById,
+                  );
+                  if (placements.isEmpty) return const SizedBox.shrink();
+                  return BotanicaRoomOptimizerCard(suggestions: placements);
+                }).animateSection(index: 10),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).isNotEmpty)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final fact = DailyFactEngine.generate(
+                    plants: plants,
+                    speciesMap: speciesById,
+                    now: DateTime.now(),
+                  );
+                  if (fact == null) return const SizedBox.shrink();
+                  return BotanicaDailyFactCard(fact: fact);
+                }).animateSection(index: 11),
               ),
             ),
           SliverPadding(

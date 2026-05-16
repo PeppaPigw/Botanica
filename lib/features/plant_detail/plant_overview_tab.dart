@@ -44,7 +44,9 @@ import '../../domain/services/plant_milestone_engine.dart';
 import '../../domain/services/care_action_effectiveness.dart';
 import '../../domain/services/growth_timelapse_engine.dart';
 import '../../domain/services/quick_check_in.dart';
+import '../../domain/services/plant_memory_lane.dart';
 import '../../core/widgets/botanica_quick_check_in_card.dart';
+import '../../core/widgets/botanica_plant_memory_card.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -370,6 +372,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantSurvivalSection(plant: plant),
         BotanicaGaps.vSm,
         _PlantMilestonesSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantMemorySection(plant: plant),
         BotanicaGaps.vSm,
         _PlantActionEffectivenessSection(plant: plant),
         BotanicaGaps.vSm,
@@ -3541,5 +3545,31 @@ class _PlantStressSection extends ConsumerWidget {
       'stressSuggestionMonitor' => 'Monitor closely over the next few days',
       _ => key.replaceAll('stressSuggestion', '').replaceAll('_', ' '),
     };
+  }
+}
+
+class _PlantMemorySection extends ConsumerWidget {
+  const _PlantMemorySection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final photosAsync = ref.watch(photoEntriesStreamProvider);
+    final photos = photosAsync.valueOrNull ?? const <PhotoEntry>[];
+
+    if (logs.length < 3) return const SizedBox.shrink();
+
+    final memory = PlantMemoryLane.surfaceMemory(
+      plant: plant,
+      logs: logs,
+      photos: photos,
+      now: DateTime.now(),
+    );
+    if (memory == null) return const SizedBox.shrink();
+
+    return BotanicaPlantMemoryCard(memory: memory);
   }
 }
