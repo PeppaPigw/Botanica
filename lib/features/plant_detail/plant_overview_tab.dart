@@ -41,6 +41,8 @@ import '../../domain/services/plant_health_forecast_engine.dart';
 import '../../domain/services/plant_milestone_engine.dart';
 import '../../domain/services/care_action_effectiveness.dart';
 import '../../domain/services/growth_timelapse_engine.dart';
+import '../../domain/services/quick_check_in.dart';
+import '../../core/widgets/botanica_quick_check_in_card.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -344,6 +346,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantJourneyCard(plant: plant),
         BotanicaGaps.vSm,
         _EmotionalBondSection(plant: plant),
+        BotanicaGaps.vSm,
+        _QuickCheckInSection(plant: plant),
         BotanicaGaps.vSm,
         _PredictiveNeedsSection(plant: plant),
         BotanicaGaps.vSm,
@@ -2462,6 +2466,36 @@ class _EmotionalBondSection extends ConsumerWidget {
     if (bond == null) return const SizedBox.shrink();
 
     return BotanicaEmotionalBondIndicator(bond: bond);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Quick Check-In Section
+// ---------------------------------------------------------------------------
+
+class _QuickCheckInSection extends ConsumerWidget {
+  const _QuickCheckInSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    final now = DateTime.now();
+    final shouldShow = QuickCheckIn.shouldPrompt(
+      plant: plant,
+      recentLogs: logs,
+      now: now,
+    );
+
+    if (!shouldShow) return const SizedBox.shrink();
+
+    return BotanicaQuickCheckInCard(
+      plantNickname: plant.nickname,
+      onResponse: (_) {},
+    );
   }
 }
 
