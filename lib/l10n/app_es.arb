@@ -1980,5 +1980,73 @@
   "quickCheckInSubtitle": "Un vistazo rápido ayuda a seguir la salud de tu planta",
   "quickCheckInThriving": "Radiante",
   "quickCheckInOkay": "Bien",
-  "quickCheckInWorried": "Preocupado"
+  "quickCheckInWorried": "Preocupado",
+
+  "diversityTitle": "Índice de Biodiversidad",
+  "diversitySpecies": "Especies",
+  "diversityLightNeeds": "Necesidades de luz",
+  "diversityDifficulty": "Dificultad",
+  "diversityEnvironment": "Entorno",
+  "diversitySuggestNewSpecies": "Intenta añadir una especie diferente",
+  "diversitySuggestDifferentLight": "Considera plantas con diferentes necesidades de luz",
+  "diversitySuggestVaryDifficulty": "Mezcla plantas fáciles y difíciles",
+  "diversitySuggestOutdoor": "Prueba una planta de exterior para más diversidad",
+  "diversitySuggestAddPlants": "Añade más plantas para aumentar la diversidad",
+
+  "momentumTitle": "Impulso del Jardín",
+  "momentumTrending": "Tendencia {direction}",
+  "@momentumTrending": {
+    "placeholders": {
+      "direction": {"type": "String"}
+    }
+  },
+  "momentumUp": "al alza",
+  "momentumDown": "a la baja",
+  "momentumSteady": "estable",
+  "momentumStreak": "Racha",
+  "momentumActivity": "Actividad",
+  "momentumGrowth": "Crecimiento",
+
+  "batchPlannerTitle": "Horario de Riego",
+  "batchPlannerEfficiency": "{percent}% eficiente",
+  "@batchPlannerEfficiency": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "batchPlannerDays": "{count} días de riego/semana",
+  "@batchPlannerDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "batchPlannerPlants": "{count} plantas",
+  "@batchPlannerPlants": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "careImpactTitle": "Tu Impacto de Cuidado",
+  "careImpactWaterings": "riegos",
+  "careImpactSaved": "salvadas",
+  "careImpactTypes": "tipos",
+  "careImpactLongestCompanion": "Compañera más larga: {name} ({days}d)",
+  "@careImpactLongestCompanion": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "careImpactAvgResponse": "Respuesta promedio: {hours}h",
+  "@careImpactAvgResponse": {
+    "placeholders": {
+      "hours": {"type": "String"}
+    }
+  },
+
+  "gardenLegacyTitle": "Legado del Jardín",
+  "gardenLegacyTotalCare": "Acciones de cuidado totales",
+  "gardenLegacyLongestSurvivor": "Mayor superviviente",
+  "gardenLegacyScore": "Puntuación de legado"
 }

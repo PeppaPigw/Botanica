@@ -1980,5 +1980,73 @@
   "quickCheckInSubtitle": "نظرة سريعة تساعد في تتبع صحة نباتك",
   "quickCheckInThriving": "مزدهر",
   "quickCheckInOkay": "بخير",
-  "quickCheckInWorried": "قلق"
+  "quickCheckInWorried": "قلق",
+
+  "diversityTitle": "مؤشر التنوع البيولوجي",
+  "diversitySpecies": "الأنواع",
+  "diversityLightNeeds": "احتياجات الإضاءة",
+  "diversityDifficulty": "الصعوبة",
+  "diversityEnvironment": "البيئة",
+  "diversitySuggestNewSpecies": "جرب إضافة نوع مختلف لزيادة التنوع",
+  "diversitySuggestDifferentLight": "فكر في نباتات ذات احتياجات إضاءة مختلفة",
+  "diversitySuggestVaryDifficulty": "امزج بين النباتات السهلة والصعبة",
+  "diversitySuggestOutdoor": "جرب نبات خارجي لتنوع البيئة",
+  "diversitySuggestAddPlants": "أضف المزيد من النباتات لزيادة التنوع",
+
+  "momentumTitle": "زخم الحديقة",
+  "momentumTrending": "الاتجاه {direction}",
+  "@momentumTrending": {
+    "placeholders": {
+      "direction": {"type": "String"}
+    }
+  },
+  "momentumUp": "صاعد",
+  "momentumDown": "هابط",
+  "momentumSteady": "مستقر",
+  "momentumStreak": "السلسلة",
+  "momentumActivity": "النشاط",
+  "momentumGrowth": "النمو",
+
+  "batchPlannerTitle": "جدول الري",
+  "batchPlannerEfficiency": "{percent}% كفاءة",
+  "@batchPlannerEfficiency": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "batchPlannerDays": "{count} أيام ري/أسبوع",
+  "@batchPlannerDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "batchPlannerPlants": "{count} نباتات",
+  "@batchPlannerPlants": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "careImpactTitle": "تأثير رعايتك",
+  "careImpactWaterings": "ريّ",
+  "careImpactSaved": "إنقاذ",
+  "careImpactTypes": "أنواع",
+  "careImpactLongestCompanion": "أطول رفيق: {name} ({days} يوم)",
+  "@careImpactLongestCompanion": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "careImpactAvgResponse": "متوسط الاستجابة: {hours} ساعة",
+  "@careImpactAvgResponse": {
+    "placeholders": {
+      "hours": {"type": "String"}
+    }
+  },
+
+  "gardenLegacyTitle": "إرث الحديقة",
+  "gardenLegacyTotalCare": "إجمالي إجراءات الرعاية",
+  "gardenLegacyLongestSurvivor": "أطول ناجٍ",
+  "gardenLegacyScore": "درجة الإرث"
 }

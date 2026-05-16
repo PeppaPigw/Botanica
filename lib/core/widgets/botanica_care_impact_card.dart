@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_impact_analyzer.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -15,6 +16,7 @@ class BotanicaCareImpactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -37,7 +39,7 @@ class BotanicaCareImpactCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Your Care Impact',
+                  l10n.careImpactTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -66,21 +68,21 @@ class BotanicaCareImpactCard extends StatelessWidget {
               _ImpactStat(
                 icon: Icons.water_drop_rounded,
                 value: '${summary.totalWateringEvents}',
-                label: 'waterings',
+                label: l10n.careImpactWaterings,
                 scheme: scheme,
               ),
               BotanicaGaps.hSm,
               _ImpactStat(
                 icon: Icons.healing_rounded,
                 value: '${summary.plantsSavedFromDecline}',
-                label: 'saved',
+                label: l10n.careImpactSaved,
                 scheme: scheme,
               ),
               BotanicaGaps.hSm,
               _ImpactStat(
                 icon: Icons.category_rounded,
                 value: '${summary.uniqueCareTypes}',
-                label: 'types',
+                label: l10n.careImpactTypes,
                 scheme: scheme,
               ),
             ],
@@ -88,7 +90,10 @@ class BotanicaCareImpactCard extends StatelessWidget {
           BotanicaGaps.vSm,
           if (summary.longestCaredPlantName.isNotEmpty)
             Text(
-              'Longest companion: ${summary.longestCaredPlantName} (${summary.longestCaredPlantDays}d)',
+              l10n.careImpactLongestCompanion(
+                summary.longestCaredPlantName,
+                summary.longestCaredPlantDays,
+              ),
               style: textTheme.labelSmall?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -98,7 +103,9 @@ class BotanicaCareImpactCard extends StatelessWidget {
           if (summary.averageResponseTimeHours != null) ...[
             BotanicaGaps.vXxs,
             Text(
-              'Avg response: ${summary.averageResponseTimeHours!.toStringAsFixed(1)}h',
+              l10n.careImpactAvgResponse(
+                summary.averageResponseTimeHours!.toStringAsFixed(1),
+              ),
               style: textTheme.labelSmall?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.5),
               ),

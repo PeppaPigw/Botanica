@@ -1988,5 +1988,73 @@
   "quickCheckInSubtitle": "A quick check helps track your plant's health over time",
   "quickCheckInThriving": "Thriving",
   "quickCheckInOkay": "Okay",
-  "quickCheckInWorried": "Worried"
+  "quickCheckInWorried": "Worried",
+
+  "diversityTitle": "Biodiversity Index",
+  "diversitySpecies": "Species",
+  "diversityLightNeeds": "Light needs",
+  "diversityDifficulty": "Difficulty",
+  "diversityEnvironment": "Environment",
+  "diversitySuggestNewSpecies": "Try adding a different species to diversify",
+  "diversitySuggestDifferentLight": "Consider plants with different light needs",
+  "diversitySuggestVaryDifficulty": "Mix easy and challenging plants for variety",
+  "diversitySuggestOutdoor": "Try an outdoor or balcony plant for environment diversity",
+  "diversitySuggestAddPlants": "Add more plants to build diversity",
+
+  "momentumTitle": "Garden Momentum",
+  "momentumTrending": "Trending {direction}",
+  "@momentumTrending": {
+    "placeholders": {
+      "direction": {"type": "String"}
+    }
+  },
+  "momentumUp": "up",
+  "momentumDown": "down",
+  "momentumSteady": "steady",
+  "momentumStreak": "Streak",
+  "momentumActivity": "Activity",
+  "momentumGrowth": "Growth",
+
+  "batchPlannerTitle": "Watering Schedule",
+  "batchPlannerEfficiency": "{percent}% efficient",
+  "@batchPlannerEfficiency": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "batchPlannerDays": "{count} watering days/week",
+  "@batchPlannerDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "batchPlannerPlants": "{count} plants",
+  "@batchPlannerPlants": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "careImpactTitle": "Your Care Impact",
+  "careImpactWaterings": "waterings",
+  "careImpactSaved": "saved",
+  "careImpactTypes": "types",
+  "careImpactLongestCompanion": "Longest companion: {name} ({days}d)",
+  "@careImpactLongestCompanion": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "careImpactAvgResponse": "Avg response: {hours}h",
+  "@careImpactAvgResponse": {
+    "placeholders": {
+      "hours": {"type": "String"}
+    }
+  },
+
+  "gardenLegacyTitle": "Garden Legacy",
+  "gardenLegacyTotalCare": "Total care actions",
+  "gardenLegacyLongestSurvivor": "Longest survivor",
+  "gardenLegacyScore": "Legacy score"
 }

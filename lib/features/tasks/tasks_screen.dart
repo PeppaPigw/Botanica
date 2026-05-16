@@ -27,7 +27,9 @@ import '../../domain/models/user_settings.dart';
 import '../../domain/services/care_plan_engine.dart';
 import '../../domain/services/smart_notification_engine.dart';
 import '../../domain/services/nudge_engine.dart';
+import '../../domain/services/community_challenge_engine.dart';
 import '../../core/widgets/botanica_nudge_card.dart';
+import '../../core/widgets/botanica_community_challenge_card.dart';
 import '../../core/widgets/botanica_smart_notification_card.dart';
 import '../../services/care/care_actions.dart';
 
@@ -195,6 +197,11 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
             _NudgeBanner(
               plants: plants,
               tasks: tasks,
+            ),
+            _CommunityChallengeSection(
+              tasks: tasks,
+              plants: plants,
+              settings: settings,
             ),
             Expanded(
               child: _showCalendarView
@@ -1018,3 +1025,51 @@ class _NudgeBanner extends ConsumerWidget {
     );
   }
 }
+
+class _CommunityChallengeSection extends ConsumerWidget {
+  const _CommunityChallengeSection({
+    required this.tasks,
+    required this.plants,
+    required this.settings,
+  });
+
+  final List<TaskInstance> tasks;
+  final List<Plant> plants;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activePlants = plants.where((p) => !p.isArchived).toList();
+    if (activePlants.length < 2) return const SizedBox.shrink();
+
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    final now = DateTime.now();
+    final weekStart = now.subtract(Duration(days: now.weekday - 1));
+    final thisWeekActions = logs.where(
+      (l) => !l.timestamp.isBefore(weekStart),
+    ).length;
+
+    final weekOfYear = ((now.difference(DateTime(now.year)).inDays) / 7).ceil();
+
+    final result = CommunityChallengeEngine.generate(
+      weekOfYear: weekOfYear,
+      userCareActionsThisWeek: thisWeekActions,
+      userPlantCount: activePlants.length,
+      userStreakDays: settings.careStreakDays,
+    );
+
+    if (result.activeChallenges.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: BotanicaTokens.spacingMd,
+        right: BotanicaTokens.spacingMd,
+        bottom: BotanicaTokens.spacingSm,
+      ),
+      child: BotanicaCommunityChallengeCard(result: result),
+    );
+  }
+}
+

@@ -3443,4 +3443,112 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get quickCheckInWorried => '担心';
+
+  @override
+  String get diversityTitle => '生物多样性指数';
+
+  @override
+  String get diversitySpecies => '物种';
+
+  @override
+  String get diversityLightNeeds => '光照需求';
+
+  @override
+  String get diversityDifficulty => '难度';
+
+  @override
+  String get diversityEnvironment => '环境';
+
+  @override
+  String get diversitySuggestNewSpecies => '尝试添加不同的物种来增加多样性';
+
+  @override
+  String get diversitySuggestDifferentLight => '考虑添加不同光照需求的植物';
+
+  @override
+  String get diversitySuggestVaryDifficulty => '混合简单和有挑战性的植物';
+
+  @override
+  String get diversitySuggestOutdoor => '尝试户外植物来增加环境多样性';
+
+  @override
+  String get diversitySuggestAddPlants => '添加更多植物来提高多样性';
+
+  @override
+  String get momentumTitle => '花园动力';
+
+  @override
+  String momentumTrending(String direction) {
+    return '趋势$direction';
+  }
+
+  @override
+  String get momentumUp => '上升';
+
+  @override
+  String get momentumDown => '下降';
+
+  @override
+  String get momentumSteady => '平稳';
+
+  @override
+  String get momentumStreak => '连续';
+
+  @override
+  String get momentumActivity => '活跃度';
+
+  @override
+  String get momentumGrowth => '成长';
+
+  @override
+  String get batchPlannerTitle => '浇水计划';
+
+  @override
+  String batchPlannerEfficiency(int percent) {
+    return '$percent%效率';
+  }
+
+  @override
+  String batchPlannerDays(int count) {
+    return '每周$count天浇水';
+  }
+
+  @override
+  String batchPlannerPlants(int count) {
+    return '$count株植物';
+  }
+
+  @override
+  String get careImpactTitle => '你的养护影响';
+
+  @override
+  String get careImpactWaterings => '浇水';
+
+  @override
+  String get careImpactSaved => '挽救';
+
+  @override
+  String get careImpactTypes => '类型';
+
+  @override
+  String careImpactLongestCompanion(String name, int days) {
+    return '最长陪伴：$name（$days天）';
+  }
+
+  @override
+  String careImpactAvgResponse(String hours) {
+    return '平均响应：$hours小时';
+  }
+
+  @override
+  String get gardenLegacyTitle => '花园传承';
+
+  @override
+  String get gardenLegacyTotalCare => '总养护次数';
+
+  @override
+  String get gardenLegacyLongestSurvivor => '最长存活';
+
+  @override
+  String get gardenLegacyScore => '传承分数';
 }

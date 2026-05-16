@@ -17,11 +17,14 @@ import '../../core/i18n/species_labels.dart';
 import '../../core/widgets/botanica_ambient_background.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_button.dart';
+import '../../core/widgets/botanica_batch_planner_card.dart';
 import '../../core/widgets/botanica_all_done_sheet.dart';
 import '../../core/widgets/botanica_celebration.dart';
 import '../../core/widgets/botanica_care_calendar_preview_card.dart';
 import '../../core/widgets/botanica_care_confidence_card.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
+import '../../core/widgets/botanica_diversity_card.dart';
+import '../../core/widgets/botanica_momentum_card.dart';
 import '../../core/widgets/botanica_next_action_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_daily_challenge_card.dart';
@@ -53,6 +56,9 @@ import '../../domain/models/photo_entry.dart';
 import '../../domain/models/task_instance.dart';
 import '../../domain/services/garden_wellness_summary.dart';
 import '../../domain/services/plant_health_score.dart';
+import '../../domain/services/garden_diversity_engine.dart';
+import '../../domain/services/garden_momentum_engine.dart';
+import '../../domain/services/watering_batch_planner.dart';
 import '../../domain/services/garden_intelligence.dart';
 import '../../domain/services/plant_mood.dart';
 import '../../domain/services/plant_voice.dart';
@@ -871,6 +877,75 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   );
                   return BotanicaCareConfidenceCard(report: report);
                 }).animateSection(index: 5),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 3)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final speciesLight = speciesById.map(
+                    (id, s) => MapEntry(id, s.light),
+                  );
+                  final speciesDiff = speciesById.map(
+                    (id, s) => MapEntry(id, s.difficulty),
+                  );
+                  final metrics = GardenDiversityEngine.compute(
+                    plants: plants,
+                    speciesLight: speciesLight,
+                    speciesDifficulty: speciesDiff,
+                  );
+                  return BotanicaDiversityCard(metrics: metrics);
+                }).animateSection(index: 5),
+              ),
+            ),
+          if (logs.length >= 7 && plants.where((p) => !p.isArchived).length >= 2)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final now = DateTime.now();
+                  final thisMonth = DateTime(now.year, now.month);
+                  final addedThisMonth = plants.where((p) =>
+                      !p.isArchived &&
+                      !p.createdAt.isBefore(thisMonth)).length;
+                  final momentum = GardenMomentumEngine.compute(
+                    plants: plants,
+                    logs: logs,
+                    streakDays: settings.careStreakDays,
+                    plantsAddedThisMonth: addedThisMonth,
+                    now: now,
+                  );
+                  return BotanicaMomentumCard(momentum: momentum);
+                }).animateSection(index: 6),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 4)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final speciesWaterDays = <String, int>{
+                    for (final entry in speciesById.entries)
+                      entry.key: entry.value.careDefaults.waterBaseDays,
+                  };
+                  final batchPlan = WateringBatchPlanner.plan(
+                    plants: plants,
+                    speciesWaterDays: speciesWaterDays,
+                    logs: logs,
+                    now: DateTime.now(),
+                  );
+                  final names = <String, String>{
+                    for (final p in plants) p.id: p.nickname,
+                  };
+                  return BotanicaBatchPlannerCard(
+                    plan: batchPlan,
+                    plantNames: names,
+                  );
+                }).animateSection(index: 6),
               ),
             ),
           SliverPadding(

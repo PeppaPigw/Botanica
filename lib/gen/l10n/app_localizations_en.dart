@@ -3613,4 +3613,116 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quickCheckInWorried => 'Worried';
+
+  @override
+  String get diversityTitle => 'Biodiversity Index';
+
+  @override
+  String get diversitySpecies => 'Species';
+
+  @override
+  String get diversityLightNeeds => 'Light needs';
+
+  @override
+  String get diversityDifficulty => 'Difficulty';
+
+  @override
+  String get diversityEnvironment => 'Environment';
+
+  @override
+  String get diversitySuggestNewSpecies =>
+      'Try adding a different species to diversify';
+
+  @override
+  String get diversitySuggestDifferentLight =>
+      'Consider plants with different light needs';
+
+  @override
+  String get diversitySuggestVaryDifficulty =>
+      'Mix easy and challenging plants for variety';
+
+  @override
+  String get diversitySuggestOutdoor =>
+      'Try an outdoor or balcony plant for environment diversity';
+
+  @override
+  String get diversitySuggestAddPlants => 'Add more plants to build diversity';
+
+  @override
+  String get momentumTitle => 'Garden Momentum';
+
+  @override
+  String momentumTrending(String direction) {
+    return 'Trending $direction';
+  }
+
+  @override
+  String get momentumUp => 'up';
+
+  @override
+  String get momentumDown => 'down';
+
+  @override
+  String get momentumSteady => 'steady';
+
+  @override
+  String get momentumStreak => 'Streak';
+
+  @override
+  String get momentumActivity => 'Activity';
+
+  @override
+  String get momentumGrowth => 'Growth';
+
+  @override
+  String get batchPlannerTitle => 'Watering Schedule';
+
+  @override
+  String batchPlannerEfficiency(int percent) {
+    return '$percent% efficient';
+  }
+
+  @override
+  String batchPlannerDays(int count) {
+    return '$count watering days/week';
+  }
+
+  @override
+  String batchPlannerPlants(int count) {
+    return '$count plants';
+  }
+
+  @override
+  String get careImpactTitle => 'Your Care Impact';
+
+  @override
+  String get careImpactWaterings => 'waterings';
+
+  @override
+  String get careImpactSaved => 'saved';
+
+  @override
+  String get careImpactTypes => 'types';
+
+  @override
+  String careImpactLongestCompanion(String name, int days) {
+    return 'Longest companion: $name (${days}d)';
+  }
+
+  @override
+  String careImpactAvgResponse(String hours) {
+    return 'Avg response: ${hours}h';
+  }
+
+  @override
+  String get gardenLegacyTitle => 'Garden Legacy';
+
+  @override
+  String get gardenLegacyTotalCare => 'Total care actions';
+
+  @override
+  String get gardenLegacyLongestSurvivor => 'Longest survivor';
+
+  @override
+  String get gardenLegacyScore => 'Legacy score';
 }

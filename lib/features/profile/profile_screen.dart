@@ -8,6 +8,11 @@ import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_streak_badge.dart';
 import '../../core/widgets/botanica_care_persona_card.dart';
+import '../../core/widgets/botanica_care_impact_card.dart';
+import '../../core/widgets/botanica_care_pattern_card.dart';
+import '../../core/widgets/botanica_achievement_card.dart';
+import '../../core/widgets/botanica_garden_goal_card.dart';
+import '../../core/widgets/botanica_garden_legacy_card.dart';
 import '../../core/widgets/botanica_garden_stats_card.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/screen_title.dart';
@@ -20,6 +25,11 @@ import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_data_exporter.dart';
 import '../../domain/services/plant_whisperer_score.dart';
 import '../../domain/services/garden_stats_engine.dart';
+import '../../domain/services/care_impact_analyzer.dart';
+import '../../domain/services/care_pattern_analyzer.dart';
+import '../../domain/services/garden_achievement_engine.dart';
+import '../../domain/services/garden_goal_engine.dart';
+import '../../domain/services/garden_legacy_engine.dart';
 import '../../domain/services/user_care_persona_engine.dart';
 import 'ai_settings_section.dart';
 import 'credits_screen.dart';
@@ -172,6 +182,16 @@ class ProfileScreen extends ConsumerWidget {
           const _CarePersonaSection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingSm),
           const _GardenStatsSection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _CareImpactSection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _GardenLegacySection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _CarePatternSection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _AchievementSection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _GardenGoalSection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           const PreferencesSection().animateSection(index: 6),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
@@ -1002,3 +1022,143 @@ class _GardenStatsSection extends ConsumerWidget {
     return BotanicaGardenStatsCard(stats: stats);
   }
 }
+
+class _CareImpactSection extends ConsumerWidget {
+  const _CareImpactSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final tasksAsync = ref.watch(tasksStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
+
+    if (logs.length < 10) return const SizedBox.shrink();
+
+    final summary = CareImpactAnalyzer.analyze(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    if (summary == null) return const SizedBox.shrink();
+
+    return BotanicaCareImpactCard(summary: summary);
+  }
+}
+
+class _GardenLegacySection extends ConsumerWidget {
+  const _GardenLegacySection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (plants.where((p) => !p.isArchived).length < 2) {
+      return const SizedBox.shrink();
+    }
+
+    final report = GardenLegacyEngine.compute(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    String nameResolver(String id) {
+      final plant = plants.where((p) => p.id == id).firstOrNull;
+      return plant?.nickname ?? id.substring(0, 8);
+    }
+
+    return BotanicaGardenLegacyCard(
+      report: report,
+      plantNameResolver: nameResolver,
+    );
+  }
+}
+
+class _CarePatternSection extends ConsumerWidget {
+  const _CarePatternSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 15) return const SizedBox.shrink();
+
+    final patterns = CarePatternAnalyzer.analyze(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    return BotanicaCarePatternCard(patterns: patterns);
+  }
+}
+
+class _AchievementSection extends ConsumerWidget {
+  const _AchievementSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final photosAsync = ref.watch(photoEntriesStreamProvider);
+    final settingsAsync = ref.watch(settingsControllerProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final photos = photosAsync.valueOrNull ?? const <PhotoEntry>[];
+    final settings = settingsAsync;
+
+    if (plants.isEmpty || logs.length < 5) return const SizedBox.shrink();
+
+    final summary = GardenAchievementEngine.compute(
+      plants: plants,
+      logs: logs,
+      photos: photos,
+      streakDays: settings.careStreakDays,
+      longestStreak: settings.longestStreak,
+      now: DateTime.now(),
+    );
+
+    if (summary.unlockedCount == 0) return const SizedBox.shrink();
+
+    return BotanicaAchievementCard(summary: summary);
+  }
+}
+
+class _GardenGoalSection extends ConsumerWidget {
+  const _GardenGoalSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final settingsAsync = ref.watch(settingsControllerProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final settings = settingsAsync;
+
+    if (plants.isEmpty) return const SizedBox.shrink();
+
+    final goals = GardenGoalEngine.suggestGoals(
+      plants: plants,
+      logs: logs,
+      streakDays: settings.careStreakDays,
+      now: DateTime.now(),
+    );
+
+    if (goals.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaGardenGoalCard(goals: goals);
+  }
+}
+

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/garden_diversity_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaDiversityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (metrics.speciesCount == 0) return const SizedBox.shrink();
 
+    final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -41,7 +43,7 @@ class BotanicaDiversityCard extends StatelessWidget {
               ),
               BotanicaGaps.hXs,
               Text(
-                'Biodiversity Index',
+                l10n.diversityTitle,
                 style: textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -58,32 +60,32 @@ class BotanicaDiversityCard extends StatelessWidget {
           ),
           BotanicaGaps.vSm,
           _DiversityBar(
-            label: 'Species',
+            label: l10n.diversitySpecies,
             value: metrics.uniqueSpeciesRatio,
             color: scheme.primary,
           ),
           BotanicaGaps.vXxs,
           _DiversityBar(
-            label: 'Light needs',
+            label: l10n.diversityLightNeeds,
             value: metrics.lightSpread,
             color: scheme.tertiary,
           ),
           BotanicaGaps.vXxs,
           _DiversityBar(
-            label: 'Difficulty',
+            label: l10n.diversityDifficulty,
             value: metrics.difficultySpread,
             color: scheme.secondary,
           ),
           BotanicaGaps.vXxs,
           _DiversityBar(
-            label: 'Environment',
+            label: l10n.diversityEnvironment,
             value: metrics.environmentSpread,
             color: const Color(0xFF4CAF50),
           ),
           if (metrics.suggestions.isNotEmpty) ...[
             BotanicaGaps.vSm,
             Text(
-              metrics.suggestions.first,
+              _localizedSuggestion(l10n, metrics.suggestions.first),
               style: textTheme.labelSmall?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.6),
                 fontStyle: FontStyle.italic,
@@ -93,6 +95,17 @@ class BotanicaDiversityCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  static String _localizedSuggestion(AppLocalizations l10n, String key) {
+    return switch (key) {
+      'diversitySuggestNewSpecies' => l10n.diversitySuggestNewSpecies,
+      'diversitySuggestDifferentLight' => l10n.diversitySuggestDifferentLight,
+      'diversitySuggestVaryDifficulty' => l10n.diversitySuggestVaryDifficulty,
+      'diversitySuggestOutdoor' => l10n.diversitySuggestOutdoor,
+      'diversitySuggestAddPlants' => l10n.diversitySuggestAddPlants,
+      _ => key,
+    };
   }
 }
 

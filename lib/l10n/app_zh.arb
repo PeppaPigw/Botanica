@@ -1991,5 +1991,73 @@
   "quickCheckInSubtitle": "快速记录帮助追踪植物健康状况",
   "quickCheckInThriving": "茁壮",
   "quickCheckInOkay": "还行",
-  "quickCheckInWorried": "担心"
+  "quickCheckInWorried": "担心",
+
+  "diversityTitle": "生物多样性指数",
+  "diversitySpecies": "物种",
+  "diversityLightNeeds": "光照需求",
+  "diversityDifficulty": "难度",
+  "diversityEnvironment": "环境",
+  "diversitySuggestNewSpecies": "尝试添加不同的物种来增加多样性",
+  "diversitySuggestDifferentLight": "考虑添加不同光照需求的植物",
+  "diversitySuggestVaryDifficulty": "混合简单和有挑战性的植物",
+  "diversitySuggestOutdoor": "尝试户外植物来增加环境多样性",
+  "diversitySuggestAddPlants": "添加更多植物来提高多样性",
+
+  "momentumTitle": "花园动力",
+  "momentumTrending": "趋势{direction}",
+  "@momentumTrending": {
+    "placeholders": {
+      "direction": {"type": "String"}
+    }
+  },
+  "momentumUp": "上升",
+  "momentumDown": "下降",
+  "momentumSteady": "平稳",
+  "momentumStreak": "连续",
+  "momentumActivity": "活跃度",
+  "momentumGrowth": "成长",
+
+  "batchPlannerTitle": "浇水计划",
+  "batchPlannerEfficiency": "{percent}%效率",
+  "@batchPlannerEfficiency": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "batchPlannerDays": "每周{count}天浇水",
+  "@batchPlannerDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "batchPlannerPlants": "{count}株植物",
+  "@batchPlannerPlants": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "careImpactTitle": "你的养护影响",
+  "careImpactWaterings": "浇水",
+  "careImpactSaved": "挽救",
+  "careImpactTypes": "类型",
+  "careImpactLongestCompanion": "最长陪伴：{name}（{days}天）",
+  "@careImpactLongestCompanion": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "careImpactAvgResponse": "平均响应：{hours}小时",
+  "@careImpactAvgResponse": {
+    "placeholders": {
+      "hours": {"type": "String"}
+    }
+  },
+
+  "gardenLegacyTitle": "花园传承",
+  "gardenLegacyTotalCare": "总养护次数",
+  "gardenLegacyLongestSurvivor": "最长存活",
+  "gardenLegacyScore": "传承分数"
 }

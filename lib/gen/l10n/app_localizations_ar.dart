@@ -3581,4 +3581,115 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quickCheckInWorried => 'قلق';
+
+  @override
+  String get diversityTitle => 'مؤشر التنوع البيولوجي';
+
+  @override
+  String get diversitySpecies => 'الأنواع';
+
+  @override
+  String get diversityLightNeeds => 'احتياجات الإضاءة';
+
+  @override
+  String get diversityDifficulty => 'الصعوبة';
+
+  @override
+  String get diversityEnvironment => 'البيئة';
+
+  @override
+  String get diversitySuggestNewSpecies => 'جرب إضافة نوع مختلف لزيادة التنوع';
+
+  @override
+  String get diversitySuggestDifferentLight =>
+      'فكر في نباتات ذات احتياجات إضاءة مختلفة';
+
+  @override
+  String get diversitySuggestVaryDifficulty =>
+      'امزج بين النباتات السهلة والصعبة';
+
+  @override
+  String get diversitySuggestOutdoor => 'جرب نبات خارجي لتنوع البيئة';
+
+  @override
+  String get diversitySuggestAddPlants =>
+      'أضف المزيد من النباتات لزيادة التنوع';
+
+  @override
+  String get momentumTitle => 'زخم الحديقة';
+
+  @override
+  String momentumTrending(String direction) {
+    return 'الاتجاه $direction';
+  }
+
+  @override
+  String get momentumUp => 'صاعد';
+
+  @override
+  String get momentumDown => 'هابط';
+
+  @override
+  String get momentumSteady => 'مستقر';
+
+  @override
+  String get momentumStreak => 'السلسلة';
+
+  @override
+  String get momentumActivity => 'النشاط';
+
+  @override
+  String get momentumGrowth => 'النمو';
+
+  @override
+  String get batchPlannerTitle => 'جدول الري';
+
+  @override
+  String batchPlannerEfficiency(int percent) {
+    return '$percent% كفاءة';
+  }
+
+  @override
+  String batchPlannerDays(int count) {
+    return '$count أيام ري/أسبوع';
+  }
+
+  @override
+  String batchPlannerPlants(int count) {
+    return '$count نباتات';
+  }
+
+  @override
+  String get careImpactTitle => 'تأثير رعايتك';
+
+  @override
+  String get careImpactWaterings => 'ريّ';
+
+  @override
+  String get careImpactSaved => 'إنقاذ';
+
+  @override
+  String get careImpactTypes => 'أنواع';
+
+  @override
+  String careImpactLongestCompanion(String name, int days) {
+    return 'أطول رفيق: $name ($days يوم)';
+  }
+
+  @override
+  String careImpactAvgResponse(String hours) {
+    return 'متوسط الاستجابة: $hours ساعة';
+  }
+
+  @override
+  String get gardenLegacyTitle => 'إرث الحديقة';
+
+  @override
+  String get gardenLegacyTotalCare => 'إجمالي إجراءات الرعاية';
+
+  @override
+  String get gardenLegacyLongestSurvivor => 'أطول ناجٍ';
+
+  @override
+  String get gardenLegacyScore => 'درجة الإرث';
 }

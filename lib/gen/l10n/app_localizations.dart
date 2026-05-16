@@ -6176,6 +6176,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Worried'**
   String get quickCheckInWorried;
+
+  /// No description provided for @diversityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Biodiversity Index'**
+  String get diversityTitle;
+
+  /// No description provided for @diversitySpecies.
+  ///
+  /// In en, this message translates to:
+  /// **'Species'**
+  String get diversitySpecies;
+
+  /// No description provided for @diversityLightNeeds.
+  ///
+  /// In en, this message translates to:
+  /// **'Light needs'**
+  String get diversityLightNeeds;
+
+  /// No description provided for @diversityDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Difficulty'**
+  String get diversityDifficulty;
+
+  /// No description provided for @diversityEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment'**
+  String get diversityEnvironment;
+
+  /// No description provided for @diversitySuggestNewSpecies.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adding a different species to diversify'**
+  String get diversitySuggestNewSpecies;
+
+  /// No description provided for @diversitySuggestDifferentLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Consider plants with different light needs'**
+  String get diversitySuggestDifferentLight;
+
+  /// No description provided for @diversitySuggestVaryDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Mix easy and challenging plants for variety'**
+  String get diversitySuggestVaryDifficulty;
+
+  /// No description provided for @diversitySuggestOutdoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Try an outdoor or balcony plant for environment diversity'**
+  String get diversitySuggestOutdoor;
+
+  /// No description provided for @diversitySuggestAddPlants.
+  ///
+  /// In en, this message translates to:
+  /// **'Add more plants to build diversity'**
+  String get diversitySuggestAddPlants;
+
+  /// No description provided for @momentumTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Momentum'**
+  String get momentumTitle;
+
+  /// No description provided for @momentumTrending.
+  ///
+  /// In en, this message translates to:
+  /// **'Trending {direction}'**
+  String momentumTrending(String direction);
+
+  /// No description provided for @momentumUp.
+  ///
+  /// In en, this message translates to:
+  /// **'up'**
+  String get momentumUp;
+
+  /// No description provided for @momentumDown.
+  ///
+  /// In en, this message translates to:
+  /// **'down'**
+  String get momentumDown;
+
+  /// No description provided for @momentumSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'steady'**
+  String get momentumSteady;
+
+  /// No description provided for @momentumStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get momentumStreak;
+
+  /// No description provided for @momentumActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get momentumActivity;
+
+  /// No description provided for @momentumGrowth.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth'**
+  String get momentumGrowth;
+
+  /// No description provided for @batchPlannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watering Schedule'**
+  String get batchPlannerTitle;
+
+  /// No description provided for @batchPlannerEfficiency.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% efficient'**
+  String batchPlannerEfficiency(int percent);
+
+  /// No description provided for @batchPlannerDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} watering days/week'**
+  String batchPlannerDays(int count);
+
+  /// No description provided for @batchPlannerPlants.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} plants'**
+  String batchPlannerPlants(int count);
+
+  /// No description provided for @careImpactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Care Impact'**
+  String get careImpactTitle;
+
+  /// No description provided for @careImpactWaterings.
+  ///
+  /// In en, this message translates to:
+  /// **'waterings'**
+  String get careImpactWaterings;
+
+  /// No description provided for @careImpactSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'saved'**
+  String get careImpactSaved;
+
+  /// No description provided for @careImpactTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'types'**
+  String get careImpactTypes;
+
+  /// No description provided for @careImpactLongestCompanion.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest companion: {name} ({days}d)'**
+  String careImpactLongestCompanion(String name, int days);
+
+  /// No description provided for @careImpactAvgResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg response: {hours}h'**
+  String careImpactAvgResponse(String hours);
+
+  /// No description provided for @gardenLegacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Legacy'**
+  String get gardenLegacyTitle;
+
+  /// No description provided for @gardenLegacyTotalCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Total care actions'**
+  String get gardenLegacyTotalCare;
+
+  /// No description provided for @gardenLegacyLongestSurvivor.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest survivor'**
+  String get gardenLegacyLongestSurvivor;
+
+  /// No description provided for @gardenLegacyScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy score'**
+  String get gardenLegacyScore;
 }
 
 class _AppLocalizationsDelegate
