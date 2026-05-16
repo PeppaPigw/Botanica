@@ -10,6 +10,7 @@ import '../../core/i18n/plant_idea_search.dart';
 import '../../core/i18n/species_labels.dart';
 import '../../core/i18n/species_search.dart';
 import '../../core/widgets/botanica_animated_section.dart';
+import '../../core/widgets/botanica_care_coaching_card.dart';
 import '../../core/widgets/botanica_chip.dart';
 import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_gaps.dart';
@@ -23,6 +24,9 @@ import '../../core/widgets/screen_title.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/species.dart';
 import '../../domain/models/plant_idea.dart';
+import '../../domain/models/task_instance.dart';
+import '../../domain/models/care_log.dart';
+import '../../domain/services/care_coaching.dart';
 import '../../gen/l10n/app_localizations.dart';
 
 class DiscoverScreen extends ConsumerStatefulWidget {
@@ -566,6 +570,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                 ),
             ],
           ).animateSection(index: 3),
+          const _DiscoverCoachingTip(),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           speciesAsync.when(
             data: (species) {
@@ -1229,6 +1234,35 @@ class _TrendingTagChip extends StatelessWidget {
         selected: selected,
         onTap: onTap,
       ),
+    );
+  }
+}
+
+class _DiscoverCoachingTip extends ConsumerWidget {
+  const _DiscoverCoachingTip();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsControllerProvider);
+    final tasksAsync = ref.watch(tasksStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 5) return const SizedBox.shrink();
+
+    final insights = CareCoachingEngine.generateInsights(
+      allTasks: tasks,
+      allLogs: logs,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    if (insights.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: BotanicaTokens.spacingSm),
+      child: BotanicaCareCoachingCard(insights: insights),
     );
   }
 }
