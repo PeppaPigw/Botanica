@@ -39,6 +39,7 @@ import '../../domain/services/plant_rescue_engine.dart';
 import '../../domain/services/plant_autobiography_engine.dart';
 import '../../domain/services/plant_health_forecast_engine.dart';
 import '../../domain/services/plant_survival_predictor.dart';
+import '../../domain/services/environment_stress_detector.dart';
 import '../../domain/services/plant_milestone_engine.dart';
 import '../../domain/services/care_action_effectiveness.dart';
 import '../../domain/services/growth_timelapse_engine.dart';
@@ -359,6 +360,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantVitalsSection(plant: plant),
         BotanicaGaps.vSm,
         _PlantRescueSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantStressSection(plant: plant),
         BotanicaGaps.vSm,
         _PlantAutobiographySection(plant: plant),
         BotanicaGaps.vSm,
@@ -3389,5 +3392,154 @@ class _SurvivalFactorChip extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Plant Stress Detection Section
+// ---------------------------------------------------------------------------
+
+class _PlantStressSection extends ConsumerWidget {
+  const _PlantStressSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final tasksAsync = ref.watch(tasksStreamProvider);
+    final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
+
+    if (logs.length < 4) return const SizedBox.shrink();
+
+    final result = EnvironmentStressDetector.detect(
+      plant: plant,
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    if (result == null || result.level == StressLevel.none) {
+      return const SizedBox.shrink();
+    }
+
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final color = switch (result.level) {
+      StressLevel.high => scheme.error,
+      StressLevel.moderate => const Color(0xFFFF9800),
+      _ => scheme.tertiary,
+    };
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.12),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.monitor_heart_rounded, size: 16, color: color),
+              ),
+              BotanicaGaps.hSm,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Stress Detected',
+                      style: textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      _levelLabel(result.level),
+                      style: textTheme.labelSmall?.copyWith(
+                        color: color,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (result.signals.isNotEmpty) ...[
+            BotanicaGaps.vSm,
+            Wrap(
+              spacing: BotanicaTokens.spacingXxs,
+              runSpacing: BotanicaTokens.spacingMicro,
+              children: result.signals.take(3).map((s) => Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: BotanicaTokens.spacingXs,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.08),
+                      borderRadius:
+                          BorderRadius.circular(BotanicaTokens.radiusS),
+                    ),
+                    child: Text(
+                      _signalLabel(s),
+                      style: textTheme.labelSmall?.copyWith(
+                        color: color,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )).toList(),
+            ),
+          ],
+          if (result.suggestion.isNotEmpty) ...[
+            BotanicaGaps.vXs,
+            Text(
+              _suggestionLabel(result.suggestion),
+              style: textTheme.labelSmall?.copyWith(
+                color: scheme.onSurface.withValues(alpha: 0.6),
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  static String _levelLabel(StressLevel level) {
+    return switch (level) {
+      StressLevel.high => 'High stress — needs attention',
+      StressLevel.moderate => 'Moderate stress signals',
+      StressLevel.mild => 'Mild stress detected',
+      StressLevel.none => '',
+    };
+  }
+
+  static String _signalLabel(StressSignal signal) {
+    return switch (signal) {
+      StressSignal.suddenWateringIncrease => 'Watering spike',
+      StressSignal.missedCareAfterConsistency => 'Missed routine',
+      StressSignal.longGapAfterFrequentCare => 'Long gap',
+      StressSignal.erraticSchedule => 'Erratic schedule',
+      StressSignal.noRecentCare => 'No recent care',
+    };
+  }
+
+  static String _suggestionLabel(String key) {
+    return switch (key) {
+      'stressSuggestionStabilize' => 'Try to stabilize your care routine',
+      'stressSuggestionResume' => 'Resume regular care to reduce stress',
+      'stressSuggestionMonitor' => 'Monitor closely over the next few days',
+      _ => key.replaceAll('stressSuggestion', '').replaceAll('_', ' '),
+    };
   }
 }
