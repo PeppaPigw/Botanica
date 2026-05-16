@@ -23,6 +23,11 @@ import '../../core/widgets/botanica_garden_goal_card.dart';
 import '../../core/widgets/botanica_room_profile_card.dart';
 import '../../core/widgets/botanica_care_impact_card.dart';
 import '../../core/widgets/botanica_streak_leaderboard_card.dart';
+import '../../core/widgets/botanica_skill_progression_card.dart';
+import '../../core/widgets/botanica_garden_mood_board_card.dart';
+import '../../core/widgets/botanica_whisperer_score_card.dart';
+import '../../core/widgets/botanica_growth_journal_card.dart';
+import '../../core/widgets/botanica_daily_ritual_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -44,6 +49,11 @@ import '../../domain/services/garden_goal_engine.dart';
 import '../../domain/services/room_microclimate_profiler.dart';
 import '../../domain/services/care_impact_analyzer.dart';
 import '../../domain/services/streak_leaderboard_engine.dart';
+import '../../domain/services/care_difficulty_progression.dart';
+import '../../domain/services/garden_mood_board_engine.dart';
+import '../../domain/services/plant_whisperer_score.dart';
+import '../../domain/services/growth_journal_engine.dart';
+import '../../domain/services/daily_rituals.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -403,6 +413,26 @@ class GardenWellnessScreen extends ConsumerWidget {
               _StreakLeaderboardSection(settings: settings, logs: logsAsync.requireValue),
               const SizedBox(height: BotanicaTokens.spacingBase),
               _RoomProfileSection(plants: plantsAsync.requireValue, logs: logsAsync.requireValue),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _SkillProgressionSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _WhispererScoreSection(settings: settings, logs: logsAsync.requireValue, tasks: tasksAsync.requireValue),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GardenMoodBoardSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _DailyRitualSection(),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GrowthJournalSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(
@@ -1647,5 +1677,123 @@ class _RoomProfileSection extends StatelessWidget {
     );
 
     return BotanicaRoomProfileCard(profiles: profiles);
+  }
+}
+
+class _SkillProgressionSection extends StatelessWidget {
+  const _SkillProgressionSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final result = CareDifficultyProgression.evaluate(
+      plants: plants,
+      species: const [],
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+    if (result == null) return const SizedBox.shrink();
+
+    return BotanicaSkillProgressionCard(progression: result);
+  }
+}
+
+class _WhispererScoreSection extends StatelessWidget {
+  const _WhispererScoreSection({
+    required this.settings,
+    required this.logs,
+    required this.tasks,
+  });
+
+  final UserSettings settings;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final activePlantCount = logs.map((l) => l.plantId).toSet().length;
+    final score = PlantWhispererScore.compute(
+      settings: settings,
+      allLogs: logs,
+      allTasks: tasks,
+      plantCount: activePlantCount,
+      now: DateTime.now(),
+    );
+
+    return BotanicaWhispererScoreCard(score: score);
+  }
+}
+
+class _GardenMoodBoardSection extends StatelessWidget {
+  const _GardenMoodBoardSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final activePlants = plants.where((p) => !p.isArchived).toList();
+    if (activePlants.isEmpty) return const SizedBox.shrink();
+
+    final moodBoard = GardenMoodBoardEngine.compute(
+      plants: plants,
+      logs: logs,
+      healthScores: {for (final p in activePlants) p.id: 0.7},
+      now: DateTime.now(),
+    );
+
+    return BotanicaGardenMoodBoardCard(moodBoard: moodBoard);
+  }
+}
+
+class _DailyRitualSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final runeId = DailyRituals.runeIdForDate(now);
+    final rune = DailyRituals.runeForId(runeId);
+    final ganzhi = DailyRituals.almanacGanzhiForDate(now);
+
+    return BotanicaDailyRitualCard(rune: rune, ganzhi: ganzhi);
+  }
+}
+
+class _GrowthJournalSection extends StatelessWidget {
+  const _GrowthJournalSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final activePlants = plants.where((p) => !p.isArchived).toList();
+    if (activePlants.isEmpty) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final plant = activePlants.first;
+    final summary = GrowthJournalEngine.generateMonthlySummary(
+      plant: plant,
+      logs: logs,
+      photos: const [],
+      month: now.month,
+      year: now.year,
+    );
+    if (summary == null) return const SizedBox.shrink();
+
+    return BotanicaGrowthJournalCard(summary: summary);
   }
 }

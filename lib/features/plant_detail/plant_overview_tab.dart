@@ -20,6 +20,7 @@ import '../../core/widgets/botanica_plant_story_card.dart';
 import '../../core/widgets/botanica_plant_personality_card.dart';
 import '../../core/widgets/botanica_plant_vitals_card.dart';
 import '../../core/widgets/botanica_plant_rescue_card.dart';
+import '../../core/widgets/botanica_plant_autobiography_card.dart';
 import '../../core/widgets/botanica_health_breakdown_sheet.dart';
 import '../../core/haptics/botanica_haptics.dart';
 import '../../core/utils/motion_preferences.dart';
@@ -35,6 +36,7 @@ import '../../domain/services/plant_story_engine.dart';
 import '../../domain/services/plant_personality_engine.dart';
 import '../../domain/services/plant_vital_signs_engine.dart';
 import '../../domain/services/plant_rescue_engine.dart';
+import '../../domain/services/plant_autobiography_engine.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -348,6 +350,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantVitalsSection(plant: plant),
         BotanicaGaps.vSm,
         _PlantRescueSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantAutobiographySection(plant: plant),
         BotanicaGaps.vSm,
         BotanicaGlassCard(
           child: Column(
@@ -2595,5 +2599,24 @@ class _PlantRescueSection extends ConsumerWidget {
     if (plan == null) return const SizedBox.shrink();
 
     return BotanicaPlantRescueCard(plan: plan);
+  }
+}
+
+class _PlantAutobiographySection extends ConsumerWidget {
+  const _PlantAutobiographySection({required this.plant});
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logs = ref.watch(careLogsForPlantProvider(plant.id)).valueOrNull ?? [];
+
+    final autobiography = PlantAutobiographyEngine.generate(
+      plant: plant,
+      logs: logs,
+      photos: const [],
+      now: DateTime.now(),
+    );
+
+    return BotanicaPlantAutobiographyCard(autobiography: autobiography);
   }
 }
