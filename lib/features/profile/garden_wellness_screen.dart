@@ -40,6 +40,11 @@ import '../../core/widgets/botanica_habit_predictor_card.dart';
 import '../../core/widgets/botanica_nudge_card.dart';
 import '../../core/widgets/botanica_maturity_card.dart';
 import '../../core/widgets/botanica_adaptive_schedule_card.dart';
+import '../../core/widgets/botanica_weekly_report_card.dart';
+import '../../core/widgets/botanica_memory_lane_card.dart';
+import '../../core/widgets/botanica_time_machine_card.dart';
+import '../../core/widgets/botanica_xp_level_card.dart';
+import '../../core/widgets/botanica_micro_season_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -78,6 +83,11 @@ import '../../domain/services/care_habit_predictor.dart';
 import '../../domain/services/nudge_engine.dart';
 import '../../domain/services/plant_maturity_estimator.dart';
 import '../../domain/services/adaptive_care_scheduler.dart';
+import '../../domain/services/weekly_report_engine.dart';
+import '../../domain/services/plant_memory_lane_engine.dart';
+import '../../domain/services/garden_time_machine.dart';
+import '../../domain/services/plant_care_xp_system.dart';
+import '../../domain/services/micro_season_detector.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -515,6 +525,32 @@ class GardenWellnessScreen extends ConsumerWidget {
                 plants: plantsAsync.requireValue,
                 logs: logsAsync.requireValue,
               ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _WeeklyReportSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _MemoryLaneSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _TimeMachineSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _XpLevelSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _MicroSeasonSection(logs: logsAsync.requireValue),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(
@@ -2168,5 +2204,122 @@ class _AdaptiveScheduleSection extends StatelessWidget {
     if (adjustments.isEmpty) return const SizedBox.shrink();
 
     return BotanicaAdaptiveScheduleCard(adjustments: adjustments);
+  }
+}
+
+class _WeeklyReportSection extends StatelessWidget {
+  const _WeeklyReportSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final report = WeeklyReportEngine.generate(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    return BotanicaWeeklyReportCard(report: report);
+  }
+}
+
+class _MemoryLaneSection extends StatelessWidget {
+  const _MemoryLaneSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final result = PlantMemoryLaneEngine.generate(
+      plants: plants,
+      logs: logs,
+      photos: const [],
+      now: DateTime.now(),
+    );
+
+    return BotanicaMemoryLaneCard(result: result);
+  }
+}
+
+class _TimeMachineSection extends StatelessWidget {
+  const _TimeMachineSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final result = GardenTimeMachine.reconstruct(
+      allPlants: plants,
+      logs: logs,
+      now: DateTime.now(),
+      monthsBack: 6,
+    );
+
+    return BotanicaTimeMachineCard(result: result);
+  }
+}
+
+class _XpLevelSection extends StatelessWidget {
+  const _XpLevelSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final level = PlantCareXpSystem.compute(
+      logs: logs,
+      tasks: tasks,
+      photos: const [],
+      plants: plants,
+      streakDays: settings.careStreakDays,
+      now: DateTime.now(),
+    );
+
+    return BotanicaXpLevelCard(level: level);
+  }
+}
+
+class _MicroSeasonSection extends StatelessWidget {
+  const _MicroSeasonSection({
+    required this.logs,
+  });
+
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final report = MicroSeasonDetector.detect(
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    return BotanicaMicroSeasonCard(report: report);
   }
 }
