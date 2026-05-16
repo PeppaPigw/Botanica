@@ -66,6 +66,9 @@ import '../../core/widgets/botanica_community_challenge_card.dart';
 import '../../core/widgets/botanica_care_persona_card.dart';
 import '../../core/widgets/botanica_garden_sharing_card.dart';
 import '../../core/widgets/botanica_care_delegation_card.dart';
+import '../../core/widgets/botanica_care_pattern_card.dart';
+import '../../core/widgets/botanica_photo_timelapse_card.dart';
+import '../../core/widgets/botanica_watering_optimizer_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -130,6 +133,9 @@ import '../../domain/services/community_challenge_engine.dart';
 import '../../domain/services/user_care_persona_engine.dart';
 import '../../domain/services/garden_sharing_engine.dart';
 import '../../domain/services/care_delegation_engine.dart';
+import '../../domain/services/care_pattern_analyzer.dart';
+import '../../domain/services/photo_timelapse_detector.dart';
+import '../../domain/services/watering_calendar_optimizer.dart';
 import '../../domain/services/seasonal_tips.dart' as seasonal_tips;
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
@@ -710,6 +716,20 @@ class GardenWellnessScreen extends ConsumerWidget {
                 plants: plantsAsync.requireValue,
                 logs: logsAsync.requireValue,
                 settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CarePatternSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _PhotoTimelapseSection(
+                plants: plantsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _WateringOptimizerSection(
+                plants: plantsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
               ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
@@ -3038,5 +3058,77 @@ class _CareDelegationSection extends StatelessWidget {
     );
 
     return BotanicaCareDelegationCard(plan: plan);
+  }
+}
+
+class _CarePatternSection extends StatelessWidget {
+  const _CarePatternSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    if (logs.length < 10) return const SizedBox.shrink();
+
+    final patterns = CarePatternAnalyzer.analyze(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    return BotanicaCarePatternCard(patterns: patterns);
+  }
+}
+
+class _PhotoTimelapseSection extends ConsumerWidget {
+  const _PhotoTimelapseSection({
+    required this.plants,
+  });
+
+  final List<Plant> plants;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final photosAsync = ref.watch(photoEntriesStreamProvider);
+    final photos = photosAsync.valueOrNull ?? const <PhotoEntry>[];
+
+    if (photos.length < 3) return const SizedBox.shrink();
+
+    final candidates = PhotoTimelapseDetector.detect(
+      plants: plants,
+      photos: photos,
+      now: DateTime.now(),
+    );
+
+    return BotanicaPhotoTimelapseCard(candidates: candidates);
+  }
+}
+
+class _WateringOptimizerSection extends StatelessWidget {
+  const _WateringOptimizerSection({
+    required this.plants,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    if (plants.length < 3) return const SizedBox.shrink();
+
+    final optimization = WateringCalendarOptimizer.optimize(
+      plants: plants,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    if (optimization == null) return const SizedBox.shrink();
+
+    return BotanicaWateringOptimizerCard(optimization: optimization);
   }
 }

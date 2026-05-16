@@ -96,7 +96,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final roomPulseFinder = find.byKey(const ValueKey('room-pulse-Bathroom'));
-    await tester.scrollUntilVisible(roomPulseFinder, 300);
+    await tester.scrollUntilVisible(roomPulseFinder, 500);
     await tester.tap(roomPulseFinder);
     await tester.pumpAndSettle();
 
@@ -162,7 +162,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final roomPulseFinder = find.byKey(const ValueKey('room-pulse-Unassigned'));
-    await tester.scrollUntilVisible(roomPulseFinder, 300);
+    await tester.scrollUntilVisible(roomPulseFinder, 500);
     await tester.tap(roomPulseFinder);
     await tester.pumpAndSettle();
 

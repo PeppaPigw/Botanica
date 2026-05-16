@@ -111,7 +111,7 @@ void main() {
     final focusFinder = find.byKey(const ValueKey('focus-plant-p2'));
     await tester.scrollUntilVisible(
       focusFinder,
-      160,
+      400,
       scrollable: find.byType(Scrollable).first,
     );
     await tester.tap(focusFinder);
