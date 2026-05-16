@@ -26,6 +26,8 @@ import '../../domain/models/task_instance.dart';
 import '../../domain/models/user_settings.dart';
 import '../../domain/services/care_plan_engine.dart';
 import '../../domain/services/smart_notification_engine.dart';
+import '../../domain/services/nudge_engine.dart';
+import '../../core/widgets/botanica_nudge_card.dart';
 import '../../core/widgets/botanica_smart_notification_card.dart';
 import '../../services/care/care_actions.dart';
 
@@ -189,6 +191,10 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
               plants: plants,
               tasks: tasks,
               settings: settings,
+            ),
+            _NudgeBanner(
+              plants: plants,
+              tasks: tasks,
             ),
             Expanded(
               child: _showCalendarView
@@ -967,6 +973,48 @@ class _SmartNotificationBanner extends ConsumerWidget {
         BotanicaTokens.spacingXs,
       ),
       child: BotanicaSmartNotificationCard(notification: notifications.first),
+    );
+  }
+}
+
+class _NudgeBanner extends ConsumerWidget {
+  const _NudgeBanner({
+    required this.plants,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final allLogs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (plants.where((p) => !p.isArchived).length < 2 || allLogs.length < 5) {
+      return const SizedBox.shrink();
+    }
+
+    final now = DateTime.now();
+    final nudges = NudgeEngine.generate(
+      plants: plants,
+      logs: allLogs,
+      tasks: tasks,
+      now: now,
+      isWinter: now.month == 12 || now.month <= 2,
+      maxNudges: 1,
+    );
+
+    if (nudges.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        BotanicaTokens.spacingLg,
+        0,
+        BotanicaTokens.spacingLg,
+        BotanicaTokens.spacingXs,
+      ),
+      child: BotanicaNudgeCard(nudges: nudges),
     );
   }
 }

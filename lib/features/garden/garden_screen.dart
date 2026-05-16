@@ -22,6 +22,7 @@ import '../../core/widgets/botanica_celebration.dart';
 import '../../core/widgets/botanica_care_calendar_preview_card.dart';
 import '../../core/widgets/botanica_care_confidence_card.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
+import '../../core/widgets/botanica_next_action_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_daily_challenge_card.dart';
 import '../../core/widgets/botanica_garden_harmony_card.dart';
@@ -57,6 +58,7 @@ import '../../domain/services/plant_mood.dart';
 import '../../domain/services/plant_voice.dart';
 import '../../domain/services/care_coaching.dart';
 import '../../domain/services/care_confidence_engine.dart';
+import '../../domain/services/next_action_recommender.dart';
 import '../../domain/services/plant_milestone.dart';
 import '../../domain/services/seasonal_tips.dart';
 import '../../domain/services/daily_briefing_engine.dart';
@@ -698,6 +700,28 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   logs: logs,
                   settings: settings,
                 ),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).isNotEmpty)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final action = NextActionRecommender.recommend(
+                    plants: plants,
+                    tasks: tasks,
+                    logs: logs,
+                    settings: settings,
+                    now: DateTime.now(),
+                  );
+                  return BotanicaNextActionCard(
+                    action: action,
+                    onTap: action.plantId != null
+                        ? () => context.push('/garden/plant/${action.plantId}')
+                        : null,
+                  );
+                }).animateSection(index: 2),
               ),
             ),
           if (plants.where((p) => !p.isArchived).length >= 2 && logs.length >= 5)
