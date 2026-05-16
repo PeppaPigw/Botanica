@@ -20,6 +20,7 @@ import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_all_done_sheet.dart';
 import '../../core/widgets/botanica_celebration.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
+import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_perfect_week_sheet.dart';
 import '../../core/widgets/botanica_rescue_reset_sheet.dart';
 import '../../core/widgets/botanica_streak_milestone_sheet.dart';
@@ -53,6 +54,7 @@ import '../../domain/services/care_coaching.dart';
 import '../../domain/services/plant_milestone.dart';
 import '../../domain/services/seasonal_tips.dart';
 import '../../domain/services/daily_briefing_engine.dart';
+import '../../domain/services/seasonal_transition_advisor.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_actions.dart';
 import '../../services/review/review_prompt_service.dart';
@@ -687,6 +689,17 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   logs: logs,
                   tasks: tasks,
                   settings: settings,
+                ).animateSection(index: 3),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 2)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: _SeasonalAlertSection(
+                  plants: plants,
+                  logs: logs,
                 ).animateSection(index: 3),
               ),
             ),
@@ -5781,5 +5794,45 @@ class _DailyBriefingSection extends ConsumerWidget {
     if (briefing.items.isEmpty) return const SizedBox.shrink();
 
     return BotanicaDailyBriefingCard(briefing: briefing);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Seasonal Alert Section
+// ---------------------------------------------------------------------------
+
+class _SeasonalAlertSection extends StatelessWidget {
+  const _SeasonalAlertSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final currentSeason = _seasonForMonth(now.month);
+    final report = SeasonalTransitionAdvisor.analyze(
+      plants: plants,
+      logs: logs,
+      currentSeason: currentSeason,
+      hemisphere: Hemisphere.northern,
+      now: now,
+    );
+
+    if (report.advice.isEmpty || report.daysUntilTransition > 45) {
+      return const SizedBox.shrink();
+    }
+
+    return BotanicaSeasonalAlertCard(report: report);
+  }
+
+  static Season _seasonForMonth(int month) {
+    if (month >= 3 && month <= 5) return Season.spring;
+    if (month >= 6 && month <= 8) return Season.summer;
+    if (month >= 9 && month <= 11) return Season.autumn;
+    return Season.winter;
   }
 }
