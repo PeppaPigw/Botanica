@@ -19,6 +19,7 @@ import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_all_done_sheet.dart';
 import '../../core/widgets/botanica_celebration.dart';
+import '../../core/widgets/botanica_care_calendar_preview_card.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_daily_challenge_card.dart';
@@ -789,6 +790,17 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   tasks: tasks,
                   plantsById: plantsById,
                 ).animateSection(index: 3),
+              ),
+            ),
+          if (tasks.length >= 3)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: BotanicaCareCalendarPreviewCard(
+                  tasks: tasks,
+                  plants: plantsById.map((id, p) => MapEntry(id, p.nickname)),
+                ).animateSection(index: 4),
               ),
             ),
           if (plants.length >= 2)
