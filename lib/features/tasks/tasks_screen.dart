@@ -21,8 +21,12 @@ import '../../core/widgets/glass_card.dart';
 import '../../core/haptics/botanica_haptics.dart';
 
 import '../../domain/models/plant.dart';
+import '../../domain/models/care_log.dart';
 import '../../domain/models/task_instance.dart';
+import '../../domain/models/user_settings.dart';
 import '../../domain/services/care_plan_engine.dart';
+import '../../domain/services/smart_notification_engine.dart';
+import '../../core/widgets/botanica_smart_notification_card.dart';
 import '../../services/care/care_actions.dart';
 
 import '../../gen/l10n/app_localizations.dart';
@@ -181,6 +185,11 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                   ],
                 ),
               ),
+            _SmartNotificationBanner(
+              plants: plants,
+              tasks: tasks,
+              settings: settings,
+            ),
             Expanded(
               child: _showCalendarView
                   ? _TasksCalendarView(
@@ -918,6 +927,46 @@ class _DailyProgressRing extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SmartNotificationBanner extends ConsumerWidget {
+  const _SmartNotificationBanner({
+    required this.plants,
+    required this.tasks,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 5 || plants.isEmpty) return const SizedBox.shrink();
+
+    final notifications = SmartNotificationEngine.generate(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    if (notifications.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        BotanicaTokens.spacingLg,
+        0,
+        BotanicaTokens.spacingLg,
+        BotanicaTokens.spacingXs,
+      ),
+      child: BotanicaSmartNotificationCard(notification: notifications.first),
     );
   }
 }
