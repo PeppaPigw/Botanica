@@ -12,6 +12,8 @@ import '../../core/widgets/botanica_care_impact_card.dart';
 import '../../core/widgets/botanica_care_pattern_card.dart';
 import '../../core/widgets/botanica_achievement_card.dart';
 import '../../core/widgets/botanica_garden_goal_card.dart';
+import '../../core/widgets/botanica_habit_predictor_card.dart';
+import '../../core/widgets/botanica_care_consistency_card.dart';
 import '../../core/widgets/botanica_garden_legacy_card.dart';
 import '../../core/widgets/botanica_garden_stats_card.dart';
 import '../../core/widgets/glass_card.dart';
@@ -27,6 +29,8 @@ import '../../domain/services/plant_whisperer_score.dart';
 import '../../domain/services/garden_stats_engine.dart';
 import '../../domain/services/care_impact_analyzer.dart';
 import '../../domain/services/care_pattern_analyzer.dart';
+import '../../domain/services/care_habit_predictor.dart';
+import '../../domain/services/care_consistency_scorer.dart';
 import '../../domain/services/garden_achievement_engine.dart';
 import '../../domain/services/garden_goal_engine.dart';
 import '../../domain/services/garden_legacy_engine.dart';
@@ -192,6 +196,10 @@ class ProfileScreen extends ConsumerWidget {
           const _AchievementSection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingSm),
           const _GardenGoalSection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _HabitPredictorSection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _CareConsistencySection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           const PreferencesSection().animateSection(index: 6),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
@@ -1159,6 +1167,56 @@ class _GardenGoalSection extends ConsumerWidget {
     if (goals.isEmpty) return const SizedBox.shrink();
 
     return BotanicaGardenGoalCard(goals: goals);
+  }
+}
+
+class _HabitPredictorSection extends ConsumerWidget {
+  const _HabitPredictorSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final tasksAsync = ref.watch(tasksStreamProvider);
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
+
+    if (logs.length < 14) return const SizedBox.shrink();
+
+    final profile = CareHabitPredictor.predict(
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    return BotanicaHabitPredictorCard(profile: profile);
+  }
+}
+
+class _CareConsistencySection extends ConsumerWidget {
+  const _CareConsistencySection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final tasksAsync = ref.watch(tasksStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
+
+    final active = plants.where((p) => !p.isArchived).toList();
+    if (active.length < 2 || logs.length < 10) return const SizedBox.shrink();
+
+    final results = CareConsistencyScorer.scoreAll(
+      plants: active,
+      tasks: tasks,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    if (results.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaCareConsistencyCard(results: results);
   }
 }
 

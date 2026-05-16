@@ -28,8 +28,10 @@ import '../../domain/services/care_plan_engine.dart';
 import '../../domain/services/smart_notification_engine.dart';
 import '../../domain/services/nudge_engine.dart';
 import '../../domain/services/community_challenge_engine.dart';
+import '../../domain/services/care_burnout_detector.dart';
 import '../../core/widgets/botanica_nudge_card.dart';
 import '../../core/widgets/botanica_community_challenge_card.dart';
+import '../../core/widgets/botanica_burnout_banner.dart';
 import '../../core/widgets/botanica_smart_notification_card.dart';
 import '../../services/care/care_actions.dart';
 
@@ -202,6 +204,10 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
               tasks: tasks,
               plants: plants,
               settings: settings,
+            ),
+            _BurnoutSection(
+              plants: plants,
+              tasks: tasks,
             ),
             Expanded(
               child: _showCalendarView
@@ -1069,6 +1075,66 @@ class _CommunityChallengeSection extends ConsumerWidget {
         bottom: BotanicaTokens.spacingSm,
       ),
       child: BotanicaCommunityChallengeCard(result: result),
+    );
+  }
+}
+
+class _BurnoutSection extends ConsumerWidget {
+  const _BurnoutSection({
+    required this.plants,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activePlants = plants.where((p) => !p.isArchived).toList();
+    if (activePlants.length < 3) return const SizedBox.shrink();
+
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    if (logs.length < 10) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final weekStart = now.subtract(Duration(days: now.weekday - 1));
+    final lastWeekStart = weekStart.subtract(const Duration(days: 7));
+
+    final missedThisWeek = tasks.where((t) =>
+        t.isDone == false &&
+        !t.dueAt.isBefore(weekStart) &&
+        t.dueAt.isBefore(now)).length;
+    final missedLastWeek = tasks.where((t) =>
+        t.isDone == false &&
+        !t.dueAt.isBefore(lastWeekStart) &&
+        t.dueAt.isBefore(weekStart)).length;
+
+    final todayTasks = tasks.where((t) {
+      final d = t.dueAt;
+      return d.year == now.year && d.month == now.month && d.day == now.day;
+    }).length;
+
+    final report = CareBurnoutDetector.assess(
+      plants: plants,
+      logs: logs,
+      missedTasksThisWeek: missedThisWeek,
+      missedTasksLastWeek: missedLastWeek,
+      totalDailyTasks: todayTasks,
+      now: now,
+    );
+
+    if (report.riskLevel == 'none' || report.signals.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: BotanicaTokens.spacingMd,
+        right: BotanicaTokens.spacingMd,
+        bottom: BotanicaTokens.spacingSm,
+      ),
+      child: BotanicaBurnoutBanner(report: report),
     );
   }
 }
