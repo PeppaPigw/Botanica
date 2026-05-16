@@ -3,6 +3,8 @@ import '../models/enums.dart';
 import '../models/plant.dart';
 import '../models/task_instance.dart';
 import '../models/user_settings.dart';
+import 'environment_stress_detector.dart';
+import 'seasonal_care_advisor.dart';
 
 enum InsightCategory {
   rhythm,
@@ -48,6 +50,8 @@ class GardenIntelligence {
     _detectCareAcceleration(logs, candidates, now);
     _detectGardenGrowth(plants, candidates, now);
     _detectSeasonalShift(logs, candidates, now);
+    _detectStressedPlants(plants, logs, tasks, candidates, now);
+    _detectSeasonalCareReminder(plants, settings, candidates, now);
 
     if (candidates.isEmpty) return null;
 
@@ -387,6 +391,66 @@ class GardenIntelligence {
         priority: 7,
       ));
     }
+  }
+
+  static void _detectStressedPlants(
+    List<Plant> plants,
+    List<CareLog> logs,
+    List<TaskInstance> tasks,
+    List<GardenInsight> out,
+    DateTime now,
+  ) {
+    final results = EnvironmentStressDetector.detectAll(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      now: now,
+    );
+    if (results.isEmpty) return;
+
+    final top = results.first;
+    if (top.level == StressLevel.high || top.level == StressLevel.moderate) {
+      out.add(GardenInsight(
+        category: InsightCategory.behavioral,
+        messageKey: 'insightPlantStressed',
+        args: {
+          'plant': top.plantNickname,
+          'signal': top.signals.first.name,
+        },
+        plantId: top.plantId,
+        priority: top.level == StressLevel.high ? 10 : 8,
+      ));
+    }
+  }
+
+  static void _detectSeasonalCareReminder(
+    List<Plant> plants,
+    UserSettings settings,
+    List<GardenInsight> out,
+    DateTime now,
+  ) {
+    final activePlants = plants.where((p) => !p.isArchived).toList();
+    if (activePlants.length < 3) return;
+
+    final season = SeasonalCareAdvisor.currentSeason(now, settings.hemisphere);
+
+    final month = now.month;
+    final isTransitionMonth = month == 3 || month == 5 || month == 9 || month == 11;
+    if (!isTransitionMonth) return;
+
+    final messageKey = switch (season) {
+      Season.spring => 'insightSpringCare',
+      Season.summer => 'insightSummerCare',
+      Season.autumn => 'insightAutumnCare',
+      Season.winter => 'insightWinterCare',
+    };
+
+    out.add(GardenInsight(
+      category: InsightCategory.seasonal,
+      messageKey: messageKey,
+      args: {'count': activePlants.length.toString()},
+      priority: 6,
+    ));
   }
 
   static double? _averageInterval(List<CareLog> sortedLogs) {
