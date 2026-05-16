@@ -5,10 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../core/haptics/botanica_haptics.dart';
+import '../../core/widgets/botanica_health_timeline_card.dart';
 import '../../core/widgets/botanica_sheet.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/enums.dart';
+import '../../domain/models/task_instance.dart';
+import '../../domain/services/plant_health_timeline.dart';
 import '../../gen/l10n/app_localizations.dart';
 
 class PlantLogsTab extends ConsumerWidget {
@@ -61,6 +64,7 @@ class PlantLogsTab extends ConsumerWidget {
             else ...[
               _CareSparkline(logs: logs),
               BotanicaGaps.vSm,
+              _HealthTimelineInsight(plantId: plantId, logs: logs),
               ...logs.map(
                 (log) => _LogCard(log: log),
               ),
@@ -436,4 +440,45 @@ class _SparklinePainter extends CustomPainter {
   bool shouldRepaint(_SparklinePainter oldDelegate) =>
       counts != oldDelegate.counts ||
       barColor != oldDelegate.barColor;
+}
+
+class _HealthTimelineInsight extends ConsumerWidget {
+  const _HealthTimelineInsight({
+    required this.plantId,
+    required this.logs,
+  });
+
+  final String plantId;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (logs.length < 7) return const SizedBox.shrink();
+
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final tasksAsync = ref.watch(tasksStreamProvider);
+    final plants = plantsAsync.valueOrNull;
+    final tasks = tasksAsync.valueOrNull ?? const <TaskInstance>[];
+
+    if (plants == null) return const SizedBox.shrink();
+
+    final plant = plants.where((p) => p.id == plantId).firstOrNull;
+    if (plant == null) return const SizedBox.shrink();
+
+    final timeline = PlantHealthTimeline.generate(
+      plant: plant,
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    if (timeline == null || timeline.snapshots.length < 3) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingSm),
+      child: BotanicaHealthTimelineCard(timelines: [timeline]),
+    );
+  }
 }
