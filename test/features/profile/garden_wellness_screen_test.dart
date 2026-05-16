@@ -101,11 +101,12 @@ void main() {
     expect(find.text('90'), findsOneWidget);
     expect(find.text(l10n.gardenCareStreakChip(11)), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.text(l10n.gardenWellnessRoomPulseTitle), 120);
+        find.text(l10n.gardenWellnessRoomPulseTitle), 200);
     expect(find.text(l10n.gardenWellnessRoomPulseTitle), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Bathroom').first, 200);
     expect(find.text('Bathroom'), findsWidgets);
     await tester.scrollUntilVisible(
-        find.text(l10n.gardenWellnessPrioritiesTitle), 120);
+        find.text(l10n.gardenWellnessPrioritiesTitle), 200);
     expect(find.text(l10n.gardenWellnessPrioritiesTitle), findsOneWidget);
     expect(
       find.text(l10n.gardenWellnessPriorityAttentionTitle('Fern')),
@@ -117,13 +118,13 @@ void main() {
     );
     await tester.scrollUntilVisible(
       find.text(l10n.gardenWellnessPriorityDueTodayTitle),
-      120,
+      200,
     );
     expect(find.text(l10n.gardenWellnessPriorityDueTodayTitle), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.text(l10n.gardenWellnessFocusPlantsTitle), 120);
+        find.text(l10n.gardenWellnessFocusPlantsTitle), 200);
     expect(find.text(l10n.gardenWellnessFocusPlantsTitle), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('Monstera').first, 120);
+    await tester.scrollUntilVisible(find.text('Monstera').first, 200);
     expect(find.text('Monstera'), findsWidgets);
   });
 
@@ -181,13 +182,13 @@ void main() {
     expect(find.text(l10n.gardenWellnessTitle), findsOneWidget);
     expect(find.text(l10n.gardenWellnessOverallScore), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.text(l10n.gardenWellnessRoomPulseTitle), 120);
+        find.text(l10n.gardenWellnessRoomPulseTitle), 200);
     expect(find.text(l10n.gardenWellnessRoomPulseTitle), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.text(l10n.gardenWellnessPrioritiesTitle), 120);
+        find.text(l10n.gardenWellnessPrioritiesTitle), 200);
     expect(find.text(l10n.gardenWellnessPrioritiesTitle), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.text(l10n.gardenWellnessFocusPlantsTitle), 120);
+        find.text(l10n.gardenWellnessFocusPlantsTitle), 200);
     expect(find.text(l10n.gardenWellnessFocusPlantsTitle), findsOneWidget);
   });
 
