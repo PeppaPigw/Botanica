@@ -19,6 +19,7 @@ import '../../core/widgets/botanica_predictive_needs_card.dart';
 import '../../core/widgets/botanica_plant_story_card.dart';
 import '../../core/widgets/botanica_plant_personality_card.dart';
 import '../../core/widgets/botanica_plant_vitals_card.dart';
+import '../../core/widgets/botanica_plant_rescue_card.dart';
 import '../../core/widgets/botanica_health_breakdown_sheet.dart';
 import '../../core/haptics/botanica_haptics.dart';
 import '../../core/utils/motion_preferences.dart';
@@ -33,6 +34,7 @@ import '../../domain/services/predictive_needs_engine.dart';
 import '../../domain/services/plant_story_engine.dart';
 import '../../domain/services/plant_personality_engine.dart';
 import '../../domain/services/plant_vital_signs_engine.dart';
+import '../../domain/services/plant_rescue_engine.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -344,6 +346,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantPersonalitySection(plant: plant),
         BotanicaGaps.vSm,
         _PlantVitalsSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantRescueSection(plant: plant),
         BotanicaGaps.vSm,
         BotanicaGlassCard(
           child: Column(
@@ -2561,5 +2565,35 @@ class _PlantVitalsSection extends ConsumerWidget {
     );
 
     return BotanicaPlantVitalsCard(dashboard: dashboard);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Plant Rescue Section
+// ---------------------------------------------------------------------------
+
+class _PlantRescueSection extends ConsumerWidget {
+  const _PlantRescueSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    final now = DateTime.now();
+    final recentLogs = logs.where((l) => now.difference(l.timestamp).inDays <= 30).toList();
+
+    final plan = PlantRescueEngine.evaluate(
+      plant: plant,
+      healthScore: 0.3,
+      recentLogs: recentLogs,
+      now: now,
+    );
+
+    if (plan == null) return const SizedBox.shrink();
+
+    return BotanicaPlantRescueCard(plan: plan);
   }
 }

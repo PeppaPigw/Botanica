@@ -19,6 +19,7 @@ import '../../core/widgets/botanica_garden_legacy_card.dart';
 import '../../core/widgets/botanica_watering_batch_card.dart';
 import '../../core/widgets/botanica_care_rhythm_card.dart';
 import '../../core/widgets/botanica_next_action_card.dart';
+import '../../core/widgets/botanica_garden_goal_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -36,6 +37,7 @@ import '../../domain/services/garden_legacy_engine.dart';
 import '../../domain/services/watering_batch_planner.dart';
 import '../../domain/services/care_rhythm_engine.dart';
 import '../../domain/services/next_action_recommender.dart';
+import '../../domain/services/garden_goal_engine.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -376,6 +378,12 @@ class GardenWellnessScreen extends ConsumerWidget {
               _NextActionSection(
                 plants: plantsAsync.requireValue,
                 tasks: tasksAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GardenGoalSection(
+                plants: plantsAsync.requireValue,
                 logs: logsAsync.requireValue,
                 settings: settings,
               ),
@@ -1507,5 +1515,33 @@ class _NextActionSection extends StatelessWidget {
     );
 
     return BotanicaNextActionCard(action: action);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Garden Goal Section
+// ---------------------------------------------------------------------------
+
+class _GardenGoalSection extends StatelessWidget {
+  const _GardenGoalSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final goals = GardenGoalEngine.suggestGoals(
+      plants: plants,
+      logs: logs,
+      streakDays: settings.careStreakDays,
+      now: DateTime.now(),
+    );
+
+    return BotanicaGardenGoalCard(goals: goals);
   }
 }

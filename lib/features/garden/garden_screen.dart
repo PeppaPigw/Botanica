@@ -23,6 +23,7 @@ import '../../core/widgets/botanica_daily_briefing_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_daily_challenge_card.dart';
 import '../../core/widgets/botanica_garden_harmony_card.dart';
+import '../../core/widgets/botanica_smart_greeting_card.dart';
 import '../../core/widgets/botanica_perfect_week_sheet.dart';
 import '../../core/widgets/botanica_rescue_reset_sheet.dart';
 import '../../core/widgets/botanica_streak_milestone_sheet.dart';
@@ -59,6 +60,7 @@ import '../../domain/services/daily_briefing_engine.dart';
 import '../../domain/services/seasonal_transition_advisor.dart';
 import '../../domain/services/daily_challenge_engine.dart';
 import '../../domain/services/garden_harmony_engine.dart';
+import '../../domain/services/smart_greeting_engine.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_actions.dart';
 import '../../services/review/review_prompt_service.dart';
@@ -681,6 +683,18 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                 child: _PlantMilestoneBanner(
                   milestones: PlantMilestoneEngine.todaysMilestones(plants),
                 ).animateSection(index: 3),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 2 && logs.length >= 5)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: _SmartGreetingSection(
+                  plants: plants,
+                  logs: logs,
+                  settings: settings,
+                ),
               ),
             ),
           if (plants.where((p) => !p.isArchived).length >= 2 && logs.length >= 5)
@@ -5923,5 +5937,33 @@ class _GardenHarmonySection extends StatelessWidget {
     );
 
     return BotanicaGardenHarmonyCard(result: result);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Smart Greeting Section
+// ---------------------------------------------------------------------------
+
+class _SmartGreetingSection extends StatelessWidget {
+  const _SmartGreetingSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final greeting = SmartGreetingEngine.generate(
+      plants: plants,
+      logs: logs,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    return BotanicaSmartGreetingCard(greeting: greeting);
   }
 }
