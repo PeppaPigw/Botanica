@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -24,9 +25,10 @@ class BotanicaGardenProgressCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
     final progress = unlockedFeatures / totalFeatures;
 
-    final nextMilestone = _nextMilestone();
+    final nextMilestone = _nextMilestone(l10n);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -44,14 +46,14 @@ class BotanicaGardenProgressCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Garden Intelligence',
+                  l10n.gardenProgressTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
               Text(
-                '$unlockedFeatures/$totalFeatures',
+                l10n.gardenProgressUnlocked(unlockedFeatures, totalFeatures),
                 style: textTheme.labelSmall?.copyWith(
                   color: scheme.primary,
                   fontWeight: FontWeight.w700,
@@ -83,13 +85,13 @@ class BotanicaGardenProgressCard extends StatelessWidget {
     );
   }
 
-  String? _nextMilestone() {
-    if (plantCount < 2) return 'Add 1 more plant to unlock diversity insights';
-    if (plantCount < 3) return 'Add 1 more plant to unlock room optimization';
-    if (plantCount < 4) return 'Add 1 more plant to unlock batch planning';
-    if (logCount < 5) return 'Log ${5 - logCount} more care actions for efficiency tracking';
-    if (logCount < 7) return 'Log ${7 - logCount} more actions for momentum analysis';
-    if (logCount < 10) return 'Log ${10 - logCount} more actions for skill progression';
+  String? _nextMilestone(AppLocalizations l10n) {
+    if (plantCount < 2) return l10n.gardenProgressMilestonePlant('diversity insights');
+    if (plantCount < 3) return l10n.gardenProgressMilestonePlant('room optimization');
+    if (plantCount < 4) return l10n.gardenProgressMilestonePlant('batch planning');
+    if (logCount < 5) return l10n.gardenProgressMilestoneLogs(5 - logCount, 'efficiency tracking');
+    if (logCount < 7) return l10n.gardenProgressMilestoneLogs(7 - logCount, 'momentum analysis');
+    if (logCount < 10) return l10n.gardenProgressMilestoneLogs(10 - logCount, 'skill progression');
     return null;
   }
 }

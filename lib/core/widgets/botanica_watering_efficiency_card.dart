@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/watering_efficiency_analyzer.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -19,6 +20,7 @@ class BotanicaWateringEfficiencyCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final optimal = analyses.where((a) => a.efficiency == WateringEfficiency.optimal).length;
     final ratio = optimal / analyses.length;
@@ -45,7 +47,7 @@ class BotanicaWateringEfficiencyCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Watering Efficiency',
+                  l10n.wateringEfficiencyTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -61,7 +63,7 @@ class BotanicaWateringEfficiencyCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
                 ),
                 child: Text(
-                  '$optimal/${analyses.length} optimal',
+                  l10n.wateringEfficiencyOptimal(optimal, analyses.length),
                   style: textTheme.labelSmall?.copyWith(
                     color: overallColor,
                     fontWeight: FontWeight.w700,
@@ -105,7 +107,7 @@ class BotanicaWateringEfficiencyCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Text(
-                '+${analyses.length - 3} more',
+                l10n.wateringEfficiencyMore(analyses.length - 3),
                 style: textTheme.labelSmall?.copyWith(
                   color: scheme.onSurface.withValues(alpha: 0.4),
                 ),

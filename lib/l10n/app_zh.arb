@@ -2086,5 +2086,22 @@
   "plantMemoryAnniversary": "纪念日",
   "plantMemoryBusiestDay": "最忙碌的一天",
   "plantMemoryLongestGap": "最长间隔",
-  "plantMemoryComeback": "回归"
+  "plantMemoryComeback": "回归",
+  "careAutopilotMore": "+{count} 条更多建议",
+  "wateringEfficiencyMore": "+{count} 更多",
+  "seasonalTransitionMore": "+{count} 项更多任务",
+  "gardenProgressTitle": "花园智能",
+  "gardenProgressUnlocked": "{unlocked}/{total}",
+  "gardenProgressMilestonePlant": "再添加 1 株植物以解锁{feature}",
+  "gardenProgressMilestoneLogs": "再记录 {count} 次养护以解锁{feature}",
+  "transitionMoveIndoors": "移入室内",
+  "transitionMoveOutdoors": "移至室外",
+  "transitionReduceWatering": "减少浇水",
+  "transitionIncreaseWatering": "增加浇水",
+  "transitionStartFertilizing": "开始施肥",
+  "transitionStopFertilizing": "停止施肥",
+  "transitionIncreaseHumidity": "增加湿度",
+  "transitionProtectFromFrost": "防冻保护",
+  "transitionProvideShadeCover": "提供遮阳",
+  "transitionResumeNormalCare": "恢复正常养护"
 }

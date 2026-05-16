@@ -3625,4 +3625,67 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get plantMemoryComeback => '回归';
+
+  @override
+  String careAutopilotMore(int count) {
+    return '+$count 条更多建议';
+  }
+
+  @override
+  String wateringEfficiencyMore(int count) {
+    return '+$count 更多';
+  }
+
+  @override
+  String seasonalTransitionMore(int count) {
+    return '+$count 项更多任务';
+  }
+
+  @override
+  String get gardenProgressTitle => '花园智能';
+
+  @override
+  String gardenProgressUnlocked(int unlocked, int total) {
+    return '$unlocked/$total';
+  }
+
+  @override
+  String gardenProgressMilestonePlant(String feature) {
+    return '再添加 1 株植物以解锁$feature';
+  }
+
+  @override
+  String gardenProgressMilestoneLogs(int count, String feature) {
+    return '再记录 $count 次养护以解锁$feature';
+  }
+
+  @override
+  String get transitionMoveIndoors => '移入室内';
+
+  @override
+  String get transitionMoveOutdoors => '移至室外';
+
+  @override
+  String get transitionReduceWatering => '减少浇水';
+
+  @override
+  String get transitionIncreaseWatering => '增加浇水';
+
+  @override
+  String get transitionStartFertilizing => '开始施肥';
+
+  @override
+  String get transitionStopFertilizing => '停止施肥';
+
+  @override
+  String get transitionIncreaseHumidity => '增加湿度';
+
+  @override
+  String get transitionProtectFromFrost => '防冻保护';
+
+  @override
+  String get transitionProvideShadeCover => '提供遮阳';
+
+  @override
+  String get transitionResumeNormalCare => '恢复正常养护';
 }

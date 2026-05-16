@@ -2075,5 +2075,22 @@
   "plantMemoryAnniversary": "ذكرى سنوية",
   "plantMemoryBusiestDay": "أكثر يوم نشاطاً",
   "plantMemoryLongestGap": "أطول فترة توقف",
-  "plantMemoryComeback": "عودة"
+  "plantMemoryComeback": "عودة",
+  "careAutopilotMore": "+{count} اقتراحات أخرى",
+  "wateringEfficiencyMore": "+{count} المزيد",
+  "seasonalTransitionMore": "+{count} مهام أخرى",
+  "gardenProgressTitle": "ذكاء الحديقة",
+  "gardenProgressUnlocked": "{unlocked}/{total}",
+  "gardenProgressMilestonePlant": "أضف نبتة واحدة أخرى لفتح {feature}",
+  "gardenProgressMilestoneLogs": "سجّل {count} عمليات رعاية أخرى لفتح {feature}",
+  "transitionMoveIndoors": "نقل للداخل",
+  "transitionMoveOutdoors": "نقل للخارج",
+  "transitionReduceWatering": "تقليل الري",
+  "transitionIncreaseWatering": "زيادة الري",
+  "transitionStartFertilizing": "بدء التسميد",
+  "transitionStopFertilizing": "إيقاف التسميد",
+  "transitionIncreaseHumidity": "زيادة الرطوبة",
+  "transitionProtectFromFrost": "حماية من الصقيع",
+  "transitionProvideShadeCover": "توفير الظل",
+  "transitionResumeNormalCare": "استئناف الرعاية العادية"
 }

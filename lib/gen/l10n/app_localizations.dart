@@ -6488,6 +6488,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Comeback'**
   String get plantMemoryComeback;
+
+  /// No description provided for @careAutopilotMore.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} more suggestions'**
+  String careAutopilotMore(int count);
+
+  /// No description provided for @wateringEfficiencyMore.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} more'**
+  String wateringEfficiencyMore(int count);
+
+  /// No description provided for @seasonalTransitionMore.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} more tasks'**
+  String seasonalTransitionMore(int count);
+
+  /// No description provided for @gardenProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Intelligence'**
+  String get gardenProgressTitle;
+
+  /// No description provided for @gardenProgressUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{unlocked}/{total}'**
+  String gardenProgressUnlocked(int unlocked, int total);
+
+  /// No description provided for @gardenProgressMilestonePlant.
+  ///
+  /// In en, this message translates to:
+  /// **'Add 1 more plant to unlock {feature}'**
+  String gardenProgressMilestonePlant(String feature);
+
+  /// No description provided for @gardenProgressMilestoneLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Log {count} more care actions for {feature}'**
+  String gardenProgressMilestoneLogs(int count, String feature);
+
+  /// No description provided for @transitionMoveIndoors.
+  ///
+  /// In en, this message translates to:
+  /// **'Move indoors'**
+  String get transitionMoveIndoors;
+
+  /// No description provided for @transitionMoveOutdoors.
+  ///
+  /// In en, this message translates to:
+  /// **'Move outdoors'**
+  String get transitionMoveOutdoors;
+
+  /// No description provided for @transitionReduceWatering.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce watering'**
+  String get transitionReduceWatering;
+
+  /// No description provided for @transitionIncreaseWatering.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase watering'**
+  String get transitionIncreaseWatering;
+
+  /// No description provided for @transitionStartFertilizing.
+  ///
+  /// In en, this message translates to:
+  /// **'Start fertilizing'**
+  String get transitionStartFertilizing;
+
+  /// No description provided for @transitionStopFertilizing.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop fertilizing'**
+  String get transitionStopFertilizing;
+
+  /// No description provided for @transitionIncreaseHumidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase humidity'**
+  String get transitionIncreaseHumidity;
+
+  /// No description provided for @transitionProtectFromFrost.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect from frost'**
+  String get transitionProtectFromFrost;
+
+  /// No description provided for @transitionProvideShadeCover.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide shade'**
+  String get transitionProvideShadeCover;
+
+  /// No description provided for @transitionResumeNormalCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume normal care'**
+  String get transitionResumeNormalCare;
 }
 
 class _AppLocalizationsDelegate

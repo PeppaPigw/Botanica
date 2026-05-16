@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_autopilot_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -19,6 +20,7 @@ class BotanicaCareAutopilotCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final highCount = suggestions.where((s) => s.urgency == SuggestionUrgency.high).length;
     final headerColor = highCount > 0 ? scheme.error : scheme.tertiary;
@@ -39,7 +41,7 @@ class BotanicaCareAutopilotCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Care Autopilot',
+                  l10n.careAutopilotTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -57,7 +59,7 @@ class BotanicaCareAutopilotCard extends StatelessWidget {
                         BorderRadius.circular(BotanicaTokens.radiusPill),
                   ),
                   child: Text(
-                    '$highCount urgent',
+                    l10n.careAutopilotUrgent(highCount),
                     style: textTheme.labelSmall?.copyWith(
                       color: scheme.error,
                       fontWeight: FontWeight.w700,
@@ -95,7 +97,7 @@ class BotanicaCareAutopilotCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Text(
-                '+${suggestions.length - 3} more suggestions',
+                l10n.careAutopilotMore(suggestions.length - 3),
                 style: textTheme.labelSmall?.copyWith(
                   color: scheme.onSurface.withValues(alpha: 0.4),
                 ),

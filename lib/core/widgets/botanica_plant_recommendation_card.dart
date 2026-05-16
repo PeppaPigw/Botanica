@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_recommendation_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -21,6 +22,7 @@ class BotanicaPlantRecommendationCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -38,7 +40,7 @@ class BotanicaPlantRecommendationCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Recommended for You',
+                  l10n.recommendedForYouTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -49,7 +51,7 @@ class BotanicaPlantRecommendationCard extends StatelessWidget {
           if (result.gardenGaps.isNotEmpty) ...[
             BotanicaGaps.vXs,
             Text(
-              'Gaps: ${result.gardenGaps.take(3).join(', ')}',
+              l10n.recommendedGaps(result.gardenGaps.take(3).join(', ')),
               style: textTheme.bodySmall?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.5),
               ),

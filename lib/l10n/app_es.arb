@@ -2075,5 +2075,22 @@
   "plantMemoryAnniversary": "Aniversario",
   "plantMemoryBusiestDay": "Día más activo",
   "plantMemoryLongestGap": "Mayor pausa",
-  "plantMemoryComeback": "Regreso"
+  "plantMemoryComeback": "Regreso",
+  "careAutopilotMore": "+{count} sugerencias más",
+  "wateringEfficiencyMore": "+{count} más",
+  "seasonalTransitionMore": "+{count} tareas más",
+  "gardenProgressTitle": "Inteligencia del jardín",
+  "gardenProgressUnlocked": "{unlocked}/{total}",
+  "gardenProgressMilestonePlant": "Añade 1 planta más para desbloquear {feature}",
+  "gardenProgressMilestoneLogs": "Registra {count} cuidados más para {feature}",
+  "transitionMoveIndoors": "Mover al interior",
+  "transitionMoveOutdoors": "Mover al exterior",
+  "transitionReduceWatering": "Reducir riego",
+  "transitionIncreaseWatering": "Aumentar riego",
+  "transitionStartFertilizing": "Empezar a fertilizar",
+  "transitionStopFertilizing": "Dejar de fertilizar",
+  "transitionIncreaseHumidity": "Aumentar humedad",
+  "transitionProtectFromFrost": "Proteger de heladas",
+  "transitionProvideShadeCover": "Proporcionar sombra",
+  "transitionResumeNormalCare": "Reanudar cuidado normal"
 }

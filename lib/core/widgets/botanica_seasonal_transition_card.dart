@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/seasonal_transition_planner.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaSeasonalTransitionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final urgentCount =
         plan.tasks.where((t) => t.urgency >= 3).length;
@@ -38,7 +40,7 @@ class BotanicaSeasonalTransitionCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Seasonal Transition',
+                  l10n.seasonalTransitionTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -54,7 +56,7 @@ class BotanicaSeasonalTransitionCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
                 ),
                 child: Text(
-                  '${plan.weeksUntilTransition}w away',
+                  l10n.seasonalTransitionWeeks(plan.weeksUntilTransition),
                   style: textTheme.labelSmall?.copyWith(
                     color: accentColor,
                     fontWeight: FontWeight.w700,
@@ -87,7 +89,7 @@ class BotanicaSeasonalTransitionCard extends StatelessWidget {
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
-                        '${t.plantNickname}: ${_actionLabel(t.action)}',
+                        '${t.plantNickname}: ${_actionLabel(t.action, l10n)}',
                         style: textTheme.labelSmall?.copyWith(
                           color: scheme.onSurface.withValues(alpha: 0.8),
                         ),
@@ -102,7 +104,7 @@ class BotanicaSeasonalTransitionCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Text(
-                '+${plan.tasks.length - 3} more tasks',
+                l10n.seasonalTransitionMore(plan.tasks.length - 3),
                 style: textTheme.labelSmall?.copyWith(
                   color: scheme.onSurface.withValues(alpha: 0.4),
                 ),
@@ -138,28 +140,28 @@ class BotanicaSeasonalTransitionCard extends StatelessWidget {
     }
   }
 
-  static String _actionLabel(TransitionAction action) {
+  static String _actionLabel(TransitionAction action, AppLocalizations l10n) {
     switch (action) {
       case TransitionAction.moveIndoors:
-        return 'Move indoors';
+        return l10n.transitionMoveIndoors;
       case TransitionAction.moveOutdoors:
-        return 'Move outdoors';
+        return l10n.transitionMoveOutdoors;
       case TransitionAction.reduceWatering:
-        return 'Reduce watering';
+        return l10n.transitionReduceWatering;
       case TransitionAction.increaseWatering:
-        return 'Increase watering';
+        return l10n.transitionIncreaseWatering;
       case TransitionAction.startFertilizing:
-        return 'Start fertilizing';
+        return l10n.transitionStartFertilizing;
       case TransitionAction.stopFertilizing:
-        return 'Stop fertilizing';
+        return l10n.transitionStopFertilizing;
       case TransitionAction.increaseHumidity:
-        return 'Increase humidity';
+        return l10n.transitionIncreaseHumidity;
       case TransitionAction.protectFromFrost:
-        return 'Protect from frost';
+        return l10n.transitionProtectFromFrost;
       case TransitionAction.provideShadeCover:
-        return 'Provide shade';
+        return l10n.transitionProvideShadeCover;
       case TransitionAction.resumeNormalCare:
-        return 'Resume normal care';
+        return l10n.transitionResumeNormalCare;
     }
   }
 }

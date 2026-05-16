@@ -3799,4 +3799,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get plantMemoryComeback => 'Comeback';
+
+  @override
+  String careAutopilotMore(int count) {
+    return '+$count more suggestions';
+  }
+
+  @override
+  String wateringEfficiencyMore(int count) {
+    return '+$count more';
+  }
+
+  @override
+  String seasonalTransitionMore(int count) {
+    return '+$count more tasks';
+  }
+
+  @override
+  String get gardenProgressTitle => 'Garden Intelligence';
+
+  @override
+  String gardenProgressUnlocked(int unlocked, int total) {
+    return '$unlocked/$total';
+  }
+
+  @override
+  String gardenProgressMilestonePlant(String feature) {
+    return 'Add 1 more plant to unlock $feature';
+  }
+
+  @override
+  String gardenProgressMilestoneLogs(int count, String feature) {
+    return 'Log $count more care actions for $feature';
+  }
+
+  @override
+  String get transitionMoveIndoors => 'Move indoors';
+
+  @override
+  String get transitionMoveOutdoors => 'Move outdoors';
+
+  @override
+  String get transitionReduceWatering => 'Reduce watering';
+
+  @override
+  String get transitionIncreaseWatering => 'Increase watering';
+
+  @override
+  String get transitionStartFertilizing => 'Start fertilizing';
+
+  @override
+  String get transitionStopFertilizing => 'Stop fertilizing';
+
+  @override
+  String get transitionIncreaseHumidity => 'Increase humidity';
+
+  @override
+  String get transitionProtectFromFrost => 'Protect from frost';
+
+  @override
+  String get transitionProvideShadeCover => 'Provide shade';
+
+  @override
+  String get transitionResumeNormalCare => 'Resume normal care';
 }
