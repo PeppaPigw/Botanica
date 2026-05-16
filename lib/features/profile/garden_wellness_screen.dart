@@ -11,6 +11,7 @@ import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/botanica_streak_badge.dart';
 import '../../core/widgets/care_patterns_card.dart';
 import '../../core/widgets/glass_card.dart';
+import '../../core/widgets/botanica_momentum_ring.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -20,6 +21,7 @@ import '../../domain/services/achievements.dart';
 import '../../domain/services/garden_wellness_priorities.dart';
 import '../../domain/services/garden_wellness_room_pulse.dart';
 import '../../domain/services/garden_wellness_summary.dart';
+import '../../domain/services/garden_momentum_engine.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -311,6 +313,12 @@ class GardenWellnessScreen extends ConsumerWidget {
                 child: BotanicaStreakProgress(
                   currentStreak: settings.careStreakDays,
                 ),
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _MomentumSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
               ),
               const SizedBox(height: BotanicaTokens.spacingBase),
               _CareActivityHeatmap(logs: logsAsync.requireValue),
@@ -1163,4 +1171,73 @@ String _achievementDesc(AppLocalizations l10n, String id) {
     'diverseCarer' => l10n.achievementDiverseCarerDesc,
     _ => '',
   };
+}
+
+// ---------------------------------------------------------------------------
+// Momentum Section
+// ---------------------------------------------------------------------------
+
+class _MomentumSection extends StatelessWidget {
+  const _MomentumSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final now = DateTime.now();
+
+    final momentum = GardenMomentumEngine.compute(
+      plants: plants,
+      logs: logs,
+      streakDays: settings.careStreakDays,
+      plantsAddedThisMonth: plants.where((p) =>
+          p.createdAt.year == now.year &&
+          p.createdAt.month == now.month).length,
+      now: now,
+    );
+
+    return BotanicaGlassCard(
+      child: Row(
+        children: [
+          BotanicaMomentumRing(
+            score: momentum.score,
+            size: 64,
+            strokeWidth: 6,
+            label: 'momentum',
+          ),
+          const SizedBox(width: BotanicaTokens.spacingMd),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Garden Momentum',
+                  style: textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  momentum.encouragement,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: scheme.onSurface.withValues(alpha: 0.7),
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -19,6 +19,7 @@ import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_all_done_sheet.dart';
 import '../../core/widgets/botanica_celebration.dart';
+import '../../core/widgets/botanica_daily_briefing_card.dart';
 import '../../core/widgets/botanica_perfect_week_sheet.dart';
 import '../../core/widgets/botanica_rescue_reset_sheet.dart';
 import '../../core/widgets/botanica_streak_milestone_sheet.dart';
@@ -51,6 +52,7 @@ import '../../domain/services/plant_voice.dart';
 import '../../domain/services/care_coaching.dart';
 import '../../domain/services/plant_milestone.dart';
 import '../../domain/services/seasonal_tips.dart';
+import '../../domain/services/daily_briefing_engine.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_actions.dart';
 import '../../services/review/review_prompt_service.dart';
@@ -672,6 +674,19 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
               sliver: SliverToBoxAdapter(
                 child: _PlantMilestoneBanner(
                   milestones: PlantMilestoneEngine.todaysMilestones(plants),
+                ).animateSection(index: 3),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 2 && logs.length >= 5)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: _DailyBriefingSection(
+                  plants: plants,
+                  logs: logs,
+                  tasks: tasks,
+                  settings: settings,
                 ).animateSection(index: 3),
               ),
             ),
@@ -5700,5 +5715,71 @@ class _GardenMoodIndicator extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Daily Briefing Section
+// ---------------------------------------------------------------------------
+
+class _DailyBriefingSection extends ConsumerWidget {
+  const _DailyBriefingSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final now = DateTime.now();
+    final active = plants.where((p) => !p.isArchived).toList();
+
+    final healthScores = <String, double>{};
+    for (final plant in active) {
+      final plantTasks = tasks.where((t) => t.plantId == plant.id).toList();
+      final plantLogs = logs.where((l) => l.plantId == plant.id).toList();
+      healthScores[plant.id] = PlantHealthScore.compute(
+        allTasks: plantTasks,
+        recentLogs: plantLogs,
+        now: now,
+      ) / 100.0;
+    }
+
+    final todayStart = DateTime(now.year, now.month, now.day);
+    final missedThisWeek = tasks.where((t) =>
+        !t.isDismissed &&
+        t.status != TaskStatus.done &&
+        t.status != TaskStatus.snoozed &&
+        t.dueAt.isBefore(todayStart) &&
+        now.difference(t.dueAt).inDays <= 7).length;
+
+    final briefing = DailyBriefingEngine.generate(
+      plants: active,
+      logs: logs,
+      healthScores: healthScores,
+      streakDays: settings.careStreakDays,
+      plantsAddedThisMonth: active.where((p) =>
+          p.createdAt.year == now.year &&
+          p.createdAt.month == now.month).length,
+      missedTasksThisWeek: missedThisWeek,
+      missedTasksLastWeek: 0,
+      totalDailyTasks: tasks.where((t) =>
+          !t.isDismissed &&
+          t.status != TaskStatus.snoozed &&
+          t.dueAt.year == now.year &&
+          t.dueAt.month == now.month &&
+          t.dueAt.day == now.day).length,
+      now: now,
+    );
+
+    if (briefing.items.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaDailyBriefingCard(briefing: briefing);
   }
 }

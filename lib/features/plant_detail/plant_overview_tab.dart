@@ -14,6 +14,7 @@ import '../../core/i18n/species_labels.dart';
 import '../../core/widgets/botanica_ai_note_card.dart';
 import '../../core/widgets/botanica_animated_counter.dart';
 import '../../core/widgets/botanica_gaps.dart';
+import '../../core/widgets/botanica_emotional_bond_indicator.dart';
 import '../../core/widgets/botanica_health_breakdown_sheet.dart';
 import '../../core/haptics/botanica_haptics.dart';
 import '../../core/utils/motion_preferences.dart';
@@ -23,6 +24,7 @@ import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/services/plant_care_streak.dart';
 import '../../domain/services/care_prediction_engine.dart';
+import '../../domain/services/emotional_bond_engine.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -324,6 +326,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _GrowthTimelineCard(plantId: plant.id),
         BotanicaGaps.vSm,
         _PlantJourneyCard(plant: plant),
+        BotanicaGaps.vSm,
+        _EmotionalBondSection(plant: plant),
         BotanicaGaps.vSm,
         BotanicaGlassCard(
           child: Column(
@@ -2390,5 +2394,37 @@ class _GrowthTimelineThumbnail extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Emotional Bond Section
+// ---------------------------------------------------------------------------
+
+class _EmotionalBondSection extends ConsumerWidget {
+  const _EmotionalBondSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plantsAsync = ref.watch(plantsStreamProvider);
+
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+
+    if (logs.isEmpty) return const SizedBox.shrink();
+
+    final bonds = EmotionalBondEngine.compute(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    final bond = bonds.where((b) => b.plantId == plant.id).firstOrNull;
+    if (bond == null) return const SizedBox.shrink();
+
+    return BotanicaEmotionalBondIndicator(bond: bond);
   }
 }
