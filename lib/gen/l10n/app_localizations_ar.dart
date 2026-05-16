@@ -3520,4 +3520,65 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get plantAnniversaryDismiss => 'إلى المزيد!';
+
+  @override
+  String insightRhythmShift(String plant, String oldDays, String newDays) {
+    return 'إيقاع ري $plant تغيّر من كل $oldDays إلى $newDays يوم';
+  }
+
+  @override
+  String insightFavoriteCareDay(String percent, String day) {
+    return '$percent% من عنايتك تحدث يوم $day — يوم حديقتك';
+  }
+
+  @override
+  String insightActiveTime(String period, String percent) {
+    return 'أنت من محبي العناية $period — $percent% من الرعاية تحدث حينها';
+  }
+
+  @override
+  String insightMostLovedPlant(String plant, String actions) {
+    return '$plant حصل على أكبر اهتمام هذا الشهر — $actions إجراء';
+  }
+
+  @override
+  String insightQuietThenBusy(String quietDays, String taskCount) {
+    return '$quietDays أيام هادئة، ثم $taskCount مهام قادمة';
+  }
+
+  @override
+  String insightCareAcceleration(String thisWeek, String lastWeek) {
+    return 'أنت في قمة نشاطك — $thisWeek إجراء هذا الأسبوع مقابل $lastWeek الأسبوع الماضي';
+  }
+
+  @override
+  String insightGardenGrowing(String total, String recent) {
+    return 'حديقتك تنمو — $total نبتة الآن، $recent أُضيفت مؤخراً';
+  }
+
+  @override
+  String insightSeasonalActivity(
+      String direction, String thisMonth, String lastMonth) {
+    return 'تحوّل موسمي: نشاط $direction هذا الشهر ($thisMonth) مقابل السابق ($lastMonth)';
+  }
+
+  @override
+  String get insightSectionTitle => 'ذكاء الحديقة';
+
+  @override
+  String quickCheckInTitle(String plant) {
+    return 'كيف يبدو $plant؟';
+  }
+
+  @override
+  String get quickCheckInSubtitle => 'نظرة سريعة تساعد في تتبع صحة نباتك';
+
+  @override
+  String get quickCheckInThriving => 'مزدهر';
+
+  @override
+  String get quickCheckInOkay => 'بخير';
+
+  @override
+  String get quickCheckInWorried => 'قلق';
 }

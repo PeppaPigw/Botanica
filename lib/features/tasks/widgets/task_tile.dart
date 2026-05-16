@@ -15,11 +15,14 @@ import '../../../app/theme/botanica_glass_theme.dart';
 import '../../../core/widgets/glass_card.dart';
 import '../../../core/widgets/care_transparency_card.dart';
 import '../../../domain/models/enums.dart';
+import '../../../domain/models/care_log.dart';
 import '../../../domain/models/plant.dart';
 import '../../../domain/models/task_instance.dart';
 import '../../../gen/l10n/app_localizations.dart';
 import '../../../services/care/care_actions.dart';
 import '../../../services/care/care_combo_tracker.dart';
+import '../../../core/widgets/botanica_quick_check_in_sheet.dart';
+import '../../../domain/services/quick_check_in.dart';
 import '../../garden/garden_screen.dart';
 import '../../garden/edit_plant_screen.dart';
 import '../snooze_sheet.dart';
@@ -186,6 +189,32 @@ class _TaskTileState extends ConsumerState<TaskTile> {
       } else {
         if (mounted) {
           BotanicaCelebration.show(context);
+        }
+      }
+
+      if (mounted) {
+        final allLogs = ref.read(careLogsStreamProvider).valueOrNull ?? const [];
+        final plantLogs = allLogs.where((l) => l.plantId == widget.plant.id).toList();
+        if (QuickCheckIn.shouldPrompt(
+          plant: widget.plant,
+          recentLogs: plantLogs,
+          now: now,
+        )) {
+          final response = await BotanicaQuickCheckInSheet.show(
+            context,
+            plant: widget.plant,
+          );
+          if (response != null && mounted) {
+            final logsRepo = ref.read(logsRepositoryProvider);
+            await logsRepo.add(CareLog(
+              id: 'checkin_${now.millisecondsSinceEpoch}',
+              plantId: widget.plant.id,
+              type: widget.task.type,
+              timestamp: now,
+              note: QuickCheckIn.responseToNote(response),
+              linkedPhotoId: null,
+            ));
+          }
         }
       }
     } catch (_) {

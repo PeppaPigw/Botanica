@@ -1909,5 +1909,76 @@
   "plantAnniversaryBody90": "Tres meses de cuidado. Tu dedicación se nota.",
   "plantAnniversaryBody180": "¡Medio año! Esta planta prospera gracias a ti.",
   "plantAnniversaryBody365": "Un año juntos. Qué viaje increíble.",
-  "plantAnniversaryDismiss": "¡Por muchos más!"
+  "plantAnniversaryDismiss": "¡Por muchos más!",
+
+  "insightRhythmShift": "El ritmo de riego de {plant} cambió de cada {oldDays} a {newDays} días",
+  "@insightRhythmShift": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "oldDays": { "type": "String" },
+      "newDays": { "type": "String" }
+    }
+  },
+  "insightFavoriteCareDay": "{percent}% de tu cuidado ocurre los {day} — tu día de jardín",
+  "@insightFavoriteCareDay": {
+    "placeholders": {
+      "percent": { "type": "String" },
+      "day": { "type": "String" }
+    }
+  },
+  "insightActiveTime": "Eres un padre de plantas de {period} — {percent}% del cuidado es entonces",
+  "@insightActiveTime": {
+    "placeholders": {
+      "period": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "insightMostLovedPlant": "{plant} recibió más atención este mes — {actions} acciones",
+  "@insightMostLovedPlant": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "actions": { "type": "String" }
+    }
+  },
+  "insightQuietThenBusy": "{quietDays} días tranquilos, luego {taskCount} tareas por venir",
+  "@insightQuietThenBusy": {
+    "placeholders": {
+      "quietDays": { "type": "String" },
+      "taskCount": { "type": "String" }
+    }
+  },
+  "insightCareAcceleration": "Estás en racha — {thisWeek} acciones esta semana vs {lastWeek} la anterior",
+  "@insightCareAcceleration": {
+    "placeholders": {
+      "thisWeek": { "type": "String" },
+      "lastWeek": { "type": "String" }
+    }
+  },
+  "insightGardenGrowing": "Tu jardín crece — {total} plantas ahora, {recent} añadidas recientemente",
+  "@insightGardenGrowing": {
+    "placeholders": {
+      "total": { "type": "String" },
+      "recent": { "type": "String" }
+    }
+  },
+  "insightSeasonalActivity": "Cambio estacional: {direction} activo este mes ({thisMonth}) vs anterior ({lastMonth})",
+  "@insightSeasonalActivity": {
+    "placeholders": {
+      "direction": { "type": "String" },
+      "thisMonth": { "type": "String" },
+      "lastMonth": { "type": "String" }
+    }
+  },
+  "insightSectionTitle": "Inteligencia del Jardín",
+
+  "quickCheckInTitle": "¿Cómo se ve {plant}?",
+  "@quickCheckInTitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "quickCheckInSubtitle": "Un vistazo rápido ayuda a seguir la salud de tu planta",
+  "quickCheckInThriving": "Radiante",
+  "quickCheckInOkay": "Bien",
+  "quickCheckInWorried": "Preocupado"
 }

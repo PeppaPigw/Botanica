@@ -3382,4 +3382,65 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get plantAnniversaryDismiss => '继续加油！';
+
+  @override
+  String insightRhythmShift(String plant, String oldDays, String newDays) {
+    return '$plant 的浇水节奏从每 $oldDays 天变为 $newDays 天';
+  }
+
+  @override
+  String insightFavoriteCareDay(String percent, String day) {
+    return '你 $percent% 的养护发生在周$day — 你的花园日';
+  }
+
+  @override
+  String insightActiveTime(String period, String percent) {
+    return '你是$period型植物家长 — $percent% 的养护在此时段';
+  }
+
+  @override
+  String insightMostLovedPlant(String plant, String actions) {
+    return '$plant 本月最受关注 — $actions 次养护';
+  }
+
+  @override
+  String insightQuietThenBusy(String quietDays, String taskCount) {
+    return '接下来 $quietDays 天清闲，之后有 $taskCount 个任务';
+  }
+
+  @override
+  String insightCareAcceleration(String thisWeek, String lastWeek) {
+    return '状态火热 — 本周 $thisWeek 次 vs 上周 $lastWeek 次';
+  }
+
+  @override
+  String insightGardenGrowing(String total, String recent) {
+    return '花园在壮大 — 现有 $total 株，最近新增 $recent 株';
+  }
+
+  @override
+  String insightSeasonalActivity(
+      String direction, String thisMonth, String lastMonth) {
+    return '季节变化：本月$direction活跃（$thisMonth vs $lastMonth）';
+  }
+
+  @override
+  String get insightSectionTitle => '花园洞察';
+
+  @override
+  String quickCheckInTitle(String plant) {
+    return '$plant 看起来怎么样？';
+  }
+
+  @override
+  String get quickCheckInSubtitle => '快速记录帮助追踪植物健康状况';
+
+  @override
+  String get quickCheckInThriving => '茁壮';
+
+  @override
+  String get quickCheckInOkay => '还行';
+
+  @override
+  String get quickCheckInWorried => '担心';
 }

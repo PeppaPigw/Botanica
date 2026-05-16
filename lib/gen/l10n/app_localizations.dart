@@ -6091,6 +6091,91 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Here\'s to more!'**
   String get plantAnniversaryDismiss;
+
+  /// No description provided for @insightRhythmShift.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant}\'s watering rhythm shifted from every {oldDays} to {newDays} days this month'**
+  String insightRhythmShift(String plant, String oldDays, String newDays);
+
+  /// No description provided for @insightFavoriteCareDay.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of your care happens on {day}s — your garden day'**
+  String insightFavoriteCareDay(String percent, String day);
+
+  /// No description provided for @insightActiveTime.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re a {period} plant parent — {percent}% of care happens then'**
+  String insightActiveTime(String period, String percent);
+
+  /// No description provided for @insightMostLovedPlant.
+  ///
+  /// In en, this message translates to:
+  /// **'{plant} got the most attention this month — {actions} care actions'**
+  String insightMostLovedPlant(String plant, String actions);
+
+  /// No description provided for @insightQuietThenBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet {quietDays} days ahead, then {taskCount} tasks coming up'**
+  String insightQuietThenBusy(String quietDays, String taskCount);
+
+  /// No description provided for @insightCareAcceleration.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re on a roll — {thisWeek} actions this week vs {lastWeek} last week'**
+  String insightCareAcceleration(String thisWeek, String lastWeek);
+
+  /// No description provided for @insightGardenGrowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Your garden is growing — {total} plants now, {recent} added recently'**
+  String insightGardenGrowing(String total, String recent);
+
+  /// No description provided for @insightSeasonalActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasonal shift: {direction} active this month ({thisMonth}) vs last ({lastMonth})'**
+  String insightSeasonalActivity(
+      String direction, String thisMonth, String lastMonth);
+
+  /// No description provided for @insightSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Intelligence'**
+  String get insightSectionTitle;
+
+  /// No description provided for @quickCheckInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How does {plant} look?'**
+  String quickCheckInTitle(String plant);
+
+  /// No description provided for @quickCheckInSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A quick check helps track your plant\'s health over time'**
+  String get quickCheckInSubtitle;
+
+  /// No description provided for @quickCheckInThriving.
+  ///
+  /// In en, this message translates to:
+  /// **'Thriving'**
+  String get quickCheckInThriving;
+
+  /// No description provided for @quickCheckInOkay.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get quickCheckInOkay;
+
+  /// No description provided for @quickCheckInWorried.
+  ///
+  /// In en, this message translates to:
+  /// **'Worried'**
+  String get quickCheckInWorried;
 }
 
 class _AppLocalizationsDelegate

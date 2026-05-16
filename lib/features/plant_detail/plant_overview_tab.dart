@@ -22,6 +22,7 @@ import '../../domain/models/enums.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/services/plant_care_streak.dart';
+import '../../domain/services/care_prediction_engine.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -646,9 +647,34 @@ class _PlantQuickInfoRow extends ConsumerWidget {
             icon: Icons.local_fire_department_rounded,
             label: l10n.plantCareStreakLabel(plantStreak),
           ),
-      ],
+        _buildPredictionPill(logs, plant.id, now, l10n),
+      ].whereType<Widget>().toList(),
     );
   }
+}
+
+Widget? _buildPredictionPill(
+    List<CareLog> logs, String plantId, DateTime now, AppLocalizations l10n) {
+  final prediction = CarePredictionEngine.predictNextWatering(
+    plantId: plantId,
+    logs: logs,
+    now: now,
+  );
+  if (prediction == null || prediction.confidence < 0.5) return null;
+
+  final days = CarePredictionEngine.daysUntil(prediction, now);
+  if (days < 0) return null;
+
+  final label = days == 0
+      ? l10n.plantDetailNextWateringToday
+      : days == 1
+          ? l10n.plantDetailNextWateringTomorrow
+          : l10n.plantDetailNextWateringInDays(days);
+
+  return PlantDetailPill(
+    icon: Icons.auto_awesome_rounded,
+    label: label,
+  );
 }
 
 class _CareStatsCard extends ConsumerWidget {

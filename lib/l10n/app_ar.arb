@@ -1909,5 +1909,76 @@
   "plantAnniversaryBody90": "ثلاثة أشهر من العناية. تفانيك واضح.",
   "plantAnniversaryBody180": "نصف عام! هذا النبات يزدهر بفضلك.",
   "plantAnniversaryBody365": "عام كامل معاً. يا لها من رحلة مذهلة.",
-  "plantAnniversaryDismiss": "إلى المزيد!"
+  "plantAnniversaryDismiss": "إلى المزيد!",
+
+  "insightRhythmShift": "إيقاع ري {plant} تغيّر من كل {oldDays} إلى {newDays} يوم",
+  "@insightRhythmShift": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "oldDays": { "type": "String" },
+      "newDays": { "type": "String" }
+    }
+  },
+  "insightFavoriteCareDay": "{percent}% من عنايتك تحدث يوم {day} — يوم حديقتك",
+  "@insightFavoriteCareDay": {
+    "placeholders": {
+      "percent": { "type": "String" },
+      "day": { "type": "String" }
+    }
+  },
+  "insightActiveTime": "أنت من محبي العناية {period} — {percent}% من الرعاية تحدث حينها",
+  "@insightActiveTime": {
+    "placeholders": {
+      "period": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "insightMostLovedPlant": "{plant} حصل على أكبر اهتمام هذا الشهر — {actions} إجراء",
+  "@insightMostLovedPlant": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "actions": { "type": "String" }
+    }
+  },
+  "insightQuietThenBusy": "{quietDays} أيام هادئة، ثم {taskCount} مهام قادمة",
+  "@insightQuietThenBusy": {
+    "placeholders": {
+      "quietDays": { "type": "String" },
+      "taskCount": { "type": "String" }
+    }
+  },
+  "insightCareAcceleration": "أنت في قمة نشاطك — {thisWeek} إجراء هذا الأسبوع مقابل {lastWeek} الأسبوع الماضي",
+  "@insightCareAcceleration": {
+    "placeholders": {
+      "thisWeek": { "type": "String" },
+      "lastWeek": { "type": "String" }
+    }
+  },
+  "insightGardenGrowing": "حديقتك تنمو — {total} نبتة الآن، {recent} أُضيفت مؤخراً",
+  "@insightGardenGrowing": {
+    "placeholders": {
+      "total": { "type": "String" },
+      "recent": { "type": "String" }
+    }
+  },
+  "insightSeasonalActivity": "تحوّل موسمي: نشاط {direction} هذا الشهر ({thisMonth}) مقابل السابق ({lastMonth})",
+  "@insightSeasonalActivity": {
+    "placeholders": {
+      "direction": { "type": "String" },
+      "thisMonth": { "type": "String" },
+      "lastMonth": { "type": "String" }
+    }
+  },
+  "insightSectionTitle": "ذكاء الحديقة",
+
+  "quickCheckInTitle": "كيف يبدو {plant}؟",
+  "@quickCheckInTitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "quickCheckInSubtitle": "نظرة سريعة تساعد في تتبع صحة نباتك",
+  "quickCheckInThriving": "مزدهر",
+  "quickCheckInOkay": "بخير",
+  "quickCheckInWorried": "قلق"
 }

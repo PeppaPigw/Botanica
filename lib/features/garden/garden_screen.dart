@@ -45,7 +45,9 @@ import '../../domain/models/photo_entry.dart';
 import '../../domain/models/task_instance.dart';
 import '../../domain/services/garden_wellness_summary.dart';
 import '../../domain/services/plant_health_score.dart';
+import '../../domain/services/garden_intelligence.dart';
 import '../../domain/services/plant_mood.dart';
+import '../../domain/services/plant_voice.dart';
 import '../../domain/services/care_coaching.dart';
 import '../../domain/services/plant_milestone.dart';
 import '../../domain/services/seasonal_tips.dart';
@@ -653,6 +655,13 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   plants: plants,
                 ),
                 isOnVacation: settings.isOnVacation,
+                gardenInsight: GardenIntelligence.surfaceInsight(
+                  plants: plants,
+                  logs: logs,
+                  tasks: tasks,
+                  settings: settings,
+                  now: DateTime.now(),
+                ),
               ).animateSection(index: 2),
             ),
           ),
@@ -1091,6 +1100,7 @@ class _TodayCard extends StatelessWidget {
     this.tomorrowTaskCount = 0,
     this.motivationalMessage,
     this.isOnVacation = false,
+    this.gardenInsight,
   });
 
   final List<TaskInstance> todayDueTasks;
@@ -1109,6 +1119,7 @@ class _TodayCard extends StatelessWidget {
   final int tomorrowTaskCount;
   final String? motivationalMessage;
   final bool isOnVacation;
+  final GardenInsight? gardenInsight;
 
   @override
   Widget build(BuildContext context) {
@@ -1248,6 +1259,40 @@ class _TodayCard extends StatelessWidget {
                           ),
                         ],
                         BotanicaGaps.vMd,
+                        if (gardenInsight != null) ...[
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: BotanicaTokens.spacingSm,
+                              vertical: BotanicaTokens.spacingXs,
+                            ),
+                            decoration: BoxDecoration(
+                              color: scheme.secondaryContainer.withValues(alpha: 0.35),
+                              borderRadius: BorderRadius.circular(
+                                BotanicaTokens.radiusL,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.auto_awesome_rounded,
+                                  size: 14,
+                                  color: scheme.secondary.withValues(alpha: 0.7),
+                                ),
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    _resolveInsightMessage(l10n, gardenInsight!),
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: scheme.onSecondaryContainer.withValues(alpha: 0.85),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          BotanicaGaps.vSm,
+                        ],
                         if (isOnVacation) ...[
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -1466,6 +1511,30 @@ class _TodayCard extends StatelessWidget {
         ...taskWidgets,
       ],
     );
+  }
+}
+
+String _resolveInsightMessage(AppLocalizations l10n, GardenInsight insight) {
+  final a = insight.args;
+  switch (insight.messageKey) {
+    case 'insightRhythmShift':
+      return l10n.insightRhythmShift(a['plant']!, a['oldDays']!, a['newDays']!);
+    case 'insightFavoriteCareDay':
+      return l10n.insightFavoriteCareDay(a['percent']!, a['day']!);
+    case 'insightActiveTime':
+      return l10n.insightActiveTime(a['period']!, a['percent']!);
+    case 'insightMostLovedPlant':
+      return l10n.insightMostLovedPlant(a['plant']!, a['actions']!);
+    case 'insightQuietThenBusy':
+      return l10n.insightQuietThenBusy(a['quietDays']!, a['taskCount']!);
+    case 'insightCareAcceleration':
+      return l10n.insightCareAcceleration(a['thisWeek']!, a['lastWeek']!);
+    case 'insightGardenGrowing':
+      return l10n.insightGardenGrowing(a['total']!, a['recent']!);
+    case 'insightSeasonalActivity':
+      return l10n.insightSeasonalActivity(a['direction']!, a['thisMonth']!, a['lastMonth']!);
+    default:
+      return '';
   }
 }
 
@@ -2597,7 +2666,12 @@ class _PlantCardState extends ConsumerState<_PlantCard>
                           ),
                         ),
                         Text(
-                          PlantMoodResolver.localizedText(l10n, mood),
+                          PlantVoice.speak(
+                            plant: widget.plant,
+                            recentLogs: ref.read(careLogsStreamProvider).valueOrNull ?? const [],
+                            pendingTasks: ref.read(tasksStreamProvider).valueOrNull ?? const [],
+                            now: DateTime.now(),
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: textTheme.bodySmall?.copyWith(
@@ -2692,7 +2766,12 @@ class _PlantCardState extends ConsumerState<_PlantCard>
                     ),
                   ),
                   Text(
-                    PlantMoodResolver.localizedText(l10n, mood),
+                    PlantVoice.speak(
+                      plant: widget.plant,
+                      recentLogs: ref.read(careLogsStreamProvider).valueOrNull ?? const [],
+                      pendingTasks: ref.read(tasksStreamProvider).valueOrNull ?? const [],
+                      now: DateTime.now(),
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: textTheme.bodySmall?.copyWith(
@@ -2776,7 +2855,12 @@ class _PlantCardState extends ConsumerState<_PlantCard>
                 ),
               ),
               Text(
-                PlantMoodResolver.localizedText(l10n, mood),
+                PlantVoice.speak(
+                  plant: widget.plant,
+                  recentLogs: ref.read(careLogsStreamProvider).valueOrNull ?? const [],
+                  pendingTasks: ref.read(tasksStreamProvider).valueOrNull ?? const [],
+                  now: DateTime.now(),
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: textTheme.bodySmall?.copyWith(

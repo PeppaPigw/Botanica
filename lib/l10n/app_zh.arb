@@ -1920,5 +1920,76 @@
   "plantAnniversaryBody90": "三个月的悉心照料，你的用心看得见。",
   "plantAnniversaryBody180": "半年了！这棵植物因你而茁壮。",
   "plantAnniversaryBody365": "整整一年，多么美妙的旅程。",
-  "plantAnniversaryDismiss": "继续加油！"
+  "plantAnniversaryDismiss": "继续加油！",
+
+  "insightRhythmShift": "{plant} 的浇水节奏从每 {oldDays} 天变为 {newDays} 天",
+  "@insightRhythmShift": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "oldDays": { "type": "String" },
+      "newDays": { "type": "String" }
+    }
+  },
+  "insightFavoriteCareDay": "你 {percent}% 的养护发生在周{day} — 你的花园日",
+  "@insightFavoriteCareDay": {
+    "placeholders": {
+      "percent": { "type": "String" },
+      "day": { "type": "String" }
+    }
+  },
+  "insightActiveTime": "你是{period}型植物家长 — {percent}% 的养护在此时段",
+  "@insightActiveTime": {
+    "placeholders": {
+      "period": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "insightMostLovedPlant": "{plant} 本月最受关注 — {actions} 次养护",
+  "@insightMostLovedPlant": {
+    "placeholders": {
+      "plant": { "type": "String" },
+      "actions": { "type": "String" }
+    }
+  },
+  "insightQuietThenBusy": "接下来 {quietDays} 天清闲，之后有 {taskCount} 个任务",
+  "@insightQuietThenBusy": {
+    "placeholders": {
+      "quietDays": { "type": "String" },
+      "taskCount": { "type": "String" }
+    }
+  },
+  "insightCareAcceleration": "状态火热 — 本周 {thisWeek} 次 vs 上周 {lastWeek} 次",
+  "@insightCareAcceleration": {
+    "placeholders": {
+      "thisWeek": { "type": "String" },
+      "lastWeek": { "type": "String" }
+    }
+  },
+  "insightGardenGrowing": "花园在壮大 — 现有 {total} 株，最近新增 {recent} 株",
+  "@insightGardenGrowing": {
+    "placeholders": {
+      "total": { "type": "String" },
+      "recent": { "type": "String" }
+    }
+  },
+  "insightSeasonalActivity": "季节变化：本月{direction}活跃（{thisMonth} vs {lastMonth}）",
+  "@insightSeasonalActivity": {
+    "placeholders": {
+      "direction": { "type": "String" },
+      "thisMonth": { "type": "String" },
+      "lastMonth": { "type": "String" }
+    }
+  },
+  "insightSectionTitle": "花园洞察",
+
+  "quickCheckInTitle": "{plant} 看起来怎么样？",
+  "@quickCheckInTitle": {
+    "placeholders": {
+      "plant": { "type": "String" }
+    }
+  },
+  "quickCheckInSubtitle": "快速记录帮助追踪植物健康状况",
+  "quickCheckInThriving": "茁壮",
+  "quickCheckInOkay": "还行",
+  "quickCheckInWorried": "担心"
 }
