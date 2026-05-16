@@ -32,6 +32,9 @@ import '../../core/widgets/botanica_care_coaching_card.dart';
 import '../../core/widgets/botanica_care_consistency_card.dart';
 import '../../core/widgets/botanica_survival_predictor_card.dart';
 import '../../core/widgets/botanica_plant_lineage_card.dart';
+import '../../core/widgets/botanica_social_graph_card.dart';
+import '../../core/widgets/botanica_seasonal_report_card.dart';
+import '../../core/widgets/botanica_knowledge_quiz_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -62,6 +65,9 @@ import '../../domain/services/care_coaching.dart';
 import '../../domain/services/care_consistency_scorer.dart';
 import '../../domain/services/plant_survival_predictor.dart';
 import '../../domain/services/plant_lineage_engine.dart';
+import '../../domain/services/garden_social_graph_engine.dart';
+import '../../domain/services/seasonal_report_engine.dart';
+import '../../domain/services/care_knowledge_quiz_engine.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -460,6 +466,18 @@ class GardenWellnessScreen extends ConsumerWidget {
               ),
               const SizedBox(height: BotanicaTokens.spacingBase),
               _PlantLineageSection(plants: plantsAsync.requireValue),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _SocialGraphSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _SeasonalReportSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _KnowledgeQuizSection(plants: plantsAsync.requireValue),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(
@@ -1920,5 +1938,77 @@ class _PlantLineageSection extends StatelessWidget {
     if (legacy.lineageTree.isEmpty) return const SizedBox.shrink();
 
     return BotanicaPlantLineageCard(legacy: legacy);
+  }
+}
+
+class _SocialGraphSection extends StatelessWidget {
+  const _SocialGraphSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final graph = GardenSocialGraphEngine.compute(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    return BotanicaSocialGraphCard(graph: graph);
+  }
+}
+
+class _SeasonalReportSection extends StatelessWidget {
+  const _SeasonalReportSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final season = switch (now.month) {
+      3 || 4 || 5 => 'Spring',
+      6 || 7 || 8 => 'Summer',
+      9 || 10 || 11 => 'Autumn',
+      _ => 'Winter',
+    };
+
+    final report = SeasonalReportEngine.generate(
+      plants: plants,
+      logs: logs,
+      currentSeason: season,
+      currentYear: now.year,
+      now: now,
+    );
+
+    return BotanicaSeasonalReportCard(report: report);
+  }
+}
+
+class _KnowledgeQuizSection extends StatelessWidget {
+  const _KnowledgeQuizSection({required this.plants});
+
+  final List<Plant> plants;
+
+  @override
+  Widget build(BuildContext context) {
+    final quiz = CareKnowledgeQuizEngine.generate(
+      plants: plants,
+      speciesLight: const {},
+      speciesWaterDays: const {},
+      userLevel: 1,
+      questionCount: 5,
+    );
+    if (quiz.questions.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaKnowledgeQuizCard(quiz: quiz);
   }
 }
