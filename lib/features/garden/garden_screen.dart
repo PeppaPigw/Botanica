@@ -72,6 +72,7 @@ import '../../domain/services/seasonal_transition_planner.dart';
 import '../../core/widgets/botanica_seasonal_transition_card.dart';
 import '../../domain/services/garden_insights_aggregator.dart' as insights_agg;
 import '../../core/widgets/botanica_garden_insights_card.dart';
+import '../../core/widgets/botanica_garden_progress_card.dart';
 import '../../domain/services/garden_momentum_engine.dart';
 import '../../domain/services/watering_batch_planner.dart';
 import '../../domain/services/care_difficulty_progression.dart';
@@ -793,6 +794,35 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   logs: logs,
                   settings: settings,
                 ).animateSection(index: 4),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length < 4 || logs.length < 10)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final activePlants =
+                      plants.where((p) => !p.isArchived).length;
+                  int unlocked = 0;
+                  const total = 8;
+                  if (activePlants >= 2) unlocked++;
+                  if (activePlants >= 3) unlocked++;
+                  if (activePlants >= 4) unlocked++;
+                  if (logs.length >= 5) unlocked++;
+                  if (logs.length >= 7) unlocked++;
+                  if (logs.length >= 10) unlocked++;
+                  if (logs.where((l) => l.type == TaskType.water).length >= 5) {
+                    unlocked++;
+                  }
+                  if (activePlants >= 3 && logs.length >= 7) unlocked++;
+                  return BotanicaGardenProgressCard(
+                    plantCount: activePlants,
+                    logCount: logs.length,
+                    unlockedFeatures: unlocked,
+                    totalFeatures: total,
+                  );
+                }).animateSection(index: 4),
               ),
             ),
           if (logs.isNotEmpty)
