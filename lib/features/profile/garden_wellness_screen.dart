@@ -12,6 +12,8 @@ import '../../core/widgets/botanica_streak_badge.dart';
 import '../../core/widgets/care_patterns_card.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/botanica_momentum_ring.dart';
+import '../../core/widgets/botanica_care_routine_card.dart';
+import '../../core/widgets/botanica_diversity_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -22,6 +24,8 @@ import '../../domain/services/garden_wellness_priorities.dart';
 import '../../domain/services/garden_wellness_room_pulse.dart';
 import '../../domain/services/garden_wellness_summary.dart';
 import '../../domain/services/garden_momentum_engine.dart';
+import '../../domain/services/care_routine_detector.dart';
+import '../../domain/services/garden_diversity_engine.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -331,6 +335,15 @@ class GardenWellnessScreen extends ConsumerWidget {
               ),
               const SizedBox(height: BotanicaTokens.spacingBase),
               const CarePatternsCard(),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareRoutineSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _DiversitySection(
+                plants: plantsAsync.requireValue,
+              ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(
@@ -1239,5 +1252,57 @@ class _MomentumSection extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Care Routine Section
+// ---------------------------------------------------------------------------
+
+class _CareRoutineSection extends StatelessWidget {
+  const _CareRoutineSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    if (logs.length < 10) return const SizedBox.shrink();
+
+    final result = CareRoutineDetector.analyze(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    return BotanicaCareRoutineCard(result: result);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Diversity Section
+// ---------------------------------------------------------------------------
+
+class _DiversitySection extends StatelessWidget {
+  const _DiversitySection({required this.plants});
+
+  final List<Plant> plants;
+
+  @override
+  Widget build(BuildContext context) {
+    if (plants.where((p) => !p.isArchived).length < 2) {
+      return const SizedBox.shrink();
+    }
+
+    final metrics = GardenDiversityEngine.compute(
+      plants: plants,
+      speciesLight: const {},
+      speciesDifficulty: const {},
+    );
+
+    return BotanicaDiversityCard(metrics: metrics);
   }
 }
