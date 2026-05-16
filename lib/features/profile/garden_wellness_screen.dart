@@ -20,6 +20,9 @@ import '../../core/widgets/botanica_watering_batch_card.dart';
 import '../../core/widgets/botanica_care_rhythm_card.dart';
 import '../../core/widgets/botanica_next_action_card.dart';
 import '../../core/widgets/botanica_garden_goal_card.dart';
+import '../../core/widgets/botanica_room_profile_card.dart';
+import '../../core/widgets/botanica_care_impact_card.dart';
+import '../../core/widgets/botanica_streak_leaderboard_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -38,6 +41,9 @@ import '../../domain/services/watering_batch_planner.dart';
 import '../../domain/services/care_rhythm_engine.dart';
 import '../../domain/services/next_action_recommender.dart';
 import '../../domain/services/garden_goal_engine.dart';
+import '../../domain/services/room_microclimate_profiler.dart';
+import '../../domain/services/care_impact_analyzer.dart';
+import '../../domain/services/streak_leaderboard_engine.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -387,6 +393,16 @@ class GardenWellnessScreen extends ConsumerWidget {
                 logs: logsAsync.requireValue,
                 settings: settings,
               ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareImpactSection(
+                plants: plantsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _StreakLeaderboardSection(settings: settings, logs: logsAsync.requireValue),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _RoomProfileSection(plants: plantsAsync.requireValue, logs: logsAsync.requireValue),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(
@@ -1543,5 +1559,93 @@ class _GardenGoalSection extends StatelessWidget {
     );
 
     return BotanicaGardenGoalCard(goals: goals);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Care Impact Section
+// ---------------------------------------------------------------------------
+
+class _CareImpactSection extends StatelessWidget {
+  const _CareImpactSection({
+    required this.plants,
+    required this.tasks,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final summary = CareImpactAnalyzer.analyze(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    if (summary == null) return const SizedBox.shrink();
+
+    return BotanicaCareImpactCard(summary: summary);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Streak Leaderboard Section
+// ---------------------------------------------------------------------------
+
+class _StreakLeaderboardSection extends StatelessWidget {
+  const _StreakLeaderboardSection({
+    required this.settings,
+    required this.logs,
+  });
+
+  final UserSettings settings;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    if (settings.careStreakDays < 3) return const SizedBox.shrink();
+
+    final result = StreakLeaderboardEngine.compute(
+      userStreakDays: settings.careStreakDays,
+      userCareActions: logs.length,
+      userDisplayName: 'You',
+      simulatedParticipants: 50,
+    );
+
+    return BotanicaStreakLeaderboardCard(result: result);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Room Profile Section
+// ---------------------------------------------------------------------------
+
+class _RoomProfileSection extends StatelessWidget {
+  const _RoomProfileSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final activePlants = plants.where((p) => !p.isArchived).toList();
+    if (activePlants.length < 2) return const SizedBox.shrink();
+
+    final profiles = RoomMicroclimateProfiler.profile(
+      plants: plants,
+      species: const [],
+      logs: logs,
+      healthScores: {for (final p in activePlants) p.id: 0.7},
+      now: DateTime.now(),
+    );
+
+    return BotanicaRoomProfileCard(profiles: profiles);
   }
 }
