@@ -6368,6 +6368,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Legacy score'**
   String get gardenLegacyScore;
+
+  /// No description provided for @roomCompatibilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{room} Compatibility'**
+  String roomCompatibilityTitle(String room);
+
+  /// No description provided for @roomCompatibilityPairings.
+  ///
+  /// In en, this message translates to:
+  /// **'{plants} plants, {pairings} pairings'**
+  String roomCompatibilityPairings(int plants, int pairings);
+
+  /// No description provided for @wateringEfficiencyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watering Efficiency'**
+  String get wateringEfficiencyTitle;
+
+  /// No description provided for @wateringEfficiencyOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/{total} optimal'**
+  String wateringEfficiencyOptimal(int count, int total);
+
+  /// No description provided for @careAutopilotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Autopilot'**
+  String get careAutopilotTitle;
+
+  /// No description provided for @careAutopilotUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} urgent'**
+  String careAutopilotUrgent(int count);
+
+  /// No description provided for @roomSuggestionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Room Suggestions'**
+  String get roomSuggestionsTitle;
+
+  /// No description provided for @roomSuggestionsMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} moves'**
+  String roomSuggestionsMoves(int count);
+
+  /// No description provided for @dailyFactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Did You Know?'**
+  String get dailyFactTitle;
+
+  /// No description provided for @seasonalTransitionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasonal Transition'**
+  String get seasonalTransitionTitle;
+
+  /// No description provided for @seasonalTransitionWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'{weeks}w away'**
+  String seasonalTransitionWeeks(int weeks);
+
+  /// No description provided for @gardenInsightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Insights'**
+  String get gardenInsightsTitle;
+
+  /// No description provided for @recommendedForYouTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended for You'**
+  String get recommendedForYouTitle;
+
+  /// No description provided for @recommendedGaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Gaps: {gaps}'**
+  String recommendedGaps(String gaps);
+
+  /// No description provided for @plantMemoryFirstPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'First Photo'**
+  String get plantMemoryFirstPhoto;
+
+  /// No description provided for @plantMemoryFirstCare.
+  ///
+  /// In en, this message translates to:
+  /// **'First Care'**
+  String get plantMemoryFirstCare;
+
+  /// No description provided for @plantMemoryAnniversary.
+  ///
+  /// In en, this message translates to:
+  /// **'Anniversary'**
+  String get plantMemoryAnniversary;
+
+  /// No description provided for @plantMemoryBusiestDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Busiest Day'**
+  String get plantMemoryBusiestDay;
+
+  /// No description provided for @plantMemoryLongestGap.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest Gap'**
+  String get plantMemoryLongestGap;
+
+  /// No description provided for @plantMemoryComeback.
+  ///
+  /// In en, this message translates to:
+  /// **'Comeback'**
+  String get plantMemoryComeback;
 }
 
 class _AppLocalizationsDelegate

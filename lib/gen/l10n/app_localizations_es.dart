@@ -3743,4 +3743,78 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get gardenLegacyScore => 'Puntuación de legado';
+
+  @override
+  String roomCompatibilityTitle(String room) {
+    return 'Compatibilidad de $room';
+  }
+
+  @override
+  String roomCompatibilityPairings(int plants, int pairings) {
+    return '$plants plantas, $pairings combinaciones';
+  }
+
+  @override
+  String get wateringEfficiencyTitle => 'Eficiencia de riego';
+
+  @override
+  String wateringEfficiencyOptimal(int count, int total) {
+    return '$count/$total óptimo';
+  }
+
+  @override
+  String get careAutopilotTitle => 'Piloto automático';
+
+  @override
+  String careAutopilotUrgent(int count) {
+    return '$count urgentes';
+  }
+
+  @override
+  String get roomSuggestionsTitle => 'Sugerencias de sala';
+
+  @override
+  String roomSuggestionsMoves(int count) {
+    return '$count cambios';
+  }
+
+  @override
+  String get dailyFactTitle => '¿Sabías que?';
+
+  @override
+  String get seasonalTransitionTitle => 'Transición estacional';
+
+  @override
+  String seasonalTransitionWeeks(int weeks) {
+    return 'en $weeks sem';
+  }
+
+  @override
+  String get gardenInsightsTitle => 'Perspectivas del jardín';
+
+  @override
+  String get recommendedForYouTitle => 'Recomendado para ti';
+
+  @override
+  String recommendedGaps(String gaps) {
+    return 'Vacíos: $gaps';
+  }
+
+  @override
+  String get plantMemoryFirstPhoto => 'Primera foto';
+
+  @override
+  String get plantMemoryFirstCare => 'Primer cuidado';
+
+  @override
+  String get plantMemoryAnniversary => 'Aniversario';
+
+  @override
+  String get plantMemoryBusiestDay => 'Día más activo';
+
+  @override
+  String get plantMemoryLongestGap => 'Mayor pausa';
+
+  @override
+  String get plantMemoryComeback => 'Regreso';
 }

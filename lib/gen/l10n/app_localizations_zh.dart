@@ -3551,4 +3551,78 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get gardenLegacyScore => '传承分数';
+
+  @override
+  String roomCompatibilityTitle(String room) {
+    return '$room兼容性';
+  }
+
+  @override
+  String roomCompatibilityPairings(int plants, int pairings) {
+    return '$plants株植物，$pairings组搭配';
+  }
+
+  @override
+  String get wateringEfficiencyTitle => '浇水效率';
+
+  @override
+  String wateringEfficiencyOptimal(int count, int total) {
+    return '$count/$total最佳';
+  }
+
+  @override
+  String get careAutopilotTitle => '养护自动建议';
+
+  @override
+  String careAutopilotUrgent(int count) {
+    return '$count项紧急';
+  }
+
+  @override
+  String get roomSuggestionsTitle => '房间建议';
+
+  @override
+  String roomSuggestionsMoves(int count) {
+    return '$count项调整';
+  }
+
+  @override
+  String get dailyFactTitle => '你知道吗？';
+
+  @override
+  String get seasonalTransitionTitle => '季节过渡';
+
+  @override
+  String seasonalTransitionWeeks(int weeks) {
+    return '$weeks周后';
+  }
+
+  @override
+  String get gardenInsightsTitle => '花园洞察';
+
+  @override
+  String get recommendedForYouTitle => '为你推荐';
+
+  @override
+  String recommendedGaps(String gaps) {
+    return '缺口：$gaps';
+  }
+
+  @override
+  String get plantMemoryFirstPhoto => '第一张照片';
+
+  @override
+  String get plantMemoryFirstCare => '第一次养护';
+
+  @override
+  String get plantMemoryAnniversary => '纪念日';
+
+  @override
+  String get plantMemoryBusiestDay => '最忙碌的一天';
+
+  @override
+  String get plantMemoryLongestGap => '最长间隔';
+
+  @override
+  String get plantMemoryComeback => '回归';
 }

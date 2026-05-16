@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_memory_lane.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaPlantMemoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -41,7 +43,7 @@ class BotanicaPlantMemoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _memoryTitle(memory.type),
+                  _memoryTitle(memory.type, l10n),
                   style: textTheme.labelSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: scheme.onSurface.withValues(alpha: 0.85),
@@ -81,20 +83,20 @@ class BotanicaPlantMemoryCard extends StatelessWidget {
     }
   }
 
-  static String _memoryTitle(MemoryType type) {
+  static String _memoryTitle(MemoryType type, AppLocalizations l10n) {
     switch (type) {
       case MemoryType.firstPhoto:
-        return 'First Photo';
+        return l10n.plantMemoryFirstPhoto;
       case MemoryType.firstCare:
-        return 'First Care';
+        return l10n.plantMemoryFirstCare;
       case MemoryType.anniversaryMonth:
-        return 'Anniversary';
+        return l10n.plantMemoryAnniversary;
       case MemoryType.busiestDay:
-        return 'Busiest Day';
+        return l10n.plantMemoryBusiestDay;
       case MemoryType.longestGap:
-        return 'Longest Gap';
+        return l10n.plantMemoryLongestGap;
       case MemoryType.careComeback:
-        return 'Comeback';
+        return l10n.plantMemoryComeback;
     }
   }
 

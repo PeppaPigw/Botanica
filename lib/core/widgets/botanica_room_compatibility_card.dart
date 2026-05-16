@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_compatibility.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -19,6 +20,7 @@ class BotanicaRoomCompatibilityCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final scoreColor = compatibility.overallScore >= 0.7
         ? scheme.tertiary
@@ -46,7 +48,7 @@ class BotanicaRoomCompatibilityCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  '${compatibility.room} Compatibility',
+                  l10n.roomCompatibilityTitle(compatibility.room),
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -73,7 +75,10 @@ class BotanicaRoomCompatibilityCard extends StatelessWidget {
           ),
           BotanicaGaps.vSm,
           Text(
-            '${compatibility.plants.length} plants, ${compatibility.pairings.length} pairings',
+            l10n.roomCompatibilityPairings(
+              compatibility.plants.length,
+              compatibility.pairings.length,
+            ),
             style: textTheme.bodySmall?.copyWith(
               color: scheme.onSurface.withValues(alpha: 0.6),
             ),
