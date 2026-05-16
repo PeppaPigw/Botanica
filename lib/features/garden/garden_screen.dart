@@ -20,6 +20,7 @@ import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_all_done_sheet.dart';
 import '../../core/widgets/botanica_celebration.dart';
 import '../../core/widgets/botanica_care_calendar_preview_card.dart';
+import '../../core/widgets/botanica_care_confidence_card.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_daily_challenge_card.dart';
@@ -55,6 +56,7 @@ import '../../domain/services/garden_intelligence.dart';
 import '../../domain/services/plant_mood.dart';
 import '../../domain/services/plant_voice.dart';
 import '../../domain/services/care_coaching.dart';
+import '../../domain/services/care_confidence_engine.dart';
 import '../../domain/services/plant_milestone.dart';
 import '../../domain/services/seasonal_tips.dart';
 import '../../domain/services/daily_briefing_engine.dart';
@@ -816,6 +818,35 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                     '/profile/${GardenWellnessScreen.subLocation}',
                   ),
                 ).animateSection(index: 4),
+              ),
+            ),
+          if (logs.length >= 5 && plants.where((p) => !p.isArchived).length >= 2)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final now = DateTime.now();
+                  final active = plants.where((p) => !p.isArchived).toList();
+                  final healthScores = <String, double>{};
+                  for (final p in active) {
+                    final pLogs = logs.where((l) => l.plantId == p.id).toList();
+                    healthScores[p.id] = pLogs.isEmpty ? 0.5 : 0.7;
+                  }
+                  final totalDays = active.isNotEmpty
+                      ? now.difference(active.map((p) => p.createdAt).reduce(
+                          (a, b) => a.isBefore(b) ? a : b)).inDays
+                      : 0;
+                  final report = CareConfidenceEngine.assess(
+                    plants: plants,
+                    logs: logs,
+                    healthScores: healthScores,
+                    streakDays: settings.careStreakDays,
+                    totalDaysActive: totalDays,
+                    now: now,
+                  );
+                  return BotanicaCareConfidenceCard(report: report);
+                }).animateSection(index: 5),
               ),
             ),
           SliverPadding(

@@ -38,6 +38,7 @@ import '../../domain/services/plant_vital_signs_engine.dart';
 import '../../domain/services/plant_rescue_engine.dart';
 import '../../domain/services/plant_autobiography_engine.dart';
 import '../../domain/services/plant_health_forecast_engine.dart';
+import '../../domain/services/plant_survival_predictor.dart';
 import '../../domain/services/plant_milestone_engine.dart';
 import '../../domain/services/care_action_effectiveness.dart';
 import '../../domain/services/growth_timelapse_engine.dart';
@@ -362,6 +363,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantAutobiographySection(plant: plant),
         BotanicaGaps.vSm,
         _PlantHealthForecastSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantSurvivalSection(plant: plant),
         BotanicaGaps.vSm,
         _PlantMilestonesSection(plant: plant),
         BotanicaGaps.vSm,
@@ -3216,6 +3219,174 @@ class _TimelapseStatChip extends StatelessWidget {
           color: scheme.onSurface.withValues(alpha: 0.6),
           fontSize: 9,
         ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Plant Survival Prediction Section
+// ---------------------------------------------------------------------------
+
+class _PlantSurvivalSection extends ConsumerWidget {
+  const _PlantSurvivalSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final healthAsync = ref.watch(plantHealthScoreProvider(plant.id));
+    final healthScore = healthAsync.valueOrNull;
+
+    if (logs.length < 3 || healthScore == null) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final predictions = PlantSurvivalPredictor.predict(
+      plants: [plant],
+      logs: logs,
+      healthScores: {plant.id: healthScore / 100.0},
+      now: now,
+    );
+
+    if (predictions.isEmpty) return const SizedBox.shrink();
+    final prediction = predictions.first;
+
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final probability = prediction.survivalProbability;
+    final color = probability >= 0.8
+        ? const Color(0xFF66BB6A)
+        : probability >= 0.6
+            ? const Color(0xFFFF9800)
+            : scheme.error;
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.12),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.shield_rounded, size: 16, color: color),
+              ),
+              BotanicaGaps.hSm,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Survival Outlook',
+                      style: textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      '${(probability * 100).round()}% thriving probability',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: color,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (prediction.riskFactors.isNotEmpty ||
+              prediction.protectiveFactors.isNotEmpty) ...[
+            BotanicaGaps.vSm,
+            Wrap(
+              spacing: BotanicaTokens.spacingXxs,
+              runSpacing: BotanicaTokens.spacingMicro,
+              children: [
+                ...prediction.protectiveFactors.take(2).map((f) => _SurvivalFactorChip(
+                      label: _factorLabel(f),
+                      color: const Color(0xFF66BB6A),
+                      icon: Icons.check_circle_outline_rounded,
+                      scheme: scheme,
+                      textTheme: textTheme,
+                    )),
+                ...prediction.riskFactors.take(2).map((f) => _SurvivalFactorChip(
+                      label: _factorLabel(f),
+                      color: scheme.error,
+                      icon: Icons.warning_amber_rounded,
+                      scheme: scheme,
+                      textTheme: textTheme,
+                    )),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  static String _factorLabel(String key) {
+    return switch (key) {
+      'survivalGoodHealth' => 'Healthy',
+      'survivalPoorHealth' => 'Low health',
+      'survivalActiveCare' => 'Active care',
+      'survivalNoCare' => 'No recent care',
+      'survivalConsistentCare' => 'Consistent',
+      'survivalEstablished' => 'Established',
+      'survivalNewPlant' => 'New plant',
+      'survivalDiverseCare' => 'Diverse care',
+      _ => key.replaceAll('survival', ''),
+    };
+  }
+}
+
+class _SurvivalFactorChip extends StatelessWidget {
+  const _SurvivalFactorChip({
+    required this.label,
+    required this.color,
+    required this.icon,
+    required this.scheme,
+    required this.textTheme,
+  });
+
+  final String label;
+  final Color color;
+  final IconData icon;
+  final ColorScheme scheme;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: BotanicaTokens.spacingXs,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(BotanicaTokens.radiusS),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 10, color: color),
+          const SizedBox(width: 3),
+          Text(
+            label,
+            style: textTheme.labelSmall?.copyWith(
+              color: color,
+              fontSize: 9,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }
