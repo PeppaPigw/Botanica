@@ -37,6 +37,10 @@ import '../../domain/services/plant_personality_engine.dart';
 import '../../domain/services/plant_vital_signs_engine.dart';
 import '../../domain/services/plant_rescue_engine.dart';
 import '../../domain/services/plant_autobiography_engine.dart';
+import '../../domain/services/plant_health_forecast_engine.dart';
+import '../../domain/services/plant_milestone_engine.dart';
+import '../../domain/services/care_action_effectiveness.dart';
+import '../../domain/services/growth_timelapse_engine.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -352,6 +356,14 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantRescueSection(plant: plant),
         BotanicaGaps.vSm,
         _PlantAutobiographySection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantHealthForecastSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantMilestonesSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantActionEffectivenessSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantGrowthTimelapseSection(plant: plant),
         BotanicaGaps.vSm,
         BotanicaGlassCard(
           child: Column(
@@ -2618,5 +2630,559 @@ class _PlantAutobiographySection extends ConsumerWidget {
     );
 
     return BotanicaPlantAutobiographyCard(autobiography: autobiography);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Plant Health Forecast Section
+// ---------------------------------------------------------------------------
+
+class _PlantHealthForecastSection extends ConsumerWidget {
+  const _PlantHealthForecastSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final healthAsync = ref.watch(plantHealthScoreProvider(plant.id));
+    final healthScore = healthAsync.valueOrNull;
+
+    if (logs.length < 3 || healthScore == null) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final forecast = PlantHealthForecastEngine.predict(
+      plant: plant,
+      logs: logs,
+      currentHealth: healthScore / 100.0,
+      forecastDays: 7,
+      now: now,
+    );
+
+    if (forecast.forecastPoints.isEmpty) return const SizedBox.shrink();
+
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final trendColor = switch (forecast.trendDirection) {
+      'improving' => const Color(0xFF66BB6A),
+      'declining' => scheme.error,
+      _ => scheme.onSurface.withValues(alpha: 0.5),
+    };
+    final trendIcon = switch (forecast.trendDirection) {
+      'improving' => Icons.trending_up_rounded,
+      'declining' => Icons.trending_down_rounded,
+      _ => Icons.trending_flat_rounded,
+    };
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.auto_graph_rounded,
+                  size: BotanicaTokens.iconSizeMd, color: scheme.primary),
+              BotanicaGaps.hXs,
+              Expanded(
+                child: Text(
+                  '7-Day Health Forecast',
+                  style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+              Icon(trendIcon, size: 16, color: trendColor),
+            ],
+          ),
+          BotanicaGaps.vSm,
+          SizedBox(
+            height: 40,
+            width: double.infinity,
+            child: CustomPaint(
+              painter: _ForecastSparklinePainter(
+                points: forecast.forecastPoints,
+                currentHealth: forecast.currentHealth,
+                lineColor: trendColor,
+                fillColor: trendColor.withValues(alpha: 0.1),
+              ),
+            ),
+          ),
+          BotanicaGaps.vXs,
+          Row(
+            children: [
+              Text(
+                'Now: ${(forecast.currentHealth * 100).round()}%',
+                style: textTheme.labelSmall?.copyWith(
+                  color: scheme.onSurface.withValues(alpha: 0.6),
+                  fontSize: 10,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '7d: ${(forecast.forecastPoints.last.predictedHealth * 100).round()}%',
+                style: textTheme.labelSmall?.copyWith(
+                  color: trendColor,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
+          if (forecast.riskLevel != 'forecastLowRisk') ...[
+            BotanicaGaps.vXxs,
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: BotanicaTokens.spacingXxs,
+                vertical: 2,
+              ),
+              decoration: BoxDecoration(
+                color: scheme.error.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
+              ),
+              child: Text(
+                forecast.primaryFactor.replaceAll('forecastFactor', '').replaceAllMapped(
+                  RegExp(r'[A-Z]'),
+                  (m) => ' ${m.group(0)!.toLowerCase()}',
+                ).trim(),
+                style: textTheme.labelSmall?.copyWith(
+                  color: scheme.error.withValues(alpha: 0.8),
+                  fontSize: 9,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _ForecastSparklinePainter extends CustomPainter {
+  const _ForecastSparklinePainter({
+    required this.points,
+    required this.currentHealth,
+    required this.lineColor,
+    required this.fillColor,
+  });
+
+  final List<HealthForecastPoint> points;
+  final double currentHealth;
+  final Color lineColor;
+  final Color fillColor;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (points.isEmpty) return;
+
+    final allValues = [currentHealth, ...points.map((p) => p.predictedHealth)];
+    final maxVal = allValues.reduce((a, b) => a > b ? a : b) * 1.1;
+    final minVal = allValues.reduce((a, b) => a < b ? a : b) * 0.9;
+    final range = maxVal - minVal;
+    if (range <= 0) return;
+
+    final offsets = <Offset>[];
+    offsets.add(Offset(0, size.height - ((currentHealth - minVal) / range) * size.height));
+    for (int i = 0; i < points.length; i++) {
+      final x = ((i + 1) / points.length) * size.width;
+      final y = size.height - ((points[i].predictedHealth - minVal) / range) * size.height;
+      offsets.add(Offset(x, y));
+    }
+
+    final fillPath = Path()..moveTo(offsets.first.dx, size.height);
+    for (final o in offsets) {
+      fillPath.lineTo(o.dx, o.dy);
+    }
+    fillPath.lineTo(offsets.last.dx, size.height);
+    fillPath.close();
+    canvas.drawPath(fillPath, Paint()..color = fillColor);
+
+    final linePath = Path()..moveTo(offsets.first.dx, offsets.first.dy);
+    for (int i = 1; i < offsets.length; i++) {
+      linePath.lineTo(offsets[i].dx, offsets[i].dy);
+    }
+    canvas.drawPath(
+      linePath,
+      Paint()
+        ..color = lineColor
+        ..strokeWidth = 2
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round,
+    );
+
+    canvas.drawCircle(offsets.first, 3, Paint()..color = lineColor);
+    canvas.drawCircle(offsets.last, 3, Paint()..color = lineColor);
+  }
+
+  @override
+  bool shouldRepaint(_ForecastSparklinePainter old) =>
+      old.points != points || old.currentHealth != currentHealth;
+}
+
+// ---------------------------------------------------------------------------
+// Plant Milestones Section
+// ---------------------------------------------------------------------------
+
+class _PlantMilestonesSection extends ConsumerWidget {
+  const _PlantMilestonesSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    final now = DateTime.now();
+    final milestones = PlantMilestoneEngine.computeMilestones(
+      plant: plant,
+      logs: logs,
+      now: now,
+    );
+
+    if (milestones.isEmpty) return const SizedBox.shrink();
+
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.emoji_events_rounded,
+                  size: BotanicaTokens.iconSizeMd, color: Color(0xFFFFB300)),
+              BotanicaGaps.hXs,
+              Expanded(
+                child: Text(
+                  'Milestones',
+                  style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+              Text(
+                '${milestones.length} achieved',
+                style: textTheme.labelSmall?.copyWith(
+                  color: scheme.onSurface.withValues(alpha: 0.5),
+                ),
+              ),
+            ],
+          ),
+          BotanicaGaps.vSm,
+          ...milestones.reversed.take(5).map((m) {
+            final daysAgo = now.difference(m.achievedAt).inDays;
+            final label = _milestoneLabel(m.type);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingMicro),
+              child: Row(
+                children: [
+                  Icon(Icons.check_circle_rounded, size: 14,
+                      color: const Color(0xFFFFB300).withValues(alpha: 0.8)),
+                  BotanicaGaps.hXxs,
+                  Expanded(
+                    child: Text(
+                      label,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: scheme.onSurface.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    daysAgo == 0 ? 'today' : '${daysAgo}d ago',
+                    style: textTheme.labelSmall?.copyWith(
+                      color: scheme.onSurface.withValues(alpha: 0.4),
+                      fontSize: 9,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  static String _milestoneLabel(MilestoneType type) {
+    return switch (type) {
+      MilestoneType.firstCare => 'First care action',
+      MilestoneType.oneWeek => 'One week together',
+      MilestoneType.oneMonth => 'One month together',
+      MilestoneType.threeMonths => 'Three months together',
+      MilestoneType.sixMonths => 'Six months together',
+      MilestoneType.oneYear => 'One year together',
+      MilestoneType.tenthCare => '10 care actions',
+      MilestoneType.fiftiethCare => '50 care actions',
+      MilestoneType.hundredthCare => '100 care actions',
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Plant Action Effectiveness Section
+// ---------------------------------------------------------------------------
+
+class _PlantActionEffectivenessSection extends ConsumerWidget {
+  const _PlantActionEffectivenessSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 5) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final healthAsync = ref.watch(plantHealthScoreProvider(plant.id));
+    final healthScore = healthAsync.valueOrNull ?? 70;
+
+    final timeline = <MapEntry<DateTime, double>>[];
+    final sortedLogs = List<CareLog>.from(logs)
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    for (final log in sortedLogs) {
+      timeline.add(MapEntry(log.timestamp, healthScore / 100.0));
+    }
+
+    final report = CareActionEffectiveness.evaluate(
+      plant: plant,
+      logs: logs,
+      healthTimeline: timeline,
+      now: now,
+    );
+
+    if (report.effects.isEmpty) return const SizedBox.shrink();
+
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.science_rounded,
+                  size: BotanicaTokens.iconSizeMd, color: scheme.tertiary),
+              BotanicaGaps.hXs,
+              Expanded(
+                child: Text(
+                  'Care Effectiveness',
+                  style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+              Text(
+                '${(report.overallScore * 100).round()}%',
+                style: textTheme.labelSmall?.copyWith(
+                  color: scheme.tertiary,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          BotanicaGaps.vSm,
+          ...report.effects.take(4).map((e) {
+            final color = e.effectivenessScore >= 0.6
+                ? const Color(0xFF66BB6A)
+                : e.effectivenessScore >= 0.3
+                    ? const Color(0xFFFF9800)
+                    : scheme.error;
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingXxs),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 56,
+                    child: Text(
+                      e.taskType.name,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: scheme.onSurface.withValues(alpha: 0.7),
+                        fontSize: 10,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(2),
+                      child: LinearProgressIndicator(
+                        value: e.effectivenessScore.clamp(0.0, 1.0),
+                        minHeight: 5,
+                        backgroundColor: scheme.onSurface.withValues(alpha: 0.06),
+                        valueColor: AlwaysStoppedAnimation(color),
+                      ),
+                    ),
+                  ),
+                  BotanicaGaps.hXxs,
+                  SizedBox(
+                    width: 30,
+                    child: Text(
+                      '${(e.effectivenessScore * 100).round()}%',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: color,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 9,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+          if (report.bestAction != null) ...[
+            BotanicaGaps.vXxs,
+            Text(
+              'Best action: ${report.bestAction!.name}',
+              style: textTheme.labelSmall?.copyWith(
+                color: const Color(0xFF66BB6A),
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Plant Growth Timelapse Section
+// ---------------------------------------------------------------------------
+
+class _PlantGrowthTimelapseSection extends ConsumerWidget {
+  const _PlantGrowthTimelapseSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final photosAsync = ref.watch(photoEntriesStreamProvider);
+    final allPhotos = photosAsync.valueOrNull ?? const <PhotoEntry>[];
+    final plantPhotos = allPhotos.where((p) => p.plantId == plant.id).toList();
+
+    if (plantPhotos.length < 2) return const SizedBox.shrink();
+
+    final photoDates = plantPhotos.map((p) => p.createdAt).toList();
+    final now = DateTime.now();
+
+    final result = GrowthTimelapseEngine.analyze(
+      plant: plant,
+      photoDates: photoDates,
+      now: now,
+    );
+
+    if (result.spanDays < 7) return const SizedBox.shrink();
+
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return BotanicaGlassCard(
+      padding: BotanicaTokens.cardPaddingDense,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.timelapse_rounded,
+                  size: BotanicaTokens.iconSizeMd, color: scheme.secondary),
+              BotanicaGaps.hXs,
+              Expanded(
+                child: Text(
+                  'Growth Timelapse',
+                  style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+              Text(
+                '${result.photoCount} photos',
+                style: textTheme.labelSmall?.copyWith(
+                  color: scheme.onSurface.withValues(alpha: 0.5),
+                ),
+              ),
+            ],
+          ),
+          BotanicaGaps.vSm,
+          Row(
+            children: [
+              _TimelapseStatChip(
+                label: '${result.spanDays}d span',
+                scheme: scheme,
+                textTheme: textTheme,
+              ),
+              BotanicaGaps.hXxs,
+              _TimelapseStatChip(
+                label: '${(result.growthRate * 100).round()}% rate',
+                scheme: scheme,
+                textTheme: textTheme,
+              ),
+            ],
+          ),
+          if (result.milestones.isNotEmpty) ...[
+            BotanicaGaps.vSm,
+            ...result.milestones.take(3).map((m) => Padding(
+                  padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingMicro),
+                  child: Row(
+                    children: [
+                      Icon(Icons.star_rounded, size: 12,
+                          color: scheme.secondary.withValues(alpha: 0.7)),
+                      BotanicaGaps.hXxs,
+                      Expanded(
+                        child: Text(
+                          m.label.replaceAll('_', ' '),
+                          style: textTheme.labelSmall?.copyWith(
+                            color: scheme.onSurface.withValues(alpha: 0.7),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _TimelapseStatChip extends StatelessWidget {
+  const _TimelapseStatChip({
+    required this.label,
+    required this.scheme,
+    required this.textTheme,
+  });
+
+  final String label;
+  final ColorScheme scheme;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: BotanicaTokens.spacingXxs,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        color: scheme.onSurface.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
+      ),
+      child: Text(
+        label,
+        style: textTheme.labelSmall?.copyWith(
+          color: scheme.onSurface.withValues(alpha: 0.6),
+          fontSize: 9,
+        ),
+      ),
+    );
   }
 }
