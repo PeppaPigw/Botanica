@@ -14,6 +14,7 @@ import '../../core/widgets/botanica_achievement_card.dart';
 import '../../core/widgets/botanica_garden_goal_card.dart';
 import '../../core/widgets/botanica_habit_predictor_card.dart';
 import '../../core/widgets/botanica_care_consistency_card.dart';
+import '../../core/widgets/botanica_care_routine_card.dart';
 import '../../core/widgets/botanica_garden_legacy_card.dart';
 import '../../core/widgets/botanica_garden_stats_card.dart';
 import '../../core/widgets/glass_card.dart';
@@ -31,6 +32,7 @@ import '../../domain/services/care_impact_analyzer.dart';
 import '../../domain/services/care_pattern_analyzer.dart';
 import '../../domain/services/care_habit_predictor.dart';
 import '../../domain/services/care_consistency_scorer.dart';
+import '../../domain/services/care_routine_detector.dart';
 import '../../domain/services/garden_achievement_engine.dart';
 import '../../domain/services/garden_goal_engine.dart';
 import '../../domain/services/garden_legacy_engine.dart';
@@ -200,6 +202,8 @@ class ProfileScreen extends ConsumerWidget {
           const _HabitPredictorSection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingSm),
           const _CareConsistencySection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _CareRoutineSection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           const PreferencesSection().animateSection(index: 6),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
@@ -1217,6 +1221,30 @@ class _CareConsistencySection extends ConsumerWidget {
     if (results.isEmpty) return const SizedBox.shrink();
 
     return BotanicaCareConsistencyCard(results: results);
+  }
+}
+
+class _CareRoutineSection extends ConsumerWidget {
+  const _CareRoutineSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 10) return const SizedBox.shrink();
+
+    final result = CareRoutineDetector.analyze(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    if (result.detectedRoutines.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaCareRoutineCard(result: result);
   }
 }
 

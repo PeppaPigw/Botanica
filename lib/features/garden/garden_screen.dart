@@ -25,6 +25,7 @@ import '../../core/widgets/botanica_care_confidence_card.dart';
 import '../../core/widgets/botanica_daily_briefing_card.dart';
 import '../../core/widgets/botanica_diversity_card.dart';
 import '../../core/widgets/botanica_momentum_card.dart';
+import '../../core/widgets/botanica_skill_progression_card.dart';
 import '../../core/widgets/botanica_next_action_card.dart';
 import '../../core/widgets/botanica_seasonal_alert_card.dart';
 import '../../core/widgets/botanica_daily_challenge_card.dart';
@@ -59,6 +60,7 @@ import '../../domain/services/plant_health_score.dart';
 import '../../domain/services/garden_diversity_engine.dart';
 import '../../domain/services/garden_momentum_engine.dart';
 import '../../domain/services/watering_batch_planner.dart';
+import '../../domain/services/care_difficulty_progression.dart';
 import '../../domain/services/garden_intelligence.dart';
 import '../../domain/services/plant_mood.dart';
 import '../../domain/services/plant_voice.dart';
@@ -944,6 +946,27 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   return BotanicaBatchPlannerCard(
                     plan: batchPlan,
                     plantNames: names,
+                  );
+                }).animateSection(index: 6),
+              ),
+            ),
+          if (logs.length >= 10 && plants.where((p) => !p.isArchived).length >= 2)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final speciesList = speciesById.values.toList();
+                  final progression = CareDifficultyProgression.evaluate(
+                    plants: plants,
+                    species: speciesList,
+                    logs: logs,
+                    tasks: tasks,
+                    now: DateTime.now(),
+                  );
+                  if (progression == null) return const SizedBox.shrink();
+                  return BotanicaSkillProgressionCard(
+                    progression: progression,
                   );
                 }).animateSection(index: 6),
               ),
