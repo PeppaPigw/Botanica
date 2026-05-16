@@ -14,6 +14,11 @@ import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/botanica_momentum_ring.dart';
 import '../../core/widgets/botanica_care_routine_card.dart';
 import '../../core/widgets/botanica_diversity_card.dart';
+import '../../core/widgets/botanica_care_confidence_radar.dart';
+import '../../core/widgets/botanica_garden_legacy_card.dart';
+import '../../core/widgets/botanica_watering_batch_card.dart';
+import '../../core/widgets/botanica_care_rhythm_card.dart';
+import '../../core/widgets/botanica_next_action_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -26,6 +31,11 @@ import '../../domain/services/garden_wellness_summary.dart';
 import '../../domain/services/garden_momentum_engine.dart';
 import '../../domain/services/care_routine_detector.dart';
 import '../../domain/services/garden_diversity_engine.dart';
+import '../../domain/services/care_confidence_engine.dart';
+import '../../domain/services/garden_legacy_engine.dart';
+import '../../domain/services/watering_batch_planner.dart';
+import '../../domain/services/care_rhythm_engine.dart';
+import '../../domain/services/next_action_recommender.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -343,6 +353,31 @@ class GardenWellnessScreen extends ConsumerWidget {
               const SizedBox(height: BotanicaTokens.spacingBase),
               _DiversitySection(
                 plants: plantsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareConfidenceSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GardenLegacySection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _WateringBatchSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CareRhythmSection(logs: logsAsync.requireValue),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _NextActionSection(
+                plants: plantsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
               ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
@@ -1304,5 +1339,173 @@ class _DiversitySection extends StatelessWidget {
     );
 
     return BotanicaDiversityCard(metrics: metrics);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Care Confidence Section
+// ---------------------------------------------------------------------------
+
+class _CareConfidenceSection extends StatelessWidget {
+  const _CareConfidenceSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    if (plants.where((p) => !p.isArchived).isEmpty || logs.length < 5) {
+      return const SizedBox.shrink();
+    }
+
+    final now = DateTime.now();
+    final healthScores = <String, double>{};
+    for (final p in plants.where((p) => !p.isArchived)) {
+      final plantLogs = logs.where((l) => l.plantId == p.id).toList();
+      healthScores[p.id] = plantLogs.isEmpty ? 0.5 : 0.7;
+    }
+
+    final totalDaysActive = plants.isNotEmpty
+        ? now.difference(plants.map((p) => p.createdAt).reduce(
+            (a, b) => a.isBefore(b) ? a : b)).inDays
+        : 0;
+
+    final report = CareConfidenceEngine.assess(
+      plants: plants,
+      logs: logs,
+      healthScores: healthScores,
+      streakDays: settings.careStreakDays,
+      totalDaysActive: totalDaysActive,
+      now: now,
+    );
+
+    return BotanicaCareConfidenceRadar(report: report);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Garden Legacy Section
+// ---------------------------------------------------------------------------
+
+class _GardenLegacySection extends StatelessWidget {
+  const _GardenLegacySection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    if (plants.where((p) => !p.isArchived).length < 2) {
+      return const SizedBox.shrink();
+    }
+
+    final report = GardenLegacyEngine.compute(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    final nameMap = {for (final p in plants) p.id: p.nickname};
+
+    return BotanicaGardenLegacyCard(
+      report: report,
+      plantNameResolver: (id) => nameMap[id] ?? id.substring(0, 8),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Watering Batch Section
+// ---------------------------------------------------------------------------
+
+class _WateringBatchSection extends StatelessWidget {
+  const _WateringBatchSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    if (plants.where((p) => !p.isArchived).length < 3) {
+      return const SizedBox.shrink();
+    }
+
+    final plan = WateringBatchPlanner.plan(
+      plants: plants,
+      speciesWaterDays: const {},
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    final nameMap = {for (final p in plants) p.id: p.nickname};
+
+    return BotanicaWateringBatchCard(
+      plan: plan,
+      plantNameResolver: (id) => nameMap[id] ?? id.substring(0, 8),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Care Rhythm Section
+// ---------------------------------------------------------------------------
+
+class _CareRhythmSection extends StatelessWidget {
+  const _CareRhythmSection({required this.logs});
+
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final rhythm = CareRhythmEngine.detect(
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    if (rhythm == null) return const SizedBox.shrink();
+
+    return BotanicaCareRhythmCard(rhythm: rhythm);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Next Action Section
+// ---------------------------------------------------------------------------
+
+class _NextActionSection extends StatelessWidget {
+  const _NextActionSection({
+    required this.plants,
+    required this.tasks,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<TaskInstance> tasks;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final action = NextActionRecommender.recommend(
+      plants: plants,
+      tasks: tasks,
+      logs: logs,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    return BotanicaNextActionCard(action: action);
   }
 }

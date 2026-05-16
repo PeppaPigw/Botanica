@@ -17,6 +17,7 @@ import '../../core/widgets/botanica_gaps.dart';
 import '../../core/widgets/botanica_emotional_bond_indicator.dart';
 import '../../core/widgets/botanica_predictive_needs_card.dart';
 import '../../core/widgets/botanica_plant_story_card.dart';
+import '../../core/widgets/botanica_plant_personality_card.dart';
 import '../../core/widgets/botanica_health_breakdown_sheet.dart';
 import '../../core/haptics/botanica_haptics.dart';
 import '../../core/utils/motion_preferences.dart';
@@ -29,6 +30,7 @@ import '../../domain/services/care_prediction_engine.dart';
 import '../../domain/services/emotional_bond_engine.dart';
 import '../../domain/services/predictive_needs_engine.dart';
 import '../../domain/services/plant_story_engine.dart';
+import '../../domain/services/plant_personality_engine.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -336,6 +338,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PredictiveNeedsSection(plant: plant),
         BotanicaGaps.vSm,
         _PlantStorySection(plant: plant),
+        BotanicaGaps.vSm,
+        _PlantPersonalitySection(plant: plant),
         BotanicaGaps.vSm,
         BotanicaGlassCard(
           child: Column(
@@ -2497,5 +2501,33 @@ class _PlantStorySection extends ConsumerWidget {
     );
 
     return BotanicaPlantStoryCard(story: story);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Plant Personality Section
+// ---------------------------------------------------------------------------
+
+class _PlantPersonalitySection extends ConsumerWidget {
+  const _PlantPersonalitySection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsForPlantProvider(plant.id));
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 3) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final personality = PlantPersonalityEngine.analyze(
+      plant: plant,
+      logs: logs,
+      healthScore: 0.7,
+      now: now,
+    );
+
+    return BotanicaPlantPersonalityCard(personality: personality);
   }
 }
