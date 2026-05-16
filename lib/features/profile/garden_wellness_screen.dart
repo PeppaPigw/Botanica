@@ -51,6 +51,12 @@ import '../../core/widgets/botanica_anniversary_card.dart';
 import '../../core/widgets/botanica_health_forecast_card.dart';
 import '../../core/widgets/botanica_achievement_card.dart';
 import '../../core/widgets/botanica_action_effectiveness_card.dart';
+import '../../core/widgets/botanica_garden_rhythm_card.dart';
+import '../../core/widgets/botanica_garden_stats_card.dart';
+import '../../core/widgets/botanica_milestone_card.dart';
+import '../../core/widgets/botanica_seasonal_advisor_card.dart';
+import '../../core/widgets/botanica_care_prediction_card.dart';
+import '../../core/widgets/botanica_health_timeline_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -100,6 +106,12 @@ import '../../domain/services/plant_anniversary_tracker.dart';
 import '../../domain/services/plant_health_forecast_engine.dart';
 import '../../domain/services/garden_achievement_engine.dart' as gae;
 import '../../domain/services/care_action_effectiveness.dart';
+import '../../domain/services/garden_rhythm_score.dart';
+import '../../domain/services/garden_stats_engine.dart';
+import '../../domain/services/plant_milestone_engine.dart';
+import '../../domain/services/seasonal_care_advisor.dart';
+import '../../domain/services/care_prediction_engine.dart';
+import '../../domain/services/plant_health_timeline.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -593,6 +605,37 @@ class GardenWellnessScreen extends ConsumerWidget {
               _ActionEffectivenessSection(
                 plants: plantsAsync.requireValue,
                 logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GardenRhythmSection(
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GardenStatsSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _MilestoneSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _SeasonalAdvisorSection(
+                plants: plantsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CarePredictionSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _HealthTimelineSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
               ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
@@ -2517,5 +2560,151 @@ class _ActionEffectivenessSection extends StatelessWidget {
     }
 
     return BotanicaActionEffectivenessCard(reports: reports);
+  }
+}
+
+class _GardenRhythmSection extends StatelessWidget {
+  const _GardenRhythmSection({
+    required this.logs,
+    required this.tasks,
+  });
+
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final result = GardenRhythmScore.compute(
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    return BotanicaGardenRhythmCard(result: result);
+  }
+}
+
+class _GardenStatsSection extends StatelessWidget {
+  const _GardenStatsSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final stats = GardenStatsEngine.compute(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    return BotanicaGardenStatsCard(stats: stats);
+  }
+}
+
+class _MilestoneSection extends StatelessWidget {
+  const _MilestoneSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final milestones = <PlantMilestone>[];
+    for (final plant in plants.where((p) => !p.isArchived)) {
+      milestones.addAll(PlantMilestoneEngine.computeMilestones(
+        plant: plant,
+        logs: logs,
+        now: DateTime.now(),
+      ));
+    }
+    milestones.sort((a, b) => b.achievedAt.compareTo(a.achievedAt));
+
+    return BotanicaMilestoneCard(milestones: milestones);
+  }
+}
+
+class _SeasonalAdvisorSection extends StatelessWidget {
+  const _SeasonalAdvisorSection({
+    required this.plants,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final tips = SeasonalCareAdvisor.advise(
+      plants: plants,
+      speciesMap: const {},
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    return BotanicaSeasonalAdvisorCard(tips: tips);
+  }
+}
+
+class _CarePredictionSection extends StatelessWidget {
+  const _CarePredictionSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final predictions = <String, CarePrediction>{};
+    final names = <String, String>{};
+    for (final plant in plants.where((p) => !p.isArchived)) {
+      final pred = CarePredictionEngine.predictNextWatering(
+        plantId: plant.id,
+        logs: logs,
+        now: DateTime.now(),
+      );
+      if (pred != null) {
+        predictions[plant.id] = pred;
+        names[plant.id] = plant.nickname;
+      }
+    }
+
+    return BotanicaCarePredictionCard(predictions: predictions, plantNames: names);
+  }
+}
+
+class _HealthTimelineSection extends StatelessWidget {
+  const _HealthTimelineSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final timelines = <HealthTimeline>[];
+    for (final plant in plants.where((p) => !p.isArchived)) {
+      final t = PlantHealthTimeline.generate(
+        plant: plant,
+        logs: logs,
+        tasks: tasks,
+        now: DateTime.now(),
+      );
+      if (t != null) timelines.add(t);
+    }
+
+    return BotanicaHealthTimelineCard(timelines: timelines);
   }
 }
