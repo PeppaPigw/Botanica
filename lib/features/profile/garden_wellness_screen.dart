@@ -35,6 +35,11 @@ import '../../core/widgets/botanica_plant_lineage_card.dart';
 import '../../core/widgets/botanica_social_graph_card.dart';
 import '../../core/widgets/botanica_seasonal_report_card.dart';
 import '../../core/widgets/botanica_knowledge_quiz_card.dart';
+import '../../core/widgets/botanica_stress_detector_card.dart';
+import '../../core/widgets/botanica_habit_predictor_card.dart';
+import '../../core/widgets/botanica_nudge_card.dart';
+import '../../core/widgets/botanica_maturity_card.dart';
+import '../../core/widgets/botanica_adaptive_schedule_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -68,6 +73,11 @@ import '../../domain/services/plant_lineage_engine.dart';
 import '../../domain/services/garden_social_graph_engine.dart';
 import '../../domain/services/seasonal_report_engine.dart';
 import '../../domain/services/care_knowledge_quiz_engine.dart';
+import '../../domain/services/environment_stress_detector.dart';
+import '../../domain/services/care_habit_predictor.dart';
+import '../../domain/services/nudge_engine.dart';
+import '../../domain/services/plant_maturity_estimator.dart';
+import '../../domain/services/adaptive_care_scheduler.dart';
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -478,6 +488,33 @@ class GardenWellnessScreen extends ConsumerWidget {
               ),
               const SizedBox(height: BotanicaTokens.spacingBase),
               _KnowledgeQuizSection(plants: plantsAsync.requireValue),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _StressDetectorSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _HabitPredictorSection(
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _NudgeSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _MaturitySection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _AdaptiveScheduleSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(
@@ -2010,5 +2047,126 @@ class _KnowledgeQuizSection extends StatelessWidget {
     if (quiz.questions.isEmpty) return const SizedBox.shrink();
 
     return BotanicaKnowledgeQuizCard(quiz: quiz);
+  }
+}
+
+class _StressDetectorSection extends StatelessWidget {
+  const _StressDetectorSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final results = <PlantStressResult>[];
+    for (final plant in plants.where((p) => !p.isArchived)) {
+      final r = EnvironmentStressDetector.detect(
+        plant: plant,
+        logs: logs,
+        tasks: tasks,
+        now: DateTime.now(),
+      );
+      if (r != null) results.add(r);
+    }
+
+    return BotanicaStressDetectorCard(results: results);
+  }
+}
+
+class _HabitPredictorSection extends StatelessWidget {
+  const _HabitPredictorSection({
+    required this.logs,
+    required this.tasks,
+  });
+
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final profile = CareHabitPredictor.predict(
+      logs: logs,
+      tasks: tasks,
+      now: DateTime.now(),
+    );
+
+    return BotanicaHabitPredictorCard(profile: profile);
+  }
+}
+
+class _NudgeSection extends StatelessWidget {
+  const _NudgeSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final nudges = NudgeEngine.generate(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      now: now,
+      isWinter: now.month == 12 || now.month <= 2,
+    );
+
+    return BotanicaNudgeCard(nudges: nudges);
+  }
+}
+
+class _MaturitySection extends StatelessWidget {
+  const _MaturitySection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final estimates = PlantMaturityEstimator.estimateAll(
+      plants: plants,
+      species: const [],
+      logs: logs,
+      now: DateTime.now(),
+    );
+    if (estimates.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaMaturityCard(estimates: estimates);
+  }
+}
+
+class _AdaptiveScheduleSection extends StatelessWidget {
+  const _AdaptiveScheduleSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final adjustments = AdaptiveCareScheduler.analyze(
+      plants: plants,
+      species: const [],
+      logs: logs,
+      now: DateTime.now(),
+    );
+    if (adjustments.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaAdaptiveScheduleCard(adjustments: adjustments);
   }
 }
