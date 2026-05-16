@@ -15,6 +15,7 @@ import '../../core/widgets/botanica_ai_note_card.dart';
 import '../../core/widgets/botanica_animated_counter.dart';
 import '../../core/widgets/botanica_gaps.dart';
 import '../../core/widgets/botanica_emotional_bond_indicator.dart';
+import '../../core/widgets/botanica_predictive_needs_card.dart';
 import '../../core/widgets/botanica_health_breakdown_sheet.dart';
 import '../../core/haptics/botanica_haptics.dart';
 import '../../core/utils/motion_preferences.dart';
@@ -25,6 +26,7 @@ import '../../domain/models/photo_entry.dart';
 import '../../domain/services/plant_care_streak.dart';
 import '../../domain/services/care_prediction_engine.dart';
 import '../../domain/services/emotional_bond_engine.dart';
+import '../../domain/services/predictive_needs_engine.dart';
 import '../../domain/models/plant.dart';
 import '../../domain/models/plant_idea.dart';
 import '../../domain/models/species.dart';
@@ -328,6 +330,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _PlantJourneyCard(plant: plant),
         BotanicaGaps.vSm,
         _EmotionalBondSection(plant: plant),
+        BotanicaGaps.vSm,
+        _PredictiveNeedsSection(plant: plant),
         BotanicaGaps.vSm,
         BotanicaGlassCard(
           child: Column(
@@ -2426,5 +2430,42 @@ class _EmotionalBondSection extends ConsumerWidget {
     if (bond == null) return const SizedBox.shrink();
 
     return BotanicaEmotionalBondIndicator(bond: bond);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Predictive Needs Section
+// ---------------------------------------------------------------------------
+
+class _PredictiveNeedsSection extends ConsumerWidget {
+  const _PredictiveNeedsSection({required this.plant});
+
+  final Plant plant;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plantsAsync = ref.watch(plantsStreamProvider);
+
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+
+    if (logs.where((l) => l.plantId == plant.id).length < 5) {
+      return const SizedBox.shrink();
+    }
+
+    final report = PredictiveNeedsEngine.predict(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    final plantPredictions = report.predictions
+        .where((p) => p.plantId == plant.id)
+        .toList();
+
+    if (plantPredictions.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaPredictiveNeedsCard(predictions: plantPredictions);
   }
 }

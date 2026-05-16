@@ -7,14 +7,18 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_streak_badge.dart';
+import '../../core/widgets/botanica_care_persona_card.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/screen_title.dart';
 import '../../domain/models/enums.dart';
+import '../../domain/models/care_log.dart';
+import '../../domain/models/plant.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/task_instance.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_data_exporter.dart';
 import '../../domain/services/plant_whisperer_score.dart';
+import '../../domain/services/user_care_persona_engine.dart';
 import 'ai_settings_section.dart';
 import 'credits_screen.dart';
 import 'daily_profile_section.dart';
@@ -162,6 +166,8 @@ class ProfileScreen extends ConsumerWidget {
           if (settings.careStreakDays > 0 || plantCount > 0)
             const SizedBox(height: BotanicaTokens.spacingSm),
           const _GardenerTypeCard().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _CarePersonaSection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           const PreferencesSection().animateSection(index: 6),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
@@ -928,5 +934,41 @@ class _GardenerTypeCard extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Care Persona Section
+// ---------------------------------------------------------------------------
+
+class _CarePersonaSection extends ConsumerWidget {
+  const _CarePersonaSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsControllerProvider);
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (plants.isEmpty || logs.length < 5) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final firstPlant = plants
+        .map((p) => p.createdAt)
+        .reduce((a, b) => a.isBefore(b) ? a : b);
+    final totalDaysActive = now.difference(firstPlant).inDays;
+
+    final persona = UserCarePersonaEngine.analyze(
+      plants: plants,
+      logs: logs,
+      streakDays: settings.careStreakDays,
+      totalDaysActive: totalDaysActive,
+      now: now,
+    );
+
+    return BotanicaCarePersonaCard(persona: persona);
   }
 }
