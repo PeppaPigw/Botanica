@@ -9,6 +9,7 @@ import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_page_scaffold.dart';
 import '../../core/widgets/botanica_state_card.dart';
 import '../../core/widgets/botanica_streak_badge.dart';
+import '../../core/widgets/care_patterns_card.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
@@ -320,6 +321,8 @@ class GardenWellnessScreen extends ConsumerWidget {
                 logs: logsAsync.requireValue,
                 settings: settings,
               ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              const CarePatternsCard(),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
                 Text(

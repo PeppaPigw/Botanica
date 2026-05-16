@@ -33,6 +33,7 @@ import '../../core/i18n/task_labels.dart';
 import '../../core/widgets/care_transparency_card.dart';
 import 'widgets/manage_care_sheet.dart';
 import 'widgets/plant_detail_pill.dart';
+import 'widgets/plant_forecast_card.dart';
 
 class PlantOverviewTab extends ConsumerWidget {
   const PlantOverviewTab({
@@ -317,6 +318,8 @@ class PlantOverviewTab extends ConsumerWidget {
         _CareStatsCard(plantId: plant.id),
         BotanicaGaps.vSm,
         _CareRhythmCard(plantId: plant.id),
+        BotanicaGaps.vSm,
+        PlantForecastCard(plantId: plant.id),
         BotanicaGaps.vSm,
         _GrowthTimelineCard(plantId: plant.id),
         BotanicaGaps.vSm,
