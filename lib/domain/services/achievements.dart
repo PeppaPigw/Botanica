@@ -165,7 +165,86 @@ class AchievementsEngine {
         progress: uniqueCareTypes.length.clamp(0, 5),
         target: 5,
       ),
+      // Intelligence-based achievements
+      Achievement(
+        id: 'earlyBird',
+        tier: AchievementTier.bronze,
+        unlocked: _morningCareCount(logs) >= 20,
+        progress: _morningCareCount(logs).clamp(0, 20),
+        target: 20,
+      ),
+      Achievement(
+        id: 'consistentCarer',
+        tier: AchievementTier.silver,
+        unlocked: _onTimePercentage(tasks) >= 0.8,
+        progress: (_onTimePercentage(tasks) * 100).round().clamp(0, 80),
+        target: 80,
+      ),
+      Achievement(
+        id: 'plantRescuer',
+        tier: AchievementTier.gold,
+        unlocked: _rescuedPlantCount(plants, tasks, logs) >= 3,
+        progress: _rescuedPlantCount(plants, tasks, logs).clamp(0, 3),
+        target: 3,
+      ),
+      Achievement(
+        id: 'seasonAdaptor',
+        tier: AchievementTier.silver,
+        unlocked: _hasSeasonalVariation(logs),
+      ),
+      Achievement(
+        id: 'gardenArchitect',
+        tier: AchievementTier.gold,
+        unlocked: uniqueRooms.length >= 4 && activePlants >= 8,
+        progress: activePlants.clamp(0, 8),
+        target: 8,
+      ),
     ];
+  }
+
+  static int _morningCareCount(List<CareLog> logs) {
+    return logs.where((l) => l.timestamp.hour >= 5 && l.timestamp.hour < 10).length;
+  }
+
+  static double _onTimePercentage(List<TaskInstance> tasks) {
+    final completed = tasks.where((t) => t.isDone && t.completedAt != null).toList();
+    if (completed.length < 10) return 0;
+    final onTime = completed.where((t) =>
+        t.completedAt!.difference(t.dueAt).inHours <= 24).length;
+    return onTime / completed.length;
+  }
+
+  static int _rescuedPlantCount(
+      List<Plant> plants, List<TaskInstance> tasks, List<CareLog> logs) {
+    int rescued = 0;
+    for (final plant in plants.where((p) => !p.isArchived)) {
+      final overdueTasks = tasks.where((t) =>
+          t.plantId == plant.id &&
+          t.isDone &&
+          t.completedAt != null &&
+          t.completedAt!.difference(t.dueAt).inHours > 72).toList();
+      if (overdueTasks.length >= 2) {
+        final recentCare = logs.any((l) =>
+            l.plantId == plant.id &&
+            DateTime.now().difference(l.timestamp).inDays < 14);
+        if (recentCare) rescued++;
+      }
+    }
+    return rescued;
+  }
+
+  static bool _hasSeasonalVariation(List<CareLog> logs) {
+    if (logs.length < 30) return false;
+    final monthCounts = List.filled(12, 0);
+    for (final log in logs) {
+      monthCounts[log.timestamp.month - 1]++;
+    }
+    final nonZeroMonths = monthCounts.where((c) => c > 0).toList();
+    if (nonZeroMonths.length < 4) return false;
+    final avg = nonZeroMonths.reduce((a, b) => a + b) / nonZeroMonths.length;
+    final hasVariation = nonZeroMonths.any((c) => c > avg * 1.5) &&
+        nonZeroMonths.any((c) => c < avg * 0.6);
+    return hasVariation;
   }
 
   static int unlockedCount({
