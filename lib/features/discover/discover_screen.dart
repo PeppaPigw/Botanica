@@ -11,6 +11,8 @@ import '../../core/i18n/species_labels.dart';
 import '../../core/i18n/species_search.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_care_coaching_card.dart';
+import '../../core/widgets/botanica_weekly_insight_card.dart';
+import '../../core/widgets/botanica_seasonal_report_card.dart';
 import '../../core/widgets/botanica_chip.dart';
 import '../../core/widgets/botanica_button.dart';
 import '../../core/widgets/botanica_gaps.dart';
@@ -27,6 +29,8 @@ import '../../domain/models/plant_idea.dart';
 import '../../domain/models/task_instance.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/services/care_coaching.dart';
+import '../../domain/services/weekly_insight_engine.dart';
+import '../../domain/services/seasonal_report_engine.dart';
 import '../../gen/l10n/app_localizations.dart';
 
 class DiscoverScreen extends ConsumerStatefulWidget {
@@ -571,6 +575,8 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
             ],
           ).animateSection(index: 3),
           const _DiscoverCoachingTip(),
+          const _WeeklyInsightSection(),
+          const _SeasonalReportSection(),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           speciesAsync.when(
             data: (species) {
@@ -2123,3 +2129,75 @@ class _MiniPill extends StatelessWidget {
     );
   }
 }
+
+class _WeeklyInsightSection extends ConsumerWidget {
+  const _WeeklyInsightSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 7) return const SizedBox.shrink();
+
+    final active = plants.where((p) => !p.isArchived).toList();
+    final healthScores = <String, double>{
+      for (final p in active)
+        p.id: logs.where((l) => l.plantId == p.id).isNotEmpty ? 0.7 : 0.5,
+    };
+
+    final digest = WeeklyInsightEngine.generate(
+      plants: plants,
+      logs: logs,
+      healthScores: healthScores,
+      now: DateTime.now(),
+    );
+
+    if (digest.insights.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: BotanicaTokens.spacingSm),
+      child: BotanicaWeeklyInsightCard(digest: digest),
+    );
+  }
+}
+
+class _SeasonalReportSection extends ConsumerWidget {
+  const _SeasonalReportSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (logs.length < 14) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final month = now.month;
+    final season = month >= 3 && month <= 5
+        ? 'spring'
+        : month >= 6 && month <= 8
+            ? 'summer'
+            : month >= 9 && month <= 11
+                ? 'autumn'
+                : 'winter';
+
+    final report = SeasonalReportEngine.generate(
+      plants: plants,
+      logs: logs,
+      currentSeason: season,
+      currentYear: now.year,
+      now: now,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(top: BotanicaTokens.spacingSm),
+      child: BotanicaSeasonalReportCard(report: report),
+    );
+  }
+}
+
