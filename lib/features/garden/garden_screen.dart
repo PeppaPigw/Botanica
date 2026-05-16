@@ -68,6 +68,10 @@ import '../../domain/services/room_optimizer.dart';
 import '../../core/widgets/botanica_room_optimizer_card.dart';
 import '../../domain/services/daily_fact_engine.dart';
 import '../../core/widgets/botanica_daily_fact_card.dart';
+import '../../domain/services/seasonal_transition_planner.dart';
+import '../../core/widgets/botanica_seasonal_transition_card.dart';
+import '../../domain/services/garden_insights_aggregator.dart' as insights_agg;
+import '../../core/widgets/botanica_garden_insights_card.dart';
 import '../../domain/services/garden_momentum_engine.dart';
 import '../../domain/services/watering_batch_planner.dart';
 import '../../domain/services/care_difficulty_progression.dart';
@@ -1073,6 +1077,42 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
                   if (fact == null) return const SizedBox.shrink();
                   return BotanicaDailyFactCard(fact: fact);
                 }).animateSection(index: 11),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 2)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final transitionPlan = SeasonalTransitionPlanner.plan(
+                    plants: plants,
+                    species: speciesById.values.toList(),
+                    settings: settings,
+                    now: DateTime.now(),
+                  );
+                  if (transitionPlan == null) return const SizedBox.shrink();
+                  return BotanicaSeasonalTransitionCard(plan: transitionPlan);
+                }).animateSection(index: 12),
+              ),
+            ),
+          if (plants.where((p) => !p.isArchived).length >= 3 && logs.length >= 7)
+            SliverPadding(
+              padding: BotanicaTokens.pagePadding
+                  .copyWith(top: BotanicaTokens.spacingSm),
+              sliver: SliverToBoxAdapter(
+                child: Builder(builder: (context) {
+                  final feed = insights_agg.GardenInsightsAggregator.generate(
+                    plants: plants,
+                    logs: logs,
+                    tasks: tasks,
+                    settings: settings,
+                    speciesMap: speciesById,
+                    now: DateTime.now(),
+                  );
+                  if (feed.insights.isEmpty) return const SizedBox.shrink();
+                  return BotanicaGardenInsightsCard(feed: feed);
+                }).animateSection(index: 13),
               ),
             ),
           SliverPadding(
