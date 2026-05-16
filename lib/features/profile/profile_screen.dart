@@ -8,6 +8,7 @@ import '../../core/utils/motion_preferences.dart';
 import '../../core/widgets/botanica_animated_section.dart';
 import '../../core/widgets/botanica_streak_badge.dart';
 import '../../core/widgets/botanica_care_persona_card.dart';
+import '../../core/widgets/botanica_garden_stats_card.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/screen_title.dart';
 import '../../domain/models/enums.dart';
@@ -18,6 +19,7 @@ import '../../domain/models/task_instance.dart';
 import '../../gen/l10n/app_localizations.dart';
 import '../../services/care/care_data_exporter.dart';
 import '../../domain/services/plant_whisperer_score.dart';
+import '../../domain/services/garden_stats_engine.dart';
 import '../../domain/services/user_care_persona_engine.dart';
 import 'ai_settings_section.dart';
 import 'credits_screen.dart';
@@ -168,6 +170,8 @@ class ProfileScreen extends ConsumerWidget {
           const _GardenerTypeCard().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingSm),
           const _CarePersonaSection().animateSection(index: 5),
+          const SizedBox(height: BotanicaTokens.spacingSm),
+          const _GardenStatsSection().animateSection(index: 5),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
           const PreferencesSection().animateSection(index: 6),
           const SizedBox(height: BotanicaTokens.spacingRelaxed),
@@ -970,5 +974,31 @@ class _CarePersonaSection extends ConsumerWidget {
     );
 
     return BotanicaCarePersonaCard(persona: persona);
+  }
+}
+
+class _GardenStatsSection extends ConsumerWidget {
+  const _GardenStatsSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plantsAsync = ref.watch(plantsStreamProvider);
+    final logsAsync = ref.watch(careLogsStreamProvider);
+    final plants = plantsAsync.valueOrNull ?? const <Plant>[];
+    final logs = logsAsync.valueOrNull ?? const <CareLog>[];
+
+    if (plants.where((p) => !p.isArchived).length < 2 || logs.length < 5) {
+      return const SizedBox.shrink();
+    }
+
+    final stats = GardenStatsEngine.compute(
+      plants: plants,
+      logs: logs,
+      now: DateTime.now(),
+    );
+
+    if (stats.isEmpty) return const SizedBox.shrink();
+
+    return BotanicaGardenStatsCard(stats: stats);
   }
 }
