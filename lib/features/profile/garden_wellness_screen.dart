@@ -57,6 +57,12 @@ import '../../core/widgets/botanica_milestone_card.dart';
 import '../../core/widgets/botanica_seasonal_advisor_card.dart';
 import '../../core/widgets/botanica_care_prediction_card.dart';
 import '../../core/widgets/botanica_health_timeline_card.dart';
+import '../../core/widgets/botanica_garden_harmony_card.dart';
+import '../../core/widgets/botanica_daily_challenge_card.dart';
+import '../../core/widgets/botanica_weekly_insight_card.dart';
+import '../../core/widgets/botanica_seasonal_alert_card.dart';
+import '../../core/widgets/botanica_daily_briefing_card.dart';
+import '../../core/widgets/botanica_community_challenge_card.dart';
 import '../../domain/models/care_log.dart';
 import '../../domain/models/photo_entry.dart';
 import '../../domain/models/plant.dart';
@@ -112,6 +118,13 @@ import '../../domain/services/plant_milestone_engine.dart';
 import '../../domain/services/seasonal_care_advisor.dart';
 import '../../domain/services/care_prediction_engine.dart';
 import '../../domain/services/plant_health_timeline.dart';
+import '../../domain/services/garden_harmony_engine.dart';
+import '../../domain/services/daily_challenge_engine.dart';
+import '../../domain/services/weekly_insight_engine.dart';
+import '../../domain/services/seasonal_transition_advisor.dart';
+import '../../domain/services/daily_briefing_engine.dart';
+import '../../domain/services/community_challenge_engine.dart';
+import '../../domain/services/seasonal_tips.dart' as seasonal_tips;
 import '../../features/garden/garden_screen.dart';
 import '../../features/tasks/tasks_screen.dart';
 import '../../gen/l10n/app_localizations.dart';
@@ -636,6 +649,43 @@ class GardenWellnessScreen extends ConsumerWidget {
                 plants: plantsAsync.requireValue,
                 logs: logsAsync.requireValue,
                 tasks: tasksAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _GardenHarmonySection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _DailyChallengeSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _WeeklyInsightSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _SeasonalAlertSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _DailyBriefingSection(
+                plants: plantsAsync.requireValue,
+                logs: logsAsync.requireValue,
+                tasks: tasksAsync.requireValue,
+                settings: settings,
+              ),
+              const SizedBox(height: BotanicaTokens.spacingBase),
+              _CommunityChallengeSection(
+                logs: logsAsync.requireValue,
+                plants: plantsAsync.requireValue,
+                settings: settings,
               ),
               const SizedBox(height: BotanicaTokens.spacingLg),
               if (roomPulse.isNotEmpty) ...[
@@ -2706,5 +2756,178 @@ class _HealthTimelineSection extends StatelessWidget {
     }
 
     return BotanicaHealthTimelineCard(timelines: timelines);
+  }
+}
+
+class _GardenHarmonySection extends StatelessWidget {
+  const _GardenHarmonySection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final result = GardenHarmonyEngine.compute(
+      plants: plants,
+      logs: logs,
+      tasks: tasks,
+      settings: settings,
+      now: DateTime.now(),
+    );
+
+    return BotanicaGardenHarmonyCard(result: result);
+  }
+}
+
+class _DailyChallengeSection extends StatelessWidget {
+  const _DailyChallengeSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final challenge = DailyChallengeEngine.generate(
+      plants: plants,
+      recentLogs: logs,
+      now: DateTime.now(),
+      streakDays: settings.careStreakDays,
+    );
+
+    return BotanicaDailyChallengeCard(challenge: challenge);
+  }
+}
+
+class _WeeklyInsightSection extends StatelessWidget {
+  const _WeeklyInsightSection({
+    required this.plants,
+    required this.logs,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+
+  @override
+  Widget build(BuildContext context) {
+    final digest = WeeklyInsightEngine.generate(
+      plants: plants,
+      logs: logs,
+      healthScores: {for (final p in plants) p.id: 0.7},
+      now: DateTime.now(),
+    );
+
+    return BotanicaWeeklyInsightCard(digest: digest);
+  }
+}
+
+class _SeasonalAlertSection extends StatelessWidget {
+  const _SeasonalAlertSection({
+    required this.plants,
+    required this.logs,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final season = seasonal_tips.SeasonalTipsEngine.currentSeason(settings.hemisphere, now: now);
+    final report = SeasonalTransitionAdvisor.analyze(
+      plants: plants,
+      logs: logs,
+      currentSeason: season,
+      hemisphere: settings.hemisphere,
+      now: now,
+    );
+
+    return BotanicaSeasonalAlertCard(report: report);
+  }
+}
+
+class _DailyBriefingSection extends StatelessWidget {
+  const _DailyBriefingSection({
+    required this.plants,
+    required this.logs,
+    required this.tasks,
+    required this.settings,
+  });
+
+  final List<Plant> plants;
+  final List<CareLog> logs;
+  final List<TaskInstance> tasks;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final weekAgo = now.subtract(const Duration(days: 7));
+    final twoWeeksAgo = now.subtract(const Duration(days: 14));
+    final monthAgo = now.subtract(const Duration(days: 30));
+    final missedThisWeek = tasks.where((t) =>
+        t.dueAt.isAfter(weekAgo) && t.dueAt.isBefore(now) && !t.isDone).length;
+    final missedLastWeek = tasks.where((t) =>
+        t.dueAt.isAfter(twoWeeksAgo) && t.dueAt.isBefore(weekAgo) && !t.isDone).length;
+    final dailyTasks = tasks.where((t) =>
+        t.dueAt.isAfter(weekAgo) && t.dueAt.isBefore(now)).length ~/ 7;
+    final plantsAdded = plants.where((p) =>
+        p.createdAt.isAfter(monthAgo)).length;
+
+    final briefing = DailyBriefingEngine.generate(
+      plants: plants,
+      logs: logs,
+      healthScores: {for (final p in plants) p.id: 0.7},
+      streakDays: settings.careStreakDays,
+      plantsAddedThisMonth: plantsAdded,
+      missedTasksThisWeek: missedThisWeek,
+      missedTasksLastWeek: missedLastWeek,
+      totalDailyTasks: dailyTasks,
+      now: now,
+    );
+
+    return BotanicaDailyBriefingCard(briefing: briefing);
+  }
+}
+
+class _CommunityChallengeSection extends StatelessWidget {
+  const _CommunityChallengeSection({
+    required this.logs,
+    required this.plants,
+    required this.settings,
+  });
+
+  final List<CareLog> logs;
+  final List<Plant> plants;
+  final UserSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final weekStart = now.subtract(Duration(days: now.weekday - 1));
+    final weekLogs = logs.where((l) => l.timestamp.isAfter(weekStart)).length;
+    final weekOfYear = (now.difference(DateTime(now.year)).inDays / 7).ceil();
+
+    final result = CommunityChallengeEngine.generate(
+      weekOfYear: weekOfYear,
+      userCareActionsThisWeek: weekLogs,
+      userPlantCount: plants.where((p) => !p.isArchived).length,
+      userStreakDays: settings.careStreakDays,
+    );
+
+    return BotanicaCommunityChallengeCard(result: result);
   }
 }
