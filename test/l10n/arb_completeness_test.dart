@@ -24,6 +24,7 @@ void main() {
         file.uri.pathSegments.last:
             (jsonDecode(file.readAsStringSync()) as Map<String, dynamic>)
                 .keys
+                .where((k) => !k.startsWith('@'))
                 .toSet(),
     };
     final allKeys = keysByFile.values.fold<Set<String>>(

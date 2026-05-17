@@ -17,18 +17,29 @@ flutter test --timeout 60s
 # Set BOTANICA_INTEGRATION_ALL=true to run the full `integration_test/` suite.
 
 integration_test_target="${BOTANICA_INTEGRATION_TARGET:-integration_test/app_smoke_test.dart}"
-integration_device="${BOTANICA_DEVICE_ID:-${BOTANICA_DEVICE:-}}"
+devices_json="$(flutter devices --machine)"
+integration_device_id="${BOTANICA_DEVICE_ID:-}"
+integration_device_query="${BOTANICA_DEVICE:-}"
 
-if [[ -z "${integration_device}" ]]; then
-  devices_json="$(flutter devices --machine)"
-  integration_device="$(
-    DEVICES_JSON="${devices_json}" python3 - 2>/dev/null <<'PY' || true
+set +e
+integration_device="$(
+  DEVICES_JSON="${devices_json}" \
+  BOTANICA_DEVICE_ID="${integration_device_id}" \
+  BOTANICA_DEVICE="${integration_device_query}" \
+  python3 - <<'PY'
 import json
 import os
 import sys
 
 devices_json = os.environ.get("DEVICES_JSON", "[]")
-devices = json.loads(devices_json)
+requested_id = os.environ.get("BOTANICA_DEVICE_ID", "").strip()
+requested_query = os.environ.get("BOTANICA_DEVICE", "").strip()
+
+try:
+  devices = json.loads(devices_json)
+except json.JSONDecodeError as exc:
+  print(f"ERROR: failed to parse `flutter devices --machine` output: {exc}", file=sys.stderr)
+  sys.exit(2)
 
 def is_supported(d):
   return bool(d.get("isSupported"))
@@ -36,9 +47,70 @@ def is_supported(d):
 def target_platform(d):
   return str(d.get("targetPlatform") or "")
 
+def is_mobile(d):
+  platform = target_platform(d)
+  return platform == "ios" or platform.startswith("android")
+
+supported = [d for d in devices if is_supported(d) and is_mobile(d)]
+
+def fmt(d):
+  kind = "emulator" if d.get("emulator") else "device"
+  return f"{d.get('name')} • {d.get('id')} • {target_platform(d)} • {kind}"
+
+def print_supported():
+  if not supported:
+    return
+  print("Detected supported devices:", file=sys.stderr)
+  for d in supported:
+    print(f"- {fmt(d)}", file=sys.stderr)
+
+if requested_id:
+  if any(str(d.get("id") or "") == requested_id for d in supported):
+    print(requested_id)
+    sys.exit(0)
+
+  print(f"ERROR: BOTANICA_DEVICE_ID='{requested_id}' not found.", file=sys.stderr)
+  print_supported()
+  sys.exit(1)
+
+if requested_query:
+  q = requested_query.lower()
+
+  matches = []
+  for d in supported:
+    did = str(d.get("id") or "")
+    name = str(d.get("name") or "")
+    if did == requested_query or did.startswith(requested_query):
+      matches.append(d)
+      continue
+    if q in name.lower():
+      matches.append(d)
+
+  # De-duplicate by id.
+  unique = []
+  seen = set()
+  for d in matches:
+    did = d.get("id")
+    if did and did not in seen:
+      seen.add(did)
+      unique.append(d)
+  matches = unique
+
+  if len(matches) == 1:
+    print(matches[0].get("id"))
+    sys.exit(0)
+
+  if len(matches) == 0:
+    print(f"ERROR: BOTANICA_DEVICE='{requested_query}' did not match any supported device.", file=sys.stderr)
+  else:
+    print(f"ERROR: BOTANICA_DEVICE='{requested_query}' is ambiguous (matched {len(matches)} devices).", file=sys.stderr)
+
+  print_supported()
+  sys.exit(1)
+
 def pick(pred):
-  for d in devices:
-    if is_supported(d) and pred(d):
+  for d in supported:
+    if pred(d):
       return d.get("id")
   return None
 
@@ -54,14 +126,21 @@ order = [
 ]
 
 for pred in order:
-  device_id = pick(pred)
-  if device_id:
-    print(device_id)
+  picked_id = pick(pred)
+  if picked_id:
+    print(picked_id)
     sys.exit(0)
 
 sys.exit(1)
 PY
-  )"
+)"
+integration_device_exit=$?
+set -e
+
+if [[ $integration_device_exit -ne 0 ]]; then
+  if [[ -n "${integration_device_id}" || -n "${integration_device_query}" ]]; then
+    exit "${integration_device_exit}"
+  fi
 fi
 
 if [[ -z "${integration_device}" ]]; then
