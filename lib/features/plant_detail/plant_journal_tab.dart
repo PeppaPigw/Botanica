@@ -56,7 +56,7 @@ enum _PhotoJournalAction { open, compare, share, delete }
 
 enum _DiaryJournalAction { view, edit, share, delete }
 
-class PlantJournalTab extends ConsumerWidget {
+class PlantJournalTab extends ConsumerStatefulWidget {
   const PlantJournalTab({
     super.key,
     required this.plant,
@@ -69,7 +69,18 @@ class PlantJournalTab extends ConsumerWidget {
   final VoidCallback onAddNote;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PlantJournalTab> createState() => _PlantJournalTabState();
+}
+
+class _PlantJournalTabState extends ConsumerState<PlantJournalTab>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final plant = widget.plant;
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final l10n = AppLocalizations.of(context);
@@ -270,7 +281,7 @@ class PlantJournalTab extends ConsumerWidget {
                             children: [
                               Expanded(
                                 child: FilledButton.icon(
-                                  onPressed: onAddPhoto,
+                                  onPressed: widget.onAddPhoto,
                                   icon: const Icon(Icons.add_a_photo_rounded),
                                   label: Text(l10n.journalAddPhotoTitle),
                                 ),
@@ -278,7 +289,7 @@ class PlantJournalTab extends ConsumerWidget {
                               BotanicaGaps.hSm,
                               Expanded(
                                 child: OutlinedButton.icon(
-                                  onPressed: onAddNote,
+                                  onPressed: widget.onAddNote,
                                   icon: const Icon(Icons.edit_note_rounded),
                                   label: Text(l10n.diaryAddEntryButton),
                                   style: OutlinedButton.styleFrom(
@@ -303,7 +314,7 @@ class PlantJournalTab extends ConsumerWidget {
                       _GrowthEchoCard(
                         plant: plant,
                         insight: growthEcho,
-                        onAddPhoto: onAddPhoto,
+                        onAddPhoto: widget.onAddPhoto,
                         onCompare: () => PhotoCompareScreen.open(
                           context,
                           beforePath: growthEcho.previous!.filePath,

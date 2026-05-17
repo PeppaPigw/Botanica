@@ -59,7 +59,7 @@ import 'widgets/manage_care_sheet.dart';
 import 'widgets/plant_detail_pill.dart';
 import 'widgets/plant_forecast_card.dart';
 
-class PlantOverviewTab extends ConsumerWidget {
+class PlantOverviewTab extends ConsumerStatefulWidget {
   const PlantOverviewTab({
     super.key,
     required this.plant,
@@ -70,7 +70,19 @@ class PlantOverviewTab extends ConsumerWidget {
   final List<TaskInstance> nextTasks;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PlantOverviewTab> createState() => _PlantOverviewTabState();
+}
+
+class _PlantOverviewTabState extends ConsumerState<PlantOverviewTab>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final plant = widget.plant;
+    final nextTasks = widget.nextTasks;
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final healthScoreAsync = ref.watch(plantHealthScoreProvider(plant.id));

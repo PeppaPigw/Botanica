@@ -14,13 +14,24 @@ import '../../domain/models/task_instance.dart';
 import '../../domain/services/plant_health_timeline.dart';
 import '../../gen/l10n/app_localizations.dart';
 
-class PlantLogsTab extends ConsumerWidget {
+class PlantLogsTab extends ConsumerStatefulWidget {
   const PlantLogsTab({super.key, required this.plantId});
 
   final String plantId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PlantLogsTab> createState() => _PlantLogsTabState();
+}
+
+class _PlantLogsTabState extends ConsumerState<PlantLogsTab>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final plantId = widget.plantId;
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
