@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_confidence_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaCareConfidenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final levelColor = _levelColor(report.level, scheme);
 
@@ -43,14 +45,14 @@ class BotanicaCareConfidenceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _levelLabel(report.level),
+                      _levelLabel(report.level, l10n),
                       style: textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       report.nextMilestone.isNotEmpty
-                          ? 'Next: ${_milestoneLabel(report.nextMilestone)}'
+                          ? l10n.confidenceNext(_milestoneLabel(report.nextMilestone, l10n))
                           : '',
                       style: textTheme.labelSmall?.copyWith(
                         color: scheme.onSurface.withValues(alpha: 0.5),
@@ -88,21 +90,21 @@ class BotanicaCareConfidenceCard extends StatelessWidget {
     };
   }
 
-  static String _levelLabel(String level) {
+  static String _levelLabel(String level, AppLocalizations l10n) {
     return switch (level) {
-      'confidenceMaster' => 'Plant Master',
-      'confidenceConfident' => 'Confident Carer',
-      'confidenceLearning' => 'Growing Learner',
-      _ => 'Plant Novice',
+      'confidenceMaster' => l10n.confidenceMaster,
+      'confidenceConfident' => l10n.confidenceConfident,
+      'confidenceLearning' => l10n.confidenceLearning,
+      _ => l10n.confidenceNovice,
     };
   }
 
-  static String _milestoneLabel(String milestone) {
+  static String _milestoneLabel(String milestone, AppLocalizations l10n) {
     return switch (milestone) {
-      'confidenceMilestoneKeepGoing' => 'Keep the streak alive',
-      'confidenceMilestoneMaster' => 'Reach Master level',
-      'confidenceMilestoneConfident' => 'Reach Confident level',
-      _ => 'Build your routine',
+      'confidenceMilestoneKeepGoing' => l10n.confidenceNextKeepGoing,
+      'confidenceMilestoneMaster' => l10n.confidenceNextMaster,
+      'confidenceMilestoneConfident' => l10n.confidenceNextConfident,
+      _ => l10n.confidenceNextBuild,
     };
   }
 }
@@ -154,12 +156,13 @@ class _DimensionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Row(
       children: [
         SizedBox(
           width: 80,
           child: Text(
-            _dimensionLabel(dimension.name),
+            _dimensionLabel(dimension.name, l10n),
             style: textTheme.labelSmall?.copyWith(
               color: scheme.onSurface.withValues(alpha: 0.6),
               fontSize: 10,
@@ -195,13 +198,13 @@ class _DimensionRow extends StatelessWidget {
     );
   }
 
-  static String _dimensionLabel(String name) {
+  static String _dimensionLabel(String name, AppLocalizations l10n) {
     return switch (name) {
-      'confidenceConsistency' => 'Consistency',
-      'confidenceDiversity' => 'Diversity',
-      'confidenceHealth' => 'Health',
-      'confidenceExperience' => 'Experience',
-      'confidenceVariety' => 'Variety',
+      'confidenceConsistency' => l10n.confidenceDimConsistency,
+      'confidenceDiversity' => l10n.confidenceDimDiversity,
+      'confidenceHealth' => l10n.confidenceDimHealth,
+      'confidenceExperience' => l10n.confidenceDimExperience,
+      'confidenceVariety' => l10n.confidenceDimVariety,
       _ => name,
     };
   }

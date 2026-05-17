@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/intelligence_providers.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_pattern_analyzer.dart';
+import '../../gen/l10n/app_localizations.dart';
 import '../widgets/glass_card.dart';
 
 class CarePatternsCard extends ConsumerWidget {
@@ -16,6 +17,7 @@ class CarePatternsCard extends ConsumerWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       child: Column(
@@ -30,7 +32,7 @@ class CarePatternsCard extends ConsumerWidget {
               ),
               const SizedBox(width: BotanicaTokens.spacingXs),
               Text(
-                'Your Care Patterns',
+                l10n.patternTitle,
                 style: textTheme.titleSmall,
               ),
             ],
@@ -52,7 +54,8 @@ class _PatternTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final (icon, label) = _patternVisuals(pattern.type);
+    final l10n = AppLocalizations.of(context);
+    final (icon, label) = _patternVisuals(pattern.type, l10n);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingSm),
@@ -100,18 +103,18 @@ class _PatternTile extends StatelessWidget {
     );
   }
 
-  (IconData, String) _patternVisuals(PatternType type) {
+  (IconData, String) _patternVisuals(PatternType type, AppLocalizations l10n) {
     return switch (type) {
-      PatternType.batchCarer => (Icons.layers_rounded, 'Batch Carer'),
-      PatternType.morningRitual => (Icons.wb_sunny_rounded, 'Morning Ritual'),
-      PatternType.eveningRitual => (Icons.nightlight_rounded, 'Evening Ritual'),
-      PatternType.weekendWarrior => (Icons.weekend_rounded, 'Weekend Warrior'),
-      PatternType.seasonalDip => (Icons.trending_down_rounded, 'Seasonal Dip'),
-      PatternType.seasonalSurge => (Icons.trending_up_rounded, 'Seasonal Surge'),
-      PatternType.favoriteFirst => (Icons.favorite_rounded, 'Favorite First'),
-      PatternType.neglectedChild => (Icons.visibility_off_rounded, 'Needs Love'),
-      PatternType.diverseRoutine => (Icons.auto_awesome_rounded, 'Diverse Routine'),
-      PatternType.focusedCarer => (Icons.center_focus_strong_rounded, 'Focused Carer'),
+      PatternType.batchCarer => (Icons.layers_rounded, l10n.patternBatchCarer),
+      PatternType.morningRitual => (Icons.wb_sunny_rounded, l10n.patternMorningRitual),
+      PatternType.eveningRitual => (Icons.nightlight_rounded, l10n.patternEveningRitual),
+      PatternType.weekendWarrior => (Icons.weekend_rounded, l10n.patternWeekendWarrior),
+      PatternType.seasonalDip => (Icons.trending_down_rounded, l10n.patternSeasonalDip),
+      PatternType.seasonalSurge => (Icons.trending_up_rounded, l10n.patternSeasonalSurge),
+      PatternType.favoriteFirst => (Icons.favorite_rounded, l10n.patternFavoriteFirst),
+      PatternType.neglectedChild => (Icons.visibility_off_rounded, l10n.patternNeedsLove),
+      PatternType.diverseRoutine => (Icons.auto_awesome_rounded, l10n.patternDiverseRoutine),
+      PatternType.focusedCarer => (Icons.center_focus_strong_rounded, l10n.patternFocusedCarer),
     };
   }
 }

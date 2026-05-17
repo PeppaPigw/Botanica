@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/emotional_bond_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 
 class BotanicaEmotionalBondIndicator extends StatelessWidget {
@@ -14,12 +15,12 @@ class BotanicaEmotionalBondIndicator extends StatelessWidget {
   final EmotionalBond bond;
   final bool compact;
 
-  String _bondLabel(String type) => switch (type) {
-        'bondSoulmate' => 'Soulmate',
-        'bondBestFriend' => 'Best Friend',
-        'bondCompanion' => 'Companion',
-        'bondNewFriend' => 'New Friend',
-        _ => 'Acquaintance',
+  String _bondLabel(String type, AppLocalizations l10n) => switch (type) {
+        'bondSoulmate' => l10n.bondSoulmate,
+        'bondBestFriend' => l10n.bondBestFriend,
+        'bondCompanion' => l10n.bondCompanion,
+        'bondNewFriend' => l10n.bondNewFriend,
+        _ => l10n.bondAcquaintance,
       };
 
   IconData _bondIcon(String type) => switch (type) {
@@ -42,6 +43,7 @@ class BotanicaEmotionalBondIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
     final color = _bondColor(bond.bondType, scheme);
 
     if (compact) {
@@ -51,7 +53,7 @@ class BotanicaEmotionalBondIndicator extends StatelessWidget {
           Icon(_bondIcon(bond.bondType), size: 14, color: color),
           const SizedBox(width: 4),
           Text(
-            _bondLabel(bond.bondType),
+            _bondLabel(bond.bondType, l10n),
             style: textTheme.labelSmall?.copyWith(
               color: color,
               fontWeight: FontWeight.w600,
@@ -81,14 +83,14 @@ class BotanicaEmotionalBondIndicator extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                _bondLabel(bond.bondType),
+                _bondLabel(bond.bondType, l10n),
                 style: textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: color,
                 ),
               ),
               Text(
-                '${bond.sharedMoments} shared moments',
+                l10n.bondSharedMoments(bond.sharedMoments),
                 style: textTheme.labelSmall?.copyWith(
                   color: scheme.onSurface.withValues(alpha: 0.6),
                 ),

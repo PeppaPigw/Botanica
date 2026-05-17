@@ -4274,4 +4274,120 @@ class AppLocalizationsEn extends AppLocalizations {
   String careRoutineMinPerWeek(int minutes) {
     return '$minutes min/week';
   }
+
+  @override
+  String get confidenceMaster => 'Plant Master';
+
+  @override
+  String get confidenceConfident => 'Confident Carer';
+
+  @override
+  String get confidenceLearning => 'Growing Learner';
+
+  @override
+  String get confidenceNovice => 'Plant Novice';
+
+  @override
+  String get confidenceNextKeepGoing => 'Keep the streak alive';
+
+  @override
+  String get confidenceNextMaster => 'Reach Master level';
+
+  @override
+  String get confidenceNextConfident => 'Reach Confident level';
+
+  @override
+  String get confidenceNextBuild => 'Build your routine';
+
+  @override
+  String confidenceNext(String milestone) {
+    return 'Next: $milestone';
+  }
+
+  @override
+  String get confidenceDimConsistency => 'Consistency';
+
+  @override
+  String get confidenceDimDiversity => 'Diversity';
+
+  @override
+  String get confidenceDimHealth => 'Health';
+
+  @override
+  String get confidenceDimExperience => 'Experience';
+
+  @override
+  String get confidenceDimVariety => 'Variety';
+
+  @override
+  String get bondSoulmate => 'Soulmate';
+
+  @override
+  String get bondBestFriend => 'Best Friend';
+
+  @override
+  String get bondCompanion => 'Companion';
+
+  @override
+  String get bondNewFriend => 'New Friend';
+
+  @override
+  String get bondAcquaintance => 'Acquaintance';
+
+  @override
+  String bondSharedMoments(int count) {
+    return '$count shared moments';
+  }
+
+  @override
+  String get calendarThisWeek => 'This Week';
+
+  @override
+  String calendarTasks(int count) {
+    return '$count tasks';
+  }
+
+  @override
+  String get calendarToday => 'today';
+
+  @override
+  String get calendarTomorrow => 'tomorrow';
+
+  @override
+  String calendarDaysShort(int days) {
+    return '${days}d';
+  }
+
+  @override
+  String get patternBatchCarer => 'Batch Carer';
+
+  @override
+  String get patternMorningRitual => 'Morning Ritual';
+
+  @override
+  String get patternEveningRitual => 'Evening Ritual';
+
+  @override
+  String get patternWeekendWarrior => 'Weekend Warrior';
+
+  @override
+  String get patternSeasonalDip => 'Seasonal Dip';
+
+  @override
+  String get patternSeasonalSurge => 'Seasonal Surge';
+
+  @override
+  String get patternFavoriteFirst => 'Favorite First';
+
+  @override
+  String get patternNeedsLove => 'Needs Love';
+
+  @override
+  String get patternDiverseRoutine => 'Diverse Routine';
+
+  @override
+  String get patternFocusedCarer => 'Focused Carer';
+
+  @override
+  String get patternTitle => 'Your Care Patterns';
 }

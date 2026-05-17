@@ -4235,4 +4235,120 @@ class AppLocalizationsAr extends AppLocalizations {
   String careRoutineMinPerWeek(int minutes) {
     return '$minutes دقيقة/أسبوع';
   }
+
+  @override
+  String get confidenceMaster => 'خبير نباتات';
+
+  @override
+  String get confidenceConfident => 'مقدم رعاية واثق';
+
+  @override
+  String get confidenceLearning => 'متعلم متنامٍ';
+
+  @override
+  String get confidenceNovice => 'مبتدئ في النباتات';
+
+  @override
+  String get confidenceNextKeepGoing => 'حافظ على السلسلة';
+
+  @override
+  String get confidenceNextMaster => 'الوصول لمستوى الخبير';
+
+  @override
+  String get confidenceNextConfident => 'الوصول لمستوى الواثق';
+
+  @override
+  String get confidenceNextBuild => 'ابنِ روتينك';
+
+  @override
+  String confidenceNext(String milestone) {
+    return 'التالي: $milestone';
+  }
+
+  @override
+  String get confidenceDimConsistency => 'الاتساق';
+
+  @override
+  String get confidenceDimDiversity => 'التنوع';
+
+  @override
+  String get confidenceDimHealth => 'الصحة';
+
+  @override
+  String get confidenceDimExperience => 'الخبرة';
+
+  @override
+  String get confidenceDimVariety => 'التنويع';
+
+  @override
+  String get bondSoulmate => 'توأم الروح';
+
+  @override
+  String get bondBestFriend => 'أفضل صديق';
+
+  @override
+  String get bondCompanion => 'رفيق';
+
+  @override
+  String get bondNewFriend => 'صديق جديد';
+
+  @override
+  String get bondAcquaintance => 'معرفة';
+
+  @override
+  String bondSharedMoments(int count) {
+    return '$count لحظات مشتركة';
+  }
+
+  @override
+  String get calendarThisWeek => 'هذا الأسبوع';
+
+  @override
+  String calendarTasks(int count) {
+    return '$count مهام';
+  }
+
+  @override
+  String get calendarToday => 'اليوم';
+
+  @override
+  String get calendarTomorrow => 'غداً';
+
+  @override
+  String calendarDaysShort(int days) {
+    return '$daysي';
+  }
+
+  @override
+  String get patternBatchCarer => 'مقدم رعاية جماعية';
+
+  @override
+  String get patternMorningRitual => 'طقس صباحي';
+
+  @override
+  String get patternEveningRitual => 'طقس مسائي';
+
+  @override
+  String get patternWeekendWarrior => 'محارب نهاية الأسبوع';
+
+  @override
+  String get patternSeasonalDip => 'انخفاض موسمي';
+
+  @override
+  String get patternSeasonalSurge => 'ارتفاع موسمي';
+
+  @override
+  String get patternFavoriteFirst => 'المفضل أولاً';
+
+  @override
+  String get patternNeedsLove => 'يحتاج حباً';
+
+  @override
+  String get patternDiverseRoutine => 'روتين متنوع';
+
+  @override
+  String get patternFocusedCarer => 'مقدم رعاية مركز';
+
+  @override
+  String get patternTitle => 'أنماط العناية الخاصة بك';
 }

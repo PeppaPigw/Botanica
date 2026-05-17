@@ -7334,6 +7334,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{minutes} min/week'**
   String careRoutineMinPerWeek(int minutes);
+
+  /// No description provided for @confidenceMaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Master'**
+  String get confidenceMaster;
+
+  /// No description provided for @confidenceConfident.
+  ///
+  /// In en, this message translates to:
+  /// **'Confident Carer'**
+  String get confidenceConfident;
+
+  /// No description provided for @confidenceLearning.
+  ///
+  /// In en, this message translates to:
+  /// **'Growing Learner'**
+  String get confidenceLearning;
+
+  /// No description provided for @confidenceNovice.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Novice'**
+  String get confidenceNovice;
+
+  /// No description provided for @confidenceNextKeepGoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the streak alive'**
+  String get confidenceNextKeepGoing;
+
+  /// No description provided for @confidenceNextMaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Master level'**
+  String get confidenceNextMaster;
+
+  /// No description provided for @confidenceNextConfident.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Confident level'**
+  String get confidenceNextConfident;
+
+  /// No description provided for @confidenceNextBuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Build your routine'**
+  String get confidenceNextBuild;
+
+  /// No description provided for @confidenceNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {milestone}'**
+  String confidenceNext(String milestone);
+
+  /// No description provided for @confidenceDimConsistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get confidenceDimConsistency;
+
+  /// No description provided for @confidenceDimDiversity.
+  ///
+  /// In en, this message translates to:
+  /// **'Diversity'**
+  String get confidenceDimDiversity;
+
+  /// No description provided for @confidenceDimHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get confidenceDimHealth;
+
+  /// No description provided for @confidenceDimExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get confidenceDimExperience;
+
+  /// No description provided for @confidenceDimVariety.
+  ///
+  /// In en, this message translates to:
+  /// **'Variety'**
+  String get confidenceDimVariety;
+
+  /// No description provided for @bondSoulmate.
+  ///
+  /// In en, this message translates to:
+  /// **'Soulmate'**
+  String get bondSoulmate;
+
+  /// No description provided for @bondBestFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Friend'**
+  String get bondBestFriend;
+
+  /// No description provided for @bondCompanion.
+  ///
+  /// In en, this message translates to:
+  /// **'Companion'**
+  String get bondCompanion;
+
+  /// No description provided for @bondNewFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'New Friend'**
+  String get bondNewFriend;
+
+  /// No description provided for @bondAcquaintance.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquaintance'**
+  String get bondAcquaintance;
+
+  /// No description provided for @bondSharedMoments.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} shared moments'**
+  String bondSharedMoments(int count);
+
+  /// No description provided for @calendarThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get calendarThisWeek;
+
+  /// No description provided for @calendarTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks'**
+  String calendarTasks(int count);
+
+  /// No description provided for @calendarToday.
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get calendarToday;
+
+  /// No description provided for @calendarTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'tomorrow'**
+  String get calendarTomorrow;
+
+  /// No description provided for @calendarDaysShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d'**
+  String calendarDaysShort(int days);
+
+  /// No description provided for @patternBatchCarer.
+  ///
+  /// In en, this message translates to:
+  /// **'Batch Carer'**
+  String get patternBatchCarer;
+
+  /// No description provided for @patternMorningRitual.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning Ritual'**
+  String get patternMorningRitual;
+
+  /// No description provided for @patternEveningRitual.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening Ritual'**
+  String get patternEveningRitual;
+
+  /// No description provided for @patternWeekendWarrior.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend Warrior'**
+  String get patternWeekendWarrior;
+
+  /// No description provided for @patternSeasonalDip.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasonal Dip'**
+  String get patternSeasonalDip;
+
+  /// No description provided for @patternSeasonalSurge.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasonal Surge'**
+  String get patternSeasonalSurge;
+
+  /// No description provided for @patternFavoriteFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite First'**
+  String get patternFavoriteFirst;
+
+  /// No description provided for @patternNeedsLove.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs Love'**
+  String get patternNeedsLove;
+
+  /// No description provided for @patternDiverseRoutine.
+  ///
+  /// In en, this message translates to:
+  /// **'Diverse Routine'**
+  String get patternDiverseRoutine;
+
+  /// No description provided for @patternFocusedCarer.
+  ///
+  /// In en, this message translates to:
+  /// **'Focused Carer'**
+  String get patternFocusedCarer;
+
+  /// No description provided for @patternTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Care Patterns'**
+  String get patternTitle;
 }
 
 class _AppLocalizationsDelegate

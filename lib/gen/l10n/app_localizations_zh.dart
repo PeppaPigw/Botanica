@@ -4090,4 +4090,120 @@ class AppLocalizationsZh extends AppLocalizations {
   String careRoutineMinPerWeek(int minutes) {
     return '$minutes 分钟/周';
   }
+
+  @override
+  String get confidenceMaster => '植物大师';
+
+  @override
+  String get confidenceConfident => '自信护理者';
+
+  @override
+  String get confidenceLearning => '成长中的学习者';
+
+  @override
+  String get confidenceNovice => '植物新手';
+
+  @override
+  String get confidenceNextKeepGoing => '保持连续记录';
+
+  @override
+  String get confidenceNextMaster => '达到大师级别';
+
+  @override
+  String get confidenceNextConfident => '达到自信级别';
+
+  @override
+  String get confidenceNextBuild => '建立你的习惯';
+
+  @override
+  String confidenceNext(String milestone) {
+    return '下一步：$milestone';
+  }
+
+  @override
+  String get confidenceDimConsistency => '一致性';
+
+  @override
+  String get confidenceDimDiversity => '多样性';
+
+  @override
+  String get confidenceDimHealth => '健康度';
+
+  @override
+  String get confidenceDimExperience => '经验值';
+
+  @override
+  String get confidenceDimVariety => '丰富度';
+
+  @override
+  String get bondSoulmate => '灵魂伴侣';
+
+  @override
+  String get bondBestFriend => '最好的朋友';
+
+  @override
+  String get bondCompanion => '伙伴';
+
+  @override
+  String get bondNewFriend => '新朋友';
+
+  @override
+  String get bondAcquaintance => '初识';
+
+  @override
+  String bondSharedMoments(int count) {
+    return '$count 个共同时刻';
+  }
+
+  @override
+  String get calendarThisWeek => '本周';
+
+  @override
+  String calendarTasks(int count) {
+    return '$count 个任务';
+  }
+
+  @override
+  String get calendarToday => '今天';
+
+  @override
+  String get calendarTomorrow => '明天';
+
+  @override
+  String calendarDaysShort(int days) {
+    return '$days天';
+  }
+
+  @override
+  String get patternBatchCarer => '批量护理者';
+
+  @override
+  String get patternMorningRitual => '晨间仪式';
+
+  @override
+  String get patternEveningRitual => '晚间仪式';
+
+  @override
+  String get patternWeekendWarrior => '周末战士';
+
+  @override
+  String get patternSeasonalDip => '季节性低谷';
+
+  @override
+  String get patternSeasonalSurge => '季节性高峰';
+
+  @override
+  String get patternFavoriteFirst => '最爱优先';
+
+  @override
+  String get patternNeedsLove => '需要关爱';
+
+  @override
+  String get patternDiverseRoutine => '多样化习惯';
+
+  @override
+  String get patternFocusedCarer => '专注护理者';
+
+  @override
+  String get patternTitle => '你的护理模式';
 }

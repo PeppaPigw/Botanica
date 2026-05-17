@@ -4293,4 +4293,120 @@ class AppLocalizationsEs extends AppLocalizations {
   String careRoutineMinPerWeek(int minutes) {
     return '$minutes min/semana';
   }
+
+  @override
+  String get confidenceMaster => 'Maestro de plantas';
+
+  @override
+  String get confidenceConfident => 'Cuidador seguro';
+
+  @override
+  String get confidenceLearning => 'Aprendiz en crecimiento';
+
+  @override
+  String get confidenceNovice => 'Novato en plantas';
+
+  @override
+  String get confidenceNextKeepGoing => 'Mantén la racha';
+
+  @override
+  String get confidenceNextMaster => 'Alcanza nivel Maestro';
+
+  @override
+  String get confidenceNextConfident => 'Alcanza nivel Seguro';
+
+  @override
+  String get confidenceNextBuild => 'Construye tu rutina';
+
+  @override
+  String confidenceNext(String milestone) {
+    return 'Siguiente: $milestone';
+  }
+
+  @override
+  String get confidenceDimConsistency => 'Consistencia';
+
+  @override
+  String get confidenceDimDiversity => 'Diversidad';
+
+  @override
+  String get confidenceDimHealth => 'Salud';
+
+  @override
+  String get confidenceDimExperience => 'Experiencia';
+
+  @override
+  String get confidenceDimVariety => 'Variedad';
+
+  @override
+  String get bondSoulmate => 'Alma gemela';
+
+  @override
+  String get bondBestFriend => 'Mejor amigo';
+
+  @override
+  String get bondCompanion => 'Compañero';
+
+  @override
+  String get bondNewFriend => 'Nuevo amigo';
+
+  @override
+  String get bondAcquaintance => 'Conocido';
+
+  @override
+  String bondSharedMoments(int count) {
+    return '$count momentos compartidos';
+  }
+
+  @override
+  String get calendarThisWeek => 'Esta semana';
+
+  @override
+  String calendarTasks(int count) {
+    return '$count tareas';
+  }
+
+  @override
+  String get calendarToday => 'hoy';
+
+  @override
+  String get calendarTomorrow => 'mañana';
+
+  @override
+  String calendarDaysShort(int days) {
+    return '${days}d';
+  }
+
+  @override
+  String get patternBatchCarer => 'Cuidador por lotes';
+
+  @override
+  String get patternMorningRitual => 'Ritual matutino';
+
+  @override
+  String get patternEveningRitual => 'Ritual nocturno';
+
+  @override
+  String get patternWeekendWarrior => 'Guerrero de fin de semana';
+
+  @override
+  String get patternSeasonalDip => 'Bajón estacional';
+
+  @override
+  String get patternSeasonalSurge => 'Auge estacional';
+
+  @override
+  String get patternFavoriteFirst => 'Favorito primero';
+
+  @override
+  String get patternNeedsLove => 'Necesita amor';
+
+  @override
+  String get patternDiverseRoutine => 'Rutina diversa';
+
+  @override
+  String get patternFocusedCarer => 'Cuidador enfocado';
+
+  @override
+  String get patternTitle => 'Tus patrones de cuidado';
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/models/enums.dart';
 import '../../domain/models/task_instance.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -31,6 +32,7 @@ class BotanicaCareCalendarPreviewCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final dayBuckets = <int, List<TaskInstance>>{};
     for (final task in weekTasks) {
@@ -51,12 +53,12 @@ class BotanicaCareCalendarPreviewCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'This Week',
+                  l10n.calendarThisWeek,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
               Text(
-                '${weekTasks.length} tasks',
+                l10n.calendarTasks(weekTasks.length),
                 style: textTheme.labelSmall?.copyWith(
                   color: scheme.onSurface.withValues(alpha: 0.5),
                 ),
@@ -88,10 +90,10 @@ class BotanicaCareCalendarPreviewCard extends StatelessWidget {
               final plantName = plants[t.plantId] ?? '';
               final daysUntil = t.dueAt.difference(today).inDays;
               final dayLabel = daysUntil == 0
-                  ? 'today'
+                  ? l10n.calendarToday
                   : daysUntil == 1
-                      ? 'tomorrow'
-                      : '${daysUntil}d';
+                      ? l10n.calendarTomorrow
+                      : l10n.calendarDaysShort(daysUntil);
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingMicro),
