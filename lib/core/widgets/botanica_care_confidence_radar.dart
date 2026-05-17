@@ -75,14 +75,17 @@ class BotanicaCareConfidenceRadar extends StatelessWidget {
           ),
           BotanicaGaps.vSm,
           Center(
-            child: SizedBox(
-              width: 140,
-              height: 140,
-              child: CustomPaint(
-                painter: _RadarPainter(
-                  dimensions: report.dimensions,
-                  color: levelColor,
-                  gridColor: scheme.outlineVariant.withValues(alpha: 0.3),
+            child: Semantics(
+              label: 'Care confidence radar chart, overall ${(report.overallConfidence * 100).round()} percent, ${report.dimensions.length} dimensions',
+              child: SizedBox(
+                width: 140,
+                height: 140,
+                child: CustomPaint(
+                  painter: _RadarPainter(
+                    dimensions: report.dimensions,
+                    color: levelColor,
+                    gridColor: scheme.outlineVariant.withValues(alpha: 0.3),
+                  ),
                 ),
               ),
             ),

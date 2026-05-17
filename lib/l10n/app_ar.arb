@@ -962,6 +962,8 @@
       }
     }
   },
+  "notificationActionDone": "تم",
+  "notificationActionSnooze": "تأجيل ساعة",
   "reasonHumidityLow": "رطوبة منخفضة → التربة تجف أسرع",
   "reasonHumidityHigh": "رطوبة عالية → التربة تبقى رطبة أطول",
   "reasonHot": "حرارة مرتفعة → تبخر أعلى",

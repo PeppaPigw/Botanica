@@ -1635,27 +1635,30 @@ class _CareHeatmapState extends State<_CareHeatmap> {
 
               return SizedBox(
                 height: gridHeight,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTapUp: (details) {
-                    final local = details.localPosition;
-                    final col = (local.dx / (cellSize + gap)).floor();
-                    final row = (local.dy / (cellSize + gap)).floor();
-                    if (col < 0 || col >= cols || row < 0 || row >= 7) return;
-                    final dayIndex = col * 7 + row;
-                    if (dayIndex < 0 || dayIndex >= totalDays) return;
-                    _showTooltip(context, dayIndex, details.globalPosition);
-                  },
-                  child: CustomPaint(
-                    size: Size(constraints.maxWidth, gridHeight),
-                    painter: _HeatmapPainter(
-                      countByDay: countByDay,
-                      maxCount: maxCount,
-                      startWeekday: startDate.weekday % 7,
-                      primaryColor: scheme.primary,
-                      emptyColor: scheme.surfaceContainerHighest
-                          .withValues(alpha: 0.3),
-                      highlightedDay: _tappedDay,
+                child: Semantics(
+                  label: '${l10n.calendarHeatmapTitle}, 84 days, peak $maxCount actions in a day',
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTapUp: (details) {
+                      final local = details.localPosition;
+                      final col = (local.dx / (cellSize + gap)).floor();
+                      final row = (local.dy / (cellSize + gap)).floor();
+                      if (col < 0 || col >= cols || row < 0 || row >= 7) return;
+                      final dayIndex = col * 7 + row;
+                      if (dayIndex < 0 || dayIndex >= totalDays) return;
+                      _showTooltip(context, dayIndex, details.globalPosition);
+                    },
+                    child: CustomPaint(
+                      size: Size(constraints.maxWidth, gridHeight),
+                      painter: _HeatmapPainter(
+                        countByDay: countByDay,
+                        maxCount: maxCount,
+                        startWeekday: startDate.weekday % 7,
+                        primaryColor: scheme.primary,
+                        emptyColor: scheme.surfaceContainerHighest
+                            .withValues(alpha: 0.3),
+                        highlightedDay: _tappedDay,
+                      ),
                     ),
                   ),
                 ),

@@ -3703,6 +3703,18 @@ abstract class AppLocalizations {
   /// **'You have {count} care tasks today. Your plants are counting on you!'**
   String notificationDailySummaryBody(int count);
 
+  /// No description provided for @notificationActionDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get notificationActionDone;
+
+  /// No description provided for @notificationActionSnooze.
+  ///
+  /// In en, this message translates to:
+  /// **'Snooze 1h'**
+  String get notificationActionSnooze;
+
   /// No description provided for @reasonHumidityLow.
   ///
   /// In en, this message translates to:

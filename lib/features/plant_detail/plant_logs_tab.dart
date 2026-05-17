@@ -373,14 +373,17 @@ class _CareSparkline extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          SizedBox(
-            height: 32,
-            child: CustomPaint(
-              size: const Size(double.infinity, 32),
-              painter: _SparklinePainter(
-                counts: counts,
-                barColor: scheme.primary,
-                emptyColor: scheme.outlineVariant.withValues(alpha: 0.3),
+          Semantics(
+            label: 'Care activity over $days days, $totalActions total actions',
+            child: SizedBox(
+              height: 32,
+              child: CustomPaint(
+                size: const Size(double.infinity, 32),
+                painter: _SparklinePainter(
+                  counts: counts,
+                  barColor: scheme.primary,
+                  emptyColor: scheme.outlineVariant.withValues(alpha: 0.3),
+                ),
               ),
             ),
           ),

@@ -1781,14 +1781,17 @@ class _CareRhythmCard extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: BotanicaTokens.spacingSm),
-          SizedBox(
-            height: 48,
-            width: double.infinity,
-            child: CustomPaint(
-              painter: _CareRhythmSparklinePainter(
-                intervals: displayIntervals,
-                lineColor: scheme.primary,
-                fillColor: scheme.primary.withValues(alpha: 0.1),
+          Semantics(
+            label: 'Care rhythm sparkline, ${displayIntervals.length} intervals',
+            child: SizedBox(
+              height: 48,
+              width: double.infinity,
+              child: CustomPaint(
+                painter: _CareRhythmSparklinePainter(
+                  intervals: displayIntervals,
+                  lineColor: scheme.primary,
+                  fillColor: scheme.primary.withValues(alpha: 0.1),
+                ),
               ),
             ),
           ),
@@ -2758,15 +2761,18 @@ class _PlantHealthForecastSection extends ConsumerWidget {
             ],
           ),
           BotanicaGaps.vSm,
-          SizedBox(
-            height: 40,
-            width: double.infinity,
-            child: CustomPaint(
-              painter: _ForecastSparklinePainter(
-                points: forecast.forecastPoints,
-                currentHealth: forecast.currentHealth,
-                lineColor: trendColor,
-                fillColor: trendColor.withValues(alpha: 0.1),
+          Semantics(
+            label: 'Health forecast sparkline, trend ${forecast.trendDirection}, current ${(forecast.currentHealth * 100).round()} percent',
+            child: SizedBox(
+              height: 40,
+              width: double.infinity,
+              child: CustomPaint(
+                painter: _ForecastSparklinePainter(
+                  points: forecast.forecastPoints,
+                  currentHealth: forecast.currentHealth,
+                  lineColor: trendColor,
+                  fillColor: trendColor.withValues(alpha: 0.1),
+                ),
               ),
             ),
           ),

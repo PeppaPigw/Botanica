@@ -964,6 +964,8 @@
       }
     }
   },
+  "notificationActionDone": "Hecho",
+  "notificationActionSnooze": "Posponer 1h",
   "reasonHumidityLow": "Humedad baja → el sustrato se seca más rápido",
   "reasonHumidityHigh": "Humedad alta → el sustrato permanece húmedo más tiempo",
   "reasonHot": "Temperatura alta → más evaporación",

@@ -37,11 +37,13 @@ class BotanicaNotificationsService {
     importance: Importance.high,
   );
 
-  Future<void> ensureInitialized() async {
+  Future<void> ensureInitialized({Locale locale = const Locale('en')}) async {
     if (_initialized) return;
 
     tz.initializeTimeZones();
     await _configureLocalTimezone(force: true);
+
+    final l10n = lookupAppLocalizations(locale);
 
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     final iOS = DarwinInitializationSettings(
@@ -51,12 +53,12 @@ class BotanicaNotificationsService {
           actions: [
             DarwinNotificationAction.plain(
               _actionMarkDone,
-              'Done',
+              l10n.notificationActionDone,
               options: {DarwinNotificationActionOption.destructive},
             ),
             DarwinNotificationAction.plain(
               _actionSnooze,
-              'Snooze 1h',
+              l10n.notificationActionSnooze,
             ),
           ],
         ),
@@ -153,7 +155,7 @@ class BotanicaNotificationsService {
     required Plant plant,
     required UserSettings settings,
   }) async {
-    await ensureInitialized();
+    await ensureInitialized(locale: settings.locale ?? const Locale('en'));
     await _configureLocalTimezone(force: false);
 
     if (task.isDismissed) {
@@ -188,15 +190,15 @@ class BotanicaNotificationsService {
         priority: Priority.high,
         category: AndroidNotificationCategory.reminder,
         styleInformation: const DefaultStyleInformation(true, true),
-        actions: const [
+        actions: [
           AndroidNotificationAction(
             _actionMarkDone,
-            'Done',
+            l10n.notificationActionDone,
             cancelNotification: true,
           ),
           AndroidNotificationAction(
             _actionSnooze,
-            'Snooze 1h',
+            l10n.notificationActionSnooze,
           ),
         ],
       ),
@@ -231,7 +233,7 @@ class BotanicaNotificationsService {
     Duration horizon = const Duration(days: 90),
     int maxScheduled = 64,
   }) async {
-    await ensureInitialized();
+    await ensureInitialized(locale: settings.locale ?? const Locale('en'));
     await _configureLocalTimezone(force: false);
 
     final now = DateTime.now();

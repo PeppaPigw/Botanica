@@ -2014,6 +2014,12 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get notificationActionDone => 'تم';
+
+  @override
+  String get notificationActionSnooze => 'تأجيل ساعة';
+
+  @override
   String get reasonHumidityLow => 'رطوبة منخفضة → التربة تجف أسرع';
 
   @override

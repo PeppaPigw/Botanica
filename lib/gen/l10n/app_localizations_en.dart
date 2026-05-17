@@ -2028,6 +2028,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get notificationActionDone => 'Done';
+
+  @override
+  String get notificationActionSnooze => 'Snooze 1h';
+
+  @override
   String get reasonHumidityLow => 'Low humidity → soil dries faster';
 
   @override

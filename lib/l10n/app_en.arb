@@ -970,6 +970,8 @@
       }
     }
   },
+  "notificationActionDone": "Done",
+  "notificationActionSnooze": "Snooze 1h",
   "reasonHumidityLow": "Low humidity → soil dries faster",
   "reasonHumidityHigh": "High humidity → soil stays moist longer",
   "reasonHot": "Warm temperature → higher evaporation",

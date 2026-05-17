@@ -958,6 +958,8 @@
       }
     }
   },
+  "notificationActionDone": "完成",
+  "notificationActionSnooze": "稍后1小时",
   "reasonHumidityLow": "湿度低 → 土壤更快变干",
   "reasonHumidityHigh": "湿度高 → 土壤保持湿润更久",
   "reasonHot": "温度高 → 蒸发更快",

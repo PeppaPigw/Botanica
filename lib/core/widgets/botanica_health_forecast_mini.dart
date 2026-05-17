@@ -34,16 +34,19 @@ class BotanicaHealthForecastMini extends StatelessWidget {
 
     return Row(
       children: [
-        SizedBox(
-          width: 80,
-          height: height,
-          child: CustomPaint(
-            painter: _SparklinePainter(
-              points: forecast.forecastPoints
-                  .map((p) => p.predictedHealth)
-                  .toList(),
-              color: trendColor,
-              fillColor: trendColor.withValues(alpha: 0.1),
+        Semantics(
+          label: 'Health forecast sparkline, trend ${forecast.trendDirection}',
+          child: SizedBox(
+            width: 80,
+            height: height,
+            child: CustomPaint(
+              painter: _SparklinePainter(
+                points: forecast.forecastPoints
+                    .map((p) => p.predictedHealth)
+                    .toList(),
+                color: trendColor,
+                fillColor: trendColor.withValues(alpha: 0.1),
+              ),
             ),
           ),
         ),

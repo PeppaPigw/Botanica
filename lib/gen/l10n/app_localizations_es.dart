@@ -2038,6 +2038,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get notificationActionDone => 'Hecho';
+
+  @override
+  String get notificationActionSnooze => 'Posponer 1h';
+
+  @override
   String get reasonHumidityLow =>
       'Humedad baja → el sustrato se seca más rápido';
 

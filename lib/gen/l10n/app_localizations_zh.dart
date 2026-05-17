@@ -1938,6 +1938,12 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get notificationActionDone => '完成';
+
+  @override
+  String get notificationActionSnooze => '稍后1小时';
+
+  @override
   String get reasonHumidityLow => '湿度低 → 土壤更快变干';
 
   @override
