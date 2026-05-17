@@ -2285,5 +2285,21 @@
   "patternNeedsLove": "Needs Love",
   "patternDiverseRoutine": "Diverse Routine",
   "patternFocusedCarer": "Focused Carer",
-  "patternTitle": "Your Care Patterns"
+  "patternTitle": "Your Care Patterns",
+  "seasonalAlertTitle": "Seasonal Transition",
+  "seasonalAlertComing": "{season} is coming",
+  "@seasonalAlertComing": {"placeholders": {"season": {"type": "String"}}},
+  "seasonalAlertUrgent": "{count} plants need prep",
+  "@seasonalAlertUrgent": {"placeholders": {"count": {"type": "int"}}},
+  "seasonalAlertDays": "{days}d",
+  "@seasonalAlertDays": {"placeholders": {"days": {"type": "int"}}},
+  "seasonalReportActions": "actions",
+  "seasonalReportPlants": "plants",
+  "seasonalReportPerWeek": "/week",
+  "seasonalReportImprovement": "{percent}% vs last season",
+  "@seasonalReportImprovement": {"placeholders": {"percent": {"type": "String"}}},
+  "xpLevelTitle": "Level {level}",
+  "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
+  "xpLevelProgress": "{current} / {next} to next level",
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
 }

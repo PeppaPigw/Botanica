@@ -4409,4 +4409,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get patternTitle => 'Tus patrones de cuidado';
+
+  @override
+  String get seasonalAlertTitle => 'Transición estacional';
+
+  @override
+  String seasonalAlertComing(String season) {
+    return '$season se acerca';
+  }
+
+  @override
+  String seasonalAlertUrgent(int count) {
+    return '$count plantas necesitan preparación';
+  }
+
+  @override
+  String seasonalAlertDays(int days) {
+    return '${days}d';
+  }
+
+  @override
+  String get seasonalReportActions => 'acciones';
+
+  @override
+  String get seasonalReportPlants => 'plantas';
+
+  @override
+  String get seasonalReportPerWeek => '/semana';
+
+  @override
+  String seasonalReportImprovement(String percent) {
+    return '$percent% vs temporada anterior';
+  }
+
+  @override
+  String xpLevelTitle(int level) {
+    return 'Nivel $level';
+  }
+
+  @override
+  String xpLevelProgress(int current, int next) {
+    return '$current / $next para subir de nivel';
+  }
 }

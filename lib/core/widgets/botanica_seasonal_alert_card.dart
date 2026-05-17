@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/models/enums.dart';
 import '../../domain/services/seasonal_transition_advisor.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -20,6 +21,7 @@ class BotanicaSeasonalAlertCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final seasonColor = switch (report.nextSeason) {
       Season.spring => const Color(0xFF66BB6A),
@@ -52,7 +54,7 @@ class BotanicaSeasonalAlertCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Seasonal Transition',
+                  l10n.seasonalAlertTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -69,7 +71,7 @@ class BotanicaSeasonalAlertCard extends StatelessWidget {
                       BorderRadius.circular(BotanicaTokens.radiusPill),
                 ),
                 child: Text(
-                  '${report.daysUntilTransition}d',
+                  l10n.seasonalAlertDays(report.daysUntilTransition),
                   style: textTheme.labelSmall?.copyWith(
                     color: seasonColor,
                     fontWeight: FontWeight.w700,
@@ -80,7 +82,7 @@ class BotanicaSeasonalAlertCard extends StatelessWidget {
           ),
           BotanicaGaps.vSm,
           Text(
-            '${report.nextSeason.name[0].toUpperCase()}${report.nextSeason.name.substring(1)} is coming',
+            l10n.seasonalAlertComing('${report.nextSeason.name[0].toUpperCase()}${report.nextSeason.name.substring(1)}'),
             style: textTheme.bodySmall?.copyWith(
               color: scheme.onSurface.withValues(alpha: 0.7),
             ),
@@ -96,7 +98,7 @@ class BotanicaSeasonalAlertCard extends StatelessWidget {
                 ),
                 BotanicaGaps.hXs,
                 Text(
-                  '${report.urgentCount} plants need prep',
+                  l10n.seasonalAlertUrgent(report.urgentCount),
                   style: textTheme.labelSmall?.copyWith(
                     color: scheme.error,
                     fontWeight: FontWeight.w600,

@@ -4206,4 +4206,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get patternTitle => '你的护理模式';
+
+  @override
+  String get seasonalAlertTitle => '季节转换';
+
+  @override
+  String seasonalAlertComing(String season) {
+    return '$season即将到来';
+  }
+
+  @override
+  String seasonalAlertUrgent(int count) {
+    return '$count 株植物需要准备';
+  }
+
+  @override
+  String seasonalAlertDays(int days) {
+    return '$days天';
+  }
+
+  @override
+  String get seasonalReportActions => '操作';
+
+  @override
+  String get seasonalReportPlants => '植物';
+
+  @override
+  String get seasonalReportPerWeek => '/周';
+
+  @override
+  String seasonalReportImprovement(String percent) {
+    return '较上季 $percent%';
+  }
+
+  @override
+  String xpLevelTitle(int level) {
+    return '等级 $level';
+  }
+
+  @override
+  String xpLevelProgress(int current, int next) {
+    return '$current / $next 升级';
+  }
 }

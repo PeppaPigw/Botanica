@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/seasonal_report_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaSeasonalReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
     final current = report.currentReport;
 
     final gradeColor = switch (current.grade) {
@@ -65,11 +67,11 @@ class BotanicaSeasonalReportCard extends StatelessWidget {
           BotanicaGaps.vSm,
           Row(
             children: [
-              _ReportStat(label: 'actions', value: '${current.totalActions}', scheme: scheme),
+              _ReportStat(label: l10n.seasonalReportActions, value: '${current.totalActions}', scheme: scheme),
               BotanicaGaps.hSm,
-              _ReportStat(label: 'plants', value: '${current.plantsActive}', scheme: scheme),
+              _ReportStat(label: l10n.seasonalReportPlants, value: '${current.plantsActive}', scheme: scheme),
               BotanicaGaps.hSm,
-              _ReportStat(label: '/week', value: current.avgActionsPerWeek.toStringAsFixed(1), scheme: scheme),
+              _ReportStat(label: l10n.seasonalReportPerWeek, value: current.avgActionsPerWeek.toStringAsFixed(1), scheme: scheme),
             ],
           ),
           if (report.improvement != 0) ...[
@@ -83,7 +85,7 @@ class BotanicaSeasonalReportCard extends StatelessWidget {
                 ),
                 BotanicaGaps.hXxs,
                 Text(
-                  '${report.improvement > 0 ? '+' : ''}${(report.improvement * 100).round()}% vs last season',
+                  l10n.seasonalReportImprovement('${report.improvement > 0 ? '+' : ''}${(report.improvement * 100).round()}'),
                   style: textTheme.labelSmall?.copyWith(
                     color: scheme.onSurface.withValues(alpha: 0.6),
                   ),

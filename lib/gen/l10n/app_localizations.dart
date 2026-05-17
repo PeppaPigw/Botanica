@@ -7550,6 +7550,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your Care Patterns'**
   String get patternTitle;
+
+  /// No description provided for @seasonalAlertTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasonal Transition'**
+  String get seasonalAlertTitle;
+
+  /// No description provided for @seasonalAlertComing.
+  ///
+  /// In en, this message translates to:
+  /// **'{season} is coming'**
+  String seasonalAlertComing(String season);
+
+  /// No description provided for @seasonalAlertUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} plants need prep'**
+  String seasonalAlertUrgent(int count);
+
+  /// No description provided for @seasonalAlertDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d'**
+  String seasonalAlertDays(int days);
+
+  /// No description provided for @seasonalReportActions.
+  ///
+  /// In en, this message translates to:
+  /// **'actions'**
+  String get seasonalReportActions;
+
+  /// No description provided for @seasonalReportPlants.
+  ///
+  /// In en, this message translates to:
+  /// **'plants'**
+  String get seasonalReportPlants;
+
+  /// No description provided for @seasonalReportPerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'/week'**
+  String get seasonalReportPerWeek;
+
+  /// No description provided for @seasonalReportImprovement.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% vs last season'**
+  String seasonalReportImprovement(String percent);
+
+  /// No description provided for @xpLevelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String xpLevelTitle(int level);
+
+  /// No description provided for @xpLevelProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / {next} to next level'**
+  String xpLevelProgress(int current, int next);
 }
 
 class _AppLocalizationsDelegate

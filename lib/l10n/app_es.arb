@@ -2262,5 +2262,21 @@
   "patternNeedsLove": "Necesita amor",
   "patternDiverseRoutine": "Rutina diversa",
   "patternFocusedCarer": "Cuidador enfocado",
-  "patternTitle": "Tus patrones de cuidado"
+  "patternTitle": "Tus patrones de cuidado",
+  "seasonalAlertTitle": "Transición estacional",
+  "seasonalAlertComing": "{season} se acerca",
+  "@seasonalAlertComing": {"placeholders": {"season": {"type": "String"}}},
+  "seasonalAlertUrgent": "{count} plantas necesitan preparación",
+  "@seasonalAlertUrgent": {"placeholders": {"count": {"type": "int"}}},
+  "seasonalAlertDays": "{days}d",
+  "@seasonalAlertDays": {"placeholders": {"days": {"type": "int"}}},
+  "seasonalReportActions": "acciones",
+  "seasonalReportPlants": "plantas",
+  "seasonalReportPerWeek": "/semana",
+  "seasonalReportImprovement": "{percent}% vs temporada anterior",
+  "@seasonalReportImprovement": {"placeholders": {"percent": {"type": "String"}}},
+  "xpLevelTitle": "Nivel {level}",
+  "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
+  "xpLevelProgress": "{current} / {next} para subir de nivel",
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
 }

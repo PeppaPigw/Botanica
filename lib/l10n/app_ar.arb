@@ -2262,5 +2262,21 @@
   "patternNeedsLove": "يحتاج حباً",
   "patternDiverseRoutine": "روتين متنوع",
   "patternFocusedCarer": "مقدم رعاية مركز",
-  "patternTitle": "أنماط العناية الخاصة بك"
+  "patternTitle": "أنماط العناية الخاصة بك",
+  "seasonalAlertTitle": "تحول موسمي",
+  "seasonalAlertComing": "{season} قادم",
+  "@seasonalAlertComing": {"placeholders": {"season": {"type": "String"}}},
+  "seasonalAlertUrgent": "{count} نباتات تحتاج تحضير",
+  "@seasonalAlertUrgent": {"placeholders": {"count": {"type": "int"}}},
+  "seasonalAlertDays": "{days}ي",
+  "@seasonalAlertDays": {"placeholders": {"days": {"type": "int"}}},
+  "seasonalReportActions": "إجراءات",
+  "seasonalReportPlants": "نباتات",
+  "seasonalReportPerWeek": "/أسبوع",
+  "seasonalReportImprovement": "{percent}% مقارنة بالموسم السابق",
+  "@seasonalReportImprovement": {"placeholders": {"percent": {"type": "String"}}},
+  "xpLevelTitle": "المستوى {level}",
+  "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
+  "xpLevelProgress": "{current} / {next} للمستوى التالي",
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
 }

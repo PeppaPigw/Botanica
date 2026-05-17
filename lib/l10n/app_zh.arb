@@ -2273,5 +2273,21 @@
   "patternNeedsLove": "需要关爱",
   "patternDiverseRoutine": "多样化习惯",
   "patternFocusedCarer": "专注护理者",
-  "patternTitle": "你的护理模式"
+  "patternTitle": "你的护理模式",
+  "seasonalAlertTitle": "季节转换",
+  "seasonalAlertComing": "{season}即将到来",
+  "@seasonalAlertComing": {"placeholders": {"season": {"type": "String"}}},
+  "seasonalAlertUrgent": "{count} 株植物需要准备",
+  "@seasonalAlertUrgent": {"placeholders": {"count": {"type": "int"}}},
+  "seasonalAlertDays": "{days}天",
+  "@seasonalAlertDays": {"placeholders": {"days": {"type": "int"}}},
+  "seasonalReportActions": "操作",
+  "seasonalReportPlants": "植物",
+  "seasonalReportPerWeek": "/周",
+  "seasonalReportImprovement": "较上季 {percent}%",
+  "@seasonalReportImprovement": {"placeholders": {"percent": {"type": "String"}}},
+  "xpLevelTitle": "等级 {level}",
+  "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
+  "xpLevelProgress": "{current} / {next} 升级",
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
 }

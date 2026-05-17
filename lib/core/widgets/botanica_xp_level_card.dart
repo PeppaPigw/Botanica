@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_care_xp_system.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaXpLevelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -31,7 +33,7 @@ class BotanicaXpLevelCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Level ${level.level}',
+                  l10n.xpLevelTitle(level.level),
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -74,7 +76,7 @@ class BotanicaXpLevelCard extends StatelessWidget {
           ),
           BotanicaGaps.vXxs,
           Text(
-            '${level.xpInCurrentLevel} / ${level.xpForNextLevel} to next level',
+            l10n.xpLevelProgress(level.xpInCurrentLevel, level.xpForNextLevel),
             style: textTheme.labelSmall?.copyWith(
               color: scheme.onSurface.withValues(alpha: 0.5),
             ),

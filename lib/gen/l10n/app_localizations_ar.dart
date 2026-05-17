@@ -4351,4 +4351,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get patternTitle => 'أنماط العناية الخاصة بك';
+
+  @override
+  String get seasonalAlertTitle => 'تحول موسمي';
+
+  @override
+  String seasonalAlertComing(String season) {
+    return '$season قادم';
+  }
+
+  @override
+  String seasonalAlertUrgent(int count) {
+    return '$count نباتات تحتاج تحضير';
+  }
+
+  @override
+  String seasonalAlertDays(int days) {
+    return '$daysي';
+  }
+
+  @override
+  String get seasonalReportActions => 'إجراءات';
+
+  @override
+  String get seasonalReportPlants => 'نباتات';
+
+  @override
+  String get seasonalReportPerWeek => '/أسبوع';
+
+  @override
+  String seasonalReportImprovement(String percent) {
+    return '$percent% مقارنة بالموسم السابق';
+  }
+
+  @override
+  String xpLevelTitle(int level) {
+    return 'المستوى $level';
+  }
+
+  @override
+  String xpLevelProgress(int current, int next) {
+    return '$current / $next للمستوى التالي';
+  }
 }
