@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/next_action_recommender.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -20,9 +21,10 @@ class BotanicaNextActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final (IconData icon, Color color, String title, String subtitle) =
-        _actionVisual(action, scheme);
+        _actionVisual(action, scheme, l10n);
 
     return BotanicaGlassCard(
       tier: GlassTier.primary,
@@ -77,55 +79,56 @@ class BotanicaNextActionCard extends StatelessWidget {
   }
 
   static (IconData, Color, String, String) _actionVisual(
-      RecommendedAction action, ColorScheme scheme) {
+      RecommendedAction action, ColorScheme scheme, AppLocalizations l10n) {
+    final plant = action.plantNickname;
     return switch (action.type) {
       ActionType.waterOverdue => (
           Icons.water_drop_rounded,
           scheme.error,
-          'Water ${action.plantNickname}',
-          'Overdue — needs attention now',
+          l10n.nextActionWaterOverdue(plant),
+          l10n.nextActionWaterOverdueSub,
         ),
       ActionType.waterToday => (
           Icons.water_drop_rounded,
           const Color(0xFF42A5F5),
-          'Water ${action.plantNickname}',
-          'Scheduled for today',
+          l10n.nextActionWaterToday(plant),
+          l10n.nextActionWaterTodaySub,
         ),
       ActionType.takePhoto => (
           Icons.camera_alt_rounded,
           scheme.tertiary,
-          'Photo time',
-          'Capture ${action.plantNickname}\'s progress',
+          l10n.nextActionTakePhoto,
+          l10n.nextActionTakePhotoSub(plant),
         ),
       ActionType.checkNewPlant => (
           Icons.visibility_rounded,
           const Color(0xFF66BB6A),
-          'Check on ${action.plantNickname}',
-          'New plant — getting to know each other',
+          l10n.nextActionCheckNewPlant(plant),
+          l10n.nextActionCheckNewPlantSub,
         ),
       ActionType.fertilize => (
           Icons.science_rounded,
           const Color(0xFFFFA726),
-          'Fertilize ${action.plantNickname}',
-          'Coming up in the next few days',
+          l10n.nextActionFertilize(plant),
+          l10n.nextActionFertilizeSub,
         ),
       ActionType.celebrate => (
           Icons.celebration_rounded,
           scheme.tertiary,
-          'Celebrate your streak!',
-          'You\'re doing amazing',
+          l10n.nextActionCelebrate,
+          l10n.nextActionCelebrateSub,
         ),
       ActionType.explore => (
           Icons.explore_rounded,
           scheme.primary,
-          'Explore new plants',
-          'Start your plant journey',
+          l10n.nextActionExplore,
+          l10n.nextActionExploreSub,
         ),
       ActionType.rest => (
           Icons.spa_rounded,
           const Color(0xFF66BB6A),
-          'All caught up!',
-          'Your garden is happy — enjoy the moment',
+          l10n.nextActionRest,
+          l10n.nextActionRestSub,
         ),
     };
   }

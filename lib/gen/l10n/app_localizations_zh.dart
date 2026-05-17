@@ -3886,4 +3886,103 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get plantWhispererTitle => '植物低语者';
+
+  @override
+  String get smartGreetingMorning => '早上好！你的植物在等你。';
+
+  @override
+  String get smartGreetingAfternoon => '下午好！是时候看看花园了。';
+
+  @override
+  String get smartGreetingEvening => '晚上好！和植物一起放松吧。';
+
+  @override
+  String smartGreetingStreak(String days) {
+    return '连续$days天！继续保持。';
+  }
+
+  @override
+  String get smartGreetingRainy => '下雨天——你的户外植物很开心。';
+
+  @override
+  String smartGreetingNewPlant(String plant) {
+    return '$plant适应得怎么样？';
+  }
+
+  @override
+  String get smartGreetingProductive => '高效的一天！花园感谢你。';
+
+  @override
+  String get smartGreetingEarlyBird => '早起的鸟儿！植物喜欢早间养护。';
+
+  @override
+  String smartGreetingLateNight(String count) {
+    return '深夜查看你的$count株植物。';
+  }
+
+  @override
+  String smartGreetingBigGarden(String count) {
+    return '$count株植物！令人印象深刻。';
+  }
+
+  @override
+  String get smartGreetingDefault => '欢迎回到你的花园。';
+
+  @override
+  String nextActionWaterOverdue(String plant) {
+    return '给$plant浇水';
+  }
+
+  @override
+  String get nextActionWaterOverdueSub => '已逾期——需要立即关注';
+
+  @override
+  String nextActionWaterToday(String plant) {
+    return '给$plant浇水';
+  }
+
+  @override
+  String get nextActionWaterTodaySub => '今天的计划';
+
+  @override
+  String get nextActionTakePhoto => '拍照时间';
+
+  @override
+  String nextActionTakePhotoSub(String plant) {
+    return '记录$plant的成长';
+  }
+
+  @override
+  String nextActionCheckNewPlant(String plant) {
+    return '看看$plant';
+  }
+
+  @override
+  String get nextActionCheckNewPlantSub => '新植物——互相了解中';
+
+  @override
+  String nextActionFertilize(String plant) {
+    return '给$plant施肥';
+  }
+
+  @override
+  String get nextActionFertilizeSub => '未来几天需要';
+
+  @override
+  String get nextActionCelebrate => '庆祝你的连续记录！';
+
+  @override
+  String get nextActionCelebrateSub => '你做得太棒了';
+
+  @override
+  String get nextActionExplore => '探索新植物';
+
+  @override
+  String get nextActionExploreSub => '开始你的植物之旅';
+
+  @override
+  String get nextActionRest => '全部完成！';
+
+  @override
+  String get nextActionRestSub => '花园很开心——享受这一刻';
 }

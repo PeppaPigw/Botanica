@@ -4027,4 +4027,103 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get plantWhispererTitle => 'همّاس النباتات';
+
+  @override
+  String get smartGreetingMorning => 'صباح الخير! نباتاتك بانتظارك.';
+
+  @override
+  String get smartGreetingAfternoon => 'مساء الخير! حان وقت تفقد الحديقة.';
+
+  @override
+  String get smartGreetingEvening => 'مساء الخير! استرخِ مع نباتاتك.';
+
+  @override
+  String smartGreetingStreak(String days) {
+    return 'سلسلة $days يوم! استمر.';
+  }
+
+  @override
+  String get smartGreetingRainy => 'يوم ماطر — نباتاتك الخارجية سعيدة.';
+
+  @override
+  String smartGreetingNewPlant(String plant) {
+    return 'كيف حال $plant في بيئتها الجديدة؟';
+  }
+
+  @override
+  String get smartGreetingProductive => 'يوم مثمر! حديقتك تشكرك.';
+
+  @override
+  String get smartGreetingEarlyBird => 'باكر! النباتات تحب الرعاية الصباحية.';
+
+  @override
+  String smartGreetingLateNight(String count) {
+    return 'تفقد ليلي لنباتاتك الـ$count.';
+  }
+
+  @override
+  String smartGreetingBigGarden(String count) {
+    return '$count نبتة! مثير للإعجاب.';
+  }
+
+  @override
+  String get smartGreetingDefault => 'مرحباً بعودتك إلى حديقتك.';
+
+  @override
+  String nextActionWaterOverdue(String plant) {
+    return 'اسقِ $plant';
+  }
+
+  @override
+  String get nextActionWaterOverdueSub => 'متأخر — يحتاج اهتماماً الآن';
+
+  @override
+  String nextActionWaterToday(String plant) {
+    return 'اسقِ $plant';
+  }
+
+  @override
+  String get nextActionWaterTodaySub => 'مجدول لليوم';
+
+  @override
+  String get nextActionTakePhoto => 'وقت التصوير';
+
+  @override
+  String nextActionTakePhotoSub(String plant) {
+    return 'التقط تقدم $plant';
+  }
+
+  @override
+  String nextActionCheckNewPlant(String plant) {
+    return 'تفقد $plant';
+  }
+
+  @override
+  String get nextActionCheckNewPlantSub => 'نبتة جديدة — تتعرفان على بعضكما';
+
+  @override
+  String nextActionFertilize(String plant) {
+    return 'سمّد $plant';
+  }
+
+  @override
+  String get nextActionFertilizeSub => 'قادم في الأيام القليلة المقبلة';
+
+  @override
+  String get nextActionCelebrate => 'احتفل بسلسلتك!';
+
+  @override
+  String get nextActionCelebrateSub => 'أنت رائع';
+
+  @override
+  String get nextActionExplore => 'اكتشف نباتات جديدة';
+
+  @override
+  String get nextActionExploreSub => 'ابدأ رحلتك النباتية';
+
+  @override
+  String get nextActionRest => 'كل شيء منجز!';
+
+  @override
+  String get nextActionRestSub => 'حديقتك سعيدة — استمتع باللحظة';
 }

@@ -6986,6 +6986,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Plant Whisperer'**
   String get plantWhispererTitle;
+
+  /// No description provided for @smartGreetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning! Your plants are waiting.'**
+  String get smartGreetingMorning;
+
+  /// No description provided for @smartGreetingAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon! Time for a garden check.'**
+  String get smartGreetingAfternoon;
+
+  /// No description provided for @smartGreetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening! Wind down with your plants.'**
+  String get smartGreetingEvening;
+
+  /// No description provided for @smartGreetingStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}-day streak! Keep it up.'**
+  String smartGreetingStreak(String days);
+
+  /// No description provided for @smartGreetingRainy.
+  ///
+  /// In en, this message translates to:
+  /// **'Rainy day — your outdoor plants are happy.'**
+  String get smartGreetingRainy;
+
+  /// No description provided for @smartGreetingNewPlant.
+  ///
+  /// In en, this message translates to:
+  /// **'How\'s {plant} settling in?'**
+  String smartGreetingNewPlant(String plant);
+
+  /// No description provided for @smartGreetingProductive.
+  ///
+  /// In en, this message translates to:
+  /// **'Productive day! Your garden thanks you.'**
+  String get smartGreetingProductive;
+
+  /// No description provided for @smartGreetingEarlyBird.
+  ///
+  /// In en, this message translates to:
+  /// **'Early bird! Plants love morning care.'**
+  String get smartGreetingEarlyBird;
+
+  /// No description provided for @smartGreetingLateNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Late night check on your {count} plants.'**
+  String smartGreetingLateNight(String count);
+
+  /// No description provided for @smartGreetingBigGarden.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} plants strong! Impressive.'**
+  String smartGreetingBigGarden(String count);
+
+  /// No description provided for @smartGreetingDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back to your garden.'**
+  String get smartGreetingDefault;
+
+  /// No description provided for @nextActionWaterOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Water {plant}'**
+  String nextActionWaterOverdue(String plant);
+
+  /// No description provided for @nextActionWaterOverdueSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue — needs attention now'**
+  String get nextActionWaterOverdueSub;
+
+  /// No description provided for @nextActionWaterToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Water {plant}'**
+  String nextActionWaterToday(String plant);
+
+  /// No description provided for @nextActionWaterTodaySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled for today'**
+  String get nextActionWaterTodaySub;
+
+  /// No description provided for @nextActionTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo time'**
+  String get nextActionTakePhoto;
+
+  /// No description provided for @nextActionTakePhotoSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture {plant}\'s progress'**
+  String nextActionTakePhotoSub(String plant);
+
+  /// No description provided for @nextActionCheckNewPlant.
+  ///
+  /// In en, this message translates to:
+  /// **'Check on {plant}'**
+  String nextActionCheckNewPlant(String plant);
+
+  /// No description provided for @nextActionCheckNewPlantSub.
+  ///
+  /// In en, this message translates to:
+  /// **'New plant — getting to know each other'**
+  String get nextActionCheckNewPlantSub;
+
+  /// No description provided for @nextActionFertilize.
+  ///
+  /// In en, this message translates to:
+  /// **'Fertilize {plant}'**
+  String nextActionFertilize(String plant);
+
+  /// No description provided for @nextActionFertilizeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up in the next few days'**
+  String get nextActionFertilizeSub;
+
+  /// No description provided for @nextActionCelebrate.
+  ///
+  /// In en, this message translates to:
+  /// **'Celebrate your streak!'**
+  String get nextActionCelebrate;
+
+  /// No description provided for @nextActionCelebrateSub.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re doing amazing'**
+  String get nextActionCelebrateSub;
+
+  /// No description provided for @nextActionExplore.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore new plants'**
+  String get nextActionExplore;
+
+  /// No description provided for @nextActionExploreSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your plant journey'**
+  String get nextActionExploreSub;
+
+  /// No description provided for @nextActionRest.
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up!'**
+  String get nextActionRest;
+
+  /// No description provided for @nextActionRestSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your garden is happy — enjoy the moment'**
+  String get nextActionRestSub;
 }
 
 class _AppLocalizationsDelegate

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/smart_greeting_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 
 class BotanicaSmartGreetingCard extends StatelessWidget {
@@ -16,8 +17,9 @@ class BotanicaSmartGreetingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
-    final (String text, IconData icon) = _greetingContent(greeting);
+    final (String text, IconData icon) = _greetingContent(greeting, l10n);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingXxs),
@@ -41,19 +43,19 @@ class BotanicaSmartGreetingCard extends StatelessWidget {
     );
   }
 
-  static (String, IconData) _greetingContent(SmartGreeting g) {
+  static (String, IconData) _greetingContent(SmartGreeting g, AppLocalizations l10n) {
     return switch (g.messageKey) {
-      'greetingMorning' => ('Good morning! Your plants are waiting.', Icons.wb_sunny_rounded),
-      'greetingAfternoon' => ('Good afternoon! Time for a garden check.', Icons.wb_cloudy_rounded),
-      'greetingEvening' => ('Good evening! Wind down with your plants.', Icons.nightlight_round),
-      'greetingStreak' => ('${g.args['days']}-day streak! Keep it up.', Icons.local_fire_department_rounded),
-      'greetingRainy' => ('Rainy day — your outdoor plants are happy.', Icons.water_drop_rounded),
-      'greetingNewPlant' => ('How\'s ${g.args['plant']} settling in?', Icons.spa_rounded),
-      'greetingProductiveDay' => ('Productive day! Your garden thanks you.', Icons.star_rounded),
-      'greetingEarlyBird' => ('Early bird! Plants love morning care.', Icons.alarm_rounded),
-      'greetingLateNight' => ('Late night check on your ${g.args['count']} plants.', Icons.bedtime_rounded),
-      'greetingBigGarden' => ('${g.args['count']} plants strong! Impressive.', Icons.park_rounded),
-      _ => ('Welcome back to your garden.', Icons.eco_rounded),
+      'greetingMorning' => (l10n.smartGreetingMorning, Icons.wb_sunny_rounded),
+      'greetingAfternoon' => (l10n.smartGreetingAfternoon, Icons.wb_cloudy_rounded),
+      'greetingEvening' => (l10n.smartGreetingEvening, Icons.nightlight_round),
+      'greetingStreak' => (l10n.smartGreetingStreak(g.args['days'] ?? ''), Icons.local_fire_department_rounded),
+      'greetingRainy' => (l10n.smartGreetingRainy, Icons.water_drop_rounded),
+      'greetingNewPlant' => (l10n.smartGreetingNewPlant(g.args['plant'] ?? ''), Icons.spa_rounded),
+      'greetingProductiveDay' => (l10n.smartGreetingProductive, Icons.star_rounded),
+      'greetingEarlyBird' => (l10n.smartGreetingEarlyBird, Icons.alarm_rounded),
+      'greetingLateNight' => (l10n.smartGreetingLateNight(g.args['count'] ?? ''), Icons.bedtime_rounded),
+      'greetingBigGarden' => (l10n.smartGreetingBigGarden(g.args['count'] ?? ''), Icons.park_rounded),
+      _ => (l10n.smartGreetingDefault, Icons.eco_rounded),
     };
   }
 }
