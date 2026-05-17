@@ -1156,6 +1156,7 @@ class _GardenScreenState extends ConsumerState<GardenScreen> {
             padding: BotanicaTokens.pagePadding
                 .copyWith(top: BotanicaTokens.spacingXxs),
             sliver: SliverToBoxAdapter(
+              // ignore: prefer_const_constructors
               child: AnimatedSize(
                 duration: BotanicaTokens.motionMedium,
                 curve: BotanicaTokens.curveSettle,

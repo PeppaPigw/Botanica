@@ -59,8 +59,8 @@ class CareCostTracker {
         totalSpent: 0,
         monthlyAverage: 0,
         costPerPlant: 0,
-        categoryBreakdown: const {},
-        monthlyTrend: const [],
+        categoryBreakdown: {},
+        monthlyTrend: [],
         projectedAnnual: 0,
         costEfficiencyScore: 1.0,
       );
