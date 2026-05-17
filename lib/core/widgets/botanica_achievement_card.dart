@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/garden_achievement_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaAchievementCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -31,7 +33,7 @@ class BotanicaAchievementCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Achievements',
+                  l10n.achievementsTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -57,7 +59,7 @@ class BotanicaAchievementCard extends StatelessWidget {
           if (summary.recentUnlocks.isNotEmpty) ...[
             BotanicaGaps.vSm,
             Text(
-              'Recent',
+              l10n.achievementsRecent,
               style: textTheme.labelSmall?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.5),
                 fontSize: 9,

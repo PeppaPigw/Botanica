@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_cost_tracker.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaCareCostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -31,7 +33,7 @@ class BotanicaCareCostCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Care Costs',
+                  l10n.careCostsTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

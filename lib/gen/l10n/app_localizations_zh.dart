@@ -3329,7 +3329,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get notificationStreakProtectionBody => '在午夜前完成一项护理任务来保持连续记录。';
 
   @override
-  String get careRhythmTitle => '护理节奏';
+  String get careRhythmTitle => '你的养护节奏';
 
   @override
   String careRhythmAvgInterval(int days) {
@@ -3688,4 +3688,79 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get transitionResumeNormalCare => '恢复正常养护';
+
+  @override
+  String get dailyBriefingTitle => '每日简报';
+
+  @override
+  String get dailyBriefingAllCaughtUp => '一切就绪 — 你的花园正在茁壮成长！';
+
+  @override
+  String get weeklyInsightTitle => '每周洞察';
+
+  @override
+  String get dailyChallengeTitle => '每日挑战';
+
+  @override
+  String get dailyChallengeAccept => '接受';
+
+  @override
+  String get communityChallengesTitle => '社区挑战';
+
+  @override
+  String get dailyRitualTitle => '每日仪式';
+
+  @override
+  String get achievementsRecent => '最近';
+
+  @override
+  String get careEffectivenessTitle => '养护效果';
+
+  @override
+  String get scheduleTuningTitle => '日程调整';
+
+  @override
+  String get careBurnoutOverload => '检测到养护过载';
+
+  @override
+  String get careBurnoutStretched => '感到疲惫？';
+
+  @override
+  String get careLoadTitle => '养护负荷';
+
+  @override
+  String get careLoadThisWeek => '本周';
+
+  @override
+  String get careCoachTitle => '养护教练';
+
+  @override
+  String get careConfidenceTitle => '养护信心';
+
+  @override
+  String get careConsistencyTitle => '养护一致性';
+
+  @override
+  String get careCostsTitle => '养护成本';
+
+  @override
+  String get delegationPlanTitle => '委托计划';
+
+  @override
+  String get carePatternsTitle => '养护模式';
+
+  @override
+  String get carePersonaTitle => '你的养护人格';
+
+  @override
+  String get carePersonaStrengths => '优势';
+
+  @override
+  String get carePersonaGrowthAreas => '成长领域';
+
+  @override
+  String get nextWateringTitle => '下次浇水';
+
+  @override
+  String get careRoutinesTitle => '你的养护习惯';
 }

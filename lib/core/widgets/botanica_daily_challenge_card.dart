@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/daily_challenge_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -19,6 +20,7 @@ class BotanicaDailyChallengeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final (IconData icon, Color color) = _categoryVisual(challenge.category, scheme);
     final difficultyColor = _difficultyColor(challenge.difficulty, scheme);
@@ -36,7 +38,7 @@ class BotanicaDailyChallengeCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Daily Challenge',
+                  l10n.dailyChallengeTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -102,7 +104,7 @@ class BotanicaDailyChallengeCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(BotanicaTokens.radiusPill),
                     ),
                     child: Text(
-                      'Accept',
+                      l10n.dailyChallengeAccept,
                       style: textTheme.labelSmall?.copyWith(
                         color: color,
                         fontWeight: FontWeight.w700,

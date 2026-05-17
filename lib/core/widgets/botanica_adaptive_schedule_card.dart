@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/adaptive_care_scheduler.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -19,6 +20,7 @@ class BotanicaAdaptiveScheduleCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -33,7 +35,7 @@ class BotanicaAdaptiveScheduleCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Schedule Tuning',
+                  l10n.scheduleTuningTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

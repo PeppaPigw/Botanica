@@ -5993,7 +5993,7 @@ abstract class AppLocalizations {
   /// No description provided for @careRhythmTitle.
   ///
   /// In en, this message translates to:
-  /// **'Care rhythm'**
+  /// **'Your Care Rhythm'**
   String get careRhythmTitle;
 
   /// No description provided for @careRhythmAvgInterval.
@@ -6590,6 +6590,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resume normal care'**
   String get transitionResumeNormalCare;
+
+  /// No description provided for @dailyBriefingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Briefing'**
+  String get dailyBriefingTitle;
+
+  /// No description provided for @dailyBriefingAllCaughtUp.
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up — your garden is thriving!'**
+  String get dailyBriefingAllCaughtUp;
+
+  /// No description provided for @weeklyInsightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Insight'**
+  String get weeklyInsightTitle;
+
+  /// No description provided for @dailyChallengeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Challenge'**
+  String get dailyChallengeTitle;
+
+  /// No description provided for @dailyChallengeAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get dailyChallengeAccept;
+
+  /// No description provided for @communityChallengesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Challenges'**
+  String get communityChallengesTitle;
+
+  /// No description provided for @dailyRitualTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Ritual'**
+  String get dailyRitualTitle;
+
+  /// No description provided for @achievementsRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get achievementsRecent;
+
+  /// No description provided for @careEffectivenessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Effectiveness'**
+  String get careEffectivenessTitle;
+
+  /// No description provided for @scheduleTuningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Tuning'**
+  String get scheduleTuningTitle;
+
+  /// No description provided for @careBurnoutOverload.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Overload Detected'**
+  String get careBurnoutOverload;
+
+  /// No description provided for @careBurnoutStretched.
+  ///
+  /// In en, this message translates to:
+  /// **'Feeling Stretched?'**
+  String get careBurnoutStretched;
+
+  /// No description provided for @careLoadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Load'**
+  String get careLoadTitle;
+
+  /// No description provided for @careLoadThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get careLoadThisWeek;
+
+  /// No description provided for @careCoachTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Coach'**
+  String get careCoachTitle;
+
+  /// No description provided for @careConfidenceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Confidence'**
+  String get careConfidenceTitle;
+
+  /// No description provided for @careConsistencyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Consistency'**
+  String get careConsistencyTitle;
+
+  /// No description provided for @careCostsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Costs'**
+  String get careCostsTitle;
+
+  /// No description provided for @delegationPlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delegation Plan'**
+  String get delegationPlanTitle;
+
+  /// No description provided for @carePatternsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Patterns'**
+  String get carePatternsTitle;
+
+  /// No description provided for @carePersonaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Care Persona'**
+  String get carePersonaTitle;
+
+  /// No description provided for @carePersonaStrengths.
+  ///
+  /// In en, this message translates to:
+  /// **'Strengths'**
+  String get carePersonaStrengths;
+
+  /// No description provided for @carePersonaGrowthAreas.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth Areas'**
+  String get carePersonaGrowthAreas;
+
+  /// No description provided for @nextWateringTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Watering'**
+  String get nextWateringTitle;
+
+  /// No description provided for @careRoutinesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Care Routines'**
+  String get careRoutinesTitle;
 }
 
 class _AppLocalizationsDelegate

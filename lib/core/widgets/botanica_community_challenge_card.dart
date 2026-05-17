@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/community_challenge_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -19,6 +20,7 @@ class BotanicaCommunityChallengeCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -33,7 +35,7 @@ class BotanicaCommunityChallengeCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Community Challenges',
+                  l10n.communityChallengesTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

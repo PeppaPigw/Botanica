@@ -3467,7 +3467,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'اكمل مهمة رعاية قبل منتصف الليل للحفاظ عليها.';
 
   @override
-  String get careRhythmTitle => 'إيقاع العناية';
+  String get careRhythmTitle => 'إيقاع رعايتك';
 
   @override
   String careRhythmAvgInterval(int days) {
@@ -3829,4 +3829,79 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get transitionResumeNormalCare => 'استئناف الرعاية العادية';
+
+  @override
+  String get dailyBriefingTitle => 'الملخص اليومي';
+
+  @override
+  String get dailyBriefingAllCaughtUp => 'كل شيء على ما يرام — حديقتك تزدهر!';
+
+  @override
+  String get weeklyInsightTitle => 'رؤية أسبوعية';
+
+  @override
+  String get dailyChallengeTitle => 'تحدي يومي';
+
+  @override
+  String get dailyChallengeAccept => 'قبول';
+
+  @override
+  String get communityChallengesTitle => 'تحديات المجتمع';
+
+  @override
+  String get dailyRitualTitle => 'طقس يومي';
+
+  @override
+  String get achievementsRecent => 'الأخيرة';
+
+  @override
+  String get careEffectivenessTitle => 'فعالية الرعاية';
+
+  @override
+  String get scheduleTuningTitle => 'ضبط الجدول';
+
+  @override
+  String get careBurnoutOverload => 'تم اكتشاف إرهاق الرعاية';
+
+  @override
+  String get careBurnoutStretched => 'هل تشعر بالإرهاق؟';
+
+  @override
+  String get careLoadTitle => 'حمل الرعاية';
+
+  @override
+  String get careLoadThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get careCoachTitle => 'مدرب الرعاية';
+
+  @override
+  String get careConfidenceTitle => 'ثقة الرعاية';
+
+  @override
+  String get careConsistencyTitle => 'اتساق الرعاية';
+
+  @override
+  String get careCostsTitle => 'تكاليف الرعاية';
+
+  @override
+  String get delegationPlanTitle => 'خطة التفويض';
+
+  @override
+  String get carePatternsTitle => 'أنماط الرعاية';
+
+  @override
+  String get carePersonaTitle => 'شخصيتك في الرعاية';
+
+  @override
+  String get carePersonaStrengths => 'نقاط القوة';
+
+  @override
+  String get carePersonaGrowthAreas => 'مجالات النمو';
+
+  @override
+  String get nextWateringTitle => 'الري التالي';
+
+  @override
+  String get careRoutinesTitle => 'روتين رعايتك';
 }

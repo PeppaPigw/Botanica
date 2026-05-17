@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/daily_briefing_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -59,6 +60,7 @@ class _BriefingHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final momentumColor = momentumScore >= 0.7
         ? scheme.tertiary
@@ -76,7 +78,7 @@ class _BriefingHeader extends StatelessWidget {
         BotanicaGaps.hXs,
         Expanded(
           child: Text(
-            'Daily Briefing',
+            l10n.dailyBriefingTitle,
             style: textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
               letterSpacing: -0.3,
@@ -234,6 +236,8 @@ class _EmptyBriefing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: BotanicaTokens.spacingSm),
       child: Row(
@@ -245,7 +249,7 @@ class _EmptyBriefing extends StatelessWidget {
           ),
           BotanicaGaps.hSm,
           Text(
-            'All caught up — your garden is thriving!',
+            l10n.dailyBriefingAllCaughtUp,
             style: textTheme.bodyMedium?.copyWith(
               color: scheme.onSurface.withValues(alpha: 0.7),
             ),

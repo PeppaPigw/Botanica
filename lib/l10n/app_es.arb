@@ -1883,7 +1883,7 @@
     }
   },
   "notificationStreakProtectionBody": "Completa una tarea de cuidado antes de medianoche para mantenerla.",
-  "careRhythmTitle": "Ritmo de cuidado",
+  "careRhythmTitle": "Tu ritmo de cuidado",
   "careRhythmAvgInterval": "Promedio {days}d entre riegos",
   "@careRhythmAvgInterval": {
     "placeholders": {
@@ -2092,5 +2092,30 @@
   "transitionIncreaseHumidity": "Aumentar humedad",
   "transitionProtectFromFrost": "Proteger de heladas",
   "transitionProvideShadeCover": "Proporcionar sombra",
-  "transitionResumeNormalCare": "Reanudar cuidado normal"
+  "transitionResumeNormalCare": "Reanudar cuidado normal",
+  "dailyBriefingTitle": "Resumen diario",
+  "dailyBriefingAllCaughtUp": "Todo al día — ¡tu jardín está floreciendo!",
+  "weeklyInsightTitle": "Perspectiva semanal",
+  "dailyChallengeTitle": "Desafío diario",
+  "dailyChallengeAccept": "Aceptar",
+  "communityChallengesTitle": "Desafíos comunitarios",
+  "dailyRitualTitle": "Ritual diario",
+  "achievementsRecent": "Recientes",
+  "careEffectivenessTitle": "Efectividad del cuidado",
+  "scheduleTuningTitle": "Ajuste de horario",
+  "careBurnoutOverload": "Sobrecarga de cuidado detectada",
+  "careBurnoutStretched": "¿Te sientes agotado?",
+  "careLoadTitle": "Carga de cuidado",
+  "careLoadThisWeek": "Esta semana",
+  "careCoachTitle": "Coach de cuidado",
+  "careConfidenceTitle": "Confianza en el cuidado",
+  "careConsistencyTitle": "Consistencia del cuidado",
+  "careCostsTitle": "Costos de cuidado",
+  "delegationPlanTitle": "Plan de delegación",
+  "carePatternsTitle": "Patrones de cuidado",
+  "carePersonaTitle": "Tu personalidad de cuidado",
+  "carePersonaStrengths": "Fortalezas",
+  "carePersonaGrowthAreas": "Áreas de crecimiento",
+  "nextWateringTitle": "Próximo riego",
+  "careRoutinesTitle": "Tus rutinas de cuidado"
 }

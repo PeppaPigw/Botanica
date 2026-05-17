@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_rhythm_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaCareRhythmCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final (IconData icon, Color color, String label, String desc) =
         _rhythmVisual(rhythm.type, scheme);
@@ -34,7 +36,7 @@ class BotanicaCareRhythmCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Your Care Rhythm',
+                  l10n.careRhythmTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),

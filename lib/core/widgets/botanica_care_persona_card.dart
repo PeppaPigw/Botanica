@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme/botanica_glass_theme.dart';
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/user_care_persona_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_care_persona_badge.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
@@ -19,6 +20,7 @@ class BotanicaCarePersonaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       tier: GlassTier.secondary,
@@ -35,7 +37,7 @@ class BotanicaCarePersonaCard extends StatelessWidget {
               ),
               BotanicaGaps.hXs,
               Text(
-                'Your Care Persona',
+                l10n.carePersonaTitle,
                 style: textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -47,7 +49,7 @@ class BotanicaCarePersonaCard extends StatelessWidget {
           if (persona.strengths.isNotEmpty) ...[
             BotanicaGaps.vSm,
             Text(
-              'Strengths',
+              l10n.carePersonaStrengths,
               style: textTheme.labelMedium?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: scheme.onSurface.withValues(alpha: 0.7),
@@ -66,7 +68,7 @@ class BotanicaCarePersonaCard extends StatelessWidget {
           if (persona.growthAreas.isNotEmpty) ...[
             BotanicaGaps.vSm,
             Text(
-              'Growth Areas',
+              l10n.carePersonaGrowthAreas,
               style: textTheme.labelMedium?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: scheme.onSurface.withValues(alpha: 0.7),

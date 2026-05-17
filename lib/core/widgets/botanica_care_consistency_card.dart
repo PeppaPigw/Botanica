@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_consistency_scorer.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -21,6 +22,7 @@ class BotanicaCareConsistencyCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final sorted = results.entries.toList()
       ..sort((a, b) => b.value.score.compareTo(a.value.score));
@@ -38,7 +40,7 @@ class BotanicaCareConsistencyCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Care Consistency',
+                  l10n.careConsistencyTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

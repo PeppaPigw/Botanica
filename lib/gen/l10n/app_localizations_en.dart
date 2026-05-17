@@ -3494,7 +3494,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Complete a care task before midnight to keep it going.';
 
   @override
-  String get careRhythmTitle => 'Care rhythm';
+  String get careRhythmTitle => 'Your Care Rhythm';
 
   @override
   String careRhythmAvgInterval(int days) {
@@ -3862,4 +3862,80 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transitionResumeNormalCare => 'Resume normal care';
+
+  @override
+  String get dailyBriefingTitle => 'Daily Briefing';
+
+  @override
+  String get dailyBriefingAllCaughtUp =>
+      'All caught up — your garden is thriving!';
+
+  @override
+  String get weeklyInsightTitle => 'Weekly Insight';
+
+  @override
+  String get dailyChallengeTitle => 'Daily Challenge';
+
+  @override
+  String get dailyChallengeAccept => 'Accept';
+
+  @override
+  String get communityChallengesTitle => 'Community Challenges';
+
+  @override
+  String get dailyRitualTitle => 'Daily Ritual';
+
+  @override
+  String get achievementsRecent => 'Recent';
+
+  @override
+  String get careEffectivenessTitle => 'Care Effectiveness';
+
+  @override
+  String get scheduleTuningTitle => 'Schedule Tuning';
+
+  @override
+  String get careBurnoutOverload => 'Care Overload Detected';
+
+  @override
+  String get careBurnoutStretched => 'Feeling Stretched?';
+
+  @override
+  String get careLoadTitle => 'Care Load';
+
+  @override
+  String get careLoadThisWeek => 'This Week';
+
+  @override
+  String get careCoachTitle => 'Care Coach';
+
+  @override
+  String get careConfidenceTitle => 'Care Confidence';
+
+  @override
+  String get careConsistencyTitle => 'Care Consistency';
+
+  @override
+  String get careCostsTitle => 'Care Costs';
+
+  @override
+  String get delegationPlanTitle => 'Delegation Plan';
+
+  @override
+  String get carePatternsTitle => 'Care Patterns';
+
+  @override
+  String get carePersonaTitle => 'Your Care Persona';
+
+  @override
+  String get carePersonaStrengths => 'Strengths';
+
+  @override
+  String get carePersonaGrowthAreas => 'Growth Areas';
+
+  @override
+  String get nextWateringTitle => 'Next Watering';
+
+  @override
+  String get careRoutinesTitle => 'Your Care Routines';
 }

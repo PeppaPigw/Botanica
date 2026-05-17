@@ -1894,7 +1894,7 @@
     }
   },
   "notificationStreakProtectionBody": "在午夜前完成一项护理任务来保持连续记录。",
-  "careRhythmTitle": "护理节奏",
+  "careRhythmTitle": "你的养护节奏",
   "careRhythmAvgInterval": "平均每 {days} 天浇水一次",
   "@careRhythmAvgInterval": {
     "placeholders": {
@@ -2103,5 +2103,30 @@
   "transitionIncreaseHumidity": "增加湿度",
   "transitionProtectFromFrost": "防冻保护",
   "transitionProvideShadeCover": "提供遮阳",
-  "transitionResumeNormalCare": "恢复正常养护"
+  "transitionResumeNormalCare": "恢复正常养护",
+  "dailyBriefingTitle": "每日简报",
+  "dailyBriefingAllCaughtUp": "一切就绪 — 你的花园正在茁壮成长！",
+  "weeklyInsightTitle": "每周洞察",
+  "dailyChallengeTitle": "每日挑战",
+  "dailyChallengeAccept": "接受",
+  "communityChallengesTitle": "社区挑战",
+  "dailyRitualTitle": "每日仪式",
+  "achievementsRecent": "最近",
+  "careEffectivenessTitle": "养护效果",
+  "scheduleTuningTitle": "日程调整",
+  "careBurnoutOverload": "检测到养护过载",
+  "careBurnoutStretched": "感到疲惫？",
+  "careLoadTitle": "养护负荷",
+  "careLoadThisWeek": "本周",
+  "careCoachTitle": "养护教练",
+  "careConfidenceTitle": "养护信心",
+  "careConsistencyTitle": "养护一致性",
+  "careCostsTitle": "养护成本",
+  "delegationPlanTitle": "委托计划",
+  "carePatternsTitle": "养护模式",
+  "carePersonaTitle": "你的养护人格",
+  "carePersonaStrengths": "优势",
+  "carePersonaGrowthAreas": "成长领域",
+  "nextWateringTitle": "下次浇水",
+  "careRoutinesTitle": "你的养护习惯"
 }

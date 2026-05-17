@@ -1883,7 +1883,7 @@
     }
   },
   "notificationStreakProtectionBody": "اكمل مهمة رعاية قبل منتصف الليل للحفاظ عليها.",
-  "careRhythmTitle": "إيقاع العناية",
+  "careRhythmTitle": "إيقاع رعايتك",
   "careRhythmAvgInterval": "متوسط {days} يوم بين الريّ",
   "@careRhythmAvgInterval": {
     "placeholders": {
@@ -2092,5 +2092,30 @@
   "transitionIncreaseHumidity": "زيادة الرطوبة",
   "transitionProtectFromFrost": "حماية من الصقيع",
   "transitionProvideShadeCover": "توفير الظل",
-  "transitionResumeNormalCare": "استئناف الرعاية العادية"
+  "transitionResumeNormalCare": "استئناف الرعاية العادية",
+  "dailyBriefingTitle": "الملخص اليومي",
+  "dailyBriefingAllCaughtUp": "كل شيء على ما يرام — حديقتك تزدهر!",
+  "weeklyInsightTitle": "رؤية أسبوعية",
+  "dailyChallengeTitle": "تحدي يومي",
+  "dailyChallengeAccept": "قبول",
+  "communityChallengesTitle": "تحديات المجتمع",
+  "dailyRitualTitle": "طقس يومي",
+  "achievementsRecent": "الأخيرة",
+  "careEffectivenessTitle": "فعالية الرعاية",
+  "scheduleTuningTitle": "ضبط الجدول",
+  "careBurnoutOverload": "تم اكتشاف إرهاق الرعاية",
+  "careBurnoutStretched": "هل تشعر بالإرهاق؟",
+  "careLoadTitle": "حمل الرعاية",
+  "careLoadThisWeek": "هذا الأسبوع",
+  "careCoachTitle": "مدرب الرعاية",
+  "careConfidenceTitle": "ثقة الرعاية",
+  "careConsistencyTitle": "اتساق الرعاية",
+  "careCostsTitle": "تكاليف الرعاية",
+  "delegationPlanTitle": "خطة التفويض",
+  "carePatternsTitle": "أنماط الرعاية",
+  "carePersonaTitle": "شخصيتك في الرعاية",
+  "carePersonaStrengths": "نقاط القوة",
+  "carePersonaGrowthAreas": "مجالات النمو",
+  "nextWateringTitle": "الري التالي",
+  "careRoutinesTitle": "روتين رعايتك"
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_confidence_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -21,6 +22,7 @@ class BotanicaCareConfidenceRadar extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final levelColor = switch (report.level) {
       'confidenceMaster' => scheme.tertiary,
@@ -45,7 +47,7 @@ class BotanicaCareConfidenceRadar extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Care Confidence',
+                  l10n.careConfidenceTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),

@@ -3512,7 +3512,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Completa una tarea de cuidado antes de medianoche para mantenerla.';
 
   @override
-  String get careRhythmTitle => 'Ritmo de cuidado';
+  String get careRhythmTitle => 'Tu ritmo de cuidado';
 
   @override
   String careRhythmAvgInterval(int days) {
@@ -3880,4 +3880,80 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get transitionResumeNormalCare => 'Reanudar cuidado normal';
+
+  @override
+  String get dailyBriefingTitle => 'Resumen diario';
+
+  @override
+  String get dailyBriefingAllCaughtUp =>
+      'Todo al día — ¡tu jardín está floreciendo!';
+
+  @override
+  String get weeklyInsightTitle => 'Perspectiva semanal';
+
+  @override
+  String get dailyChallengeTitle => 'Desafío diario';
+
+  @override
+  String get dailyChallengeAccept => 'Aceptar';
+
+  @override
+  String get communityChallengesTitle => 'Desafíos comunitarios';
+
+  @override
+  String get dailyRitualTitle => 'Ritual diario';
+
+  @override
+  String get achievementsRecent => 'Recientes';
+
+  @override
+  String get careEffectivenessTitle => 'Efectividad del cuidado';
+
+  @override
+  String get scheduleTuningTitle => 'Ajuste de horario';
+
+  @override
+  String get careBurnoutOverload => 'Sobrecarga de cuidado detectada';
+
+  @override
+  String get careBurnoutStretched => '¿Te sientes agotado?';
+
+  @override
+  String get careLoadTitle => 'Carga de cuidado';
+
+  @override
+  String get careLoadThisWeek => 'Esta semana';
+
+  @override
+  String get careCoachTitle => 'Coach de cuidado';
+
+  @override
+  String get careConfidenceTitle => 'Confianza en el cuidado';
+
+  @override
+  String get careConsistencyTitle => 'Consistencia del cuidado';
+
+  @override
+  String get careCostsTitle => 'Costos de cuidado';
+
+  @override
+  String get delegationPlanTitle => 'Plan de delegación';
+
+  @override
+  String get carePatternsTitle => 'Patrones de cuidado';
+
+  @override
+  String get carePersonaTitle => 'Tu personalidad de cuidado';
+
+  @override
+  String get carePersonaStrengths => 'Fortalezas';
+
+  @override
+  String get carePersonaGrowthAreas => 'Áreas de crecimiento';
+
+  @override
+  String get nextWateringTitle => 'Próximo riego';
+
+  @override
+  String get careRoutinesTitle => 'Tus rutinas de cuidado';
 }

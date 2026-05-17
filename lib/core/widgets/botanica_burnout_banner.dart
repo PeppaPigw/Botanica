@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_burnout_detector.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -55,6 +56,7 @@ class _BotanicaBurnoutBannerState extends State<BotanicaBurnoutBanner>
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
     final isHigh = widget.report.riskLevel == 'burnoutHigh';
     final color = isHigh ? scheme.error : const Color(0xFFFF9800);
 
@@ -88,7 +90,9 @@ class _BotanicaBurnoutBannerState extends State<BotanicaBurnoutBanner>
                 BotanicaGaps.hSm,
                 Expanded(
                   child: Text(
-                    isHigh ? 'Care Overload Detected' : 'Feeling Stretched?',
+                    isHigh
+                        ? l10n.careBurnoutOverload
+                        : l10n.careBurnoutStretched,
                     style: textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: color,

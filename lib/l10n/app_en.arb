@@ -1891,7 +1891,7 @@
     }
   },
   "notificationStreakProtectionBody": "Complete a care task before midnight to keep it going.",
-  "careRhythmTitle": "Care rhythm",
+  "careRhythmTitle": "Your Care Rhythm",
   "careRhythmAvgInterval": "Avg {days}d between waterings",
   "@careRhythmAvgInterval": {
     "placeholders": {
@@ -2106,5 +2106,30 @@
   "transitionIncreaseHumidity": "Increase humidity",
   "transitionProtectFromFrost": "Protect from frost",
   "transitionProvideShadeCover": "Provide shade",
-  "transitionResumeNormalCare": "Resume normal care"
+  "transitionResumeNormalCare": "Resume normal care",
+  "dailyBriefingTitle": "Daily Briefing",
+  "dailyBriefingAllCaughtUp": "All caught up — your garden is thriving!",
+  "weeklyInsightTitle": "Weekly Insight",
+  "dailyChallengeTitle": "Daily Challenge",
+  "dailyChallengeAccept": "Accept",
+  "communityChallengesTitle": "Community Challenges",
+  "dailyRitualTitle": "Daily Ritual",
+  "achievementsRecent": "Recent",
+  "careEffectivenessTitle": "Care Effectiveness",
+  "scheduleTuningTitle": "Schedule Tuning",
+  "careBurnoutOverload": "Care Overload Detected",
+  "careBurnoutStretched": "Feeling Stretched?",
+  "careLoadTitle": "Care Load",
+  "careLoadThisWeek": "This Week",
+  "careCoachTitle": "Care Coach",
+  "careConfidenceTitle": "Care Confidence",
+  "careConsistencyTitle": "Care Consistency",
+  "careCostsTitle": "Care Costs",
+  "delegationPlanTitle": "Delegation Plan",
+  "carePatternsTitle": "Care Patterns",
+  "carePersonaTitle": "Your Care Persona",
+  "carePersonaStrengths": "Strengths",
+  "carePersonaGrowthAreas": "Growth Areas",
+  "nextWateringTitle": "Next Watering",
+  "careRoutinesTitle": "Your Care Routines"
 }
