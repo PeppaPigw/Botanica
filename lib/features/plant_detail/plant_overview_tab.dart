@@ -521,7 +521,11 @@ class _HealthScoreGaugeState extends State<_HealthScoreGauge>
 
     final track = scheme.outlineVariant.withValues(alpha: 0.25);
 
-    return SizedBox(
+    return Semantics(
+      label: resolvedScore == null
+          ? 'Health score unavailable'
+          : 'Health score ${(resolvedScore * 100).round()} out of 100',
+      child: SizedBox(
       width: 56,
       height: 56,
       child: AnimatedBuilder(
@@ -547,6 +551,7 @@ class _HealthScoreGaugeState extends State<_HealthScoreGauge>
           );
         },
       ),
+    ),
     );
   }
 }

@@ -60,25 +60,29 @@ class _BotanicaAmbientBackgroundState extends State<BotanicaAmbientBackground>
         scheme.primary.withValues(alpha: widget.intensity * 0.6);
 
     if (botanicaReduceMotion(context)) {
-      return CustomPaint(
-        painter: _OrganicBlobPainter(
-          t: 0.0,
-          primary: primary,
-          secondary: secondary,
+      return ExcludeSemantics(
+        child: CustomPaint(
+          painter: _OrganicBlobPainter(
+            t: 0.0,
+            primary: primary,
+            secondary: secondary,
+          ),
+          size: Size.infinite,
         ),
-        size: Size.infinite,
       );
     }
 
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, _) => CustomPaint(
-        painter: _OrganicBlobPainter(
-          t: _controller.value,
-          primary: primary,
-          secondary: secondary,
+    return ExcludeSemantics(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, _) => CustomPaint(
+          painter: _OrganicBlobPainter(
+            t: _controller.value,
+            primary: primary,
+            secondary: secondary,
+          ),
+          size: Size.infinite,
         ),
-        size: Size.infinite,
       ),
     );
   }

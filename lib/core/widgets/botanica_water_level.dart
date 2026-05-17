@@ -59,7 +59,9 @@ class _BotanicaWaterLevelState extends State<BotanicaWaterLevel>
     final waterColor = _colorForProgress(widget.progress, scheme);
     final bgColor = scheme.surfaceContainerHighest.withValues(alpha: 0.3);
 
-    return SizedBox(
+    return Semantics(
+      label: 'Water level ${(widget.progress * 100).round()} percent',
+      child: SizedBox(
       width: widget.size,
       height: widget.size,
       child: Stack(
@@ -106,6 +108,7 @@ class _BotanicaWaterLevelState extends State<BotanicaWaterLevel>
           ),
         ],
       ),
+    ),
     );
   }
 

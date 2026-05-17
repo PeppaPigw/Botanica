@@ -27,7 +27,9 @@ class BotanicaMomentumRing extends StatelessWidget {
             ? scheme.primary
             : scheme.error;
 
-    return SizedBox(
+    return Semantics(
+      label: '${label ?? "Momentum"} ${(score * 100).round()} percent',
+      child: SizedBox(
       width: size,
       height: size,
       child: Stack(
@@ -66,6 +68,7 @@ class BotanicaMomentumRing extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }
