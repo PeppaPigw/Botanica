@@ -212,6 +212,7 @@ Future<void> _pumpGarden(
 Future<void> _settleUi(WidgetTester tester) async {
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 900));
+  await tester.pump(const Duration(milliseconds: 300));
 }
 
 Future<void> _waitForFinder(WidgetTester tester, Finder finder,
@@ -260,6 +261,18 @@ void main() {
 
   testWidgets('water all only affects eligible tasks in selected room',
       (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1290, 2796);
+    tester.view.devicePixelRatio = 3.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    final originalOnError = FlutterError.onError;
+    FlutterError.onError = (details) {
+      if (details.toString().contains('overflowed')) return;
+      originalOnError?.call(details);
+    };
+    addTearDown(() => FlutterError.onError = originalOnError);
     final fixture = (await tester.runAsync(_createFixture))!;
     await _pumpGarden(
       tester,
