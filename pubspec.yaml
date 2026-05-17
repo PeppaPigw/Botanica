@@ -67,6 +67,9 @@ dependencies:
   cross_file: ^0.3.4+2
   share_plus: ^10.1.4
   in_app_review: ^2.0.10
+  quick_actions_ios: ^1.2.4
+  quick_actions_android: ^1.0.30
+  quick_actions_platform_interface: ^1.1.0
 
 dev_dependencies:
   flutter_test:

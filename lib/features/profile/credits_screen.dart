@@ -138,6 +138,8 @@ const _thirdPartyPackages = <_PackageRow>[
   _PackageRow(name: 'crypto', note: 'BSD-3-Clause'),
   _PackageRow(name: 'cross_file', note: 'BSD-3-Clause'),
   _PackageRow(name: 'share_plus', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'quick_actions_ios', note: 'BSD-3-Clause'),
+  _PackageRow(name: 'quick_actions_android', note: 'BSD-3-Clause'),
   _PackageRow(name: 'flutter_lints', note: 'BSD-3-Clause'),
   _PackageRow(name: 'flutter_launcher_icons', note: 'MIT'),
 ];

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/environment/weather_code.dart';
+import '../features/scan/scan_flow_screen.dart';
 import '../gen/l10n/app_localizations.dart';
+import '../services/quick_actions/quick_actions_service.dart';
 import 'routing/app_router.dart';
 import 'theme/botanica_tokens.dart';
 import 'theme/botanica_theme.dart';
@@ -25,6 +27,7 @@ class _BotanicaAppState extends ConsumerState<BotanicaApp> {
     _lifecycleListener = AppLifecycleListener(
       onResume: () => ref.read(notificationsServiceProvider).clearBadge(),
     );
+    ref.read(quickActionsServiceProvider).initialize();
   }
 
   @override
@@ -44,6 +47,17 @@ class _BotanicaAppState extends ConsumerState<BotanicaApp> {
     final router = ref.watch(goRouterProvider);
     notificationPlantIdCallback = (plantId) {
       router.push('/garden/plant/$plantId');
+    };
+    quickActionCallback = (action) {
+      switch (action) {
+        case QuickActionType.addPlant:
+          router.go('/garden/add');
+        case QuickActionType.waterNow:
+          router.go('/garden/tasks');
+        case QuickActionType.scanPlant:
+          final ctx = router.routerDelegate.navigatorKey.currentContext;
+          if (ctx != null) ScanFlowScreen.open(ctx);
+      }
     };
     ref.watch(taskRemindersSyncProvider);
     final environment = ref.watch(environmentControllerProvider);

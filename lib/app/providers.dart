@@ -42,6 +42,7 @@ import '../services/ai/botanica_ai_service.dart';
 import '../services/permissions/permissions_service.dart';
 import '../services/notifications/notifications_service.dart';
 import '../services/notifications/task_reminders_syncer.dart';
+import '../services/quick_actions/quick_actions_service.dart';
 import '../services/care/seasonal_task_rescheduler.dart';
 import '../domain/services/plant_whisperer_score.dart';
 
@@ -367,6 +368,18 @@ final notificationsServiceProvider =
 
 /// Set by the app after the router is available.
 void Function(String plantId)? notificationPlantIdCallback;
+
+/// Set by the app after the router is available.
+void Function(QuickActionType action)? quickActionCallback;
+
+final quickActionsServiceProvider =
+    Provider<BotanicaQuickActionsService>((ref) {
+  return BotanicaQuickActionsService(
+    onAction: (action) {
+      quickActionCallback?.call(action);
+    },
+  );
+});
 
 /// Keeps scheduled local notifications in sync with the current task list.
 ///
