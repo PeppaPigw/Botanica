@@ -363,6 +363,22 @@ final notificationsServiceProvider =
     onNotificationTap: (plantId) {
       notificationPlantIdCallback?.call(plantId);
     },
+    onTaskAction: (taskId, action) {
+      final tasksRepo = ref.read(tasksRepositoryProvider);
+      final task = tasksRepo.byId(taskId);
+      if (task == null) return;
+
+      if (action == 'mark_done') {
+        tasksRepo.upsert(task.copyWith(
+          status: TaskStatus.done,
+          completedAt: DateTime.now(),
+        ));
+      } else if (action == 'snooze') {
+        tasksRepo.upsert(task.copyWith(
+          dueAt: task.dueAt.add(const Duration(hours: 1)),
+        ));
+      }
+    },
   );
 });
 

@@ -52,6 +52,8 @@ class FlutterLocalTaskReminderNotificationsService
     String androidChannelName = 'Task reminders',
     String androidChannelDescription = 'Task reminder notifications',
     String androidIcon = '@mipmap/ic_launcher',
+    this.onMarkDone,
+    this.onSnooze,
   })  : _localTimezoneNameProvider = localTimezoneNameProvider,
         _plugin = plugin ?? FlutterLocalNotificationsPlugin(),
         _androidChannelId = androidChannelId,
@@ -66,6 +68,12 @@ class FlutterLocalTaskReminderNotificationsService
   final String _androidChannelName;
   final String _androidChannelDescription;
   final String _androidIcon;
+
+  final void Function(String taskId)? onMarkDone;
+  final void Function(String taskId)? onSnooze;
+
+  static const _actionMarkDone = 'mark_done';
+  static const _actionSnooze = 'snooze';
 
   Future<void>? _init;
   String? _currentTimezoneName;
@@ -89,6 +97,7 @@ class FlutterLocalTaskReminderNotificationsService
 
     await _plugin.initialize(
       InitializationSettings(android: androidSettings, iOS: iOSSettings),
+      onDidReceiveNotificationResponse: _handleNotificationResponse,
     );
 
     final android = _plugin.resolvePlatformSpecificImplementation<
@@ -102,6 +111,18 @@ class FlutterLocalTaskReminderNotificationsService
           importance: Importance.high,
         ),
       );
+    }
+  }
+
+  void _handleNotificationResponse(NotificationResponse response) {
+    final taskId = taskInstanceIdFromTaskReminderPayload(response.payload);
+    if (taskId == null) return;
+
+    switch (response.actionId) {
+      case _actionMarkDone:
+        onMarkDone?.call(taskId);
+      case _actionSnooze:
+        onSnooze?.call(taskId);
     }
   }
 
@@ -276,11 +297,23 @@ class FlutterLocalTaskReminderNotificationsService
       importance: Importance.high,
       priority: Priority.high,
       category: AndroidNotificationCategory.reminder,
+      actions: const [
+        AndroidNotificationAction(
+          _actionMarkDone,
+          'Done',
+          cancelNotification: true,
+        ),
+        AndroidNotificationAction(
+          _actionSnooze,
+          'Snooze 1h',
+        ),
+      ],
     );
 
     const ios = DarwinNotificationDetails(
       presentAlert: true,
       presentSound: true,
+      categoryIdentifier: 'task_reminder',
     );
 
     return NotificationDetails(android: android, iOS: ios);

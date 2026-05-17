@@ -16,15 +16,19 @@ import '../../domain/models/plant.dart';
 import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaNotificationsService {
-  BotanicaNotificationsService({this.onNotificationTap});
+  BotanicaNotificationsService({this.onNotificationTap, this.onTaskAction});
 
   final void Function(String plantId)? onNotificationTap;
+  final void Function(String taskId, String action)? onTaskAction;
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
   bool _initialized = false;
   String? _currentTimezoneName;
+
+  static const _actionMarkDone = 'mark_done';
+  static const _actionSnooze = 'snooze';
 
   static const _androidChannel = AndroidNotificationChannel(
     'botanica_tasks',
@@ -40,9 +44,26 @@ class BotanicaNotificationsService {
     await _configureLocalTimezone(force: true);
 
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const iOS = DarwinInitializationSettings();
+    final iOS = DarwinInitializationSettings(
+      notificationCategories: [
+        DarwinNotificationCategory(
+          'task_reminder',
+          actions: [
+            DarwinNotificationAction.plain(
+              _actionMarkDone,
+              'Done',
+              options: {DarwinNotificationActionOption.destructive},
+            ),
+            DarwinNotificationAction.plain(
+              _actionSnooze,
+              'Snooze 1h',
+            ),
+          ],
+        ),
+      ],
+    );
 
-    const settings = InitializationSettings(android: android, iOS: iOS);
+    final settings = InitializationSettings(android: android, iOS: iOS);
     await _plugin.initialize(
       settings,
       onDidReceiveNotificationResponse: _handleNotificationTap,
@@ -61,7 +82,18 @@ class BotanicaNotificationsService {
     try {
       final decoded = jsonDecode(payload);
       if (decoded is Map && decoded['type'] == 'task') {
+        final taskId = decoded['taskId'] as String?;
         final plantId = decoded['plantId'] as String?;
+
+        if (response.actionId == _actionMarkDone && taskId != null) {
+          onTaskAction?.call(taskId, _actionMarkDone);
+          return;
+        }
+        if (response.actionId == _actionSnooze && taskId != null) {
+          onTaskAction?.call(taskId, _actionSnooze);
+          return;
+        }
+
         if (plantId != null && plantId.isNotEmpty) {
           onNotificationTap?.call(plantId);
         }
@@ -156,11 +188,23 @@ class BotanicaNotificationsService {
         priority: Priority.high,
         category: AndroidNotificationCategory.reminder,
         styleInformation: const DefaultStyleInformation(true, true),
+        actions: const [
+          AndroidNotificationAction(
+            _actionMarkDone,
+            'Done',
+            cancelNotification: true,
+          ),
+          AndroidNotificationAction(
+            _actionSnooze,
+            'Snooze 1h',
+          ),
+        ],
       ),
       iOS: const DarwinNotificationDetails(
         presentAlert: true,
         presentSound: true,
         presentBadge: true,
+        categoryIdentifier: 'task_reminder',
       ),
     );
 
