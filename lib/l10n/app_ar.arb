@@ -2278,5 +2278,6 @@
   "xpLevelTitle": "المستوى {level}",
   "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
   "xpLevelProgress": "{current} / {next} للمستوى التالي",
-  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}},
+  "resetAll": "إعادة تعيين الكل"
 }

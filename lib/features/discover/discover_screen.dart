@@ -1831,7 +1831,7 @@ Future<String?> _showSingleSelectSheet({
                       Navigator.of(context).pop(_kFilterSheetClearSentinel);
                     },
                     icon: const Icon(Icons.restart_alt_rounded),
-                    label: const Text('Reset all'),
+                    label: Text(l10n.resetAll),
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(currentValue),

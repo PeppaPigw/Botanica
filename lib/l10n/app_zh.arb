@@ -2289,5 +2289,6 @@
   "xpLevelTitle": "等级 {level}",
   "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
   "xpLevelProgress": "{current} / {next} 升级",
-  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}},
+  "resetAll": "全部重置"
 }

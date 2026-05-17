@@ -4393,4 +4393,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String xpLevelProgress(int current, int next) {
     return '$current / $next للمستوى التالي';
   }
+
+  @override
+  String get resetAll => 'إعادة تعيين الكل';
 }

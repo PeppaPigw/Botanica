@@ -2301,5 +2301,6 @@
   "xpLevelTitle": "Level {level}",
   "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
   "xpLevelProgress": "{current} / {next} to next level",
-  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}},
+  "resetAll": "Reset all"
 }

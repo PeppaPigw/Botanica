@@ -4248,4 +4248,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String xpLevelProgress(int current, int next) {
     return '$current / $next 升级';
   }
+
+  @override
+  String get resetAll => '全部重置';
 }

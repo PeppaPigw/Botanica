@@ -7610,6 +7610,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{current} / {next} to next level'**
   String xpLevelProgress(int current, int next);
+
+  /// No description provided for @resetAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all'**
+  String get resetAll;
 }
 
 class _AppLocalizationsDelegate

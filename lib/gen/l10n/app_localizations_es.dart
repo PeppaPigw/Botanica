@@ -4451,4 +4451,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String xpLevelProgress(int current, int next) {
     return '$current / $next para subir de nivel';
   }
+
+  @override
+  String get resetAll => 'Restablecer todo';
 }

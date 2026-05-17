@@ -4432,4 +4432,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String xpLevelProgress(int current, int next) {
     return '$current / $next to next level';
   }
+
+  @override
+  String get resetAll => 'Reset all';
 }

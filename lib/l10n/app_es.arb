@@ -2278,5 +2278,6 @@
   "xpLevelTitle": "Nivel {level}",
   "@xpLevelTitle": {"placeholders": {"level": {"type": "int"}}},
   "xpLevelProgress": "{current} / {next} para subir de nivel",
-  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}}
+  "@xpLevelProgress": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}},
+  "resetAll": "Restablecer todo"
 }
