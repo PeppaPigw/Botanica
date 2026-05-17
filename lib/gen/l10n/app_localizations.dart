@@ -7148,6 +7148,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your garden is happy — enjoy the moment'**
   String get nextActionRestSub;
+
+  /// No description provided for @careRhythmStreakBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}x streak'**
+  String careRhythmStreakBadge(int count);
+
+  /// No description provided for @careRhythmMorningPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning Person'**
+  String get careRhythmMorningPerson;
+
+  /// No description provided for @careRhythmMorningPersonDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You tend to care for your plants in the morning hours.'**
+  String get careRhythmMorningPersonDesc;
+
+  /// No description provided for @careRhythmEveningCarer.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening Carer'**
+  String get careRhythmEveningCarer;
+
+  /// No description provided for @careRhythmEveningCarerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plants get attention during the evening wind-down.'**
+  String get careRhythmEveningCarerDesc;
+
+  /// No description provided for @careRhythmWeekendWarrior.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend Warrior'**
+  String get careRhythmWeekendWarrior;
+
+  /// No description provided for @careRhythmWeekendWarriorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekends are your dedicated plant care time.'**
+  String get careRhythmWeekendWarriorDesc;
+
+  /// No description provided for @careRhythmDailyDevoter.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Devoter'**
+  String get careRhythmDailyDevoter;
+
+  /// No description provided for @careRhythmDailyDevoterDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You check on your plants almost every single day.'**
+  String get careRhythmDailyDevoterDesc;
+
+  /// No description provided for @careRhythmBatchCarer.
+  ///
+  /// In en, this message translates to:
+  /// **'Batch Carer'**
+  String get careRhythmBatchCarer;
+
+  /// No description provided for @careRhythmBatchCarerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You handle multiple plants in focused care sessions.'**
+  String get careRhythmBatchCarerDesc;
+
+  /// No description provided for @careRhythmConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% match'**
+  String careRhythmConfidence(int percent);
+
+  /// No description provided for @quickCheckInThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks for checking in!'**
+  String get quickCheckInThanks;
+
+  /// No description provided for @carePersonaMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% match'**
+  String carePersonaMatch(int percent);
+
+  /// No description provided for @carePersonaDevotee.
+  ///
+  /// In en, this message translates to:
+  /// **'Devotee'**
+  String get carePersonaDevotee;
+
+  /// No description provided for @carePersonaExplorer.
+  ///
+  /// In en, this message translates to:
+  /// **'Explorer'**
+  String get carePersonaExplorer;
+
+  /// No description provided for @carePersonaPerfectionist.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfectionist'**
+  String get carePersonaPerfectionist;
+
+  /// No description provided for @carePersonaNurturer.
+  ///
+  /// In en, this message translates to:
+  /// **'Nurturer'**
+  String get carePersonaNurturer;
+
+  /// No description provided for @carePersonaVeteran.
+  ///
+  /// In en, this message translates to:
+  /// **'Veteran'**
+  String get carePersonaVeteran;
+
+  /// No description provided for @carePersonaEarlyBird.
+  ///
+  /// In en, this message translates to:
+  /// **'Early Bird'**
+  String get carePersonaEarlyBird;
+
+  /// No description provided for @plantPersonalityThe.
+  ///
+  /// In en, this message translates to:
+  /// **'The {trait}'**
+  String plantPersonalityThe(String trait);
+
+  /// No description provided for @plantPersonalityDedicated.
+  ///
+  /// In en, this message translates to:
+  /// **'Dedicated care routine'**
+  String get plantPersonalityDedicated;
+
+  /// No description provided for @plantPersonalityBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced care approach'**
+  String get plantPersonalityBalanced;
+
+  /// No description provided for @plantPersonalityCasual.
+  ///
+  /// In en, this message translates to:
+  /// **'Casual care style'**
+  String get plantPersonalityCasual;
+
+  /// No description provided for @plantPersonalityMinimalist.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimalist care'**
+  String get plantPersonalityMinimalist;
+
+  /// No description provided for @careRoutineNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get careRoutineNight;
+
+  /// No description provided for @careRoutineMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get careRoutineMorning;
+
+  /// No description provided for @careRoutineAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get careRoutineAfternoon;
+
+  /// No description provided for @careRoutineEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get careRoutineEvening;
+
+  /// No description provided for @careRoutinePlants.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} plants'**
+  String careRoutinePlants(int count);
+
+  /// No description provided for @careRoutineMinPerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min/week'**
+  String careRoutineMinPerWeek(int minutes);
 }
 
 class _AppLocalizationsDelegate

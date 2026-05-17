@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/quick_check_in.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -26,6 +27,7 @@ class _BotanicaQuickCheckInCardState extends State<BotanicaQuickCheckInCard> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     if (_selected != null) {
       return BotanicaGlassCard(
@@ -36,7 +38,7 @@ class _BotanicaQuickCheckInCardState extends State<BotanicaQuickCheckInCard> {
                 color: Color(0xFF66BB6A)),
             BotanicaGaps.hXs,
             Text(
-              'Thanks for checking in!',
+              l10n.quickCheckInThanks,
               style: textTheme.labelSmall?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -59,7 +61,7 @@ class _BotanicaQuickCheckInCardState extends State<BotanicaQuickCheckInCard> {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'How is ${widget.plantNickname} doing?',
+                  l10n.quickCheckInTitle(widget.plantNickname),
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -72,7 +74,7 @@ class _BotanicaQuickCheckInCardState extends State<BotanicaQuickCheckInCard> {
             children: [
               _ResponseButton(
                 icon: Icons.sentiment_very_satisfied_rounded,
-                label: 'Thriving',
+                label: l10n.quickCheckInThriving,
                 color: const Color(0xFF66BB6A),
                 onTap: () => _respond(QuickCheckInResponse.thriving),
                 scheme: scheme,
@@ -81,7 +83,7 @@ class _BotanicaQuickCheckInCardState extends State<BotanicaQuickCheckInCard> {
               BotanicaGaps.hXs,
               _ResponseButton(
                 icon: Icons.sentiment_neutral_rounded,
-                label: 'Okay',
+                label: l10n.quickCheckInOkay,
                 color: const Color(0xFFFF9800),
                 onTap: () => _respond(QuickCheckInResponse.okay),
                 scheme: scheme,
@@ -90,7 +92,7 @@ class _BotanicaQuickCheckInCardState extends State<BotanicaQuickCheckInCard> {
               BotanicaGaps.hXs,
               _ResponseButton(
                 icon: Icons.sentiment_dissatisfied_rounded,
-                label: 'Worried',
+                label: l10n.quickCheckInWorried,
                 color: scheme.error,
                 onTap: () => _respond(QuickCheckInResponse.worried),
                 scheme: scheme,

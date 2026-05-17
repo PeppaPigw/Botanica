@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/user_care_persona_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 
 class BotanicaCarePersonaBadge extends StatelessWidget {
@@ -34,10 +35,21 @@ class BotanicaCarePersonaBadge extends StatelessWidget {
         _ => scheme.outline,
       };
 
+  String _localizedType(String type, AppLocalizations l10n) => switch (type) {
+        'Devotee' => l10n.carePersonaDevotee,
+        'Explorer' => l10n.carePersonaExplorer,
+        'Perfectionist' => l10n.carePersonaPerfectionist,
+        'Nurturer' => l10n.carePersonaNurturer,
+        'Veteran' => l10n.carePersonaVeteran,
+        'EarlyBird' => l10n.carePersonaEarlyBird,
+        _ => type,
+      };
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
     final color = _colorFor(persona.primaryType, scheme);
 
     if (compact) {
@@ -56,7 +68,7 @@ class BotanicaCarePersonaBadge extends StatelessWidget {
             Icon(_iconFor(persona.primaryType), size: 14, color: color),
             const SizedBox(width: 4),
             Text(
-              persona.primaryType,
+              _localizedType(persona.primaryType, l10n),
               style: textTheme.labelSmall?.copyWith(
                 color: color,
                 fontWeight: FontWeight.w700,
@@ -104,14 +116,14 @@ class BotanicaCarePersonaBadge extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  persona.primaryType,
+                  _localizedType(persona.primaryType, l10n),
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: color,
                   ),
                 ),
                 Text(
-                  '${(persona.matchPercentage * 100).round()}% match',
+                  l10n.carePersonaMatch((persona.matchPercentage * 100).round()),
                   style: textTheme.bodySmall?.copyWith(
                     color: scheme.onSurface.withValues(alpha: 0.6),
                   ),

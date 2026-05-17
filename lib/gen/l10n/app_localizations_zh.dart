@@ -3985,4 +3985,109 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nextActionRestSub => '花园很开心——享受这一刻';
+
+  @override
+  String careRhythmStreakBadge(int count) {
+    return '${count}x 连续';
+  }
+
+  @override
+  String get careRhythmMorningPerson => '晨间达人';
+
+  @override
+  String get careRhythmMorningPersonDesc => '你倾向于在早晨照顾植物。';
+
+  @override
+  String get careRhythmEveningCarer => '傍晚护理者';
+
+  @override
+  String get careRhythmEveningCarerDesc => '你的植物在傍晚时分得到关注。';
+
+  @override
+  String get careRhythmWeekendWarrior => '周末战士';
+
+  @override
+  String get careRhythmWeekendWarriorDesc => '周末是你专注照顾植物的时间。';
+
+  @override
+  String get careRhythmDailyDevoter => '每日守护者';
+
+  @override
+  String get careRhythmDailyDevoterDesc => '你几乎每天都会查看植物。';
+
+  @override
+  String get careRhythmBatchCarer => '批量护理者';
+
+  @override
+  String get careRhythmBatchCarerDesc => '你在集中的护理时段照顾多株植物。';
+
+  @override
+  String careRhythmConfidence(int percent) {
+    return '$percent% 匹配';
+  }
+
+  @override
+  String get quickCheckInThanks => '感谢你的关注！';
+
+  @override
+  String carePersonaMatch(int percent) {
+    return '$percent% 匹配';
+  }
+
+  @override
+  String get carePersonaDevotee => '忠实爱好者';
+
+  @override
+  String get carePersonaExplorer => '探索者';
+
+  @override
+  String get carePersonaPerfectionist => '完美主义者';
+
+  @override
+  String get carePersonaNurturer => '养育者';
+
+  @override
+  String get carePersonaVeteran => '资深玩家';
+
+  @override
+  String get carePersonaEarlyBird => '早起鸟';
+
+  @override
+  String plantPersonalityThe(String trait) {
+    return '$trait型';
+  }
+
+  @override
+  String get plantPersonalityDedicated => '专注护理模式';
+
+  @override
+  String get plantPersonalityBalanced => '均衡护理方式';
+
+  @override
+  String get plantPersonalityCasual => '随性护理风格';
+
+  @override
+  String get plantPersonalityMinimalist => '极简护理';
+
+  @override
+  String get careRoutineNight => '夜间';
+
+  @override
+  String get careRoutineMorning => '早晨';
+
+  @override
+  String get careRoutineAfternoon => '下午';
+
+  @override
+  String get careRoutineEvening => '傍晚';
+
+  @override
+  String careRoutinePlants(int count) {
+    return '$count 株植物';
+  }
+
+  @override
+  String careRoutineMinPerWeek(int minutes) {
+    return '$minutes 分钟/周';
+  }
 }

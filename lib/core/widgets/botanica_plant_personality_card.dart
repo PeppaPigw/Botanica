@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_personality_engine.dart';
+import '../../gen/l10n/app_localizations.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
 
@@ -17,6 +18,7 @@ class BotanicaPlantPersonalityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final (IconData icon, Color color) = _traitVisual(personality.primaryTrait, scheme);
 
@@ -52,7 +54,7 @@ class BotanicaPlantPersonalityCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      'The ${_capitalize(personality.primaryTrait)}',
+                      l10n.plantPersonalityThe(_capitalize(personality.primaryTrait)),
                       style: textTheme.labelSmall?.copyWith(
                         color: color,
                         fontWeight: FontWeight.w600,
@@ -84,7 +86,7 @@ class BotanicaPlantPersonalityCard extends StatelessWidget {
           ),
           BotanicaGaps.vSm,
           Text(
-            _careStyleLabel(personality.careStyle),
+            _careStyleLabel(personality.careStyle, l10n),
             style: textTheme.labelSmall?.copyWith(
               color: scheme.onSurface.withValues(alpha: 0.6),
               fontStyle: FontStyle.italic,
@@ -111,12 +113,12 @@ class BotanicaPlantPersonalityCard extends StatelessWidget {
   static String _capitalize(String s) =>
       s.isEmpty ? s : '${s[0].toUpperCase()}${s.substring(1)}';
 
-  static String _careStyleLabel(String style) {
+  static String _careStyleLabel(String style, AppLocalizations l10n) {
     return switch (style) {
-      'careStyleDedicated' => 'Dedicated care routine',
-      'careStyleBalanced' => 'Balanced care approach',
-      'careStyleCasual' => 'Casual care style',
-      'careStyleMinimalist' => 'Minimalist care',
+      'careStyleDedicated' => l10n.plantPersonalityDedicated,
+      'careStyleBalanced' => l10n.plantPersonalityBalanced,
+      'careStyleCasual' => l10n.plantPersonalityCasual,
+      'careStyleMinimalist' => l10n.plantPersonalityMinimalist,
       _ => style,
     };
   }

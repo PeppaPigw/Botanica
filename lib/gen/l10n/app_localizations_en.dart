@@ -4164,4 +4164,114 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nextActionRestSub => 'Your garden is happy — enjoy the moment';
+
+  @override
+  String careRhythmStreakBadge(int count) {
+    return '${count}x streak';
+  }
+
+  @override
+  String get careRhythmMorningPerson => 'Morning Person';
+
+  @override
+  String get careRhythmMorningPersonDesc =>
+      'You tend to care for your plants in the morning hours.';
+
+  @override
+  String get careRhythmEveningCarer => 'Evening Carer';
+
+  @override
+  String get careRhythmEveningCarerDesc =>
+      'Your plants get attention during the evening wind-down.';
+
+  @override
+  String get careRhythmWeekendWarrior => 'Weekend Warrior';
+
+  @override
+  String get careRhythmWeekendWarriorDesc =>
+      'Weekends are your dedicated plant care time.';
+
+  @override
+  String get careRhythmDailyDevoter => 'Daily Devoter';
+
+  @override
+  String get careRhythmDailyDevoterDesc =>
+      'You check on your plants almost every single day.';
+
+  @override
+  String get careRhythmBatchCarer => 'Batch Carer';
+
+  @override
+  String get careRhythmBatchCarerDesc =>
+      'You handle multiple plants in focused care sessions.';
+
+  @override
+  String careRhythmConfidence(int percent) {
+    return '$percent% match';
+  }
+
+  @override
+  String get quickCheckInThanks => 'Thanks for checking in!';
+
+  @override
+  String carePersonaMatch(int percent) {
+    return '$percent% match';
+  }
+
+  @override
+  String get carePersonaDevotee => 'Devotee';
+
+  @override
+  String get carePersonaExplorer => 'Explorer';
+
+  @override
+  String get carePersonaPerfectionist => 'Perfectionist';
+
+  @override
+  String get carePersonaNurturer => 'Nurturer';
+
+  @override
+  String get carePersonaVeteran => 'Veteran';
+
+  @override
+  String get carePersonaEarlyBird => 'Early Bird';
+
+  @override
+  String plantPersonalityThe(String trait) {
+    return 'The $trait';
+  }
+
+  @override
+  String get plantPersonalityDedicated => 'Dedicated care routine';
+
+  @override
+  String get plantPersonalityBalanced => 'Balanced care approach';
+
+  @override
+  String get plantPersonalityCasual => 'Casual care style';
+
+  @override
+  String get plantPersonalityMinimalist => 'Minimalist care';
+
+  @override
+  String get careRoutineNight => 'Night';
+
+  @override
+  String get careRoutineMorning => 'Morning';
+
+  @override
+  String get careRoutineAfternoon => 'Afternoon';
+
+  @override
+  String get careRoutineEvening => 'Evening';
+
+  @override
+  String careRoutinePlants(int count) {
+    return '$count plants';
+  }
+
+  @override
+  String careRoutineMinPerWeek(int minutes) {
+    return '$minutes min/week';
+  }
 }

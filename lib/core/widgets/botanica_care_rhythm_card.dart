@@ -21,7 +21,7 @@ class BotanicaCareRhythmCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     final (IconData icon, Color color, String label, String desc) =
-        _rhythmVisual(rhythm.type, scheme);
+        _rhythmVisual(rhythm.type, scheme, l10n);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -54,7 +54,7 @@ class BotanicaCareRhythmCard extends StatelessWidget {
                         BorderRadius.circular(BotanicaTokens.radiusPill),
                   ),
                   child: Text(
-                    '${rhythm.streak}x streak',
+                    l10n.careRhythmStreakBadge(rhythm.streak),
                     style: textTheme.labelSmall?.copyWith(
                       color: color,
                       fontWeight: FontWeight.w700,
@@ -87,37 +87,37 @@ class BotanicaCareRhythmCard extends StatelessWidget {
   }
 
   static (IconData, Color, String, String) _rhythmVisual(
-      CareRhythmType type, ColorScheme scheme) {
+      CareRhythmType type, ColorScheme scheme, AppLocalizations l10n) {
     return switch (type) {
       CareRhythmType.morningPerson => (
           Icons.wb_sunny_rounded,
           const Color(0xFFFFA726),
-          'Morning Person',
-          'You tend to care for your plants in the morning hours.',
+          l10n.careRhythmMorningPerson,
+          l10n.careRhythmMorningPersonDesc,
         ),
       CareRhythmType.eveningPerson => (
           Icons.nightlight_round,
           const Color(0xFF7E57C2),
-          'Evening Carer',
-          'Your plants get attention during the evening wind-down.',
+          l10n.careRhythmEveningCarer,
+          l10n.careRhythmEveningCarerDesc,
         ),
       CareRhythmType.weekendWarrior => (
           Icons.weekend_rounded,
           scheme.tertiary,
-          'Weekend Warrior',
-          'Weekends are your dedicated plant care time.',
+          l10n.careRhythmWeekendWarrior,
+          l10n.careRhythmWeekendWarriorDesc,
         ),
       CareRhythmType.dailyDevoter => (
           Icons.calendar_today_rounded,
           scheme.primary,
-          'Daily Devoter',
-          'You check on your plants almost every single day.',
+          l10n.careRhythmDailyDevoter,
+          l10n.careRhythmDailyDevoterDesc,
         ),
       CareRhythmType.batchCarer => (
           Icons.layers_rounded,
           scheme.secondary,
-          'Batch Carer',
-          'You handle multiple plants in focused care sessions.',
+          l10n.careRhythmBatchCarer,
+          l10n.careRhythmBatchCarerDesc,
         ),
     };
   }
@@ -136,6 +136,7 @@ class _ConfidenceBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Row(
       children: [
         Expanded(
@@ -151,7 +152,7 @@ class _ConfidenceBar extends StatelessWidget {
         ),
         BotanicaGaps.hXs,
         Text(
-          '${(confidence * 100).round()}% match',
+          l10n.careRhythmConfidence((confidence * 100).round()),
           style: Theme.of(context).textTheme.labelSmall?.copyWith(
                 color: scheme.onSurface.withValues(alpha: 0.5),
               ),

@@ -55,7 +55,7 @@ class BotanicaCareRoutineCard extends StatelessWidget {
                       BorderRadius.circular(BotanicaTokens.radiusPill),
                 ),
                 child: Text(
-                  '${result.totalWeeklyMinutes} min/week',
+                  l10n.careRoutineMinPerWeek(result.totalWeeklyMinutes),
                   style: textTheme.labelSmall?.copyWith(
                     color: scheme.tertiary,
                     fontWeight: FontWeight.w700,
@@ -83,11 +83,11 @@ class _RoutineRow extends StatelessWidget {
 
   final CareRoutine routine;
 
-  String _timeLabel(int hour) {
-    if (hour < 6) return 'Night';
-    if (hour < 12) return 'Morning';
-    if (hour < 17) return 'Afternoon';
-    return 'Evening';
+  String _timeLabel(int hour, AppLocalizations l10n) {
+    if (hour < 6) return l10n.careRoutineNight;
+    if (hour < 12) return l10n.careRoutineMorning;
+    if (hour < 17) return l10n.careRoutineAfternoon;
+    return l10n.careRoutineEvening;
   }
 
   IconData _timeIcon(int hour) {
@@ -101,6 +101,7 @@ class _RoutineRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: BotanicaTokens.spacingXxs),
@@ -114,14 +115,14 @@ class _RoutineRow extends StatelessWidget {
           BotanicaGaps.hXs,
           Expanded(
             child: Text(
-              '${_timeLabel(routine.preferredTime)} ${routine.frequency}',
+              '${_timeLabel(routine.preferredTime, l10n)} ${routine.frequency}',
               style: textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           Text(
-            '${routine.plantIds.length} plants',
+            l10n.careRoutinePlants(routine.plantIds.length),
             style: textTheme.labelSmall?.copyWith(
               color: scheme.onSurface.withValues(alpha: 0.6),
             ),

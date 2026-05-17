@@ -4183,4 +4183,114 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nextActionRestSub => 'Tu jardín está feliz — disfruta el momento';
+
+  @override
+  String careRhythmStreakBadge(int count) {
+    return '${count}x racha';
+  }
+
+  @override
+  String get careRhythmMorningPerson => 'Madrugador';
+
+  @override
+  String get careRhythmMorningPersonDesc =>
+      'Tiendes a cuidar tus plantas por la mañana.';
+
+  @override
+  String get careRhythmEveningCarer => 'Cuidador nocturno';
+
+  @override
+  String get careRhythmEveningCarerDesc =>
+      'Tus plantas reciben atención al atardecer.';
+
+  @override
+  String get careRhythmWeekendWarrior => 'Guerrero de fin de semana';
+
+  @override
+  String get careRhythmWeekendWarriorDesc =>
+      'Los fines de semana son tu momento para las plantas.';
+
+  @override
+  String get careRhythmDailyDevoter => 'Devoto diario';
+
+  @override
+  String get careRhythmDailyDevoterDesc =>
+      'Revisas tus plantas casi todos los días.';
+
+  @override
+  String get careRhythmBatchCarer => 'Cuidador por lotes';
+
+  @override
+  String get careRhythmBatchCarerDesc =>
+      'Cuidas varias plantas en sesiones concentradas.';
+
+  @override
+  String careRhythmConfidence(int percent) {
+    return '$percent% coincidencia';
+  }
+
+  @override
+  String get quickCheckInThanks => '¡Gracias por revisar!';
+
+  @override
+  String carePersonaMatch(int percent) {
+    return '$percent% coincidencia';
+  }
+
+  @override
+  String get carePersonaDevotee => 'Devoto';
+
+  @override
+  String get carePersonaExplorer => 'Explorador';
+
+  @override
+  String get carePersonaPerfectionist => 'Perfeccionista';
+
+  @override
+  String get carePersonaNurturer => 'Cuidador';
+
+  @override
+  String get carePersonaVeteran => 'Veterano';
+
+  @override
+  String get carePersonaEarlyBird => 'Madrugador';
+
+  @override
+  String plantPersonalityThe(String trait) {
+    return 'El $trait';
+  }
+
+  @override
+  String get plantPersonalityDedicated => 'Rutina de cuidado dedicada';
+
+  @override
+  String get plantPersonalityBalanced => 'Enfoque de cuidado equilibrado';
+
+  @override
+  String get plantPersonalityCasual => 'Estilo de cuidado casual';
+
+  @override
+  String get plantPersonalityMinimalist => 'Cuidado minimalista';
+
+  @override
+  String get careRoutineNight => 'Noche';
+
+  @override
+  String get careRoutineMorning => 'Mañana';
+
+  @override
+  String get careRoutineAfternoon => 'Tarde';
+
+  @override
+  String get careRoutineEvening => 'Atardecer';
+
+  @override
+  String careRoutinePlants(int count) {
+    return '$count plantas';
+  }
+
+  @override
+  String careRoutineMinPerWeek(int minutes) {
+    return '$minutes min/semana';
+  }
 }

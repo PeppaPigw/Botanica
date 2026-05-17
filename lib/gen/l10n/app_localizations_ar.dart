@@ -4126,4 +4126,113 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nextActionRestSub => 'حديقتك سعيدة — استمتع باللحظة';
+
+  @override
+  String careRhythmStreakBadge(int count) {
+    return '${count}x متتالية';
+  }
+
+  @override
+  String get careRhythmMorningPerson => 'شخص صباحي';
+
+  @override
+  String get careRhythmMorningPersonDesc =>
+      'تميل إلى العناية بنباتاتك في ساعات الصباح.';
+
+  @override
+  String get careRhythmEveningCarer => 'مقدم رعاية مسائي';
+
+  @override
+  String get careRhythmEveningCarerDesc =>
+      'تحصل نباتاتك على الاهتمام خلال المساء.';
+
+  @override
+  String get careRhythmWeekendWarrior => 'محارب نهاية الأسبوع';
+
+  @override
+  String get careRhythmWeekendWarriorDesc =>
+      'عطلات نهاية الأسبوع هي وقتك المخصص للعناية بالنباتات.';
+
+  @override
+  String get careRhythmDailyDevoter => 'مخلص يومي';
+
+  @override
+  String get careRhythmDailyDevoterDesc => 'تتفقد نباتاتك كل يوم تقريباً.';
+
+  @override
+  String get careRhythmBatchCarer => 'مقدم رعاية جماعية';
+
+  @override
+  String get careRhythmBatchCarerDesc =>
+      'تعتني بعدة نباتات في جلسات رعاية مركزة.';
+
+  @override
+  String careRhythmConfidence(int percent) {
+    return '$percent% تطابق';
+  }
+
+  @override
+  String get quickCheckInThanks => 'شكراً على المتابعة!';
+
+  @override
+  String carePersonaMatch(int percent) {
+    return '$percent% تطابق';
+  }
+
+  @override
+  String get carePersonaDevotee => 'مخلص';
+
+  @override
+  String get carePersonaExplorer => 'مستكشف';
+
+  @override
+  String get carePersonaPerfectionist => 'كمالي';
+
+  @override
+  String get carePersonaNurturer => 'راعٍ';
+
+  @override
+  String get carePersonaVeteran => 'محترف';
+
+  @override
+  String get carePersonaEarlyBird => 'مبكر';
+
+  @override
+  String plantPersonalityThe(String trait) {
+    return '$trait';
+  }
+
+  @override
+  String get plantPersonalityDedicated => 'روتين عناية مخصص';
+
+  @override
+  String get plantPersonalityBalanced => 'نهج عناية متوازن';
+
+  @override
+  String get plantPersonalityCasual => 'أسلوب عناية عفوي';
+
+  @override
+  String get plantPersonalityMinimalist => 'عناية بسيطة';
+
+  @override
+  String get careRoutineNight => 'ليلاً';
+
+  @override
+  String get careRoutineMorning => 'صباحاً';
+
+  @override
+  String get careRoutineAfternoon => 'بعد الظهر';
+
+  @override
+  String get careRoutineEvening => 'مساءً';
+
+  @override
+  String careRoutinePlants(int count) {
+    return '$count نباتات';
+  }
+
+  @override
+  String careRoutineMinPerWeek(int minutes) {
+    return '$minutes دقيقة/أسبوع';
+  }
 }
