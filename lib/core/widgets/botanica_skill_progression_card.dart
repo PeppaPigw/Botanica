@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/care_difficulty_progression.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaSkillProgressionCard extends StatelessWidget {
   const BotanicaSkillProgressionCard({
@@ -17,6 +18,7 @@ class BotanicaSkillProgressionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final levelColor = switch (progression.level) {
       SkillLevel.beginner => const Color(0xFF66BB6A),
@@ -42,7 +44,7 @@ class BotanicaSkillProgressionCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Skill Level',
+                  l10n.skillLevelTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

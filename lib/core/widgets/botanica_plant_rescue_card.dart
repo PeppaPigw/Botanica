@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_rescue_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaPlantRescueCard extends StatelessWidget {
   const BotanicaPlantRescueCard({
@@ -17,6 +18,7 @@ class BotanicaPlantRescueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final severityColor = switch (plan.severity) {
       RescueSeverity.critical => scheme.error,
@@ -41,7 +43,7 @@ class BotanicaPlantRescueCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Rescue Plan',
+                  l10n.rescuePlanTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),

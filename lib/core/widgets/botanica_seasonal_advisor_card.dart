@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/seasonal_care_advisor.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaSeasonalAdvisorCard extends StatelessWidget {
   const BotanicaSeasonalAdvisorCard({
@@ -19,6 +20,7 @@ class BotanicaSeasonalAdvisorCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -33,7 +35,7 @@ class BotanicaSeasonalAdvisorCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Seasonal Tips',
+                  l10n.seasonalTipsTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

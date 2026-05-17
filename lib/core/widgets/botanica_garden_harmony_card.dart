@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/garden_harmony_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaGardenHarmonyCard extends StatelessWidget {
   const BotanicaGardenHarmonyCard({
@@ -17,6 +18,7 @@ class BotanicaGardenHarmonyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final levelColor = _levelColor(result.level, scheme);
     final trendIcon = switch (result.trend) {
@@ -42,7 +44,7 @@ class BotanicaGardenHarmonyCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Garden Harmony',
+                  l10n.gardenHarmonyTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),

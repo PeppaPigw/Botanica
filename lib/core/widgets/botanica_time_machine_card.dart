@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/garden_time_machine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaTimeMachineCard extends StatelessWidget {
   const BotanicaTimeMachineCard({
@@ -19,6 +20,7 @@ class BotanicaTimeMachineCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -33,7 +35,7 @@ class BotanicaTimeMachineCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Garden Timeline',
+                  l10n.gardenTimelineTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

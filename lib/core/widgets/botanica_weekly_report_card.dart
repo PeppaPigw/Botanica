@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/weekly_report_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaWeeklyReportCard extends StatelessWidget {
   const BotanicaWeeklyReportCard({
@@ -17,6 +18,7 @@ class BotanicaWeeklyReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final trendColor = report.comparedToLastWeek >= 0
         ? const Color(0xFF66BB6A)
@@ -35,7 +37,7 @@ class BotanicaWeeklyReportCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'This Week',
+                  l10n.weeklyReportTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

@@ -3763,4 +3763,127 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get careRoutinesTitle => '你的养护习惯';
+
+  @override
+  String get plantAnniversariesTitle => '植物纪念日';
+
+  @override
+  String get communityBenchmarkTitle => '社区基准';
+
+  @override
+  String get emotionalBondsTitle => '情感纽带';
+
+  @override
+  String get suggestedGoalsTitle => '建议目标';
+
+  @override
+  String get gardenHarmonyTitle => '花园和谐';
+
+  @override
+  String get gardenMomentumTitle => '花园动力';
+
+  @override
+  String get gardenMoodTitle => '花园氛围';
+
+  @override
+  String get gardenRhythmTitle => '花园节奏';
+
+  @override
+  String get gardenCardTitle => '花园卡片';
+
+  @override
+  String get gardenStatsTitle => '花园统计';
+
+  @override
+  String get growthJournalTitle => '生长日志';
+
+  @override
+  String get careHabitsTitle => '养护习惯';
+
+  @override
+  String get healthForecastTitle => '健康预测';
+
+  @override
+  String get healthTimelineTitle => '健康时间线';
+
+  @override
+  String get plantQuizTitle => '植物问答';
+
+  @override
+  String get growthStageTitle => '生长阶段';
+
+  @override
+  String get memoryLaneTitle => '回忆长廊';
+
+  @override
+  String get microSeasonsTitle => '微季节';
+
+  @override
+  String get milestonesTitle => '里程碑';
+
+  @override
+  String get gentleNudgesTitle => '温馨提醒';
+
+  @override
+  String get timelapseReadyTitle => '延时摄影就绪';
+
+  @override
+  String get lifeStoryTitle => '生命故事';
+
+  @override
+  String get plantLineageTitle => '植物谱系';
+
+  @override
+  String get rescuePlanTitle => '救援计划';
+
+  @override
+  String get plantStoryTitle => '植物故事';
+
+  @override
+  String get vitalSignsTitle => '生命体征';
+
+  @override
+  String get predictedNeedsTitle => '预测需求';
+
+  @override
+  String get propagationTitle => '繁殖';
+
+  @override
+  String get roomProfilesTitle => '房间档案';
+
+  @override
+  String get seasonalTipsTitle => '季节建议';
+
+  @override
+  String get skillLevelTitle => '技能等级';
+
+  @override
+  String get plantSocialGraphTitle => '植物社交图谱';
+
+  @override
+  String get streakBoardTitle => '连续排行';
+
+  @override
+  String get stressAlertsTitle => '压力警报';
+
+  @override
+  String get survivalOutlookTitle => '存活展望';
+
+  @override
+  String get gardenTimelineTitle => '花园时间线';
+
+  @override
+  String get waterEfficiencyTitle => '浇水效率';
+
+  @override
+  String get wateringScheduleTitle => '浇水计划';
+
+  @override
+  String get scheduleOptimizerTitle => '计划优化';
+
+  @override
+  String get weeklyReportTitle => '本周';
+
+  @override
+  String get plantWhispererTitle => '植物低语者';
 }

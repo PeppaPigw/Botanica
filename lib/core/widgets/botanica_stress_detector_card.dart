@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/environment_stress_detector.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaStressDetectorCard extends StatelessWidget {
   const BotanicaStressDetectorCard({
@@ -19,6 +20,7 @@ class BotanicaStressDetectorCard extends StatelessWidget {
     if (stressed.isEmpty) return const SizedBox.shrink();
 
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     return BotanicaGlassCard(
       padding: BotanicaTokens.cardPaddingDense,
@@ -33,7 +35,7 @@ class BotanicaStressDetectorCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Stress Alerts',
+                  l10n.stressAlertsTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

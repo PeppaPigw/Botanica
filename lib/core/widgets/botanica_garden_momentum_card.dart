@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/garden_momentum_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaGardenMomentumCard extends StatelessWidget {
   const BotanicaGardenMomentumCard({
@@ -17,6 +18,7 @@ class BotanicaGardenMomentumCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final scoreColor = momentum.score >= 0.7
         ? const Color(0xFF66BB6A)
@@ -43,7 +45,7 @@ class BotanicaGardenMomentumCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Garden Momentum',
+                  l10n.gardenMomentumTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

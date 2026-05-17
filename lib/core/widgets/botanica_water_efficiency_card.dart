@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/water_efficiency_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaWaterEfficiencyCard extends StatelessWidget {
   const BotanicaWaterEfficiencyCard({
@@ -19,6 +20,7 @@ class BotanicaWaterEfficiencyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final effColor = switch (result.efficiency) {
       WaterEfficiency.optimal => const Color(0xFF66BB6A),
@@ -40,7 +42,7 @@ class BotanicaWaterEfficiencyCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Water Efficiency',
+                  l10n.waterEfficiencyTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

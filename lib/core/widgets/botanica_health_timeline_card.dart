@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_health_timeline.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaHealthTimelineCard extends StatelessWidget {
   const BotanicaHealthTimelineCard({
@@ -19,6 +20,7 @@ class BotanicaHealthTimelineCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final improving = timelines.where((t) => t.trend > 0.1).length;
     final declining = timelines.where((t) => t.trend < -0.1).length;
@@ -36,7 +38,7 @@ class BotanicaHealthTimelineCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Health Timeline',
+                  l10n.healthTimelineTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/micro_season_detector.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaMicroSeasonCard extends StatelessWidget {
   const BotanicaMicroSeasonCard({
@@ -21,6 +22,7 @@ class BotanicaMicroSeasonCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
     final current = report.currentMicroSeason;
 
     return BotanicaGlassCard(
@@ -36,7 +38,7 @@ class BotanicaMicroSeasonCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Micro Seasons',
+                  l10n.microSeasonsTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

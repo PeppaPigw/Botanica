@@ -3938,4 +3938,127 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get careRoutinesTitle => 'Your Care Routines';
+
+  @override
+  String get plantAnniversariesTitle => 'Plant Anniversaries';
+
+  @override
+  String get communityBenchmarkTitle => 'Community Benchmark';
+
+  @override
+  String get emotionalBondsTitle => 'Emotional Bonds';
+
+  @override
+  String get suggestedGoalsTitle => 'Suggested Goals';
+
+  @override
+  String get gardenHarmonyTitle => 'Garden Harmony';
+
+  @override
+  String get gardenMomentumTitle => 'Garden Momentum';
+
+  @override
+  String get gardenMoodTitle => 'Garden Mood';
+
+  @override
+  String get gardenRhythmTitle => 'Garden Rhythm';
+
+  @override
+  String get gardenCardTitle => 'Garden Card';
+
+  @override
+  String get gardenStatsTitle => 'Garden Stats';
+
+  @override
+  String get growthJournalTitle => 'Growth Journal';
+
+  @override
+  String get careHabitsTitle => 'Care Habits';
+
+  @override
+  String get healthForecastTitle => 'Health Forecast';
+
+  @override
+  String get healthTimelineTitle => 'Health Timeline';
+
+  @override
+  String get plantQuizTitle => 'Plant Quiz';
+
+  @override
+  String get growthStageTitle => 'Growth Stage';
+
+  @override
+  String get memoryLaneTitle => 'Memory Lane';
+
+  @override
+  String get microSeasonsTitle => 'Micro Seasons';
+
+  @override
+  String get milestonesTitle => 'Milestones';
+
+  @override
+  String get gentleNudgesTitle => 'Gentle Nudges';
+
+  @override
+  String get timelapseReadyTitle => 'Timelapse Ready';
+
+  @override
+  String get lifeStoryTitle => 'Life Story';
+
+  @override
+  String get plantLineageTitle => 'Plant Lineage';
+
+  @override
+  String get rescuePlanTitle => 'Rescue Plan';
+
+  @override
+  String get plantStoryTitle => 'Plant Story';
+
+  @override
+  String get vitalSignsTitle => 'Vital Signs';
+
+  @override
+  String get predictedNeedsTitle => 'Predicted Needs';
+
+  @override
+  String get propagationTitle => 'Propagation';
+
+  @override
+  String get roomProfilesTitle => 'Room Profiles';
+
+  @override
+  String get seasonalTipsTitle => 'Seasonal Tips';
+
+  @override
+  String get skillLevelTitle => 'Skill Level';
+
+  @override
+  String get plantSocialGraphTitle => 'Plant Social Graph';
+
+  @override
+  String get streakBoardTitle => 'Streak Board';
+
+  @override
+  String get stressAlertsTitle => 'Stress Alerts';
+
+  @override
+  String get survivalOutlookTitle => 'Survival Outlook';
+
+  @override
+  String get gardenTimelineTitle => 'Garden Timeline';
+
+  @override
+  String get waterEfficiencyTitle => 'Water Efficiency';
+
+  @override
+  String get wateringScheduleTitle => 'Watering Schedule';
+
+  @override
+  String get scheduleOptimizerTitle => 'Schedule Optimizer';
+
+  @override
+  String get weeklyReportTitle => 'This Week';
+
+  @override
+  String get plantWhispererTitle => 'Plant Whisperer';
 }

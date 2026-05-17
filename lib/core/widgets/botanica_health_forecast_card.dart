@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_health_forecast_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaHealthForecastCard extends StatelessWidget {
   const BotanicaHealthForecastCard({
@@ -19,6 +20,7 @@ class BotanicaHealthForecastCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final atRisk = forecasts.where((f) => f.riskLevel == 'high').length;
 
@@ -35,7 +37,7 @@ class BotanicaHealthForecastCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Health Forecast',
+                  l10n.healthForecastTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

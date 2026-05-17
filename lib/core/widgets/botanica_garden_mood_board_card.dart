@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/garden_mood_board_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaGardenMoodBoardCard extends StatelessWidget {
   const BotanicaGardenMoodBoardCard({
@@ -17,6 +18,7 @@ class BotanicaGardenMoodBoardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final moodColor = _moodColor(moodBoard.dominantMood);
 
@@ -33,7 +35,7 @@ class BotanicaGardenMoodBoardCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Garden Mood',
+                  l10n.gardenMoodTitle,
                   style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),

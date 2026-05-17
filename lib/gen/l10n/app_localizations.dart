@@ -6740,6 +6740,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your Care Routines'**
   String get careRoutinesTitle;
+
+  /// No description provided for @plantAnniversariesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Anniversaries'**
+  String get plantAnniversariesTitle;
+
+  /// No description provided for @communityBenchmarkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Benchmark'**
+  String get communityBenchmarkTitle;
+
+  /// No description provided for @emotionalBondsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Emotional Bonds'**
+  String get emotionalBondsTitle;
+
+  /// No description provided for @suggestedGoalsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Goals'**
+  String get suggestedGoalsTitle;
+
+  /// No description provided for @gardenHarmonyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Harmony'**
+  String get gardenHarmonyTitle;
+
+  /// No description provided for @gardenMomentumTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Momentum'**
+  String get gardenMomentumTitle;
+
+  /// No description provided for @gardenMoodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Mood'**
+  String get gardenMoodTitle;
+
+  /// No description provided for @gardenRhythmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Rhythm'**
+  String get gardenRhythmTitle;
+
+  /// No description provided for @gardenCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Card'**
+  String get gardenCardTitle;
+
+  /// No description provided for @gardenStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Stats'**
+  String get gardenStatsTitle;
+
+  /// No description provided for @growthJournalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth Journal'**
+  String get growthJournalTitle;
+
+  /// No description provided for @careHabitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Care Habits'**
+  String get careHabitsTitle;
+
+  /// No description provided for @healthForecastTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Forecast'**
+  String get healthForecastTitle;
+
+  /// No description provided for @healthTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Timeline'**
+  String get healthTimelineTitle;
+
+  /// No description provided for @plantQuizTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Quiz'**
+  String get plantQuizTitle;
+
+  /// No description provided for @growthStageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth Stage'**
+  String get growthStageTitle;
+
+  /// No description provided for @memoryLaneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory Lane'**
+  String get memoryLaneTitle;
+
+  /// No description provided for @microSeasonsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Micro Seasons'**
+  String get microSeasonsTitle;
+
+  /// No description provided for @milestonesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get milestonesTitle;
+
+  /// No description provided for @gentleNudgesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle Nudges'**
+  String get gentleNudgesTitle;
+
+  /// No description provided for @timelapseReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timelapse Ready'**
+  String get timelapseReadyTitle;
+
+  /// No description provided for @lifeStoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Life Story'**
+  String get lifeStoryTitle;
+
+  /// No description provided for @plantLineageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Lineage'**
+  String get plantLineageTitle;
+
+  /// No description provided for @rescuePlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rescue Plan'**
+  String get rescuePlanTitle;
+
+  /// No description provided for @plantStoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Story'**
+  String get plantStoryTitle;
+
+  /// No description provided for @vitalSignsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vital Signs'**
+  String get vitalSignsTitle;
+
+  /// No description provided for @predictedNeedsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Predicted Needs'**
+  String get predictedNeedsTitle;
+
+  /// No description provided for @propagationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Propagation'**
+  String get propagationTitle;
+
+  /// No description provided for @roomProfilesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Room Profiles'**
+  String get roomProfilesTitle;
+
+  /// No description provided for @seasonalTipsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seasonal Tips'**
+  String get seasonalTipsTitle;
+
+  /// No description provided for @skillLevelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Skill Level'**
+  String get skillLevelTitle;
+
+  /// No description provided for @plantSocialGraphTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Social Graph'**
+  String get plantSocialGraphTitle;
+
+  /// No description provided for @streakBoardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak Board'**
+  String get streakBoardTitle;
+
+  /// No description provided for @stressAlertsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress Alerts'**
+  String get stressAlertsTitle;
+
+  /// No description provided for @survivalOutlookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Survival Outlook'**
+  String get survivalOutlookTitle;
+
+  /// No description provided for @gardenTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden Timeline'**
+  String get gardenTimelineTitle;
+
+  /// No description provided for @waterEfficiencyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Efficiency'**
+  String get waterEfficiencyTitle;
+
+  /// No description provided for @wateringScheduleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watering Schedule'**
+  String get wateringScheduleTitle;
+
+  /// No description provided for @scheduleOptimizerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Optimizer'**
+  String get scheduleOptimizerTitle;
+
+  /// No description provided for @weeklyReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get weeklyReportTitle;
+
+  /// No description provided for @plantWhispererTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Whisperer'**
+  String get plantWhispererTitle;
 }
 
 class _AppLocalizationsDelegate

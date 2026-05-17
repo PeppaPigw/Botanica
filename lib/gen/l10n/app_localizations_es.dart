@@ -3956,4 +3956,127 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get careRoutinesTitle => 'Tus rutinas de cuidado';
+
+  @override
+  String get plantAnniversariesTitle => 'Aniversarios de plantas';
+
+  @override
+  String get communityBenchmarkTitle => 'Referencia comunitaria';
+
+  @override
+  String get emotionalBondsTitle => 'Vínculos emocionales';
+
+  @override
+  String get suggestedGoalsTitle => 'Objetivos sugeridos';
+
+  @override
+  String get gardenHarmonyTitle => 'Armonía del jardín';
+
+  @override
+  String get gardenMomentumTitle => 'Impulso del jardín';
+
+  @override
+  String get gardenMoodTitle => 'Ambiente del jardín';
+
+  @override
+  String get gardenRhythmTitle => 'Ritmo del jardín';
+
+  @override
+  String get gardenCardTitle => 'Tarjeta del jardín';
+
+  @override
+  String get gardenStatsTitle => 'Estadísticas del jardín';
+
+  @override
+  String get growthJournalTitle => 'Diario de crecimiento';
+
+  @override
+  String get careHabitsTitle => 'Hábitos de cuidado';
+
+  @override
+  String get healthForecastTitle => 'Pronóstico de salud';
+
+  @override
+  String get healthTimelineTitle => 'Línea de tiempo de salud';
+
+  @override
+  String get plantQuizTitle => 'Quiz de plantas';
+
+  @override
+  String get growthStageTitle => 'Etapa de crecimiento';
+
+  @override
+  String get memoryLaneTitle => 'Paseo de recuerdos';
+
+  @override
+  String get microSeasonsTitle => 'Micro estaciones';
+
+  @override
+  String get milestonesTitle => 'Hitos';
+
+  @override
+  String get gentleNudgesTitle => 'Recordatorios suaves';
+
+  @override
+  String get timelapseReadyTitle => 'Timelapse listo';
+
+  @override
+  String get lifeStoryTitle => 'Historia de vida';
+
+  @override
+  String get plantLineageTitle => 'Linaje de la planta';
+
+  @override
+  String get rescuePlanTitle => 'Plan de rescate';
+
+  @override
+  String get plantStoryTitle => 'Historia de la planta';
+
+  @override
+  String get vitalSignsTitle => 'Signos vitales';
+
+  @override
+  String get predictedNeedsTitle => 'Necesidades previstas';
+
+  @override
+  String get propagationTitle => 'Propagación';
+
+  @override
+  String get roomProfilesTitle => 'Perfiles de habitación';
+
+  @override
+  String get seasonalTipsTitle => 'Consejos estacionales';
+
+  @override
+  String get skillLevelTitle => 'Nivel de habilidad';
+
+  @override
+  String get plantSocialGraphTitle => 'Grafo social de plantas';
+
+  @override
+  String get streakBoardTitle => 'Tabla de rachas';
+
+  @override
+  String get stressAlertsTitle => 'Alertas de estrés';
+
+  @override
+  String get survivalOutlookTitle => 'Perspectiva de supervivencia';
+
+  @override
+  String get gardenTimelineTitle => 'Línea de tiempo del jardín';
+
+  @override
+  String get waterEfficiencyTitle => 'Eficiencia de riego';
+
+  @override
+  String get wateringScheduleTitle => 'Calendario de riego';
+
+  @override
+  String get scheduleOptimizerTitle => 'Optimizador de horario';
+
+  @override
+  String get weeklyReportTitle => 'Esta semana';
+
+  @override
+  String get plantWhispererTitle => 'Susurrador de plantas';
 }

@@ -4,6 +4,7 @@ import '../../app/theme/botanica_tokens.dart';
 import '../../domain/services/plant_story_engine.dart';
 import 'botanica_gaps.dart';
 import 'glass_card.dart';
+import '../../gen/l10n/app_localizations.dart';
 
 class BotanicaPlantStoryCard extends StatelessWidget {
   const BotanicaPlantStoryCard({
@@ -19,6 +20,7 @@ class BotanicaPlantStoryCard extends StatelessWidget {
 
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
     final current = story.chapters.length > story.currentChapter
         ? story.chapters[story.currentChapter]
@@ -40,7 +42,7 @@ class BotanicaPlantStoryCard extends StatelessWidget {
               BotanicaGaps.hXs,
               Expanded(
                 child: Text(
-                  'Plant Story',
+                  l10n.plantStoryTitle,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),

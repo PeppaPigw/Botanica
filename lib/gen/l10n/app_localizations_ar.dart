@@ -3904,4 +3904,127 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get careRoutinesTitle => 'روتين رعايتك';
+
+  @override
+  String get plantAnniversariesTitle => 'ذكرى النباتات';
+
+  @override
+  String get communityBenchmarkTitle => 'معيار المجتمع';
+
+  @override
+  String get emotionalBondsTitle => 'الروابط العاطفية';
+
+  @override
+  String get suggestedGoalsTitle => 'أهداف مقترحة';
+
+  @override
+  String get gardenHarmonyTitle => 'انسجام الحديقة';
+
+  @override
+  String get gardenMomentumTitle => 'زخم الحديقة';
+
+  @override
+  String get gardenMoodTitle => 'مزاج الحديقة';
+
+  @override
+  String get gardenRhythmTitle => 'إيقاع الحديقة';
+
+  @override
+  String get gardenCardTitle => 'بطاقة الحديقة';
+
+  @override
+  String get gardenStatsTitle => 'إحصائيات الحديقة';
+
+  @override
+  String get growthJournalTitle => 'يوميات النمو';
+
+  @override
+  String get careHabitsTitle => 'عادات الرعاية';
+
+  @override
+  String get healthForecastTitle => 'توقعات الصحة';
+
+  @override
+  String get healthTimelineTitle => 'الجدول الزمني للصحة';
+
+  @override
+  String get plantQuizTitle => 'اختبار النباتات';
+
+  @override
+  String get growthStageTitle => 'مرحلة النمو';
+
+  @override
+  String get memoryLaneTitle => 'ممر الذكريات';
+
+  @override
+  String get microSeasonsTitle => 'المواسم الصغيرة';
+
+  @override
+  String get milestonesTitle => 'الإنجازات';
+
+  @override
+  String get gentleNudgesTitle => 'تذكيرات لطيفة';
+
+  @override
+  String get timelapseReadyTitle => 'جاهز للتصوير المتتابع';
+
+  @override
+  String get lifeStoryTitle => 'قصة الحياة';
+
+  @override
+  String get plantLineageTitle => 'سلالة النبات';
+
+  @override
+  String get rescuePlanTitle => 'خطة الإنقاذ';
+
+  @override
+  String get plantStoryTitle => 'قصة النبات';
+
+  @override
+  String get vitalSignsTitle => 'العلامات الحيوية';
+
+  @override
+  String get predictedNeedsTitle => 'الاحتياجات المتوقعة';
+
+  @override
+  String get propagationTitle => 'الإكثار';
+
+  @override
+  String get roomProfilesTitle => 'ملفات الغرف';
+
+  @override
+  String get seasonalTipsTitle => 'نصائح موسمية';
+
+  @override
+  String get skillLevelTitle => 'مستوى المهارة';
+
+  @override
+  String get plantSocialGraphTitle => 'الرسم الاجتماعي للنباتات';
+
+  @override
+  String get streakBoardTitle => 'لوحة التتابع';
+
+  @override
+  String get stressAlertsTitle => 'تنبيهات الإجهاد';
+
+  @override
+  String get survivalOutlookTitle => 'توقعات البقاء';
+
+  @override
+  String get gardenTimelineTitle => 'الجدول الزمني للحديقة';
+
+  @override
+  String get waterEfficiencyTitle => 'كفاءة الري';
+
+  @override
+  String get wateringScheduleTitle => 'جدول الري';
+
+  @override
+  String get scheduleOptimizerTitle => 'محسّن الجدول';
+
+  @override
+  String get weeklyReportTitle => 'هذا الأسبوع';
+
+  @override
+  String get plantWhispererTitle => 'همّاس النباتات';
 }
